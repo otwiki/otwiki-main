@@ -1,5 +1,5 @@
 ---
-title: "Kantorovich_Problem"
+title: "Kantorovich Problem"
 bibliography: bibliography.bibtex
 ---
 
