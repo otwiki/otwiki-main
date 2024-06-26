@@ -3,7 +3,7 @@ title: "Kantorovich Problem"
 bibliography: bibliography.bibtex
 ---
 
-Kiilroy as here!
+Kiilroy as here! No he wasn't.
 
 The Kantorovich problem [@Villani2003] is one of the two essential minimization problems in [optimal transport](https://en.wikipedia.org/wiki/Transportation_theory_(mathematics)) (the other being the [Monge problem](http://34.106.105.83/wiki/Monge_Problem)). It is named after Russian mathematician and Nobel Laureate [Leonid Kantorovich](https://en.wikipedia.org/wiki/Leonid_Kantorovich).
 
