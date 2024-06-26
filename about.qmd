@@ -1,0 +1,11 @@
+---
+title: "About"
+---
+
+**Contributors wanted!**
+
+Do you want to help others learn about optimal transport? Do you need a concrete goal to motivate yourself to learn about a new topic? Please consider becoming a contributor to our wiki!
+
+Your contributions will be gratefully recognized in footers of each page. Please contact Katy Craig to receive an account.
+
+This wiki is maintained by Katy Craig with help from the awesome students from Math 260L in Spring 202, Math 201A in Fall 2020, and Math 260J in Winter 2022.

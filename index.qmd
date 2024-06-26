@@ -1,0 +1,67 @@
+---
+title: "Optimal Transport Wiki"
+---
+
+![](GraphMongeSmall.png) **Welcome to the Optimal Transport Wiki!**
+
+Here is a list of [New article ideas](tbd.qmd).
+
+Here is a list of [Article revision ideas](tbd.qmd).
+
+Contact Katy Craig if you would like to contribute to this wiki.
+
+# The optimal transportation problem
+
+-   [Monge Problem](tbd.qmd)
+-   [Monge Problem(revised)](tbd.qmd)
+-   [Kantorovich Problem](Kantorovich_Problem.qmd) [\<--- **THIS PAGE ONLY**]{style="color: red"}
+-   [Optimal Transport in One Dimension](tbd.qmd)
+-   [Kantorovich Dual Problem (for general costs)](tbd.qmd)
+-   [Kantorovich Dual Problem (for c(x,y) = d(x,y)\^2 where d is a metric)](tbd.qmd)
+-   [Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds](tbd.qmd)
+-   [1-Wasserstein metric and generalizations](tbd.qmd)
+-   [Optimal Transport and Ricci curvature](tbd.qmd)
+
+# Variants of the optimal transport problem
+
+-   [Martingale optimal transport and mathematical finance](tbd.qmd) [^1]
+-   [Wasserstein barycenters and applications in image processing](tbd.qmd)
+
+[^1]: Santambrogio (51-53); <https://link.springer.com/content/pdf/10.1007/s00440-013-0531-y.pdf>
+
+# The 2-Wasserstein Metric
+
+-   [Geodesics and generalized geodesics](tbd.qmd)
+-   [Formal Riemannian Structure of the Wasserstein metric](tbd.qmd)
+-   [Asymptotic equivalence of W_2 and H\^-1](tbd.qmd)
+
+# Numerical methods for optimal transport
+
+-   [Discrete Optimal Transport](tbd.qmd)
+-   [Auction Algorithm](tbd.qmd)
+-   [Semidiscrete Optimal Transport](tbd.qmd)
+-   [Sinkhorn's Algorithm](tbd.qmd)
+-   [Sliced Wasserstein Distance](tbd.qmd)
+
+# Mathematical foundations
+
+-   [Dual space of C_0(x) vs C_b(x)](tbd.qmd)
+-   [Convergence of Measures and Metrizability](tbd.qmd)
+-   [Fenchel-Moreau and Primal/Dual Optimization Problems](tbd.qmd)
+-   [Fenchel-Rockafellar and Linear Programming](tbd.qmd)
+-   [The Moreau-Yosida Regularization](tbd.qmd)
+-   [Gradient flows in Hilbert spaces](tbd.qmd)
+-   [The continuity equation and Benamour Brenier formula](tbd.qmd)
+-   [Isoperimetric inequality and OMT](tbd.qmd)
+
+# Applications of Optimal Transport
+
+-   [Machine Learning](tbd.qmd)
+-   [Shallow neural networks as Wasserstein gradient flows](tbd.qmd)
+
+# Other
+
+-   [Distraction Recommendations](tbd.qmd)
+-   [Nonlocal Equations Wiki](https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?)
+-   [Proteopedia](http://proteopedia.org/wiki/index.php/Main_Page)
+-   [Quantum Information Wiki](https://www.quantiki.org)
