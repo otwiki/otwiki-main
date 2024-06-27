@@ -22,6 +22,11 @@ for l in open(sys.argv[1]):
         print("#"*level + " " + header)
     else:
         l = l.strip()
+        # Bold
+        l = re.sub("'''(.*?)'''", r"**\1**", l)
+        l = re.sub("<strong>(.*?)</strong>", r"**\1**", l)
+        # Italic
+        l = re.sub("''(.*?)''", r"_\1_", l)
         # TeX math sections
         l = re.sub("<math> *(.*?) *</math>", r"$\1$", l)
         # Citations - just comment out for now
