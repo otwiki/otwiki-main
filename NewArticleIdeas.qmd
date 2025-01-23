@@ -39,7 +39,6 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 
 -   Bures-Wasserstein Gradient flows, Chewi, Niles-Weed, Rigollet (149-153)
 
--   Probability flow solution of the Fokker–Planck equation [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
 
 # Mathematical Foundations
 
@@ -51,8 +50,6 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 -   Estimation of transport maps, Chewi, Niles-Weed, Rigollet Ch.3
 
 # Applications:
-
--   Wasserstein Generative Adversarial Networks [4](https://leon.bottou.org/publications/pdf/icml-2017.pdf), [5](https://nemo.kiwi/studies/M1/ML/report.pdf)
 
 -   Optimal transport methods in economics; see introduction of book by Galichon (I have a copy you can borrow) and [6](https://arxiv.org/abs/2107.04700)
 
