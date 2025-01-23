@@ -42,7 +42,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 # Wasserstein Gradient Flows
 
--   Probability flow solution of the Fokker–Planck equation - Simone Betteti -  [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
+-   Probability flow solution of the Fokker–Planck equation - Simone Betteti - [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
 
 # Mathematical foundations
 
@@ -59,7 +59,8 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 -   [Machine Learning](https://www.otwiki.xyz/wiki/Machine_Learning)
 -   [Shallow neural networks as Wasserstein gradient flows](https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows)
-- Wasserstein Generative Adversarial Networks - Haosheng Zhou - [4](https://leon.bottou.org/publications/pdf/icml-2017.pdf), [5](https://nemo.kiwi/studies/M1/ML/report.pdf)
+-   Wasserstein Generative Adversarial Networks - Haosheng Zhou - [4](https://leon.bottou.org/publications/pdf/icml-2017.pdf), [5](https://nemo.kiwi/studies/M1/ML/report.pdf)
+-   Knothe maps and conditional sampling - Charles Kulick - [Baptista, Marzouk, Zahm 2023](https://link.springer.com/article/10.1007/s10208-023-09630-x)
 
 # Other
 

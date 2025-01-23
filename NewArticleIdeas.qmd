@@ -39,7 +39,6 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 
 -   Bures-Wasserstein Gradient flows, Chewi, Niles-Weed, Rigollet (149-153)
 
-
 # Mathematical Foundations
 
 -   Gradient flows in metric spaces; Figalli-Glaudo (107-108); Santambrogio, 'OT for Applied Mathematicians' (285-290); Santambrogio, 'Euclidean, Metric, and Wasserstein GFs' (90-107; don't need to cover all topics, just what interests you)
@@ -55,8 +54,6 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 
 -   Quantization and Lloyd's algorithm [7](https://hal.science/hal-03256039/document), [8](https://link.springer.com/content/pdf/10.1007/978-3-030-01947-1_7.pdf), [9](https://link.springer.com/content/pdf/10.1007/978-3-319-99689-9_6.pdf)
 
--   Knothe maps and conditional sampling [Baptista, Marzouk, Zahm 2023](https://link.springer.com/article/10.1007/s10208-023-09630-x)
-
 -   Transformers as Wasserstein Gradient Flows; Chewi, Niles-Weed, Rigollet (195-200)
 
-- Inferring developmental trajectories of biological cells via optimal transport [Waddington-OT](https://broadinstitute.github.io/wot/tutorial/), [Schiebinger, et. al. 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)30039-X)
+-   Inferring developmental trajectories of biological cells via optimal transport [Waddington-OT](https://broadinstitute.github.io/wot/tutorial/), [Schiebinger, et. al. 2019](https://www.cell.com/cell/fulltext/S0092-8674(19)30039-X)
