@@ -6,7 +6,7 @@ title: "Optimal Transport Wiki"
 
 **Welcome to the Optimal Transport Wiki!**
 
-Here is a list of [New article ideNewArticleIdeas.qmd).
+Here is a list of [New article ideas](NewArticleIdeas.qmd).
 
 Contact Katy Craig if you would like to contribute to this wiki.
 
