@@ -1,1 +1,1 @@
-Sitemap: https://ucsb-library-research-data-services.github.io/math-wiki-test/sitemap.xml
+Sitemap: https://otwiki.github.io/otwiki-main/sitemap.xml
