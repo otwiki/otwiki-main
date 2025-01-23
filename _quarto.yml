@@ -3,7 +3,7 @@ project:
 
 website:
   title: "OT WIKI"
-  site-url: https://ucsb-library-research-data-services.github.io/math-wiki-test
+  site-url: https://otwiki.github.io/otwiki-main/
   navbar:
     left:
       - href: index.qmd
