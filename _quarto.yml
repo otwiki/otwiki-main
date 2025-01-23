@@ -6,8 +6,6 @@ website:
   site-url: https://otwiki.github.io/otwiki-main/
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - about.qmd
 
 format:
