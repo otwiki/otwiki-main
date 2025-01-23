@@ -2,11 +2,11 @@
 title: "Optimal Transport Wiki"
 ---
 
-![](GraphMongeSmall.png) **Welcome to the Optimal Transport Wiki!**
+![](GraphMongeSmall.png)
 
-Here is a list of [New article ideas](tbd.qmd).
+**Welcome to the Optimal Transport Wiki!**
 
-Here is a list of [Article revision ideas](tbd.qmd).
+Here is a list of [New article ideNewArticleIdeas.qmd).
 
 Contact Katy Craig if you would like to contribute to this wiki.
 
@@ -23,9 +23,8 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 # Variants of the optimal transport problem
 
--   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance) 
+-   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance)
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
-
 
 # The 2-Wasserstein Metric
 
@@ -48,7 +47,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Fenchel-Moreau and Primal/Dual Optimization Problems](https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems)
 -   [Fenchel-Rockafellar and Linear Programming](https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming)
 -   [The Moreau-Yosida Regularization](https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization)
--   [Gradient flows in Hilbert spaces](Gradient flows in Hilbert spaces)
+-   [Gradient flows in Hilbert spaces](Gradient%20flows%20in%20Hilbert%20spaces)
 -   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
 
