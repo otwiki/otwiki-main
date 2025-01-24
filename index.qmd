@@ -10,7 +10,7 @@ Here is a list of [New article ideas](NewArticleIdeas.qmd).
 
 Contact Katy Craig if you would like to contribute to this wiki.
 
-# The optimal transportation problem
+### The optimal transportation problem
 
 -   [Monge Problem](https://www.otwiki.xyz/wiki/Monge_Problem)
 -   [Kantorovich Problem](Kantorovich_Problem.qmd) *(has already been updated to quarto)*
@@ -21,18 +21,18 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [1-Wasserstein metric and generalizations](https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations)
 -   [Optimal Transport and Ricci curvature](https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature)
 
-# Variants of the optimal transport problem
+## Variants of the optimal transport problem
 
 -   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance)
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
 
-# The 2-Wasserstein Metric
+## The 2-Wasserstein Metric
 
 -   [Geodesics and generalized geodesics](https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics)
 -   [Formal Riemannian Structure of the Wasserstein metric](https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric)
 -   [Asymptotic equivalence of W_2 and H\^-1](https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1)
 
-# Numerical methods for optimal transport
+## Numerical methods for optimal transport
 
 -   [Discrete Optimal Transport](https://www.otwiki.xyz/wiki/Discrete_Optimal_Transport)
 -   [Auction Algorithm](https://www.otwiki.xyz/wiki/Auction_Algorithm)
@@ -40,12 +40,12 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Sinkhorn's Algorithm](https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm)
 -   [Sliced Wasserstein Distance](https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance)
 
-# Wasserstein Gradient Flows
+## Wasserstein Gradient Flows
 
 -   Probability flow solution of the Fokker–Planck equation - Simone Betteti - [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
 -   Bures-Wasserstein Gradient flows - Arie Ogranovich - Chewi, Niles-Weed, Rigollet (149-153)
 
-# Mathematical foundations
+## Mathematical foundations
 
 -   [Dual space of C_0(x) vs C_b(x)](https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x))
 -   [Convergence of Measures and Metrizability](https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability)
@@ -56,14 +56,14 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
 
-# Applications of Optimal Transport
+## Applications of Optimal Transport
 
 -   [Machine Learning](https://www.otwiki.xyz/wiki/Machine_Learning)
 -   [Shallow neural networks as Wasserstein gradient flows](https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows)
 -   Wasserstein Generative Adversarial Networks - Haosheng Zhou - [4](https://leon.bottou.org/publications/pdf/icml-2017.pdf), [5](https://nemo.kiwi/studies/M1/ML/report.pdf)
 -   Knothe maps and conditional sampling - Charles Kulick - [Baptista, Marzouk, Zahm 2023](https://link.springer.com/article/10.1007/s10208-023-09630-x)
 
-# Other
+## Other
 
 -   [Distraction Recommendations](tbd.qmd)
 -   [Nonlocal Equations Wiki](https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?)
