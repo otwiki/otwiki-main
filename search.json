@@ -116,6 +116,55 @@
     "href": "index.html",
     "title": "Optimal Transport Wiki",
     "section": "",
-    "text": "Welcome to the Optimal Transport Wiki!\nHere is a list of New article ideas.\nContact Katy Craig if you would like to contribute to this wiki.\n\nThe optimal transportation problem\n\nMonge Problem\nKantorovich Problem (has already been updated to quarto)\nOptimal Transport in One Dimension\nKantorovich Dual Problem (for general costs)\nKantorovich Dual Problem (for \\(c(x,y) = d(x,y)^2\\) where \\(d\\) is a metric)\nRegularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds\n1-Wasserstein metric and generalizations\nOptimal Transport and Ricci curvature\n\n\n\nVariants of the optimal transport problem\n\nMartingale optimal transport and mathematical finance\nWasserstein barycenters and applications in image processing\n\n\n\nThe 2-Wasserstein Metric\n\nGeodesics and generalized geodesics\nFormal Riemannian Structure of the Wasserstein metric\nAsymptotic equivalence of W_2 and H^-1\n\n\n\nNumerical methods for optimal transport\n\nDiscrete Optimal Transport\nAuction Algorithm\nSemidiscrete Optimal Transport\nSinkhorn’s Algorithm\nSliced Wasserstein Distance\n\n\n\nWasserstein Gradient Flows\n\nProbability flow solution of the Fokker–Planck equation - Simone Betteti - Boffi and Vanden-Eijnden 2023\nBures-Wasserstein Gradient flows - Arie Ogranovich - Chewi, Niles-Weed, Rigollet (149-153)\n\n\n\nMathematical foundations\n\nDual space of C_0(x) vs C_b(x)\nConvergence of Measures and Metrizability\nFenchel-Moreau and Primal/Dual Optimization Problems\nFenchel-Rockafellar and Linear Programming\nThe Moreau-Yosida Regularization\nGradient flows in Hilbert spaces\nThe continuity equation and Benamour Brenier formula\nIsoperimetric inequality and OMT\n\n\n\nApplications of Optimal Transport\n\nMachine Learning\nShallow neural networks as Wasserstein gradient flows\nWasserstein Generative Adversarial Networks - Haosheng Zhou - 4, 5\nKnothe maps and conditional sampling - Charles Kulick - Baptista, Marzouk, Zahm 2023\n\n\n\nOther\n\nDistraction Recommendations\nNonlocal Equations Wiki\nProteopedia\nQuantum Information Wiki"
+    "text": "Welcome to the Optimal Transport Wiki!\nHere is a list of New article ideas.\nContact Katy Craig if you would like to contribute to this wiki."
+  },
+  {
+    "objectID": "index.html#variants-of-the-optimal-transport-problem",
+    "href": "index.html#variants-of-the-optimal-transport-problem",
+    "title": "Optimal Transport Wiki",
+    "section": "Variants of the optimal transport problem",
+    "text": "Variants of the optimal transport problem\n\nMartingale optimal transport and mathematical finance\nWasserstein barycenters and applications in image processing"
+  },
+  {
+    "objectID": "index.html#the-2-wasserstein-metric",
+    "href": "index.html#the-2-wasserstein-metric",
+    "title": "Optimal Transport Wiki",
+    "section": "The 2-Wasserstein Metric",
+    "text": "The 2-Wasserstein Metric\n\nGeodesics and generalized geodesics\nFormal Riemannian Structure of the Wasserstein metric\nAsymptotic equivalence of W_2 and H^-1"
+  },
+  {
+    "objectID": "index.html#numerical-methods-for-optimal-transport",
+    "href": "index.html#numerical-methods-for-optimal-transport",
+    "title": "Optimal Transport Wiki",
+    "section": "Numerical methods for optimal transport",
+    "text": "Numerical methods for optimal transport\n\nDiscrete Optimal Transport\nAuction Algorithm\nSemidiscrete Optimal Transport\nSinkhorn’s Algorithm\nSliced Wasserstein Distance"
+  },
+  {
+    "objectID": "index.html#wasserstein-gradient-flows",
+    "href": "index.html#wasserstein-gradient-flows",
+    "title": "Optimal Transport Wiki",
+    "section": "Wasserstein Gradient Flows",
+    "text": "Wasserstein Gradient Flows\n\nProbability flow solution of the Fokker–Planck equation - Simone Betteti - Boffi and Vanden-Eijnden 2023\nBures-Wasserstein Gradient flows - Arie Ogranovich - Chewi, Niles-Weed, Rigollet (149-153)"
+  },
+  {
+    "objectID": "index.html#mathematical-foundations",
+    "href": "index.html#mathematical-foundations",
+    "title": "Optimal Transport Wiki",
+    "section": "Mathematical foundations",
+    "text": "Mathematical foundations\n\nDual space of C_0(x) vs C_b(x)\nConvergence of Measures and Metrizability\nFenchel-Moreau and Primal/Dual Optimization Problems\nFenchel-Rockafellar and Linear Programming\nThe Moreau-Yosida Regularization\nGradient flows in Hilbert spaces\nThe continuity equation and Benamour Brenier formula\nIsoperimetric inequality and OMT"
+  },
+  {
+    "objectID": "index.html#applications-of-optimal-transport",
+    "href": "index.html#applications-of-optimal-transport",
+    "title": "Optimal Transport Wiki",
+    "section": "Applications of Optimal Transport",
+    "text": "Applications of Optimal Transport\n\nMachine Learning\nShallow neural networks as Wasserstein gradient flows\nWasserstein Generative Adversarial Networks - Haosheng Zhou - 4, 5\nKnothe maps and conditional sampling - Charles Kulick - Baptista, Marzouk, Zahm 2023"
+  },
+  {
+    "objectID": "index.html#other",
+    "href": "index.html#other",
+    "title": "Optimal Transport Wiki",
+    "section": "Other",
+    "text": "Other\n\nDistraction Recommendations\nNonlocal Equations Wiki\nProteopedia\nQuantum Information Wiki"
   }
 ]
