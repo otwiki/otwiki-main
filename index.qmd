@@ -21,16 +21,19 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [1-Wasserstein metric and generalizations](https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations)
 -   [Optimal Transport and Ricci curvature](https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature)
 
-### Variants of the optimal transport problem
 
--   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance)
--   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
 
 ### The 2-Wasserstein Metric
 
 -   [Geodesics and generalized geodesics](https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics)
 -   [Formal Riemannian Structure of the Wasserstein metric](https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric)
 -   [Asymptotic equivalence of W_2 and H\^-1](https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1)
+
+### Variants of the optimal transport problem
+
+-   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance)
+-   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
+- Wasserstein metrics on graphs - Claire
 
 ### Numerical methods for optimal transport
 
