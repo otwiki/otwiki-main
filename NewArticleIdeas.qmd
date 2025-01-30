@@ -32,7 +32,7 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 
 ### Statistical Foundations
 -   Estimation of Wasserstein distances, Chewi, Niles-Weed, Rigollet Ch.2
--   Estimation of transport maps, Chewi, Niles-Weed, Rigollet Ch.3
+
 
 ### Applications:
 -   Optimal transport methods in economics; see introduction of book by Galichon (I have a copy you can borrow) and [6](https://arxiv.org/abs/2107.04700)
