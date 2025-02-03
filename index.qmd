@@ -21,8 +21,6 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [1-Wasserstein metric and generalizations](https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations)
 -   [Optimal Transport and Ricci curvature](https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature)
 
-
-
 ### The 2-Wasserstein Metric
 
 -   [Geodesics and generalized geodesics](https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics)
@@ -32,8 +30,9 @@ Contact Katy Craig if you would like to contribute to this wiki.
 ### Variants of the optimal transport problem
 
 -   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance)
+- [Martingale optimal transport: dynamic formulation] - Ka Lok Lam
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
-- Wasserstein metrics on graphs - Claire
+-   Wasserstein metrics on graphs - Claire
 
 ### Numerical methods for optimal transport
 
@@ -45,13 +44,14 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   Back and Forth Method - Jack Pfaffinger
 
 ### Optimal Transport and Statistics
+
 -   Estimation of transport maps - Evan Tufte, Chewi, Niles-Weed, Rigollet Ch.3
 
 ### Wasserstein Gradient Flows
 
 -   Probability flow solution of the Fokker–Planck equation - Simone Betteti - [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
 -   Bures-Wasserstein Gradient flows - Arie Ogranovich - Chewi, Niles-Weed, Rigollet (149-153)
-- Hellinger-Kantorvich Gradient flows - Djordje Nikolic
+-   Hellinger-Kantorvich Gradient flows - Djordje Nikolic
 
 ### Mathematical foundations
 
