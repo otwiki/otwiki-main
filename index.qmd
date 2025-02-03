@@ -33,6 +33,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 - [Martingale optimal transport: dynamic formulation] - Ka Lok Lam
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
 -   Wasserstein metrics on graphs - Claire
+- Continuous time martingale OT and Skorohod Embedding - Qijin Shi
 
 ### Numerical methods for optimal transport
 
