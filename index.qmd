@@ -64,6 +64,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Gradient flows in Hilbert spaces](Gradient%20flows%20in%20Hilbert%20spaces)
 -   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
+- Gaussian Measures - Connor Marrs
 
 ### Applications of Optimal Transport
 
