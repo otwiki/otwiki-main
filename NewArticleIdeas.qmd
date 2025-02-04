@@ -28,7 +28,7 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 -   Fundamentals of Wasserstein Gradient flows, Chewi, Niles-Weed, Rigollet (135-148) and Santambrogio, 'Euclidean, Metric, and Wasserstein GFs'
 
 ### Mathematical Foundations
--   Gradient flows in metric spaces; Figalli-Glaudo (107-108); Santambrogio, 'OT for Applied Mathematicians' (285-290); Santambrogio, 'Euclidean, Metric, and Wasserstein GFs' (90-107; don't need to cover all topics, just what interests you)
+
 
 ### Statistical Foundations
 -   Estimation of Wasserstein distances, Chewi, Niles-Weed, Rigollet Ch.2
