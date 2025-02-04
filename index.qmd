@@ -17,6 +17,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Optimal Transport in One Dimension](https://www.otwiki.xyz/wiki/Optimal_Transport_in_One_Dimension)
 -   [Kantorovich Dual Problem (for general costs)](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs))
 -   [Kantorovich Dual Problem (for $c(x,y) = d(x,y)^2$ where $d$ is a metric)](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric))
+- Dynamic formulation of $W_p$ metric - Max Emerick
 -   [Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds](https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds)
 -   [1-Wasserstein metric and generalizations](https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations)
 -   [Optimal Transport and Ricci curvature](https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature)
@@ -65,6 +66,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
 - Gaussian Measures - Connor Marrs
+- Analysis on metric spaces - Max Emerick
 
 ### Applications of Optimal Transport
 
