@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Wasserstein Generative Adversarial Network – OT WIKI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">OT WIKI</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Wasserstein Generative Adversarial Network</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The <a href="https://en.wikipedia.org/wiki/Wasserstein_GAN">Wasserstein generative adversarial network (WGAN)</a> <span class="citation" data-cites="arjovsky2017wasserstein">(<a href="#ref-arjovsky2017wasserstein" role="doc-biblioref">Arjovsky, Chintala, and Bottou 2017</a>)</span> is a recently proposed state-of-the-art <a href="https://en.wikipedia.org/wiki/Generative_model">generative model</a> that leverages ideas from <a href="https://en.wikipedia.org/wiki/Transportation_theory_(mathematics)">optimal transport</a> to address key limitations of the traditional <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network">generative adversarial network (GAN)</a> <span class="citation" data-cites="goodfellow2014generative">(<a href="#ref-goodfellow2014generative" role="doc-biblioref">Goodfellow et al. 2014</a>)</span>.</p>
+<p>To provide a comprehensive introduction to WGAN, we begin by clarifying the problem of generative modeling. Among various approaches, we focus specifically on GANs, outlining their main ideas and performing a straightforward theoretical analysis. Motivated by the challenges encountered in the training of GANs, WGANs are naturally introduced, highlighting how ideas from optimal transport improve the performance and stability of machine learning models.</p>
+<section id="generative-model" class="level1">
+<h1>Generative Model</h1>
+<section id="general-overview" class="level2">
+<h2 class="anchored" data-anchor-id="general-overview">General Overview</h2>
+<p>In recent years, it has been a hot topic to train machine learning models that exhibit human capabilities, one of which is creativity — the ability to create novel objects within a given category after observing a set of examples. Just like a human child, who can draw numerous distinct cats after seeing just a few real-life cats, one example of generative modeling is to train a machine learning model based on a set of cat images, which can produce an unlimited variety of new cat images that do not resemble those in the training set.</p>
+<p>In brief, the problem of generative modeling has the following requirements:</p>
+<ol type="1">
+<li><p>The training set consists of a finite number of samples.</p></li>
+<li><p>The generated outputs belong to the same category as the training samples.</p></li>
+<li><p>The model is capable of producing an infinite variety of outputs.</p></li>
+</ol>
+<p>Generative models have numerous connections and applications in various fields, e.g., synthetic data generation <span class="citation" data-cites="eigenschink2023deep">(<a href="#ref-eigenschink2023deep" role="doc-biblioref">Eigenschink et al. 2023</a>)</span>, image generation <span class="citation" data-cites="oussidi2018deep">(<a href="#ref-oussidi2018deep" role="doc-biblioref">Oussidi and Elhassouny 2018</a>)</span>, game theory <span class="citation" data-cites="cao2020connecting">(<a href="#ref-cao2020connecting" role="doc-biblioref">Cao, Guo, and Laurière 2020</a>)</span> and reinforcement learning <span class="citation" data-cites="franceschelli2024reinforcement">(<a href="#ref-franceschelli2024reinforcement" role="doc-biblioref">Franceschelli and Musolesi 2024</a>)</span>, etc. We refer interested readers to <span class="citation" data-cites="harshvardhan2020comprehensive">(<a href="#ref-harshvardhan2020comprehensive" role="doc-biblioref">Harshvardhan et al. 2020</a>)</span> for a comprehensive survey on the analysis and applications of generative models.</p>
+</section>
+<section id="problem-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="problem-formulation">Problem Formulation</h2>
+<p>Let <span class="math inline">\(\mathcal{X}\subset \mathbb{R}^D\)</span> denote the sample space where training samples take values. The key assumption of generative modeling is the existence of an unknown probability distribution <span class="math inline">\(\mathbb{P}_r\)</span> on <span class="math inline">\(\mathcal{X}\)</span>, from which the training samples are drawn. Therefore, generative modeling typically consists of two parts:</p>
+<ol type="1">
+<li><p><strong>Approximation</strong>: Approximate the distribution <span class="math inline">\(\mathbb{P}_r\)</span> with a parameterized model <span class="math inline">\(\mathbb{P}_\theta\in\mathscr{P}(\mathcal{X})\)</span>, where <span class="math inline">\(\theta\)</span> represents the parameters, based on a finite number of samples from <span class="math inline">\(\mathbb{P}_r\)</span>.</p></li>
+<li><p><strong>Sampling</strong>: Generate samples from the approximated distribution <span class="math inline">\(\mathbb{P}_\theta\)</span>.</p></li>
+</ol>
+</section>
+<section id="geometric-structure" class="level2">
+<h2 class="anchored" data-anchor-id="geometric-structure">Geometric Structure</h2>
+<p>Before diving deeper into state-of-the-art methods of generative modeling, it is crucial to understand why classical density estimation methods in Statistics are not performing well. One of the reasons lies in the geometric structure of the problem that the distribution <span class="math inline">\(\mathbb{P}_r\)</span>, in most cases, is supported only on a low-dimensional manifold within <span class="math inline">\(\mathbb{R}^D\)</span>.</p>
+<p>Consider the task of image generation, where each image consists of approximately <span class="math inline">\(10^6\)</span> pixels with three color channels, i.e., <span class="math inline">\(D \approx 3\times 10^6\)</span>. While each one of the images can be viewed as a single point in <span class="math inline">\(\mathbb{R}^D\)</span>, the true distribution <span class="math inline">\(\mathbb{P}_r\)</span> is typically concentrated on a manifold with an intrinsic dimension <span class="math inline">\(d\)</span>, where <span class="math inline">\(d\leq 50\)</span> for most image datasets <span class="citation" data-cites="pope2021intrinsic">(<a href="#ref-pope2021intrinsic" role="doc-biblioref">Pope et al. 2021</a>)</span>. This significant gap between the ambient dimension <span class="math inline">\(D\)</span> and the intrinsic dimension <span class="math inline">\(d\)</span> arises from implicit constraints that define the structure of <span class="math inline">\(\mathbb{P}_r\)</span>. For instance, human face images require symmetry and the nose and ears have to adhere to specific shape characteristics.</p>
+<p>Under this specific structure, perturbation-based sampling methods, which refer to the generation of a randomly perturbed version of one of the training samples, no longer work. As a simple example illustrating such failure, consider <span class="math inline">\(\mathbb{P}_r\)</span> as a uniform distribution on a unit circle <span class="math inline">\(C^1\subset\mathbb{R}^2\)</span>. Adding Gaussian noises to a point <span class="math inline">\((x,y)\in C^1\)</span> almost surely yields a point outside the manifold <span class="math inline">\(C^1\)</span>. In other words, general perturbations would destroy the manifold structure, if not carefully designed.</p>
+<p>Similarly, classical density estimation methods face at least two major challenges:</p>
+<ol type="1">
+<li><p><strong>The density approximation on the manifold.</strong> The density of <span class="math inline">\(\mathbb{P}_r\)</span>, if exists on the manifold, is almost everywhere zero under the Lebesgue measure on <span class="math inline">\(\mathbb{R}^D\)</span>.</p></li>
+<li><p><strong>The density-based sampling scheme.</strong> Sampling from a distribution on a high-dimensional space with a known density suffers from the curse of dimensionality.</p></li>
+</ol>
+<p>Those challenges motivate the development of state-of-the-art generative modeling approaches based on different ideas, as introduced in the following section.</p>
+</section>
+<section id="sota-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="sota-approaches">SOTA Approaches</h2>
+<p>Popular methods of generative modeling can be roughly categorized as:</p>
+<ol type="1">
+<li><p><a href="https://en.wikipedia.org/wiki/Variational_autoencoder">Variational Autoencoders (VAEs)</a>: VAEs are likelihood-based generative models that train an encoder to map samples to a latent space and a decoder to reconstruct samples from latent vectors.</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Generative_adversarial_network">Generative Adversarial Networks (GANs)</a>: GANs involve a generator and a discriminator network trained in an adversarial way, where the discriminator learns to distinguish between real and generated data, while the generator aims to create samples indistinguishable from real data.</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Diffusion_model">Diffusion models</a>: Diffusion models progressively corrupt samples by adding random noise and reverses this process, reconstructing new samples from pure random noise.</p></li>
+</ol>
+<p>While all approaches share the same objective, their methodologies differ significantly. In the following discussion, we briefly introduce GANs to prepare the readers for the discussion on WGANs.</p>
+</section>
+</section>
+<section id="generative-adversarial-network" class="level1">
+<h1>Generative Adversarial Network</h1>
+<section id="main-idea" class="level2">
+<h2 class="anchored" data-anchor-id="main-idea">Main Idea</h2>
+<p>As mentioned in the previous context, a generative model shall have the “power of infinity”, i.e., the ability to produce an infinite variety of outputs. However, when it comes to numerical implementations of most algorithms, we are always trying to discretize continuous objects. For example, when numerical integration is performed, the integration domain is discretized into a large (but finite) number of small areas. Attaining infinity seems impossible at the first glance, but modern computers do attain infinity in one specific task — generating random samples from a given distribution. We draw distinct samples from a multivariate standard Gaussian <span class="math inline">\(N(0,I)\)</span> each time the random number generator is called, which is actually the source of the “power of infinity”. Inspired by such observations, generative models shall learn how to map random samples from a known distribution, e.g., <span class="math inline">\(N(0,I)\)</span>, to outputs that follow <span class="math inline">\(\mathbb{P}_r\)</span>, i.e., the models should be delivering randomness, rather than creating new randomness.</p>
+<p>Mathematically speaking, we call <span class="math inline">\(\mathcal{Z}\subset \mathbb{R}^l\)</span> the latent space, where the latent random variable <span class="math inline">\(Z\)</span> takes values. The random variable <span class="math inline">\(Z\)</span> follows a given probability distribution <span class="math inline">\(\mathbb{P}_Z\)</span>, which is often taken as a multivariate Gaussian. A GAN aims to learn a function parameterized by <span class="math inline">\(\theta\)</span>: <span class="math display">\[
+G_\theta:\mathcal{Z}\to\mathcal{X},
+\]</span> such that the law of <span class="math inline">\(G_\theta(Z)\)</span> is approximately <span class="math inline">\(\mathbb{P}_r\)</span>. In practice, <span class="math inline">\(G_\theta\)</span> is typically taken as a neural network, while <span class="math inline">\(\theta\)</span> denotes the collection of all the network paramaters. For the purpose of notation, we denote <span class="math inline">\(\mathbb{P}_\theta\)</span> as the law of <span class="math inline">\(G_\theta(Z)\)</span> so that the problem turns into: <span class="math display">\[
+\inf_\theta d(\mathbb{P}_\theta,\mathbb{P}_r),
+\]</span> where <span class="math inline">\(d\)</span> is some information divergence that measures the difference between two probability distributions. Such a formulation naturally poses two questions:</p>
+<ol type="1">
+<li><p>How to supervise the model with the finite number of training samples from <span class="math inline">\(\mathbb{P}_r\)</span>?</p></li>
+<li><p>How to select the information divergence <span class="math inline">\(d\)</span>?</p></li>
+</ol>
+<p>The wisdom of GANs lies in using another neural network to approximate <span class="math inline">\(d\)</span> without specifying it explicitly. The network that approximates <span class="math inline">\(d\)</span> is parameterized by <span class="math inline">\(w\)</span>: <span class="math display">\[
+D_w:\mathcal{X}\to[0,1].
+\]</span></p>
+<p>The fundamental framework of GANs consists of a <strong>generator</strong> <span class="math inline">\(G_\theta\)</span> and a <strong>discriminator</strong> <span class="math inline">\(D_w\)</span>. The generator receives inputs as samples <span class="math inline">\(z\)</span> from the known distribution <span class="math inline">\(\mathbb{P}_Z\)</span> and outputs the generated samples <span class="math inline">\(G_\theta(z)\in\mathcal{X}\)</span>. The discriminator receives inputs as elements in <span class="math inline">\(\mathcal{X}\)</span> (could be samples in the training set or outputs of the generator <span class="math inline">\(G_\theta(z)\)</span>), and assigns a score as the probability that the input received is from the true distribution <span class="math inline">\(\mathbb{P}_r\)</span>. In principle, the discriminator hopes to distinguish the training samples from <span class="math inline">\(\mathbb{P}_r\)</span> and the fake samples from <span class="math inline">\(\mathbb{P}_\theta\)</span> that are produced by the generator, while the generator hopes to fool the discriminator on the top of that. Since the GAN architecture creates a competition between the generator and the discriminator, ideally, both networks perform well enough in fulfilling their respective tasks after training. The trained generator is exactly the generative model we have been referring to, while the auxiliary discriminator is simply disregarded.</p>
+<p>With the GAN architecture in mind, it suffices to propose loss functions for both networks, as the only missing components. The constructions of loss functions are rather intuitive: if the input of the discriminator comes from <span class="math inline">\(\mathbb{P}_r\)</span>, its output shall be close to one; if the input of the discriminator comes from <span class="math inline">\(\mathbb{P}_\theta\)</span>, its output shall be close to zero. With the logarithms introduced, the discriminator maximizes <span class="math inline">\(\mathbb{E}_{X\sim\mathbb{P}_r}\log D_\omega(X) + \mathbb{E}_{Z\sim\mathbb{P}_Z}\log (1-D_\omega(G_\theta(Z)))\)</span> w.r.t. <span class="math inline">\(w\)</span>. When the discriminator reaches its optimum, the generator aims to minimize the same loss in order to fool the discriminator, resulting in the optimization problem: <span class="math display">\[
+\inf_\theta\sup_\omega \mathbb{E}_{X\sim\mathbb{P}_r}\log D_\omega(X) + \mathbb{E}_{Z\sim\mathbb{P}_Z}\log (1-D_\omega(G_\theta(Z))).
+\]</span></p>
+<p>We leave the following remarks on the training of GANs:</p>
+<ol type="1">
+<li><p>The generator and the discriminator share exactly the same loss function, but are optimizing it in opposite directions. In this sense, GAN has essential difference from the well-known actor-critic algorithm in reinforcement learning, where two networks have their respective loss functions to optimize.</p></li>
+<li><p>The expectations in the loss functions are approximated by Monte Carlo. For numerical implementations, one only needs to compute the loss function, call backpropagation for gradient computations (w.r.t. <span class="math inline">\(w\)</span> and <span class="math inline">\(\theta\)</span>), and conduct gradient descent/ascent for the parameters of the generator/discriminator network.</p></li>
+<li><p>Due to the inf-sup structure of the problem, one typically trains the discriminator for several epochs before training the generator for a single epoch. GANs work in the way that the training samples supervise the discriminator, and the discriminator supervises the generator.</p></li>
+</ol>
+</section>
+<section id="theoretical-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="theoretical-analysis">Theoretical Analysis</h2>
+<p>We demonstrate a simple theoretical analysis for the GAN optimization problem <span class="citation" data-cites="goodfellow2014generative">(<a href="#ref-goodfellow2014generative" role="doc-biblioref">Goodfellow et al. 2014</a>)</span>. Due to technical difficulties modeling the parameter optimization procedure within neural networks, we omit the dependence on the parameters <span class="math inline">\(\theta\)</span> and <span class="math inline">\(w\)</span>, and rewrite the optimization problem in terms of the generator <span class="math inline">\(G\)</span> and the discriminator <span class="math inline">\(D\)</span>. For simplicity, we adopt a change of variable <span class="math inline">\(Y := G(Z)\)</span> to absorb all dependencies on the generator <span class="math inline">\(G\)</span>. Since <span class="math inline">\(Y\)</span> is the output of the generator, it follows the distribution <span class="math inline">\(\mathbb{P}_\theta\)</span>. The inner layer optimization of the inf-sup problem turns out to be explicitly solvable: <span class="math display">\[
+\sup_D f(D):=\mathbb{E}_{X\sim\mathbb{P}_r}\log D(X) + \mathbb{E}_{Y\sim\mathbb{P}_\theta}\log (1-D(Y)).
+\]</span> Compute the first variation of <span class="math inline">\(f\)</span> in <span class="math inline">\(D\)</span> w.r.t. the perturbation <span class="math inline">\(\psi\)</span>: <span class="math display">\[
+\delta f(D)(\psi) := \lim_{\varepsilon\to 0}\frac{f(D + \varepsilon \psi) - f(D)}{\varepsilon}
+= \mathbb{E}_{X\sim\mathbb{P}_r}\frac{\psi(X)}{D(X)} - \mathbb{E}_{Y\sim\mathbb{P}_\theta}\frac{\psi(Y)}{1-D(Y)}.
+\]</span> Assume <span class="math inline">\(\mathbb{P}_r\)</span> and <span class="math inline">\(\mathbb{P}_\theta\)</span> have respective densities <span class="math inline">\(p_r\)</span> and <span class="math inline">\(p_\theta\)</span> w.r.t. the Lebesgue measure. The optimality criterion <span class="math inline">\(\delta f(D^*)(\psi) = 0\)</span>, <span class="math inline">\(\forall \psi\)</span> implies that <span class="math display">\[
+D^* = \frac{p_r}{p_r + p_\theta}.
+\]</span> Plugging back into the objective function yields <span class="math display">\[
+f(D^*) = \int \left[p_r(x)\log\frac{p_r(x)}{\frac{p_r(x) + p_\theta(x)}{2}} + p_\theta(x)\log\frac{p_\theta(x)}{\frac{p_r(x) + p_\theta(x)}{2}}\right]\,dx - 2\log 2.
+\]</span> This quantity can be identified with the <a href="https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Jensen-Shannon divergence</a>: <span class="math display">\[
+f(D^*) = D_{\text{KL}} \left(\mathbb{P}_r||\frac{\mathbb{P}_r + \mathbb{P}_\theta}{2}\right) + D_{\text{KL}} \left(\mathbb{P}_\theta||\frac{\mathbb{P}_r + \mathbb{P}_\theta}{2}\right) - 2\log 2=: 2\text{JS}(\mathbb{P}_r,\mathbb{P}_\theta) - 2\log 2.
+\]</span> Consequently, if the discriminator has reached its optimum <span class="math inline">\(D^*\)</span>, training the generator is equivalent to minimizing the Jensen-Shannon divergence between the real and the approximated distributions.</p>
+</section>
+</section>
+<section id="wasserstein-generative-adversarial-network" class="level1">
+<h1>Wasserstein Generative Adversarial Network</h1>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>Despite great success in practical applications, the training of GANs is notoriously unstable. One of the main issues is called <strong>mode collapse</strong>, the phenomenon that a trained GAN generates samples of one single variety while ignoring other possible modes. It is widely believed that the main cause of mode collapse is the lack of control on the discriminator <span class="citation" data-cites="kushwaha2020study">(<a href="#ref-kushwaha2020study" role="doc-biblioref">Kushwaha, Nandi, et al. 2020</a>)</span>. Philosophically, if the discriminator learns much faster than the generator, it criticizes all the samples produced by the generator, so that the generator does not know how to proceed. Conversely, if the discriminator learns much slower than the generator, it accepts all the results generated by the generator, which once again causes the similar issue. Hence, normal GAN training requires a careful adjustment in the relative learning speed of the generator and the discriminator. Numerically, we shall not train the discriminator till optimality before training the generator, despite the actual inf-sup structure of the optimization problem.</p>
+<p>There are two main streams of ideas in the literature to augment the stability of GANs:</p>
+<ol type="1">
+<li><p>Minimize an information divergence other than the Jensen-Shannon divergence.</p></li>
+<li><p>Use multiple generators to explicitly enforce GANs to capture diverse modes.</p></li>
+</ol>
+<p>Wasserstein GANs take the first approach and use the <a href="https://en.wikipedia.org/wiki/Wasserstein_metric">Wasserstein distance</a> (with <span class="math inline">\(p=1\)</span>) instead of the Jensen-Shannon divergence. To understand what motivates WGANs, there are two main questions to answer:</p>
+<ol type="1">
+<li><p>What is the advantage of the Wasserstein distance over the Jensen-Shannon divergence?</p></li>
+<li><p>How to encode the minimization of the Wasserstein distance in the loss functions?</p></li>
+</ol>
+</section>
+<section id="advantage-of-wasserstein-distance" class="level2">
+<h2 class="anchored" data-anchor-id="advantage-of-wasserstein-distance">Advantage of Wasserstein Distance</h2>
+<p>We refer to a simple working example from <span class="citation" data-cites="arjovsky2017wasserstein">(<a href="#ref-arjovsky2017wasserstein" role="doc-biblioref">Arjovsky, Chintala, and Bottou 2017</a>)</span> that illustrates the advantage of using the Wasserstein distance <span class="math inline">\(W(\mathbb{P}_r,\mathbb{P}_\theta)\)</span>.</p>
+<p>Consider the setting where <span class="math inline">\(\mathcal{X}= \mathbb{R}^2\)</span>. Let <span class="math inline">\(S_\theta := \{\theta\}\times [0,1]\)</span> denote a family of unit line segments parameterized by <span class="math inline">\(\theta\)</span>. Clearly, each <span class="math inline">\(S_\theta\)</span> is a one-dimensional manifold within <span class="math inline">\(\mathcal{X}\)</span>. Let <span class="math inline">\(\mathbb{P}_\theta\)</span> be the uniform distribution on <span class="math inline">\(S_\theta\)</span> and <span class="math inline">\(\mathbb{P}_r = \mathbb{P}_{\theta = 0}\)</span>. The optimal value of <span class="math inline">\(\theta\)</span> that guarantees <span class="math inline">\(\mathbb{P}_r = \mathbb{P}_\theta\)</span> is thus <span class="math inline">\(0\)</span>. We compare four differently defined information divergences between <span class="math inline">\(\mathbb{P}_r\)</span> and <span class="math inline">\(\mathbb{P}_\theta\)</span>:</p>
+<ol type="1">
+<li><p><a href="https://en.wikipedia.org/wiki/Total_variation">Total variation</a>: <span class="math display">\[
+\text{TV}(\mathbb{P}_0,\mathbb{P}_\theta) := \sup_{A\in\mathscr{B}_{\mathcal{X}}}|\mathbb{P}_0(A) - \mathbb{P}_\theta(A)|,
+\]</span> where <span class="math inline">\(\mathscr{B}_{\mathcal{X}}\)</span> denotes the Borel sigma field on <span class="math inline">\(\mathcal{X}\)</span>. Since the supports <span class="math inline">\(S_0\)</span> and <span class="math inline">\(S_\theta\)</span> are disjoint when <span class="math inline">\(\theta \neq 0\)</span>, the total variation attains its maximum value <span class="math inline">\(1\)</span>. Therefore, <span class="math display">\[
+\text{TV}(\mathbb{P}_0,\mathbb{P}_\theta) = \begin{cases} 0 &amp;\text{if}\ \theta = 0\\ 1 &amp; \text{else}\end{cases}.
+\]</span></p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a>: <span class="math display">\[
+\text{KL}(\mathbb{P}_0||\mathbb{P}_\theta) := \begin{cases} \mathbb{E}_{\mathbb{P}_\theta} \left(\frac{\text{d}\mathbb{P}_0}{\text{d}\mathbb{P}_\theta}\log \frac{\text{d}\mathbb{P}_0}{\text{d}\mathbb{P}_\theta}\right)&amp; \text{if}\ \mathbb{P}_0 &lt;&lt;\mathbb{P}_\theta\\ \infty &amp; \text{else}\end{cases},
+\]</span> where <span class="math inline">\(&lt;&lt;\)</span> denotes the absolute continuity between measures. Since the supports <span class="math inline">\(S_0\)</span> and <span class="math inline">\(S_\theta\)</span> are disjoint when <span class="math inline">\(\theta \neq 0\)</span>, absolute continuity fails and the KL divergence is infinite. Therefore, <span class="math display">\[
+\text{KL}(\mathbb{P}_0||\mathbb{P}_\theta) = \begin{cases} 0 &amp;\text{if}\ \theta = 0\\ \infty &amp; \text{else}\end{cases}.
+\]</span></p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Jensen-Shannon divergence</a>: <span class="math display">\[
+\text{JS}(\mathbb{P}_0,\mathbb{P}_\theta) := \frac{1}{2}\text{KL}(\mathbb{P}_0||\frac{\mathbb{P}_0 + \mathbb{P}_\theta}{2}) + \frac{1}{2}\text{KL}(\mathbb{P}_\theta||\frac{\mathbb{P}_0 + \mathbb{P}_\theta}{2}).
+\]</span> Note that <span class="math inline">\(\mathbb{P}_0&lt;&lt;\frac{\mathbb{P}_0 + \mathbb{P}_\theta}{2}\)</span>, hence the Jensen-Shannon divergence is always finite. When <span class="math inline">\(\theta\neq 0\)</span>, we calculate the two Radon-Nikodym derivatives <span class="math display">\[
+\frac{\text{d}\mathbb{P}_0}{\text{d}\frac{\mathbb{P}_0 + \mathbb{P}_\theta}{2}} = 2\mathbb{I}_{S_0},\quad
+\frac{\text{d}\mathbb{P}_\theta}{\text{d}\frac{\mathbb{P}_0 + \mathbb{P}_\theta}{2}} = 2\mathbb{I}_{S_\theta},
+\]</span> where <span class="math inline">\(\mathbb{I}_A\)</span> denotes the indicator of a set <span class="math inline">\(A\)</span>. Those conclusions could be verified from definitions <span class="math display">\[
+\int_A 2\mathbb{I}_{S_0}(x)\,\text{d}\frac{\mathbb{P}_0 + \mathbb{P}_\theta}{2}(x) = \mathbb{P}_0(A\cap S_0) + \mathbb{P}_\theta(A\cap S_0) = \mathbb{P}_0(A),\ \forall A\in\mathscr{B}_{\mathcal{X}}.
+\]</span> Therefore, <span class="math display">\[
+\text{JS}(\mathbb{P}_0,\mathbb{P}_\theta) = \begin{cases} 0 &amp;\text{if}\ \theta = 0\\ \log 2 &amp; \text{else}\end{cases}.
+\]</span></p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Wasserstein_metric">Wasserstein distance</a> with <span class="math inline">\(p=1\)</span>: <span class="math display">\[
+W(\mathbb{P}_0,\mathbb{P}_\theta) := \inf_{X\sim \mathbb{P}_0,Y\sim\mathbb{P}_\theta} \mathbb{E}\|X - Y\|_2.
+\]</span> From geometric intuition, <span class="math inline">\(T(x) = x+\theta\)</span> is the optimal transport map under the convex cost <span class="math inline">\(c(x,y) = \|x-y\|_2\)</span>. Therefore, <span class="math display">\[
+W(\mathbb{P}_0,\mathbb{P}_\theta) = |\theta|.
+\]</span></p></li>
+</ol>
+<p>Obviously, only the Wasserstein distance exhibits the <strong>continuity in parameter</strong> <span class="math inline">\(\theta\)</span>, while other divergences have discontinuities at <span class="math inline">\(0\)</span>. This observation has been made rigorous in general cases <span class="citation" data-cites="arjovsky2017wasserstein">(<a href="#ref-arjovsky2017wasserstein" role="doc-biblioref">Arjovsky, Chintala, and Bottou 2017</a>)</span>. The authors prove that if the generator <span class="math inline">\(G_\theta\)</span> is continuous in <span class="math inline">\(\theta\)</span>, then so is <span class="math inline">\(W(\mathbb{P}_r,\mathbb{P}_\theta)\)</span>. If the generator <span class="math inline">\(G_\theta\)</span> is locally Lipschitz in <span class="math inline">\(\theta\)</span>, then so is <span class="math inline">\(W(\mathbb{P}_r,\mathbb{P}_\theta)\)</span> under mild regularity assumptions, which, by <a href="https://en.wikipedia.org/wiki/Rademacher%27s_theorem">Rademacher’s theorem</a>, implies that <span class="math inline">\(W(\mathbb{P}_r,\mathbb{P}_\theta)\)</span> is almost everywhere differentiable in <span class="math inline">\(\theta\)</span>.</p>
+<p>The continuity and differentiability w.r.t. the parameter is crucial in the training of GANs and is closely related to the issue of vanishing gradients. When the discriminator has reached its optimum and one gradient step of the generator is performed, the gradient actually refers to <span class="math inline">\(\nabla_{\theta}[d(\mathbb{P}_r,\mathbb{P}_\theta)]\)</span>. In the example above, all divergences except the Wasserstein distance provide trivial (vanishing) gradients for the generator. By contrast, the Wasserstein distance provides a gradient that is <span class="math inline">\(1\)</span> for positive <span class="math inline">\(\theta\)</span> and <span class="math inline">\(-1\)</span> for negative <span class="math inline">\(\theta\)</span>, which is always effective for the generator. Thanks to the physical interpretation of optimal transport, the Wasserstein distance, as a specific optimal-transport-based information divergence, greatly mitigates the issue of vanishing gradients for the generator.</p>
+</section>
+<section id="construction-of-wgan" class="level2">
+<h2 class="anchored" data-anchor-id="construction-of-wgan">Construction of WGAN</h2>
+<p>In terms of numerical implementation, an inf-sup formulation of the optimization problem is required, as it clearly specifies the loss functions. Luckily, the <a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">Kantorovich-Rubinstein duality</a> provides the representation: <span class="math display">\[
+W(\mathbb{P}_r,\mathbb{P}_\theta) = \sup_{\|f\|_L\leq 1} \mathbb{E}_{X\sim \mathbb{P}_r} f(X) - \mathbb{E}_{Y\sim\mathbb{P}_\theta}  f(Y),
+\]</span> where the supremum is taken over all Lipschitz functions <span class="math inline">\(f\)</span> with Lipschitz constants no larger than <span class="math inline">\(1\)</span>. Substituting <span class="math inline">\(f = \frac{g}{K}\)</span> allows the relaxation in the Lipschitz constant: <span class="math display">\[
+K\cdot W(\mathbb{P}_r,\mathbb{P}_\theta) = \sup_{\|g\|_L\leq K} \mathbb{E}_{X\sim \mathbb{P}_r} g(X) - \mathbb{E}_{Y\sim\mathbb{P}_\theta}  g(Y).
+\]</span> Therefore, the complete optimization problem of WGANs w.r.t. the parameterized generator <span class="math inline">\(G_\theta\)</span> and discriminator <span class="math inline">\(D_w\)</span> is given by <span class="math display">\[
+\inf_\theta\sup_{w:\|D_w\|_L\leq K} \mathbb{E}_{X\sim \mathbb{P}_r} D_w(X) - \mathbb{E}_{Z\sim\mathbb{P}_Z}  D_w(G_\theta(Z)).
+\]</span> The objective of this optimization problem serves as the loss functions in WGANs, shared by both the generator and the discriminator. One last piece of detail for the implementation of WGANs lies in the way to numerically impose the constraint <span class="math inline">\(\|D_w\|_L\leq K\)</span> for parameters <span class="math inline">\(w\)</span>. If <span class="math inline">\(D_w\)</span> is parameterized by a feedforward neural network, each layer of the network consists of an affine mapping <span class="math inline">\(x\mapsto Wx + b\)</span> with weight <span class="math inline">\(W\)</span>, bias <span class="math inline">\(b\)</span>, and a mapping of the nonlinear activation function <span class="math inline">\(\sigma\)</span>. Clearly, the affine mapping has Lipschitz constant <span class="math inline">\(\|W\|\)</span>, while the common activation functions, e.g., sigmoid, hyperbolic tangent, ReLU, etc, have Lipschitz constants <span class="math inline">\(L_\sigma&lt;\infty\)</span>. Therefore, the composition <span class="math inline">\(x\mapsto \sigma(Wx+b)\)</span> has a Lipschitz constant <span class="math inline">\(L_\sigma\|W\|\)</span>, which is uniform w.r.t. the trainable network parameters if <span class="math inline">\(\|W\|\)</span> has a uniform upper bound, i.e., when <span class="math inline">\(w\)</span> is restricted to a compact domain. As a result, WGANs impose the Lipschitz constraint by <strong>parameter clipping</strong>, e.g., restricting each component of <span class="math inline">\(w\)</span> to take values in <span class="math inline">\([-0.01,0.01]\)</span>.</p>
+<p>We remark that, by imposing the Lipschitz constraint, the discriminator is not allowed to saturate, thus providing effective gradients everywhere. As shown in the plot below, the GAN discriminator is too good at distinguishing two Gaussian distributions to provide effective gradients. In contrary, the WGAN discriminator (critic) with parameter clipping does not perform that well in distinguishing, but does provide effective gradients everywhere. Philosophically, the GAN discriminator is too smart that it demotivates the learning of the generator!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./Comparison.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>The comparisons of the behavior of optimal GAN discriminator and WGAN discriminator (critic) in dintinguishing two Gaussian distributions. The GAN discriminator saturates and provide trivial gradients within the main support of two Gaussian distributions. However, the WGAN discrinimator (critic) has a linear growth and provides effective gradients on the whole space. <span class="citation" data-cites="arjovsky2017wasserstein">(<a href="#ref-arjovsky2017wasserstein" role="doc-biblioref">Arjovsky, Chintala, and Bottou 2017</a>)</span></figcaption>
+</figure>
+</div>
+</section>
+<section id="conclusions-and-future-studies" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions-and-future-studies">Conclusions and Future Studies</h2>
+<p>To conclude, WGANs improve the training stability of GANs by switching the minimization of the Jensen-Shannon divergence to that of the Wasserstein distance, which is continuous in terms of the parameter of the generator. Numerically, we make use of the Kantorovich-Rubinstein duality to keep the inf-sup structure of the optimization problem, and adopt parameter clipping to impose the Lipschitz continuity.</p>
+<p>As pointed out in <span class="citation" data-cites="arjovsky2017wasserstein">(<a href="#ref-arjovsky2017wasserstein" role="doc-biblioref">Arjovsky, Chintala, and Bottou 2017</a>)</span>, future studies can be conducted in the following directions:</p>
+<ol type="1">
+<li><p>Impose the Lipschitz continuity of the neural network with a different technique, due to the subtleties in choosing the clipping hyperparameter.</p></li>
+<li><p>Explain why WGAN training is unstable when momentum based optimizers (like Adam) or high learning rates are used.</p></li>
+</ol>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-arjovsky2017wasserstein" class="csl-entry" role="listitem">
+Arjovsky, Martin, Soumith Chintala, and Léon Bottou. 2017. <span>“Wasserstein Generative Adversarial Networks.”</span> In <em>International Conference on Machine Learning</em>, 214–23. PMLR.
+</div>
+<div id="ref-cao2020connecting" class="csl-entry" role="listitem">
+Cao, Haoyang, Xin Guo, and Mathieu Laurière. 2020. <span>“Connecting GANs, MFGs, and OT.”</span> <em>arXiv Preprint arXiv:2002.04112</em>.
+</div>
+<div id="ref-eigenschink2023deep" class="csl-entry" role="listitem">
+Eigenschink, Peter, Thomas Reutterer, Stefan Vamosi, Ralf Vamosi, Chang Sun, and Klaudius Kalcher. 2023. <span>“Deep Generative Models for Synthetic Data: A Survey.”</span> <em>IEEE Access</em> 11: 47304–20.
+</div>
+<div id="ref-franceschelli2024reinforcement" class="csl-entry" role="listitem">
+Franceschelli, Giorgio, and Mirco Musolesi. 2024. <span>“Reinforcement Learning for Generative Ai: State of the Art, Opportunities and Open Research Challenges.”</span> <em>Journal of Artificial Intelligence Research</em> 79: 417–46.
+</div>
+<div id="ref-goodfellow2014generative" class="csl-entry" role="listitem">
+Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. 2014. <span>“Generative Adversarial Nets.”</span> <em>Advances in Neural Information Processing Systems</em> 27.
+</div>
+<div id="ref-harshvardhan2020comprehensive" class="csl-entry" role="listitem">
+Harshvardhan, GM, Mahendra Kumar Gourisaria, Manjusha Pandey, and Siddharth Swarup Rautaray. 2020. <span>“A Comprehensive Survey and Analysis of Generative Models in Machine Learning.”</span> <em>Computer Science Review</em> 38: 100285.
+</div>
+<div id="ref-kushwaha2020study" class="csl-entry" role="listitem">
+Kushwaha, Vandana, GC Nandi, et al. 2020. <span>“Study of Prevention of Mode Collapse in Generative Adversarial Network (GAN).”</span> In <em>2020 IEEE 4th Conference on Information &amp; Communication Technology (CICT)</em>, 1–6. IEEE.
+</div>
+<div id="ref-oussidi2018deep" class="csl-entry" role="listitem">
+Oussidi, Achraf, and Azeddine Elhassouny. 2018. <span>“Deep Generative Models: Survey.”</span> In <em>2018 International Conference on Intelligent Systems and Computer Vision (ISCV)</em>, 1–8. IEEE.
+</div>
+<div id="ref-pope2021intrinsic" class="csl-entry" role="listitem">
+Pope, Phillip, Chen Zhu, Ahmed Abdelkader, Micah Goldblum, and Tom Goldstein. 2021. <span>“The Intrinsic Dimension of Images and Its Impact on Learning.”</span> <em>arXiv Preprint arXiv:2104.08894</em>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/otwiki\.github\.io\/otwiki-main\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

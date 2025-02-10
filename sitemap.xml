@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/about.html</loc>
-    <lastmod>2025-01-27T04:21:29.497Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/WGAN.html</loc>
+    <lastmod>2025-02-08T04:30:04.617Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html</loc>
-    <lastmod>2025-01-23T04:14:08.035Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/index.html</loc>
+    <lastmod>2025-02-10T03:48:29.958Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/NewArticleIdeas.html</loc>
     <lastmod>2025-02-04T18:55:19.874Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/index.html</loc>
-    <lastmod>2025-02-04T18:57:52.654Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html</loc>
+    <lastmod>2025-01-23T04:14:08.035Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/about.html</loc>
+    <lastmod>2025-01-27T04:21:29.497Z</lastmod>
   </url>
 </urlset>
