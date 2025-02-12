@@ -67,7 +67,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
 - Gaussian Measures - Connor Marrs
 - Analysis on metric spaces - Max Emerick
--   [Gradient flows in metric spaces](GFMetricSpace.qmd) - Yusen Xia; Figalli-Glaudo (107-108); Santambrogio, 'OT for Applied Mathematicians' (285-290); Santambrogio, 'Euclidean, Metric, and Wasserstein GFs' (90-107; don't need to cover all topics, just what interests you)
+-   [Gradient flows in metric spaces](GFMetricSpace.qmd)
 
 ### Applications of Optimal Transport
 
