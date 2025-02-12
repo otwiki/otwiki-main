@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Yusen Xia">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Gradient Flows in Metric Space – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -138,13 +159,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Gradient Flows in Metric Space</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yusen Xia </p>
+          </div>
+  </div>
     
   
     
@@ -155,105 +182,72 @@ window.Quarto = {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">New article ideas</a>.</p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a> <em>(has already been updated to quarto)</em></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_in_One_Dimension">Optimal Transport in One Dimension</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric)">Kantorovich Dual Problem (for <span class="math inline">\(c(x,y) = d(x,y)^2\)</span> where <span class="math inline">\(d\)</span> is a metric)</a></li>
-<li>Dynamic formulation of <span class="math inline">\(W_p\)</span> metric - Max Emerick</li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">1-Wasserstein metric and generalizations</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<section id="gradient-flows-in-euclidean-space" class="level2">
+<h2 class="anchored" data-anchor-id="gradient-flows-in-euclidean-space">Gradient Flows in Euclidean Space</h2>
+<p>We first briefly reivew gradient flows in <span class="math inline">\(\mathbb{R}^n\)</span>. The motivation comes from the so-called “gradient descent method”: Suppose we would like to find the minimizer of a certain (continuously differentiable) function <span class="math inline">\(F:\mathbb{R}^n\to \mathbb{R}\)</span>. A classical way is to start with any point <span class="math inline">\(x_0\)</span>, and then go along the direction of negative of gradient of <span class="math inline">\(F\)</span>. That is, we are solving</p>
+<span class="math display">\[\begin{array}{l}
+x^{\prime}(t)=-\nabla F(x(t)) \quad \text { for } t&gt;0, \\
+x(0)=x_0.
+\end{array}\]</span>
+<p>A solution to the above initial value problem (IVP) is called a gradient flow of <span class="math inline">\(F\)</span>. As the gradient always points at the direction where <span class="math inline">\(F\)</span> increases the most, negative gradient will lead us to a (local) minimizer of <span class="math inline">\(F\)</span>. The existence and uniqueness theory of ODE guarantees a satisfactory solution of this gradient flow.</p>
+<section id="energy-dissipation-equality-evolution-variation-inequalitysantambrogio2016euclideanmetricwasserstein" class="level3">
+<h3 class="anchored" data-anchor-id="energy-dissipation-equality-evolution-variation-inequalitysantambrogio2016euclideanmetricwasserstein">Energy Dissipation Equality &amp; Evolution Variation Inequality<span class="citation" data-cites="santambrogio2016euclideanmetricwasserstein">(<a href="#ref-santambrogio2016euclideanmetricwasserstein" role="doc-biblioref">Santambrogio 2016</a>)</span></h3>
+<p>Note that along any smooth curve <span class="math inline">\(x_t\)</span> it holds that <span class="math inline">\(\begin{aligned} F(x(s))-F(x(t))=\int_s^t-\nabla F(x(r)) \cdot x^{\prime}(r) \mathrm{d} r &amp; \leq \int_s^t|\nabla F(x(r))|\left|x^{\prime}(r)\right| \mathrm{d} r \\ &amp; \leq \int_s^t\left(\frac{1}{2}\left|x^{\prime}(r)\right|^2+\frac{1}{2}|\nabla F(x(r))|^2\right) \mathrm{d} r\end{aligned}\)</span></p>
+<p>Note that if <span class="math inline">\(x(t)\)</span> solves the gradient flow IVP, then</p>
+<p><span class="math display">\[
+F(x(s))-F(x(t))=\int_s^t\left(\frac{1}{2}\left|x^{\prime}(r)\right|^2+\frac{1}{2}|\nabla F(x(r))|^2\right) \mathrm{d} r, \quad  \forall s&lt;t
+\]</span> which we call Energy Dissipation Enequality (EDE).</p>
+<p>Now if <span class="math inline">\(F\)</span> is <span class="math inline">\(\lambda\)</span>-convex, the inequality that characterizes the gradient is</p>
+<p><span class="math display">\[
+F(y) \geq F(x)+\frac{\lambda}{2}|x-y|^2+p \cdot(y-x) \quad \text { for all } y \in \mathbb{R}^d .
+\]</span> We can pick a curve <span class="math inline">\(x(t)\)</span> and a point <span class="math inline">\(y\)</span> and compute</p>
+<p><span class="math display">\[
+\frac{d}{d t} \frac{1}{2}|x(t)-y|^2=(y-x(t)) \cdot\left(-x^{\prime}(t)\right)
+\]</span></p>
+<p>Consequently, imposing</p>
+<p><span class="math display">\[
+\frac{d}{d t} \frac{1}{2}|x(t)-y|^2 \leq F(y)-F(x(t))-\frac{\lambda}{2}|x(t)-y|^2
+\]</span></p>
+<p>for all <span class="math inline">\(y\)</span>, will be equivalent to <span class="math inline">\(-x^{\prime}(t) \in-\partial F(x(t))\)</span>. This will provide a second characterization (called EVI, Evolution Variational Inequality) of gradient flows in a metric environment.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a></li>
-<li>[Martingale optimal transport: dynamic formulation] - Ka Lok Lam</li>
-<li><a href="https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing">Wasserstein barycenters and applications in image processing</a></li>
-<li>Wasserstein metrics on graphs - Claire</li>
-<li>Continuous time martingale OT and Skorohod Embedding - Qijin Shi</li>
-</ul>
-</section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Discrete_Optimal_Transport">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm">Sinkhorn’s Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance">Sliced Wasserstein Distance</a></li>
-<li>Back and Forth Method - Jack Pfaffinger</li>
-</ul>
-</section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal Transport and Statistics</h3>
-<ul>
-<li>Estimation of transport maps - Evan Tufte, Chewi, Niles-Weed, Rigollet Ch.3</li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein Gradient Flows</h3>
-<ul>
-<li>Probability flow solution of the Fokker–Planck equation - Simone Betteti - <a href="https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta">Boffi and Vanden-Eijnden 2023</a></li>
-<li>Bures-Wasserstein Gradient flows - Arie Ogranovich - Chewi, Niles-Weed, Rigollet (149-153)</li>
-<li>Hellinger-Kantorvich Gradient flows - Djordje Nikolic</li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="Gradient flows in Hilbert spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li>Gaussian Measures - Connor Marrs</li>
-<li>Analysis on metric spaces - Max Emerick</li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a> - Yusen Xia; Figalli-Glaudo (107-108); Santambrogio, ‘OT for Applied Mathematicians’ (285-290); Santambrogio, ‘Euclidean, Metric, and Wasserstein GFs’ (90-107; don’t need to cover all topics, just what interests you)</li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li>Knothe maps and conditional sampling - Charles Kulick - <a href="https://link.springer.com/article/10.1007/s10208-023-09630-x">Baptista, Marzouk, Zahm 2023</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="tbd.qmd">Distraction Recommendations</a></li>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="gradient-flows-in-metric-space" class="level2">
+<h2 class="anchored" data-anchor-id="gradient-flows-in-metric-space">Gradient Flows in Metric Space</h2>
+<p>To generalize the above IVP, we need to make sense of derivative and gradient in metric space setting.</p>
+<p>The first notion is the generalization of “derivative” in metric space, so-called <strong>metric derivative</strong> defined as follows: Given a curve <span class="math inline">\(x:[0, T] \rightarrow X\)</span> valued in a metric space, <span class="math display">\[
+\left|x^{\prime}\right|(t):=\lim _{h \rightarrow 0} \frac{d(x(t), x(t+h))}{|h|}.
+\]</span> Note that there is no vector structure here, so we can only make sense of modulus of the velocity of a curve.</p>
+<p>The second concept is the generalization of convexity. A function <span class="math inline">\(F\)</span> is called <strong>geodeiscally convex</strong> if it is convex along any geodesic: <span class="math display">\[F(x(t)) \leq(1-t) F(x(0))+t F(x(1)).\]</span> Similarly we define <strong>geodeisc</strong> <span class="math inline">\(\lambda\)</span>-convex if <span class="math display">\[
+F(x(t)) \leq(1-t) F(x(0))+t F(x(1))-\lambda \frac{t(1-t)}{2} d^2(x(0), x(1)) .
+\]</span></p>
+<p>Lastly we define the metric version of <span class="math inline">\(|\nabla F|\)</span> as <strong>slope</strong>: Let <span class="math inline">\(F: X \rightarrow \mathbb{R} \cup\{+\infty\}\)</span> and <span class="math inline">\(x \in X\)</span> be such that <span class="math inline">\(F(x)&lt;\infty\)</span>. Then the slope <span class="math inline">\(|\nabla F|(x)\)</span> of <span class="math inline">\(F\)</span> at <span class="math inline">\(x\)</span> is:</p>
+<p><span class="math display">\[
+|\nabla F|(x):=\varlimsup_{y \rightarrow x} \frac{(F(x)-F(y))^{+}}{d(x, y)}=\max \left\{\varlimsup_{y \rightarrow x} \frac{F(x)-F(y)}{d(x, y)}, 0\right\} .
+\]</span></p>
+<p>Now we are ready to define gradient flows in metric setting. There are two definitions<span class="citation" data-cites="ambrosio2013user">(<a href="#ref-ambrosio2013user" role="doc-biblioref">Ambrosio et al. 2013</a>)</span>:</p>
+<p>(Energy Dissipation Equality definition of GF - EDE) Let <span class="math inline">\(E: X \rightarrow \mathbb{R} \cup\{+\infty\}\)</span> and let <span class="math inline">\(\bar{x} \in X\)</span> be such that <span class="math inline">\(E(\bar{x})&lt;\infty\)</span>. We say that <span class="math inline">\([0, \infty) \ni t \mapsto x_t \in X\)</span> is a Gradient Flow in the EDE sense starting at <span class="math inline">\(\bar{x}\)</span> provided it is a locally absolutely continuous curve, <span class="math inline">\(x_0=\bar{x}\)</span> and</p>
+<p><span class="math display">\[
+E\left(x_s\right)+\frac{1}{2} \int_t^s\left|\dot{x}_r\right|^2 d r+\frac{1}{2} \int_t^s|\nabla E|^2\left(x_r\right) d r=E\left(x_t\right), \quad \forall 0 \leq t \leq s
+\]</span></p>
+<p>The second definition is the EVI version:</p>
+<p>(Evolution Variation Inequality definition of GF - EVI) Let <span class="math inline">\(E: X \rightarrow \mathbb{R} \cup\{+\infty\}\)</span>, <span class="math inline">\(\bar{x} \in \overline{\{E&lt;\infty\}}\)</span> and <span class="math inline">\(\lambda \in \mathbb{R}\)</span>. We say that <span class="math inline">\((0, \infty) \ni t \mapsto x_t \in X\)</span> is a Gradient Flow in the EVI sense (with respect to <span class="math inline">\(\lambda\)</span> ) starting at <span class="math inline">\(\bar{x}\)</span> provided it is a locally absolutely continuous curve in <span class="math inline">\((0, \infty), x_t \rightarrow \bar{x}\)</span> as <span class="math inline">\(t \rightarrow 0\)</span> and</p>
+<p><span class="math display">\[
+E\left(x_t\right)+\frac{1}{2} \frac{d}{d t} d^2\left(x_t, y\right)+\frac{\lambda}{2} d^2\left(x_t, y\right) \leq E(y), \quad \forall y \in X, \text { a.e. } t&gt;0
+\]</span></p>
+<p>It turns out that the EDE definition is weaker than the EVI definition, i.e.&nbsp;any EVI GF is automatically an EDE GF. The EDE definition is easier to get existence, and the EVI definition is used to get uniqueness results.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ambrosio2013user" class="csl-entry" role="listitem">
+Ambrosio, Luigi, Alberto Bressan, Dirk Helbing, Axel Klar, Enrique Zuazua, Luigi Ambrosio, and Nicola Gigli. 2013. <span>“A User’s Guide to Optimal Transport.”</span> <em>Modelling and Optimisation of Flows on Networks: Cetraro, Italy 2009, Editors: Benedetto Piccoli, Michel Rascle</em>, 1–155.
+</div>
+<div id="ref-santambrogio2016euclideanmetricwasserstein" class="csl-entry" role="listitem">
+Santambrogio, Filippo. 2016.<span>“<span class="nocase"> Euclidean, Metric, and Wasserstein </span> Gradient Flows: An Overview.”</span> <a href="https://arxiv.org/abs/1609.03890">https://arxiv.org/abs/1609.03890</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
