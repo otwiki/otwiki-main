@@ -1,41 +1,41 @@
-
 ---
 title: "Gradient Flows in Metric Space"
 author: "Yusen Xia"
-bibliography: ref.bibtex
+bibliography: bibliography.bibtex
 ---
+
 ## Gradient Flows in Euclidean Space
 
-We first briefly reivew gradient flows in $\mathbb{R}^n$. The motivation comes from the so-called "gradient descent method": Suppose we would like to find the minimizer of a certain (continuously differentiable) function $F:\mathbb{R}^n\to \mathbb{R}$. A classical way is to start with any point $x_0$, and then go along the direction of negative of gradient of $F$. That is, we are solving 
+We first briefly reivew gradient flows in $\mathbb{R}^n$. The motivation comes from the so-called "gradient descent method": Suppose we would like to find the minimizer of a certain (continuously differentiable) function $F:\mathbb{R}^n\to \mathbb{R}$. A classical way is to start with any point $x_0$, and then go along the direction of negative of gradient of $F$. That is, we are solving
+
 \begin{array}{l}
 x^{\prime}(t)=-\nabla F(x(t)) \quad \text { for } t>0, \\
 x(0)=x_0.
 \end{array}
-A solution to the above initial value problem (IVP) is called a gradient flow of $F$. As the gradient always points at the direction where $F$ increases the most, negative gradient will lead us to a (local) minimizer of $F$. The existence and uniqueness theory of ODE guarantees a satisfactory solution of this gradient flow.
 
+A solution to the above initial value problem (IVP) is called a gradient flow of $F$. As the gradient always points at the direction where $F$ increases the most, negative gradient will lead us to a (local) minimizer of $F$. The existence and uniqueness theory of ODE guarantees a satisfactory solution of this gradient flow.
 
 ### Energy Dissipation Equality & Evolution Variation Inequality[@santambrogio2016euclideanmetricwasserstein]
 
-Note that along any smooth curve $x_t$ it holds that
-$\begin{aligned} F(x(s))-F(x(t))=\int_s^t-\nabla F(x(r)) \cdot x^{\prime}(r) \mathrm{d} r & \leq \int_s^t|\nabla F(x(r))|\left|x^{\prime}(r)\right| \mathrm{d} r \\ & \leq \int_s^t\left(\frac{1}{2}\left|x^{\prime}(r)\right|^2+\frac{1}{2}|\nabla F(x(r))|^2\right) \mathrm{d} r\end{aligned}$
+Note that along any smooth curve $x_t$ it holds that $\begin{aligned} F(x(s))-F(x(t))=\int_s^t-\nabla F(x(r)) \cdot x^{\prime}(r) \mathrm{d} r & \leq \int_s^t|\nabla F(x(r))|\left|x^{\prime}(r)\right| \mathrm{d} r \\ & \leq \int_s^t\left(\frac{1}{2}\left|x^{\prime}(r)\right|^2+\frac{1}{2}|\nabla F(x(r))|^2\right) \mathrm{d} r\end{aligned}$
 
 Note that if $x(t)$ solves the gradient flow IVP, then
 
 $$
 F(x(s))-F(x(t))=\int_s^t\left(\frac{1}{2}\left|x^{\prime}(r)\right|^2+\frac{1}{2}|\nabla F(x(r))|^2\right) \mathrm{d} r, \quad  \forall s<t
-$$
-which we call Energy Dissipation Enequality (EDE).
-\par Now if $F$ is $\lambda$-convex, the inequality that characterizes the gradient is
+$$ which we call Energy Dissipation Enequality (EDE).
+
+\par
+
+Now if $F$ is $\lambda$-convex, the inequality that characterizes the gradient is
 
 $$
 F(y) \geq F(x)+\frac{\lambda}{2}|x-y|^2+p \cdot(y-x) \quad \text { for all } y \in \mathbb{R}^d .
-$$
-We can pick a curve $x(t)$ and a point $y$ and compute
+$$ We can pick a curve $x(t)$ and a point $y$ and compute
 
 $$
 \frac{d}{d t} \frac{1}{2}|x(t)-y|^2=(y-x(t)) \cdot\left(-x^{\prime}(t)\right)
 $$
-
 
 Consequently, imposing
 
@@ -45,40 +45,48 @@ $$
 
 for all $y$, will be equivalent to $-x^{\prime}(t) \in-\partial F(x(t))$. This will provide a second characterization (called EVI, Evolution Variational Inequality) of gradient flows in a metric environment.
 
-
-
 ## Gradient Flows in Metric Space
 
 To generalize the above IVP, we need to make sense of derivative and gradient in metric space setting.
-\par The first notion is the generalization of "derivative" in metric space, so-called **metric derivative** defined as follows: Given a curve $x:[0, T] \rightarrow X$ valued in a metric space, $$
+
+\par
+
+The first notion is the generalization of "derivative" in metric space, so-called **metric derivative** defined as follows: Given a curve $x:[0, T] \rightarrow X$ valued in a metric space, $$
 \left|x^{\prime}\right|(t):=\lim _{h \rightarrow 0} \frac{d(x(t), x(t+h))}{|h|}.
-$$
-Note that there is no vector structure here, so we can only make sense of modulus of the velocity of a curve.
-\par The second concept is the generalization of convexity. A function $F$ is called **geodeiscally convex** if it is convex along any geodesic: $$F(x(t)) \leq(1-t) F(x(0))+t F(x(1)).$$ Similarly we define **geodeisc $\lambda$-convex** if 
-$$
+$$ Note that there is no vector structure here, so we can only make sense of modulus of the velocity of a curve.
+
+\par
+
+The second concept is the generalization of convexity. A function $F$ is called **geodeiscally convex** if it is convex along any geodesic: $$F(x(t)) \leq(1-t) F(x(0))+t F(x(1)).$$ Similarly we define **geodeisc** $\lambda$-convex if $$
 F(x(t)) \leq(1-t) F(x(0))+t F(x(1))-\lambda \frac{t(1-t)}{2} d^2(x(0), x(1)) .
 $$
-\par Lastly we define the metric version of $|\nabla F|$ as **slope**:
-Let $F: X \rightarrow \mathbb{R} \cup\{+\infty\}$ and $x \in X$ be such that $F(x)<\infty$. Then the slope $|\nabla F|(x)$ of $F$ at $x$ is:
+
+\par
+
+Lastly we define the metric version of $|\nabla F|$ as **slope**: Let $F: X \rightarrow \mathbb{R} \cup\{+\infty\}$ and $x \in X$ be such that $F(x)<\infty$. Then the slope $|\nabla F|(x)$ of $F$ at $x$ is:
 
 $$
 |\nabla F|(x):=\varlimsup_{y \rightarrow x} \frac{(F(x)-F(y))^{+}}{d(x, y)}=\max \left\{\varlimsup_{y \rightarrow x} \frac{F(x)-F(y)}{d(x, y)}, 0\right\} .
 $$
 
-
 Now we are ready to define gradient flows in metric setting. There are two definitions[@ambrosio2013user]:
-\par (Energy Dissipation Equality definition of GF - EDE) Let $E: X \rightarrow \mathbb{R} \cup\{+\infty\}$ and let $\bar{x} \in X$ be such that $E(\bar{x})<\infty$. We say that $[0, \infty) \ni t \mapsto x_t \in X$ is a Gradient Flow in the EDE sense starting at $\bar{x}$ provided it is a locally absolutely continuous curve, $x_0=\bar{x}$ and
+
+\par
+
+(Energy Dissipation Equality definition of GF - EDE) Let $E: X \rightarrow \mathbb{R} \cup\{+\infty\}$ and let $\bar{x} \in X$ be such that $E(\bar{x})<\infty$. We say that $[0, \infty) \ni t \mapsto x_t \in X$ is a Gradient Flow in the EDE sense starting at $\bar{x}$ provided it is a locally absolutely continuous curve, $x_0=\bar{x}$ and
 
 $$
 E\left(x_s\right)+\frac{1}{2} \int_t^s\left|\dot{x}_r\right|^2 d r+\frac{1}{2} \int_t^s|\nabla E|^2\left(x_r\right) d r=E\left(x_t\right), \quad \forall 0 \leq t \leq s
 $$
- 
+
 The second definition is the EVI version:
-\par (Evolution Variation Inequality definition of GF - EVI) Let $E: X \rightarrow \mathbb{R} \cup\{+\infty\}$, $\bar{x} \in \overline{\{E<\infty\}}$ and $\lambda \in \mathbb{R}$. We say that $(0, \infty) \ni t \mapsto x_t \in X$ is a Gradient Flow in the EVI sense (with respect to $\lambda$ ) starting at $\bar{x}$ provided it is a locally absolutely continuous curve in $(0, \infty), x_t \rightarrow \bar{x}$ as $t \rightarrow 0$ and
+
+\par
+
+(Evolution Variation Inequality definition of GF - EVI) Let $E: X \rightarrow \mathbb{R} \cup\{+\infty\}$, $\bar{x} \in \overline{\{E<\infty\}}$ and $\lambda \in \mathbb{R}$. We say that $(0, \infty) \ni t \mapsto x_t \in X$ is a Gradient Flow in the EVI sense (with respect to $\lambda$ ) starting at $\bar{x}$ provided it is a locally absolutely continuous curve in $(0, \infty), x_t \rightarrow \bar{x}$ as $t \rightarrow 0$ and
 
 $$
 E\left(x_t\right)+\frac{1}{2} \frac{d}{d t} d^2\left(x_t, y\right)+\frac{\lambda}{2} d^2\left(x_t, y\right) \leq E(y), \quad \forall y \in X, \text { a.e. } t>0
 $$
-
 
 It turns out that the EDE definition is weaker than the EVI definition, i.e. any EVI GF is automatically an EDE GF. The EDE definition is easier to get existence, and the EVI definition is used to get uniqueness results.
