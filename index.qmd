@@ -6,7 +6,8 @@ title: "Optimal Transport Wiki"
 
 **Welcome to the Optimal Transport Wiki!**
 
-Here is a list of [New article ideas](NewArticleIdeas.qmd).
+Here is a list of [new article ideas](NewArticleIdeas.qmd).
+Here is a list of [suggestions of articles to revise](ArticlesToRevise.qmd)
 
 Contact Katy Craig if you would like to contribute to this wiki.
 
@@ -62,7 +63,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Fenchel-Moreau and Primal/Dual Optimization Problems](https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems)
 -   [Fenchel-Rockafellar and Linear Programming](https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming)
 -   [The Moreau-Yosida Regularization](https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization)
--   [Gradient flows in Hilbert spaces](Gradient%20flows%20in%20Hilbert%20spaces)
+-   [Gradient flows in Hilbert spaces](https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces)
 -   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
 - Gaussian Measures - Connor Marrs
