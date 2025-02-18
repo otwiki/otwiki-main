@@ -1,0 +1,127 @@
+---
+title: "Wasserstein-like Metrics on Graphs"
+bibliography: bibliography.bibtex
+---
+
+# Motivation
+
+On Euclidean space, it is known that the solution to the heat equation can be viewed as a gradient flow.
+In other words, consider the heat equation
+    $$ \begin{cases} 
+          \partial_t u(t, x) = \Delta u(t, x) \\
+          u(0,\cdot)=u_0(\cdot) . \\  
+       \end{cases} 
+    $$
+We construct the energy functional $\mathcal{F}:L^2(\mathbb{R}^d) \rightarrow \mathbb{R}$, given by 
+$$ \mathcal{F}(f)=\int_{\mathbb{R}^d}f(x)\ln(f(x))dx . $$
+Consider the metric space $(P_2(\mathbb{R}^d), W_2)$, where $W_2$ denotes the 2-Wasserstein metric, and 
+$$ P_2(\mathbb{R}^d) = \left \{ \mu \in P(\mathbb{R}^d) : \int_{\mathbb{R}^d} |x|^2 d \mu(x) < \infty \right \} . $$
+This is a geodesic space, so the operator $\nabla_{W_2}$ is well-defined.
+Based on the seminal work of Jordan, Kinderlehrer and Otto in [@JKO], we know that the solution to the heat equation, $u(t, x)$, satisfies
+$$
+    \partial_t u(t, x) = -\nabla_{W_2}\mathcal{F}(u(t,x)) .
+$$ {#eq-grad-flows}
+This result has been extended to non-Euclidean base spaces.
+In other words, in many instances, we replace $\mathbb{R}^d$ with a more abstract space (e.g. a Riemannian manifold).
+Then, we develop an analogue to $W_2$ so that @eq-grad-flows still holds.
+In this article, we will replace $\mathbb{R}^d$ with a finite directed graph $G$, and then construct an analogue to the 2-Wasserstein metric so that heat flow is the gradient flow of the entropy.
+
+# Setting: Graphs and Markov Chains
+
+Consider a complete finite weighted graph $G$ with nodes $X = \{x_1, \ldots, x_n \}$.
+Let $K = \{ k_{ij} \}$ contain the edge weight from $x_i$ to $x_j$.
+By a slight abuse of notation, we will define $K(x_i, y_j) = k_{ij}$.
+We may view our graph as a continuous-time Markov chain with states $\{ x_1, \ldots, x_n \}$.
+Then, we let $Q = K - I$ be the transition matrix associated with our Markov chain.
+The associated continuous time semigroup is given by 
+$$ H(t) = e^{tQ} . $$
+We will assume that 
+$$ k_{ij} \geq 0 \; \forall i, j, \; \sum \limits_{j = 1}^n k_{ij} = 1 \; \forall i . $$
+We will further assume that $K$ is irreducible, and hence has a unique steady state $\pi$, where $\pi = \pi K$.
+By elementary Markov chain theory, we know that $\pi$ is strictly positive.
+Consider the set 
+$$ P(X) = \left \{ \rho: X \rightarrow \mathbb{R} : \rho(x) \geq 0 \; \forall x \in X : \sum \limits_{x \in X} \rho(x)\pi(x) = 1 \right \} . $$
+Intuitively, $P(X)$ can be thought of as the set of all probability density functions on $X$; for each $\rho \in P(X)$, there is a corresponding measure $\mu$ on $X$, where
+$$ \mu(A) = \sum \limits_{x \in A} \rho(x) \pi(x) \; \forall A \subseteq X . $$
+
+# A New Metric on $P(X)$
+
+Let $\theta: \mathbb{R}_+ \times \mathbb{R}_+ \rightarrow \mathbb{R}_+$ equal the logarithmic mean, i.e.
+$$ \theta(s, t) = \begin{cases}
+    s & s = t \\
+    \frac{s - t}{\ln(s) - \ln(t)} & \text{otherwise}.
+\end{cases}$$
+Then, we define $\rho(x, y) = \theta(\rho(x), \rho(y))$.
+For $\rho_0, \rho_1 \in P(S)$, we define
+$$ W(\rho_0, \rho_1)^2 = \inf \limits_{\rho, \psi} \left \{ \frac{1}{2} \int_0^1 \sum \limits_{x, y \in X} \left ( \psi_t(x) - \psi_t(y)\right )^2 K(x, y) \rho_t(x, y) \pi(x) dt \right \} , $$
+where the infimum runs over all piecewise $C^1$ curves $\rho:[0, 1] \rightarrow P(X)$ and all measurable functions $\psi:[0, 1] \rightarrow \mathbb{R}^X$ satisfying for a.e. $t \in [0, 1]$,
+$$ \begin{cases}
+    \frac{d}{dt} \rho_t(x) + \sum \limits_{y \in X}  ( \psi_t(x) - \psi_t(y) ) K(x, y) \rho_t(x, y) = 0 & \forall x \in X \\
+    \rho(0) = \rho_0, \rho(1) = \rho_1 . 
+\end{cases} $$
+Readers who are familiar with the Benamou-Brenier formula will note the similarity between this definition and that formula.
+We have the following:
+
+:::{#thm-1}
+The following assertions hold: 
+
+1. $W$ defines a pseudo-metric on $P(X)$.
+2. $W(\rho_0, \rho_1) < \infty$ for all $\rho_0, \rho_1 \in P(X)$.
+3. $W$ metrises the topology of weak convergence. 
+:::
+
+:::{#thm-2}
+Let $H(\rho) = \sum \limits_{x \in X} \pi(x) \rho(x) \ln(\rho(x))$ be the entropy functional.
+For $\rho \in P(X)$ and $t \geq 0$, set $\rho_t = e^{t(K - I)}$.
+Then the gradient flow equation 
+$$ D_t \rho = - \nabla H(\rho_t) $$
+holds for all $t > 0$.
+:::
+
+Proofs for these theorems can be found in [@Maas2011].
+
+# The Two Point Space
+
+Consider the case $X = (a, b)$,
+$$ K = \begin{bmatrix}
+    1 - p & p \\
+    q & 1 - q
+\end{bmatrix}. $$
+If we define $\rho^{\beta} = \frac{1}{2} \left ( (1 - \beta)\delta_a + (1 + \beta) \delta_b \right )$, then
+$$ P(X) = \left \{ \rho^{\beta} : \beta \in [-1, 1] \right \} . $$
+In this special case, our metric $W$ reduces to 
+$$ W(\rho^{\alpha}, \rho^{\beta}) =  \int_{\alpha}^{\beta} \frac{1}{\sqrt{2\theta(q(1 + r), p(1 - r))}} dr , $$
+where $\alpha \leq \beta$.
+Notice that if we define
+$$ \varphi(\beta) = \int_{0}^{\beta}  \frac{1}{\sqrt{2 \theta(q(1 + r), p(1 - r))}}dr , $$
+then for any $\alpha, \beta \in [-1, 1]$,
+$$ W(\rho^{\alpha}, \rho^{\beta}) = |\varphi(\alpha) - \varphi(\beta)| . $$
+As a result, the function $J: P(X) \rightarrow [-1, 1]$,
+$$ J(\rho^{\beta}) = \varphi(\beta) $$
+defines an isometry from $(P(X), W)$ to $([-1, 1], |\cdot|)$.
+We can exploit this isometry when identifying constant-speed geodesics in $(P(X), W)$.
+
+:::{#thm-3}
+Choose $\alpha, \beta \in [-1, 1]$.
+There exists a unique constant speed geodesic $\{ p^{\gamma(t)} \}_{t \in [0, 1]}$, where $\gamma \in C^1([0, 1], \mathbb{R})$ and 
+$$ \begin{cases}
+    \gamma'(t) = \omega \sqrt{ 2 \theta(q(1 + \gamma(t)), p(1 - \gamma(t))) } \\
+    \gamma(0) = \alpha \\
+    \gamma(1) = \beta, 
+\end{cases} $$
+where $\omega = sgn(\beta - \alpha) W(\rho^{\alpha}, \rho^{\beta})$.
+:::
+
+::: {.proof}
+Since $J$ is an isometry, existence and uniqueness of $\gamma(t)$ immediately follows.
+To show $\rho^{\gamma(t)}$ is a constant speed geodesic, let $\gamma$ be the curve described above.
+Choose $0 \leq s < t \leq 1$, and note
+\begin{align*}
+    W \left (\rho^{\gamma(t)}, \rho^{\gamma(s)} \right )
+    & = |\varphi(\gamma(t)) - \varphi(\gamma(s))| \\
+    & = \left | \int_s^t \varphi'(\gamma(r)) \cdot \gamma'(r) dr \right | \\
+    & = \left | \int_s^t  \frac{1}{\sqrt{2 \theta(q(1 + \gamma(t)), p(1 - \gamma(t)))}} \cdot \omega \sqrt{ 2 \theta(p(1 - \gamma(t)), q(1 + \gamma(t))) } dr \right | \\
+    & = |t - s| W\left(\rho^{\alpha}, \rho^{\beta}\right) .
+\end{align*}
+::: 
+
