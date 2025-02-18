@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Charles Kulick">
+
+<title>Knothe Maps and Conditional Sampling – OT WIKI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">OT WIKI</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Knothe Maps and Conditional Sampling</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Charles Kulick </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A core problem of modern sampling is the approximation of high complexity distributions on <span class="math inline">\(\mathbb{R}^d\)</span>. If <span class="math inline">\(\mu \in \mathcal{P}(\mathbb{R}^d)\)</span> is some distribution of interest, and <span class="math inline">\(\nu \in \mathcal{P}(\mathbb{R}^d)\)</span> is an easily computable reference distribution (typically a Gaussian), a transport map <span class="math inline">\(t : \mathbb{R}^d \rightarrow \mathbb{R}^d\)</span> satisfying <span class="math inline">\(\nu = t \# \mu\)</span> provides a link between distributions that can potentially allow for easier density estimation <span class="citation" data-cites="Tabak_2013">(<a href="#ref-Tabak_2013" role="doc-biblioref">Tabak and Turner 2013</a>)</span>, inference <span class="citation" data-cites="Moselhy_2012">(<a href="#ref-Moselhy_2012" role="doc-biblioref">El Moselhy and Marzouk 2012</a>)</span>, and generative modeling, particularly exhibited in <a href="https://otwiki.github.io/otwiki-main/WGAN.html">WGANs</a>.</p>
+<p><a href="https://en.wikipedia.org/wiki/Transportation_theory_(mathematics)">Optimal transport</a> provides a widely used approach for computing such maps <span class="math inline">\(t\)</span> through minimization of a relevant cost. However, the resulting map may not be amenable to fast computation, which is vitally important in some modern applications. Knothe maps provide a closely connected approach with certain benefits for a class of sampling problems. We focus on the efficient computation of Knothe maps, following the development of a recent algorithmic approach <span class="citation" data-cites="Baptista_2023">(<a href="#ref-Baptista_2023" role="doc-biblioref">Baptista, Marzouk, and Zahm 2023</a>)</span>.</p>
+<section id="knothe-rosenblatt-maps" class="level1">
+<h1>Knothe-Rosenblatt Maps</h1>
+<section id="definition" class="level2">
+<h2 class="anchored" data-anchor-id="definition">Definition</h2>
+<p>A Knothe-Rosenblatt map <span class="citation" data-cites="Davis_2011">(<a href="#ref-Davis_2011" role="doc-biblioref">Davis, Lii, and Politis 2011</a>)</span> is a transport map <span class="math inline">\(S : \mathbb{R}^d \rightarrow \mathbb{R}^d\)</span> that decomposes component-wise into the form:</p>
+<p><span class="math display">\[
+S(\mathbf{x}) = \begin{bmatrix} S_1(x_1) \\ S_2(x_1, x_2) \\ \vdots \\ S_d(x_1, \dots, x_d)\\ \end{bmatrix}
+\]</span> Each component function <span class="math inline">\(S_i\)</span> may only depend on <span class="math inline">\(\mathbf{x}_{\leq i} = (x_1, \dots, x_i)\)</span> and must be increasing with respect to <span class="math inline">\(x_i\)</span>. The triangular structure of Knothe-Rosenblatt maps allows for efficient computation of both the inverse and the Jacobian, improving computational speed, while the increasing condition ensures <span class="math inline">\(S_i\)</span> is an increasing transport map between the marginals <span class="math inline">\(\mu(x_i \vert \mathbf{x}_{&lt;i})\)</span> and <span class="math inline">\(\nu(x_i \vert \mathbf{x}_{&lt;i})\)</span>, which allows for direct connection with conditional sampling.</p>
+<p>In particular, for Jacobian computation, we have the explicit formula:</p>
+<p><span class="math display">\[
+\vert \det \nabla S(\mathbf{x}) \vert = \prod_{i=1}^d \partial_i S_i(\mathbf{x}_{\leq i})
+\]</span> Therefore, computation of the determinant of the Jacobian relies upon fast evaluation of partials for the increasing part of each component function, which is relatively quick to compute.</p>
+<p>If <span class="math inline">\(\mu \in \mathcal{P}(\mathbb{R}^d)\)</span> is absolutely continuous with respect to <span class="math inline">\(\nu \in \mathcal{P}(\mathbb{R}^d)\)</span> with <span class="math inline">\(\nu\)</span> Gaussian, the Knothe-Rosenblatt map exists and is unique almost everywhere. <span class="citation" data-cites="Bogachev_2023">(<a href="#ref-Bogachev_2023" role="doc-biblioref">Bogachev, Kolesnikov, and Medvedev 2005</a>)</span></p>
+</section>
+<section id="convergence-properties" class="level2">
+<h2 class="anchored" data-anchor-id="convergence-properties">Convergence Properties</h2>
+<p>Our eventual goal is to learn a close approximation of the Knothe-Rosenblatt map. Thus it is beneficial to examine convergence of maps <span class="math inline">\(S\)</span> to the unique Knothe-Rosenblatt map <span class="math inline">\(S_{KR}\)</span>, assuming <span class="math inline">\(\nu\)</span> is a standard Gaussian on <span class="math inline">\(\mathbb{R}^d\)</span>.</p>
+<p><a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">KL divergence</a> is an extremely popular statistical measure for quantification of the distance between two probability distributions in generative modeling. For the Knothe-Rosenblatt map, any triangular map <span class="math inline">\(S\)</span> converges to <span class="math inline">\(S_{KR}\)</span> in <span class="math inline">\(L^2_{\mu}\)</span> when <span class="math inline">\(\mathcal{D}_{KL}(\mu \vert \vert S \# \nu) \rightarrow 0\)</span>.</p>
+<p>Define the functional:</p>
+<p><span class="math display">\[
+\mathcal{J}_i(s) = \int \left( \frac 1 2 s(\mathbf{x}_{\leq i})^2 - \log \vert \partial_i s(\mathbf{x}_{\leq i}) \vert  \right) d\mu
+\]</span> By decomposition of the Gaussian, one can write:</p>
+<p><span class="math display">\[
+\mathcal{D}_{KL}(\mu \vert \vert S \# \nu) = \sum_{i=1}^d \mathcal{J}_i(S_i) - \mathcal{J}_i(S_{KR,i})
+\]</span> For a given sample of data <span class="math inline">\(\{\mathbf{X}^k\}_{k=1}^n\)</span> from <span class="math inline">\(\mu\)</span>, minimization of the above leads to a maximum likelihood estimator <span class="math inline">\(\hat{S}\)</span> for <span class="math inline">\(S_{KR}\)</span>:</p>
+<p><span class="math display">\[
+\hat{S} = \arg \max \sum_{k=1}^n \log S \# \nu (\mathbf{X}^k)
+\]</span></p>
+<p>where <span class="math inline">\(S\)</span> are maximized over the space of triangular maps with <span class="math inline">\(\partial_i S_i &gt; 0\)</span> for all <span class="math inline">\(i\)</span>. This generates a convex optimization problem that can be parallelized in each component, as each <span class="math inline">\(\mathcal{J}_i\)</span> functional is independent.</p>
+</section>
+</section>
+<section id="learning-a-knothe-rosenblatt-map" class="level1">
+<h1>Learning a Knothe-Rosenblatt Map</h1>
+<section id="rectification-operator" class="level2">
+<h2 class="anchored" data-anchor-id="rectification-operator">Rectification Operator</h2>
+<p>The monotone condition on <span class="math inline">\(S\)</span> is necessary for the formulation of triangular maps, but is inconvenient for learning, as most functional bases do not conveniently allow for this constraint to be satisfied. To solve this issue and allow for the use of standard functional bases, a rectifier functional <span class="math inline">\(\mathcal{R}\)</span> must be introduced, defined component-wise as the following:</p>
+<p><span class="math display">\[
+\mathcal{R}_i(f)(\mathbf{x}_{\leq i}) = f(\mathbf{x}_{&lt;i},0) + \int_0^{x_i} g\left(\partial_i f(\mathbf{x}_{&lt;i}, t)\right) dt
+\]</span></p>
+<p>If <span class="math inline">\(g: \mathbb{R} \rightarrow \mathbb{R}^+\)</span> is a positive function, this transforms any <span class="math inline">\(f\)</span> of sufficient smoothness into a function satisfying the increasing condition in the last variable component-wise.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./rectifier_animation.gif" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>An example of the action of the rectifier on a class of functions. This utilizes <span class="math inline">\(g(x) = \log(1 + \exp(x))\)</span>. As the function changes, corresponding changes to rectifier value are evident.</figcaption>
+</figure>
+</div>
+<p>Then the core component-wise learning of a Knothe-Rosenblatt map relies on the optimization problem:</p>
+<p><span class="math display">\[
+\min_{f\in V_i} \mathcal{J}_i(\mathcal{R}_i(f))
+\]</span> where <span class="math inline">\(V_i\)</span> is a suitable linear space of sufficiently smooth functions.</p>
+<p>Under some additional assumptions on the choice of <span class="math inline">\(g\)</span>, and assuming the tails of the target distribution <span class="math inline">\(\mu\)</span> are Gaussian, there exists a unique global minimizer for the optimization problem using this rectifier, and the optimization landscape is relatively favorable. For a full treatment of the theoretical argument, refer to Section 3 of <span class="citation" data-cites="Baptista_2023">(<a href="#ref-Baptista_2023" role="doc-biblioref">Baptista, Marzouk, and Zahm 2023</a>)</span>.</p>
+</section>
+<section id="functional-basis-expansion" class="level2">
+<h2 class="anchored" data-anchor-id="functional-basis-expansion">Functional Basis Expansion</h2>
+<p>For each <span class="math inline">\(i\)</span>, we approximate <span class="math inline">\(f\)</span> by a particular chosen basis for a suitable function space. In particular, we represent:</p>
+<p><span class="math display">\[
+f(\mathbf{x}_{\leq i}) = \sum_{\alpha \in \Lambda} c_{\alpha} \psi_{\alpha}(\mathbf{x}_{\leq i})
+\]</span> In the above, <span class="math inline">\(\Lambda\)</span> forms the set of multi-indices <span class="math inline">\(\alpha = (\alpha_1, \alpha_2, \dots, \alpha_i) \in \mathbb{N}^i\)</span> with <span class="math inline">\(\vert\Lambda \vert = m\)</span>, with <span class="math inline">\(c_\alpha \in \mathbb{R}\)</span> coefficients and <span class="math inline">\(\psi_{\alpha} : \mathbb{R}^i \rightarrow \mathbb{R}\)</span> basis functions for <span class="math inline">\(V_i\)</span>.</p>
+<p>The basis functions <span class="math inline">\(\psi_{\alpha}\)</span> are constructed as products of single variable functions:</p>
+<p><span class="math display">\[
+\psi_{\alpha}(\mathbf{x}_{\leq i}) = \prod_{j=1}^i \psi^j_{\alpha_j}(x_j)
+\]</span></p>
+<p>Suitable choices for functional spaces include <a href="https://en.wikipedia.org/wiki/Hermite_polynomials">Hermite polynomials</a> and <a href="https://en.wikipedia.org/wiki/Ricker_wavelet">Ricker wavelets</a>, which provide expressive one- or two-parameter families of functions with well-known approximation properties that are suitable to many transport problems.</p>
+</section>
+<section id="multi-index-set-construction" class="level2">
+<h2 class="anchored" data-anchor-id="multi-index-set-construction">Multi-Index Set Construction</h2>
+<p>Note that the richness of the functional basis is directly tied to the size <span class="math inline">\(m\)</span> of the multi-index set <span class="math inline">\(\Lambda\)</span>. Thus controlling this size gives a natural method to learn several different hierarchical expansions at varying levels of complexity. However, choosing which components to spend this finite budget of complexity on is a nontrivial problem.</p>
+<p>Fortunately, a greedy algorithm is well suited to this task, as we have easily computable heuristics to inform each choice. In particular, we define <span class="math inline">\(\Lambda_0 = \emptyset\)</span> and iteratively update:</p>
+<p><span class="math display">\[
+\Lambda_{t+1} = \Lambda_t \cup \{\alpha_t^*\}
+\]</span> There are several necessary conditions for <span class="math inline">\(\alpha_t^*\)</span>. First, <span class="math inline">\(\alpha_t^* \notin \Lambda_t\)</span> must hold. Second, we wish for the basis approximation to add complexity in a orderly manner, rather than adding random basis functions of high degree when one of lower degree will suffice. Thus we constrain the set <span class="math inline">\(\Lambda_t\)</span> to be downward closed:</p>
+<p><span class="math display">\[
+\alpha \in \Lambda_t \text{ and } \alpha' \leq \alpha \implies \alpha' \in \Lambda_t
+\]</span> We next define the margin of the set <span class="math inline">\(\Lambda_t\)</span>. Let <span class="math inline">\(e_j\)</span> denote the <span class="math inline">\(j\)</span>-th canonical basis vector of <span class="math inline">\(\mathbb{N}^i\)</span>:</p>
+<p><span class="math display">\[
+\Lambda_t^M = \{\alpha \notin \Lambda_t : \exists j &gt; 0, \alpha - e_j \in \Lambda_t\}
+\]</span> Intuitively this means that the margin is any multi-index that is one shift away, in any direction, from the set <span class="math inline">\(\Lambda_t\)</span>. The reduced margin is stronger in that the multi-index must be one shift away not in one, but in every direction:</p>
+<p><span class="math display">\[
+\Lambda_t^{RM} = \{\alpha \notin \Lambda_t : \forall j &gt; 0, \alpha - e_j \in \Lambda_t\}
+\]</span> For our greedy algorithm, we add multi-indices via the following optimization procedure:</p>
+<p><span class="math display">\[
+\alpha_t^* \in \arg \max_{\alpha \in \Lambda_t^{RM}} \vert \nabla_{\alpha} \mathcal{J}_i(\mathcal{R}_i(f_i)) \vert
+\]</span></p>
+<p>That is, evaluate the derivative of the loss in the direction of each basis function under consideration, and choose to add the index with the largest derivative.</p>
+<p>Below we illustrate this entire process for an example multi-index set:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./reduced_margin_animation.gif" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>An example of the hierarchical building of the set <span class="math inline">\(\Lambda_t\)</span> over time. At each iteration, the derivative of the loss is evaluated for all reduced margin squares (orange), and the one with highest magnitude is selected (green) and added to the next level of the set <span class="math inline">\(\Lambda_{t+1}\)</span> (blue).</figcaption>
+</figure>
+</div>
+</section>
+<section id="adaptive-transport-map-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="adaptive-transport-map-algorithm">Adaptive Transport Map Algorithm</h2>
+<p>Using the above pieces, we can write the full algorithm for learning a map component <span class="math inline">\(S_i\)</span> approximating the Knothe-Rosenblatt map component <span class="math inline">\(S_{KR,i}\)</span>:</p>
+<p><strong>Algorithm 1 <span class="citation" data-cites="Baptista_2023">(<a href="#ref-Baptista_2023" role="doc-biblioref">Baptista, Marzouk, and Zahm 2023</a>)</span>: Estimate map component</strong> <span class="math inline">\(S_i\)</span></p>
+<p><strong>Input:</strong> Training sample <span class="math inline">\(\{X^k_{1:i}\}_{k=1}^{n}\)</span>, cardinality <span class="math inline">\(m\)</span> for <span class="math inline">\(\Lambda_t\)</span></p>
+<p><strong>Initialize:</strong> <span class="math inline">\(\Lambda_0 = \emptyset\)</span>, <span class="math inline">\(f_0 = 0\)</span></p>
+<p>for <span class="math inline">\(t = 0, \dots, m-1\)</span>:</p>
+<ul>
+<li><p>Construct the reduced margin: <span class="math inline">\(\Lambda_t^{RM}\)</span></p></li>
+<li><p>Select the new multi-index:</p></li>
+</ul>
+<p><span class="math display">\[
+\alpha_t^* \in \arg\max_{\alpha \in \Lambda_t^{RM}} |\nabla_{\alpha} \mathcal{J}_i(\mathcal{R}_i(f_t))|
+\]</span></p>
+<ul>
+<li><p>Update the active set: <span class="math inline">\(\Lambda_{t+1} = \Lambda_t \cup \{\alpha_t^*\}\)</span></p></li>
+<li><p>Update the approximation:</p></li>
+</ul>
+<p><span class="math display">\[
+f_{t+1} = \arg\min_{f \in \text{span}\{\psi_{\alpha} : \alpha \in \Lambda_{t+1}\}} \mathcal{J}_i(\mathcal{R}_i(f))
+\]</span></p>
+<p><strong>Output:</strong> <span class="math inline">\(\hat{S}_i = R_i(f_m)\)</span></p>
+<p>In practice, the value of <span class="math inline">\(m\)</span> can be considered a hyperparameter and optimized through cross-validation.</p>
+</section>
+<section id="algorithm-application" class="level2">
+<h2 class="anchored" data-anchor-id="algorithm-application">Algorithm Application</h2>
+<p>Matlab code for learning Knothe-Rosenblatt maps is available on <a href="https://github.com/baptistar/ATM">GitHub</a>. From this repository, quick replication and extension of experiments is possible. Below we showcase the standard sampling problem: given <span class="math inline">\(1000\)</span> points sampled from a true pdf, and using a reference measure that is standard Gaussian, approximate the true pdf by learning an approximation to the Knothe-Rosenblatt map.</p>
+<div class="grid">
+<div class="g-col-6" style="text-align: center;">
+<p><img src="true_pdf.png" class="img-fluid"> A total of <span class="math inline">\(1000\)</span> sampled points from the given true distribution.</p>
+</div>
+<div class="g-col-6" style="text-align: center;">
+<p><img src="approx_pdf.png" class="img-fluid"> The approximated distribution using the learned triangular map with Hermite polynomial basis.</p>
+</div>
+</div>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Baptista_2023" class="csl-entry" role="listitem">
+Baptista, Ricardo, Youssef Marzouk, and Olivier Zahm. 2023. <span>“On the Representation and Learning of Monotone Triangular Transport Maps.”</span> <em>Foundations of Computational Mathematics</em> 24 (6): 2063–2108. <a href="https://doi.org/10.1007/s10208-023-09630-x">https://doi.org/10.1007/s10208-023-09630-x</a>.
+</div>
+<div id="ref-Bogachev_2023" class="csl-entry" role="listitem">
+Bogachev, V. I., A. V. Kolesnikov, and K. V. Medvedev. 2005. <span>“Triangular Transformations of Measures.”</span> <em>Sb. Math</em> 196: 309–35. <a href="https://doi.org/10.1070/SM2005v196n03ABEH000882">https://doi.org/10.1070/SM2005v196n03ABEH000882</a>.
+</div>
+<div id="ref-Davis_2011" class="csl-entry" role="listitem">
+Davis, Richard A., Keh-Shin Lii, and Dimitris N. Politis. 2011. <span>“Remarks on a Multivariate Transformation.”</span> In <em>Selected Works of Murray Rosenblatt</em>, edited by Richard A. Davis, Keh-Shin Lii, and Dimitris N. Politis, 49–51. New York, NY: Springer New York. <a href="https://doi.org/10.1007/978-1-4419-8339-8_8">https://doi.org/10.1007/978-1-4419-8339-8_8</a>.
+</div>
+<div id="ref-Moselhy_2012" class="csl-entry" role="listitem">
+El Moselhy, Tarek A., and Youssef M. Marzouk. 2012. <span>“Bayesian Inference with Optimal Maps.”</span> <em>Journal of Computational Physics</em> 231 (23): 7815–50. <a href="https://doi.org/10.1016/j.jcp.2012.07.022">https://doi.org/10.1016/j.jcp.2012.07.022</a>.
+</div>
+<div id="ref-Tabak_2013" class="csl-entry" role="listitem">
+Tabak, E. G., and Cristina V. Turner. 2013. <span>“A Family of Nonparametric Density Estimation Algorithms.”</span> <em>Communications on Pure and Applied Mathematics</em> 66 (2): 145–64. <a href="https://doi.org/10.1002/cpa.21423">https://doi.org/10.1002/cpa.21423</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/otwiki\.github\.io\/otwiki-main\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
