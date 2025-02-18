@@ -1,6 +1,6 @@
 ---
 title: "Dynamic Optimal Transport"
-bibliography: library.bib
+bibliography: bibliography.bibtex
 author: Max Emerick
 ---
 
@@ -8,27 +8,21 @@ The dynamic formulation of optimal transport is one of the four main formulation
 
 Minimizing over curves (as opposed to maps or plans) has at least two major advantages. First, it allows for continuous interpolation between measures in the Wasserstein space. This is desirable in several applications.
 
-Second, minimization over curves generalizes to many settings where transport maps or plans may not be well defined or may be difficult to define. This allows for the construction of optimal transport-based metrics in nonclassical settings, such as [Optimal Transport on Graphs](add_link) or  [Unbalanced Optimal Transport](https://arxiv.org/abs/1508.05216).
+Second, minimization over curves generalizes to many settings where transport maps or plans may not be well defined or may be difficult to define. This allows for the construction of optimal transport-based metrics in nonclassical settings, such as [Optimal Transport on Graphs](add_link) or [Unbalanced Optimal Transport](https://arxiv.org/abs/1508.05216).
 
 The original formulation of the dynamic optimal transport problem is due to [@Benamou2000]. However, a somewhat different formulation is presented in this article following [@Ambrosio2021] which is based on integrals defined on the path space of the underlying metric space. We will compare these two approaches later in this article.
 
-
 ## Preliminaries
 
-Let $(X,d)$ be a metric space. Recall that a curve $\gamma: [a,b] \to X$ is said to be absolutely continuous if there exists $g \in L^1(a,b)$ such that
-$$
+Let $(X,d)$ be a metric space. Recall that a curve $\gamma: [a,b] \to X$ is said to be absolutely continuous if there exists $g \in L^1(a,b)$ such that $$
 d(\gamma(r),\gamma(s)) ~\leq~ \int_r^s g(t) \, dt
-$$
-for all $a \leq r \leq s \leq b$. The space of absolutely continuous curves from $[a,b]$ to $X$ is denoted $\text{AC}([a,b],X)$.
+$$ for all $a \leq r \leq s \leq b$. The space of absolutely continuous curves from $[a,b]$ to $X$ is denoted $\text{AC}([a,b],X)$.
 
-The metric dertivative of $\gamma \in \text{AC}([a,b],X)$ is defined as
-$$
+The metric dertivative of $\gamma \in \text{AC}([a,b],X)$ is defined as $$
 |\gamma'|(t) ~:=~ \lim_{h \to 0} \frac{d(\gamma(t),\gamma(t+h))}{|h|} .
-$$
-The metric derivative formalizes the notion of "speed" of the curve $\gamma$, and is defined for a.e.-$t$. The metric derivative is the minimal $g$ that can be chosen in the definition of absolute continuity above.
+$$ The metric derivative formalizes the notion of "speed" of the curve $\gamma$, and is defined for a.e.-$t$. The metric derivative is the minimal $g$ that can be chosen in the definition of absolute continuity above.
 
-The length of $\gamma$ is then defined as
-$$
+The length of $\gamma$ is then defined as $$
 \ell(\gamma) ~:=~ \int_a^b |\gamma'|(t) \, dt .
 $$
 
@@ -40,11 +34,9 @@ A metric space $X$ is said to be geodesic if for all $x,y \in X$ there exists $\
 
 See [Analysis in Metric Spaces](add_link) for a review of these ideas.
 
-Generalizing the notion of length, the ($p$-) action of a curve $\gamma \in \text{AC}([0,1],X)$ is defined as
-$$
+Generalizing the notion of length, the ($p$-) action of a curve $\gamma \in \text{AC}([0,1],X)$ is defined as $$
 A_p(\gamma) ~:=~ \int_0^1 |\gamma'|^p (t) \, dt .
-$$
-Note that this quantity is possibly infinite. This definition can be extended to all of $C([0,1],X)$ by setting $A_p(\gamma) = + \infty$ if $\gamma \in C([0,1],X) \backslash AC([0,1],X)$.
+$$ Note that this quantity is possibly infinite. This definition can be extended to all of $C([0,1],X)$ by setting $A_p(\gamma) = + \infty$ if $\gamma \in C([0,1],X) \backslash AC([0,1],X)$.
 
 Geodesics can then be characterized by a variational principle involving the action.
 
@@ -52,28 +44,21 @@ Geodesics can then be characterized by a variational principle involving the act
 
 For $\gamma \in \text{AC}([0,1],X)$ and $1 \leq p < \infty$, $\gamma \in \text{Geo}(X)$ if and only if $A_p(\gamma) = d^p(\gamma(0),\gamma(1))$.
 
-
 #### Proof.
 
-The forward direction is immediate, since $\gamma \in \text{Geo}(X)$ means that $|\gamma'| \equiv \ell(\gamma) = d(\gamma(0),\gamma(1))$ by definition. The reverse direction follows from Jensen's inequality, since
-$$
+The forward direction is immediate, since $\gamma \in \text{Geo}(X)$ means that $|\gamma'| \equiv \ell(\gamma) = d(\gamma(0),\gamma(1))$ by definition. The reverse direction follows from Jensen's inequality, since $$
 A_p(\gamma) ~:=~ \int_0^1 |\gamma'|^p(t) \, dt ~\geq~ \left( \int_0^1 |\gamma'|(t) \, dt \right)^p ~=:~ \ell^p(\gamma) ~\geq~ d^p(\gamma(0),\gamma(1)) ,
-$$
-with equality being achieved if and only if $\gamma \in \text{Geo}(X)$. $\square$ 
+$$ with equality being achieved if and only if $\gamma \in \text{Geo}(X)$. $\square$
 
 The space $C([0,1],X)$ is termed the path space over $X$. The dynamic formulation of optimal transport is posed in terms of probability measures on this path space, i.e., in terms of $\eta \in P(C([0,1],X))$.
 
 The evaluation map $e_t: C([0,1],X) \to X$ is defined by $e_t(\gamma) := \gamma(t)$. The evaluation map acts on probability measures on the path space by pushforward $(e_t)_\# : P(C([0,1],X)) \to P(X)$. Thus $(e_t)_\# \eta$ is itself a path in $P(X)$.
 
-
 ## The Dynamic Optimal Transport Problem
 
-The dynamic optimal transport problem is stated as follows. Given probability measures $\mu, \nu \in P(X)$, solve
-$$
+The dynamic optimal transport problem is stated as follows. Given probability measures $\mu, \nu \in P(X)$, solve $$
 \min_\eta ~ \int_{C([0,1],X)} A_p(\gamma) \, d \eta(\gamma) \qquad \text{s.t.} \qquad \eta \in P(C([0,1],X)), ~~(e_0)_\# \eta = \mu , ~~ (e_1)_\# \eta = \nu .
-$$
-An admissible $\eta$ is termed a dynamic transport plan and an optimal $\eta$ is termed an optimal dynamic tranport plan. This terminology is justified by the fact that $\eta$ is an admissible dynamic transport plan if and only if $(e_0,e_1)_\# \eta$ is an admissible tranport plan. A dynamic transport plan $\eta$, however, encodes not only information about which particles in $\mu$ are transported to which particles in $\nu$, but about which trajectories these particles take during the transport process.
-
+$$ An admissible $\eta$ is termed a dynamic transport plan and an optimal $\eta$ is termed an optimal dynamic tranport plan. This terminology is justified by the fact that $\eta$ is an admissible dynamic transport plan if and only if $(e_0,e_1)_\# \eta$ is an admissible tranport plan. A dynamic transport plan $\eta$, however, encodes not only information about which particles in $\mu$ are transported to which particles in $\nu$, but about which trajectories these particles take during the transport process.
 
 #### Theorem.
 
@@ -81,59 +66,43 @@ If $(X,d)$ is a Polish and geodesic metric space, then the minimum attained for 
 
 #### Proof.
 
-If $\eta$ is an admissible dynamic transport plan, then
-$$
+If $\eta$ is an admissible dynamic transport plan, then $$
 \begin{align}
 \int_{C([0,1],X)} A_p(\gamma) \, d\eta(\gamma) ~&\geq~ \int_{C([0,1],X)} d^p(\gamma(0),\gamma(1)) \, d\eta(\gamma) \\
 ~&=~ \int_{X \times X} d^p(x,y) \, d(e_0,e_1)_\# \eta(x,y) \\
 ~&\geq~ \min_\pi \mathbb{K}_p(\pi) .
 \end{align}
-$$
-To prove the converse, start from an optimal transport plan $\pi$ and for each $(x,y) \in X \times X$, choose $\gamma_{x,y} \in \text{Geo}(X)$ such that $\gamma_{x,y}(0) = x$ and $\gamma_{x,y}(1) = y$. Define the map $\Gamma: X \times X \to \text{Geo}(X)$ by $\Gamma(x,y) = \gamma_{x,y}$ and the measure $\eta := \Gamma_\# \pi \in P(C([0,1],X))$. By construction, $\eta$ is supported in $\text{Geo}(X)$. Thus
-$$
+$$ To prove the converse, start from an optimal transport plan $\pi$ and for each $(x,y) \in X \times X$, choose $\gamma_{x,y} \in \text{Geo}(X)$ such that $\gamma_{x,y}(0) = x$ and $\gamma_{x,y}(1) = y$. Define the map $\Gamma: X \times X \to \text{Geo}(X)$ by $\Gamma(x,y) = \gamma_{x,y}$ and the measure $\eta := \Gamma_\# \pi \in P(C([0,1],X))$. By construction, $\eta$ is supported in $\text{Geo}(X)$. Thus $$
 \begin{align}
 \min_\pi \mathbb{K}_p(\gamma) ~&=~ \int_{X \times X} d^p(x,y) \, d\pi(x,y) \\
 ~&=~ \int_{C([0,1],X)} d^p(\gamma(0),\gamma(1)) \, d\eta(\gamma) \\
 ~&=~ \int_{C([0,1],X)} A_p(\gamma) \, d\eta(\gamma)
 \end{align}
-$$
-by the previous lemma, and equality is achieved.
+$$ by the previous lemma, and equality is achieved.
 
 Lastly, observe that $\eta$ is optimal if and only if equality is achieved above, which happens if and only if $\gamma$ is supported in $\text{Geo}(X)$ and $(e_0,e_1)_\# \eta$ is optimal for the Kantorovich problem. $\square$
 
-
 ## Comparison With Original Formulation
 
-The original formulation of dynamic optimal transport due to [@Benamou2000] is posed as follows. Given probability measures $\mu, \nu \in P(X)$, solve
-$$
+The original formulation of dynamic optimal transport due to [@Benamou2000] is posed as follows. Given probability measures $\mu, \nu \in P(X)$, solve $$
 \begin{align}
 \min_{\rho,v} ~ \int_0^1 \int_X \| v(t,x) \|^p \, d \rho(t,x) \, dt \qquad \text{s.t.} \qquad &\partial_t \rho(t,x) = - \nabla \cdot (\rho(t,x) v(t,x)), \\
 ~~ &\rho(0) = \mu, ~~ \rho(1) = \nu .
 \end{align}
-$$
-Here, $\rho$ is a time-varying probability measure on $X$ and $v$ is a time-varying vector field which acts to transport $\rho$. Individual particles are considered to be transported according to $x'(t) = v(x,t)$, and thus the continuity equation $\partial_t \rho = - \nabla \cdot (\rho v)$ describes how the density $\rho$ evolves under the action of $v$. (Note the abuse of notation here: the symbol $\rho$ is used both for the measure and for its density function.)
+$$ Here, $\rho$ is a time-varying probability measure on $X$ and $v$ is a time-varying vector field which acts to transport $\rho$. Individual particles are considered to be transported according to $x'(t) = v(x,t)$, and thus the continuity equation $\partial_t \rho = - \nabla \cdot (\rho v)$ describes how the density $\rho$ evolves under the action of $v$. (Note the abuse of notation here: the symbol $\rho$ is used both for the measure and for its density function.)
 
 In order to interpret the statement of this problem appropriately, $X$ needs to be a subset of Euclidean space (or some Riemannian manifold) and the continuity equation must be understood in some appropriate weak sense.
 
 See [The Continuity Equation and Benamou Brenier Formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula) and [Geodesics and Generalized Geodesics](https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics) for more on these ideas.
 
-If $\mu$ has a density function, then particles start from unique locations, and we can write $\phi(t,x)$ to denote the location (at time $t$) of the particle which started from location $x$ at time $0$. It then holds that
-$$
+If $\mu$ has a density function, then particles start from unique locations, and we can write $\phi(t,x)$ to denote the location (at time $t$) of the particle which started from location $x$ at time $0$. It then holds that $$
 \rho(t) ~=~ (\phi(t,\cdot))_\# \rho(0) ~=~ (\phi(t,\cdot))_\# \mu .
-$$
-Substituting this into the objective function and using properties of the pushforward, the objective can be rewritten
-$$
+$$ Substituting this into the objective function and using properties of the pushforward, the objective can be rewritten $$
 ~=~ \int_0^1 \int_X \| v(t, \phi(t,x)) \|^p \, d \mu(x) \, dt .
-$$
-Recognizing the quantity $\| v(t,\phi(t,x)) \| = \| \tfrac{d}{dt}\phi(t,x) \|$ as the metric derivative of the trajectory $\phi(\cdot,x)$ and interchanging the order of integration, we obtain
-$$
+$$ Recognizing the quantity $\| v(t,\phi(t,x)) \| = \| \tfrac{d}{dt}\phi(t,x) \|$ as the metric derivative of the trajectory $\phi(\cdot,x)$ and interchanging the order of integration, we obtain $$
 ~=~ \int_X \int_0^1 |\phi'(\cdot,x)|^p(t) \, dt \, d\mu(x) ~=:~ \int_X A_p(\phi(\cdot,x)) \, d\mu(x) .
-$$
-Lastly, defining $\eta := \phi_\# \mu$ and letting $\gamma$ range over all possible paths from $[0,1]$ into $X$ gives
-$$
+$$ Lastly, defining $\eta := \phi_\# \mu$ and letting $\gamma$ range over all possible paths from $[0,1]$ into $X$ gives $$
 ~=~ \int_{C([0,1],X)} A_p(\gamma) \, d\eta(\gamma) ,
-$$
-thus recovering the formulation presented earlier.
+$$ thus recovering the formulation presented earlier.
 
 Therefore, when $X$ is a subset of Euclidean space (or a Riemannian manifold) and when $\mu$ has a density with respect to Lebesgue measure, the two formulations presented are equivalent. When $\mu$ does not have a density, the original formulation can be further weakened to maintain equivalence. However, when $X$ is a general metric space, only the earlier formulation in terms of integrals on the path space is valid.
-
