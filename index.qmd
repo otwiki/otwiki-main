@@ -18,7 +18,6 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Optimal Transport in One Dimension](https://www.otwiki.xyz/wiki/Optimal_Transport_in_One_Dimension) - will be revised by Yusen
 -   [Kantorovich Dual Problem (for general costs)](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs))
 -   [Kantorovich Dual Problem (for $c(x,y) = d(x,y)^2$ where $d$ is a metric)](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric))
-- Dynamic formulation of $W_p$ metric - Max Emerick
 -   [Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds](https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds)
 -   [1-Wasserstein metric and generalizations](https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations)
 -   [Optimal Transport and Ricci curvature](https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature)
@@ -31,7 +30,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 ### Variants of the optimal transport problem
 
--   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance)
+-   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance) - will be edited by Haosheng Zhou
 - [Martingale optimal transport: dynamic formulation] - Ka Lok Lam
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
 -   [Wasserstein-like Metrics on Graphs](WassersteinOnGraphs.qmd)
