@@ -34,7 +34,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance)
 - [Martingale optimal transport: dynamic formulation] - Ka Lok Lam
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing)
--   Wasserstein metrics on graphs - Claire
+-   [Wasserstein-like Metrics on Graphs](WassersteinOnGraphs.qmd)
 - Continuous time martingale OT and Skorohod Embedding - Qijin Shi
 
 ### Numerical methods for optimal transport
@@ -67,7 +67,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
 - Gaussian Measures - Connor Marrs
-- Analysis on metric spaces - Max Emerick
+- [Dynamic Optimal Transport](Dynamic_OT.qmd)
 -   [Gradient flows in metric spaces](GFMetricSpace.qmd)
 
 ### Applications of Optimal Transport
@@ -75,7 +75,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Machine Learning](https://www.otwiki.xyz/wiki/Machine_Learning)
 -   [Shallow neural networks as Wasserstein gradient flows](https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows)
 -   [Wasserstein Generative Adversarial Networks](WGAN.qmd)
--   Knothe maps and conditional sampling - Charles Kulick - [Baptista, Marzouk, Zahm 2023](https://link.springer.com/article/10.1007/s10208-023-09630-x)
+-   [Knothe Maps and Conditional Sampling](Knothe_Maps_Conditional_Sampling.qmd)
 
 ### Other
 
