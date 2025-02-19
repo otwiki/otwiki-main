@@ -191,7 +191,7 @@ window.Quarto = {
 </section>
 <section id="a-new-metric-on-px" class="level1">
 <h1>A New Metric on <span class="math inline">\(P(X)\)</span></h1>
-<p>Let <span class="math inline">\(\theta: \mathbb{R}_+ \times \mathbb{R}_+ \rightarrow \mathbb{R}_+\)</span> equal the logarithmic mean, i.e. <span class="math display">\[ \theta(s, t) = \begin{cases}
+<p>Let <span class="math inline">\(\theta: \mathbb{R}_+ \times \mathbb{R}_+ \rightarrow \mathbb{R}_+\)</span> equal the logarithmic mean, i.e.&nbsp;<span class="math display">\[ \theta(s, t) = \begin{cases}
     s &amp; s = t \\
     \frac{s - t}{\ln(s) - \ln(t)} &amp; \text{otherwise}.
 \end{cases}\]</span> Then, we define <span class="math inline">\(\rho(x, y) = \theta(\rho(x), \rho(y))\)</span>. For <span class="math inline">\(\rho_0, \rho_1 \in P(S)\)</span>, we define <span class="math display">\[ W(\rho_0, \rho_1)^2 = \inf \limits_{\rho, \psi} \left \{ \frac{1}{2} \int_0^1 \sum \limits_{x, y \in X} \left ( \psi_t(x) - \psi_t(y)\right )^2 K(x, y) \rho_t(x, y) \pi(x) dt \right \} , \]</span> where the infimum runs over all piecewise <span class="math inline">\(C^1\)</span> curves <span class="math inline">\(\rho:[0, 1] \rightarrow P(X)\)</span> and all measurable functions <span class="math inline">\(\psi:[0, 1] \rightarrow \mathbb{R}^X\)</span> satisfying for a.e. <span class="math inline">\(t \in [0, 1]\)</span>, <span class="math display">\[ \begin{cases}
