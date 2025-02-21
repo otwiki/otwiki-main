@@ -1,0 +1,113 @@
+---
+title: "Discrete Optimal Transport"
+bibliography: bibliography.bibtex
+---
+
+\usepackage{bbm}
+
+For a given space $X$, we call a measure $\alpha$ on $X$ a histogram if 
+$$ \alpha = \sum_{i=1}^{n} a_i \delta_{x_i} , $$
+where $(a_1, \ldots, a_n) \in \mathbb{R}_+^n$, $\sum \limits_{i = 1}^n a_i = 1$, and each $x_i \in X$.
+When the source measure $\mu$ and target measure $\nu$ are historgrams, the 
+[Monge problem](https://www.otwiki.xyz/wiki/Monge_Problem) and the [Kantorovich problem](https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html) 
+may be stated as linear programs [@Villani2003], and solved using classical methods [@Peyre].
+This insight may be used to approximate the Wasserstein distances between general measures, by first discretizing the source and target with a known level of accuracy
+(a difficult problem), then computing the cost between the discrete measures.
+
+
+# The Monge Problem
+
+Let $\alpha = \sum_{i=1}^{n} a_i \delta_{x_i}$ and $\beta = \sum_{j=1}^{m} b_j \delta_{y_j}$ be histograms.
+We say a function $T: \{ x_1, \ldots, x_n \} \rightarrow \{ y_1, \ldots, y_m \}$ is a transport map from $\alpha$ to $\beta$ if for all $1 \leq j \leq m$,
+$$ b_j = \sum \limits_{i : T(x_i) = y_j} a_i , $$
+which we write in compact form as $T \# \alpha = \beta$. 
+In other words, for each $j$, the mass $T$ "sends" to $y_j$ must equal $b_j$.
+
+Let $c: X \times Y \rightarrow \mathbb{R}$ be the cost function from $\alpha$ to $\beta$.
+In other words, $c(x, y)$ equals the cost to send one unit of mass from point $x$ to point $y$.
+Then, the Monge problem is defined as 
+$$ \min \limits_{T} \left \{ \sum \limits_{i = 1}^n c(x_i, T(x_i)) \right \} . $$
+Notice the use of "$\min$" rather than "$\inf$" in this problem, since there are at most $m!$ transport maps from $\alpha$ to $\beta$.
+A transport map that achieves this minimum is called an optimal transport map.
+
+
+## Existence
+
+First, consider the case $n < m$.
+In this case, we have more elements $\{ y_j \}$ than elements $\{ x_i \}$.
+As a result, the range of any transport map $T$ does not equal $\{ y_1, \ldots, y_m \}$.
+Let $y_k$ be an element such that $y_k \notin T(x_1, \ldots, x_n)$.
+Notice that 
+$$ b_k =  \sum \limits_{i : T(x_i) = y_k} a_i = 0 , $$
+which contradicts our assumption that each $b_j$ is positive.
+Thus, no transport map exists, so the Monge problem does not have a solution.
+
+Even in the case $n \geq m$, existence is not guaranteed.
+For example, assume $n = m = 2$, $X = Y = \{ 1, 2 \}$.
+Define $x_1 = y_1 = 1, x_2 = y_2 = 2$.
+Define
+$$ \alpha = \frac{1}{3} \delta_{x_1} + \frac{2}{3} \delta_{x_2}, \beta = \frac{1}{2} \delta_{y_1} + \frac{1}{2} \delta_{y_2} . $$
+There are no transport maps from $\alpha$ to $\beta$, hence the Monge problem does not have a solution.
+
+## Uniqueness
+
+The Monge problem may have multiple minimizers.
+For example, assume $n = m = 2$, $X = Y = \mathbb{R}^2$.
+Define
+$$ x_1 = (0, 0), x_2 = (1, 1), y_1 = (1, 0), y_2 = (0, 1) . $$
+Notice that $x_1$ and $x_2$ are the opposite corners of the unit square, as are $y_1$ and $y_2$.
+Define
+$$ \alpha = \frac{1}{2} \delta_{x_1} + \frac{1}{2} \delta_{x_2}, \beta = \frac{1}{2} \delta_{y_1} + \frac{1}{2} \delta_{y_2} . $$
+The only two transport maps are $T$ and $T'$, where
+$$ T(x_1) = y_1, T(x_2) = y_2 , $$
+$$ T'(x_1) = y_2, T'(x_2) = y_1 . $$
+
+We consider the Monge problem with $c(x, y) = |x - y|$.
+Notice that 
+$$ \sum \limits_{i = 1}^2 c(x_i, T(x_i)) = 2 , $$
+$$ \sum \limits_{i = 1}^2 c(x_i, T'(x_i)) = 2 . $$
+Thus both transport maps are optimal, i.e. the Monge problem does not have a unique solution.
+This example is taken from [@Peyre].
+
+# The Kantorovich Problem
+
+Again, let $\alpha = \sum_{i=1}^{n} a_i \delta_{x_i}$ and $\beta = \sum_{j=1}^{m} b_j \delta_{y_j}$ be histograms.
+We say a matrix $P \in \mathbb{R}_+^{n \times m}$ is an admissible coupling if 
+$$ P 1_m = a \text{ and } P^T 1_n = b . $$
+Here, $a = (a_1, \ldots, a_n), b = (b_1, \ldots, b_m)$ and $1_n$ equals the vector of size $n$ with each entry equal to one.
+For simplicity, we let $U(a, b)$ equal the set of all admissible couplings.
+Let $c: X \times Y \rightarrow \mathbb{R}$ be the cost function from $\alpha$ to $\beta$.
+The Kantorovich problem is defined as 
+$$ \min \limits_{P \in U(a, b)} \sum \limits_{i, j} c(x_i, y_j) P_{ij} . $$
+Again, notice that we use ""$\min$" in our statement, rather than "$\inf$".
+We use the Calculus of Variations to show that this minimum is indeed achieved.
+A coupling that achieves this minimum is called an optimal coupling, or optimal transport plan.
+
+## Existence
+
+We know there always exists an admissible coupling; take $P_{ij} = a_i b_j$.
+
+## Uniqueness
+
+Again, optimal solutions may not be unique. 
+Consider the example first consider in the discussion of the uniqueness of the Monge problem, i.e. the square.
+Notice that for any $i, j$, $c(x_i, y_j) = 1$.
+Thus, the Kantorovich problem reduces to  
+$$ \min \limits_{P \in U(a, b)} \sum \limits_{i, j} P_{ij} . $$
+Because $P \in U(a, b)$, we know that the entries of $P_{ij}$ sum to one.
+Thus, for any admissible coupling $P$, we have $\sum \limits_{i, j} c(x_i, y_j) P_{ij} = 1$.
+
+Consider $P_1 = \begin{bmatrix}
+\frac{1}{2} & 0 \\
+0 & \frac{1}{2}
+\end{bmatrix}$ and $P_2 = (P_1)^T$.
+Both $P_1$ and $P_2$ are admissible couplings, and both achieve the minimum for the Kantorovich problem.
+
+## The Dual Problem
+
+Consider the theorem mentioned in [this article](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)).
+In the discrete case, our dual problem reduces to 
+$$ \max \limits_{(f, g) \in R(c)} \left < f, a \right > + \left < g, b \right > , $$
+where $R(c) := \left \{ (f, g) \in \mathbb{R}^n \times \mathbb{R}^m :  \text{ for all } 1 \leq i \leq n, 1 \leq j \leq m, f_i + g_j \leq c_{ij} \right \}.$
+Again, we know that this maximum is achieved; see the article above for the rationale.
+We also know that the dual problem is equal to the primal problem. 
