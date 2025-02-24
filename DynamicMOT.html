@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ka Lok Lam">
+
+<title>Dynamic Formulation of Martingale Optimal Transport – OT WIKI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">OT WIKI</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Dynamic Formulation of Martingale Optimal Transport</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ka Lok Lam </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The following page mainly follows the first two sections of <span class="citation" data-cites="BB20">(<a href="#ref-BB20" role="doc-biblioref">Backhoff-Veraguas et al. 2020</a>)</span>.</p>
+<section id="motivation" class="level1">
+<h1>Motivation</h1>
+<p>Let <span class="math inline">\(\Omega := \mathbb{R}^d\)</span> and <span class="math inline">\(\mu, \nu \in P^2(\Omega)\)</span>. Then it is well-known that we have:</p>
+<p><span class="math display">\[\begin{align}
+    W^2(\mu, \nu) &amp;:= \inf_{q \in \Pi(\mu, \nu)} \int \left| x - y \right|^2 q(dx, dy) \\
+    &amp;= \inf \left\{ \mathbb{E} \int_0^1 \left| \nu_t \right|^2 \, dt : (X_0, \nu_t, \mathbb{P}) \text{ such that } X_0 \overset{\mathbb{P}}{\sim} \mu, X_1 := X_0 + \int_0^1 \nu_t \, dt \sim \nu \right\}
+\end{align}\]</span></p>
+<p>in which the infimum runs through all paths characterized by the initial condition <span class="math inline">\(X_0 \in \Omega\)</span> and dynamics <span class="math inline">\(X_t = X_0 + \int_0^t \nu_s \, ds\)</span> for <span class="math inline">\(t \in [0, 1]\)</span> with Borel measurable velocity <span class="math inline">\(\nu_t:[0, 1] \to \Omega\)</span> and a choice of probability measure <span class="math inline">\(\mathbb{P}\)</span> on <span class="math inline">\(\Omega\)</span> such that the path satisfies the required distribution condition.</p>
+<p>The well-known <em>Benamou-Brenier theorem</em> claims that if <span class="math inline">\(\mu\)</span> is absolutely continuous with respect to the Lebesgue measure, then <span class="math inline">\(X_t\)</span> is an optimal path if and only if there exists a convex function <span class="math inline">\(F\)</span> such that <span class="math inline">\(\nabla F(X_0) = X_1\)</span>. In such case, <span class="math inline">\(X_t = t X_0 + (1 - t) X_1\)</span> for all <span class="math inline">\(t \in [0, 1]\)</span>.</p>
+<p>It follows that <span class="math inline">\(\nu_t = X_0 - X_1 = X_0 - \nabla F(X_0)\)</span> gives a constant velocity. Furthermore, such an optimal path is unique in the sense of path law, or equivalently, finite-dimensional distribution.</p>
+<p>To ask for a dynamic formulation of martingale optimal transport is then to ask for transforming the optimization over martingale couplings to optimization over martingale paths between two target marginals.</p>
+</section>
+<section id="sec-problemsetup" class="level1">
+<h1>Set-up and Basic Problems</h1>
+<p>We recall the fundamental <em>Strassen’s theorem</em>, which states that for <span class="math inline">\(\mu_0, \mu_1 \in P^1(\Omega)\)</span> where <span class="math inline">\(\Omega = \mathbb{R}^d\)</span>, there exists a <strong>martingale coupling</strong> between them, that is, a probability measure <span class="math inline">\(\mathbb{P}\)</span> and random variables <span class="math inline">\(X_0, X_1\)</span> such that <span class="math inline">\(X_i \sim \mu_i\)</span> for <span class="math inline">\(i = 0, 1\)</span> with <span class="math inline">\(\mathbb{E}(X_1 \mid X_0) = X_0\)</span>, if and only if <span class="math inline">\(\mu_0 \leq_c \mu_1\)</span>, where <span class="math inline">\(\leq_c\)</span> denotes the convex order. This translates to the condition that <span class="math inline">\(\int \phi(x) \mu_0(dx) \leq \int \phi(x)\mu_1(dx)\)</span> for all convex <span class="math inline">\(\phi: \Omega \to \mathbb{R}\)</span>. A remark is that <span class="math inline">\(\mu_0 \leq_c \mu_1\)</span> automatically implies <span class="math inline">\(\int x \mu_0(dx) = \int x \mu_1(dy)\)</span> by considering linear <span class="math inline">\(\phi\)</span>.</p>
+<p>Following <span class="citation" data-cites="BB20">(<a href="#ref-BB20" role="doc-biblioref">Backhoff-Veraguas et al. 2020</a>)</span>, for <span class="math inline">\(\mu, \nu \in P^2(\Omega)\)</span> with <span class="math inline">\(\mu \leq_c \nu\)</span>, we define the dynamic martingale transport cost from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span> as <span class="math display">\[\begin{align}
+    MT(\mu, \nu) := \sup \left\{ \mathbb{E} \int_0^1 \text{tr}(\sigma_t) \, dt : (X_0, \sigma_t, \mathcal{F}_t, \mathbb{P}) \text{ such that } X_0 \overset{\mathbb{P}}{\sim} \mu, X_1 := X_0 + \int_0^1 \sigma_t \, dB_t \sim \nu \right\}
+\end{align}\]</span> where the supremum runs through all choices of filtrations <span class="math inline">\(\mathcal{F}_t\)</span> and standard Brownian motions with <span class="math inline">\(\mathcal{F}_t^B = \mathcal{F}_t\)</span>, and <span class="math inline">\(X_0 \in \mathcal{F}_0\)</span> being independent of <span class="math inline">\(\mathcal{F}_t^B\)</span>, also with an adapted <span class="math inline">\(\sigma_t\)</span> that satisfies the distributional assumption. Note that here <span class="math inline">\(B_t\)</span> is a <span class="math inline">\(d\)</span>-dimensional Brownian motion with <span class="math inline">\(\sigma_t\)</span> being a <span class="math inline">\(d \times d\)</span> matrix-valued process.</p>
+<p>Basic problems related to this dynamic martingale transport cost include, but are not limited to:</p>
+<ul>
+<li><p>The respective static formulation of <span class="math inline">\(MT(\mu, \nu)\)</span></p></li>
+<li><p>Well-posedness of <span class="math inline">\(MT(\mu, \nu)\)</span>, i.e., whether a unique-in-law optimal path that attains <span class="math inline">\(MT(\mu, \nu)\)</span> exists</p></li>
+<li><p>Basic properties of the solution to <span class="math inline">\(MT(\mu, \nu)\)</span></p></li>
+</ul>
+<p>We address these problems in the sections below.</p>
+</section>
+<section id="well-posedness-of-mtmu-nu" class="level1">
+<h1>Well-posedness of <span class="math inline">\(MT(\mu, \nu)\)</span></h1>
+<p>Below we always consider <span class="math inline">\(\mu \leq_c \nu\)</span> with <span class="math inline">\(\mu, \nu \in P^2(\mathbb{R}^d)\)</span> and use the notations in <a href="#sec-problemsetup" class="quarto-xref">Section&nbsp;2</a>.</p>
+<section id="a-static-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="a-static-formulation">A static formulation</h2>
+<p>A first observation is to claim the equivalence of <span class="math inline">\(MT(\mu, \nu)\)</span> with the static formulation <span class="math display">\[\begin{align}
+    WOT(\mu, \nu):= \sup \{\int \mu(dx) \sup_{q\in \Pi(\gamma^d, \pi_x)}\int b\cdot m q(db, dm):\{\pi_x\}_{x\in \Omega}, \overline{\pi_x} =x, \nu(dy) = \int \pi_x(dy) \mu(dx)\}
+\end{align}\]</span> where the supremum runs through all kernels (hence conditional distributions) from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span> with the mean property <span class="math inline">\(\overline{\pi_x}:= \int y \pi_x(dy) = x\)</span>. In terms of joint distributions, they corresponds precisely to all martingale couplings between <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>.</p>
+<div id="thm-equivalencebetweenMOTandMT" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Equivalence between WOT and MT)</strong></span> For all <span class="math inline">\(\mu \leq_c \nu \in P^2(\Omega)\)</span>, we have <span class="math inline">\(MT(\mu, \nu) = WOT(\mu, \nu)\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math inline">\((\leq)\)</span>. Going from dynamic to static is easier. Suppose we have a path <span class="math inline">\(X_t = X_0 + \int_0^t \sigma_s dB_s\)</span> with <span class="math inline">\(X_0\sim \mu\)</span> and <span class="math inline">\(X_1\in \nu\)</span>. The key observation is that by Ito’s formula, using super-script to denote the coordinate components, we have <span class="math display">\[\begin{align}
+    d(X_t^i B_t^i) = X_t^i dB_t^i + B_t^i dX_t^i + d\langle{X^i, B^i}\rangle_t
+\end{align}\]</span> where <span class="math inline">\(d\langle{X^i, B^i}\rangle_t = \sum_j d(\sigma_{ij}B_t^j) dB_t^i= \sigma_{ii}dt\)</span> is the cross variation between <span class="math inline">\(X\)</span> and <span class="math inline">\(B\)</span>. Hence <span class="math display">\[\begin{align}
+X_1\cdot B_1 =     X_1\cdot B_1 - X_0\cdot B_0 = \sum_i \int_0^1 X_t^i dB_t^i + \sum_{ij} \int_0^1 B_t^i B_t^j \sigma_{ij} dB_t^j + \sum_i \int_0^1 \sigma_{ii}dt
+\end{align}\]</span> Taking expectation gives the following frequently used formula <span id="eq-prodtrace"><span class="math display">\[
+    \mathbb{E}(X_1\cdot B_1) = \mathbb{E}\int_0^1 tr(\sigma_t)dt
+\tag{1}\]</span></span> Using the tower law gives <span class="math display">\[\begin{align}
+\mathbb{E}(X_1\cdot B_1) = \mathbb{E}(\mathbb{E}(X_1\cdot B_1\mid X_0)) = \int \mu(dx) \int_{q\in \Pi(\gamma, \pi_x)} b\cdot m q(dm, db) \leq WOT(\mu, \nu)
+\end{align}\]</span></p>
+<p>Considering all paths gives the inequality.</p>
+<p><span class="math inline">\((\geq)\)</span>. The remaining direction relies on an important construction. Suppose <span class="math inline">\(\pi\in \Pi(\mu, \nu)\)</span>. Then for all <span class="math inline">\(x\in \Omega\)</span>, by Brenier’s theorem, there exists a unique convex gradient map <span class="math inline">\(\nabla F^x\)</span> such that <span class="math inline">\(\nabla F^x\# \gamma = \pi_x\)</span> since <span class="math inline">\(\gamma\)</span> is absolutely continuous to <span class="math inline">\(\mathcal{L}eb\)</span> (recall <span class="math inline">\(\gamma\)</span> is the d-dim normal). Now we pick any filtration <span class="math inline">\(\mathcal{F}_t\)</span> and a standard Brownian motion <span class="math inline">\(B_t\)</span> adapted to it and define <span class="math display">\[\begin{align}
+    M_t^x:= E(\nabla F^x (B_1) \mid \mathcal{F}_t^B) = E(\nabla F^x (B_1) \mid B_t)
+\end{align}\]</span> where the second equality follows from the Markov property of <span class="math inline">\(B_t\)</span>. It is clearly that <span class="math inline">\(M_t^x\)</span> is a martingale with <span class="math inline">\(M_1^x = \nabla F^x(B_1)\sim \pi_x\)</span> and <span class="math inline">\(M_0^x = x\)</span>. Now we pick <span class="math inline">\(X\sim \mu\)</span> independent to <span class="math inline">\(\mathcal{F}_t\)</span>. Then we define <span class="math display">\[\begin{align}
+    M_t^X(\omega) = M_t^{X(\omega)}
+\end{align}\]</span> which could be easily shown to be a martingale adapted to the filtration by <span class="math inline">\(X\)</span> and <span class="math inline">\(\mathcal{F}_t\)</span> in which <span class="math inline">\(X\)</span> is independent to <span class="math inline">\(\mathcal{F}_t^B\)</span>. Let <span class="math inline">\(\sigma_t\)</span> be the volatility process of <span class="math inline">\(M_t^X\)</span> (for instance given by the ). Then by <a href="#eq-prodtrace" class="quarto-xref">Equation&nbsp;1</a>, we have <span class="math display">\[\begin{align}
+     \mathbb{E}\int_0^1 tr(\sigma_t)dt &amp;= \mathbb{E}(M_1^X\cdot B_1) = \mathbb{E}(\mathbb{E}(\nabla F^x(B_1)\cdot B_1\mid X)) = \int \mu(dx) \mathbb{E}(\nabla F^x(B_1)\cdot B_1\mid X = x) \\
+    &amp; \overset{X\perp B}{=} \int \mu(dx) \mathbb{E}(\nabla F^x (B_1)\cdot B_1)=\int \mu(dx)  \sup_{q\in \Pi(\gamma, \pi_x)}\int b\cdot m q(dm, db)\\
+    &amp;\geq WOT(\mu, \nu)
+\end{align}\]</span> in which the last equality follows from Brenier theorem for the choice of <span class="math inline">\(\nabla F^x\)</span>. This of course implies that <span class="math inline">\(MT(\mu, \nu)\geq WOT(\mu, \nu)\)</span>.</p>
+<section id="well-posedness-with-unique-in-law-solution" class="level2">
+<h2 class="anchored" data-anchor-id="well-posedness-with-unique-in-law-solution">Well-posedness with unique-in-law solution</h2>
+<p>With the equivalence between the static formulation and dynamic formulation one can then raise the well-established theory of the static case to the dynamic case.</p>
+<div id="thm-well-posedness" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Well-posedness of MT and WOT)</strong></span> Let <span class="math inline">\(\mu\leq_c \nu\in P^2(\Omega)\)</span>. Then we have</p>
+<ol type="1">
+<li><p>There exists a unique martingale coupling <span class="math inline">\(\pi^*\)</span> attaining <span class="math inline">\(WOT(\mu, \nu)\)</span>.</p></li>
+<li><p>There exists a unique-in-law martingale <span class="math inline">\(M_t\)</span> attaining <span class="math inline">\(MT(\mu, \nu)\)</span>.</p></li>
+</ol>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span></p>
+<ol type="1">
+<li><p>This follows from standard arguement so here we only give a sketch of proof. In particular recall that <span class="math display">\[\begin{align}
+WOT(\mu, \nu):= \sup \{\int \mu(dx) \sup_{q\in \Pi(\gamma^d, \pi_x)}\int b\cdot m q(db, dm):\{\pi_x\}_{x\in \Omega}, \overline{\pi_x} =x, \nu(dy) = \int \pi_x(dy) \mu(dx)\}
+\end{align}\]</span> We can then make use of tightness property of martingale measures as well as strict concavity of the functional <span class="math inline">\(H(\eta):= \sup_{q\in \Pi(\gamma^d, \eta)} \int b\cdot m d(db, dm)\)</span>, which basically follows from that of the Wasserstein-2 metric, to claim the well-posedness of the static optimization.</p></li>
+<li><p>We first consider the case where <span class="math inline">\(\mu = \delta_x\)</span>. Suppose <span class="math inline">\(N_t\)</span> attains <span class="math inline">\(MT(\mu, \nu)\)</span> with filtration <span class="math inline">\(\mathcal{F}_t\)</span> and Brownian motion <span class="math inline">\(B_t\)</span>. Then we have by <a href="#eq-prodtrace" class="quarto-xref">Equation&nbsp;1</a> <span class="math display">\[\begin{align}
+\mathbb{E}(N_1 B_1) =\mathbb{E}\int_0^1 tr(\sigma_s) ds = MT(\delta_x,\nu) = WOT(\delta_x, \nu) = \sup_{q\in \Pi(\gamma, \nu)}\int b\cdot n q(db, dn)
+\end{align}\]</span> in which the last equality follows simply by definition of WOT. Since <span class="math inline">\(N_1\sim \nu\)</span> and <span class="math inline">\(B_1\sim \gamma\)</span>, it follows that <span class="math inline">\(N_t\)</span> induces the optimal coupling for the last quantity. It follows the by Brenier’s theorem we must have <span class="math inline">\(N_1 = \nabla F^x (B_1)\)</span>. By the martingale property, we then have <span class="math inline">\(N_t = E(\nabla F^x(B_1)\mid \mathcal{F}_t)  = \mathbb{E}(\nabla F^x(B_1)\mid B_t)\)</span> (recall that in the definition of MT, we are restricted to martingale over Brownian filtrations). This determines a unique law. For general <span class="math inline">\(\mu\)</span>, as we are assuming the initial condition of the optimal process has to be independent to the remaining of the process, we already determine the law.</p></li>
+</ol>
+<section id="property-of-stretched-brownian-motions" class="level1">
+<h1>Property of stretched Brownian motions</h1>
+<p>Because of the well-posedness of <span class="math inline">\(MT(\mu, \nu)\)</span>, it deserves to give a name to the unique-in-law optimizer.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Stretched Brownian Motions)</strong></span> Let <span class="math inline">\(\mu\leq_c \nu\)</span>. Then we call the unique-in-law optimizer of <span class="math inline">\(MT(\mu, \nu)\)</span> the stretched Brownian motion (sBm) from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>, which is a martingale <span class="math inline">\(M_t\)</span> adapted to some Brownian filtration <span class="math inline">\(\mathcal{F}_t\)</span> and an independent <span class="math inline">\(M_0\sim \mu\)</span> with <span class="math inline">\(M_1\sim \nu\)</span>.</p>
+</div>
+<section id="markov-property-of-sbm" class="level2">
+<h2 class="anchored" data-anchor-id="markov-property-of-sbm">Markov property of sBm</h2>
+<p>To deduce the Markov property of sBm we are going to establish a dynamic programming principle (DPP) for <span class="math inline">\(MT(\mu, \nu)\)</span>. To this end we define for <span class="math inline">\(t\in [0, 1]\)</span>, <span class="math display">\[\begin{align}
+    V(t, 1, \mu, \nu):= \sup\{\mathbb{E}\int_t^1 tr(\sigma_s)ds: (M_t, \sigma_t, \mathcal{F}_t, \mathbb{P}), M_t\sim \mu, M_1:=\int_t^1 \sigma_s dB_s \sim \nu\}
+\end{align}\]</span> with filtration conditions similar to that of <span class="math inline">\(MT(\mu, \nu)\)</span> in which <span class="math inline">\(M_t\)</span> has to be independent to the rest of the process. In particular, we have <span class="math inline">\(V(0, 1, \mu, \nu) = MT(\mu, \nu)\)</span>. The DPP is as follows</p>
+<div id="thm-DPP" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3 (DPP of <span class="math inline">\(MT(\mu, \nu)\)</span>)</strong></span> Let <span class="math inline">\(\mu\leq_c \nu\in P^2(\Omega)\)</span>. Then <span class="math display">\[\begin{align}
+    V(0, 1, \mu, \nu) = \sup\{\mathbb{E}(\int_0^t tr(\sigma_s)ds) + V(t, 1, \mathcal{L}(M_t), \nu): (M_0, \sigma_t, \mathcal{F}_t), M_0\sim \mu, M_t = \int_0^t \sigma_s dB_s\}
+\end{align}\]</span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>The <span class="math inline">\(\leq\)</span> direction is trivial. We consider the opposite direction. Let <span class="math inline">\(M_t\)</span> be satisfying the condition on the right-hand-side so <span class="math inline">\(dM_t = \sigma_t dB_t\)</span> with <span class="math inline">\(M_0\sim \mu\)</span>. Now we want to build an optimal path from time <span class="math inline">\(t\)</span> to <span class="math inline">\(1\)</span>. Clearly by similar arguement to sections 3 the value <span class="math inline">\(V(t, 1,\mathcal{L}(M_t), \nu)\)</span> is attained by a unique-in-law processes with an independent initial condition. We now choose a Brownian filtration <span class="math inline">\(\mathcal{G}_t = \sigma(W_t)\)</span> independent to <span class="math inline">\(\mathcal{F}_t\)</span>. Let <span class="math inline">\(\sigma^{(2)}_t\)</span> be the volatility process of the dynamics: <span class="math inline">\(dM^{(2)}_s = \sigma^{(2)}_sdW_s\)</span>. We set the initial condition to be <span class="math inline">\(M_t^{(2)} = M_t\)</span>. Since this initial condition is independent to the rest of the process, the resulting path gives a valid optimizer that attains the unique law. We then define <span class="math display">\[\begin{align}
+    M_s^* := \mathbb{1}_{s\leq t}M_s + \mathbb{1}_{s&gt;t} M_s^{(2)}
+\end{align}\]</span> We now have to define a Browian motion for which the process is a martingale. Consider <span class="math display">\[\begin{align}
+    B^*_s:= \mathbb{1}_{s\leq t} B_s + \mathbb{1}_{s&gt;t} (W_s-W_t+ B_{t})
+\end{align}\]</span> One can show that this is a Brownian motion! In addition, <span class="math inline">\(M_s^*\)</span> is then a martingale with respect to this Brownian filtration (either by definition or one can show that <span class="math inline">\(dM_s^* =  (\sigma_s \mathbb{1}_{s\in [0, t]} + \sigma_s^{(2)}\mathbb{1}_{s\in [t, 1]})dB_s^*\)</span>). It then follows that <span class="math display">\[\begin{align}
+    \mathbb{E}(\int_0^t \sigma_s dB_s) + V(t, 1, \mathcal{L}(M_t), \nu)=\mathbb{E}(\int_0^t \sigma_s dB_s + \int_t^1 \sigma^{(2)}_s dW_s) = \mathbb{E}(\int_0^1 \sigma^*_s dB_s^*)\leq V(0, 1, \mu, \nu)
+\end{align}\]</span> which concludes the proof.</p>
+<div id="cor-" class="theorem corollary">
+<p><span class="theorem-title"><strong>Corollary 1</strong></span> The stretched Brownian motion from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span> is Markov</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Fix <span class="math inline">\(t\)</span> and a path of sBm <span class="math inline">\(M_t\)</span>. Then we can construct another sBm (identified by the same law) by first restricting <span class="math inline">\(M_s\)</span> over <span class="math inline">\([0, t]\)</span> and glue an independent path from <span class="math inline">\(M_t\)</span> (given by the flexibility of filtration in the optimizer of <span class="math inline">\(V\)</span>). It follows that conditioning on the path up to time <span class="math inline">\(t\)</span> is the same as conditioning on the state at <span class="math inline">\(t\)</span>.</p>
+</div>
+</div>
+</section>
+</section>
+</div>
+</section>
+</div>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-BB20" class="csl-entry" role="listitem">
+Backhoff-Veraguas, Julio, Mathias Beiglböck, Martin Huesmann, and Sigrid Källblad. 2020. <span>“<span class="nocase">Martingale Benamou–Brenier: A probabilistic perspective</span>.”</span> <em>The Annals of Probability</em> 48 (5): 2258–89. <a href="https://doi.org/10.1214/20-AOP1422">https://doi.org/10.1214/20-AOP1422</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/otwiki\.github\.io\/otwiki-main\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
