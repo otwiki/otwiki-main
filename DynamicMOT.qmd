@@ -1,0 +1,148 @@
+---
+title: "Dynamic Formulation of Martingale Optimal Transport"
+bibliography: DynamicMOT_refs.bib
+author: Ka Lok Lam
+---
+
+The following page mainly follows the first two sections of [@BB20].
+
+# Motivation
+
+Let $\Omega := \mathbb{R}^d$ and $\mu, \nu \in P^2(\Omega)$. Then it is well-known that we have:
+
+\begin{align}
+    W^2(\mu, \nu) &:= \inf_{q \in \Pi(\mu, \nu)} \int \left| x - y \right|^2 q(dx, dy) \\
+    &= \inf \left\{ \mathbb{E} \int_0^1 \left| \nu_t \right|^2 \, dt : (X_0, \nu_t, \mathbb{P}) \text{ such that } X_0 \overset{\mathbb{P}}{\sim} \mu, X_1 := X_0 + \int_0^1 \nu_t \, dt \sim \nu \right\}
+\end{align}
+
+in which the infimum runs through all paths characterized by the initial condition $X_0 \in \Omega$ and dynamics $X_t = X_0 + \int_0^t \nu_s \, ds$ for $t \in [0, 1]$ with Borel measurable velocity $\nu_t:[0, 1] \to \Omega$ and a choice of probability measure $\mathbb{P}$ on $\Omega$ such that the path satisfies the required distribution condition.
+
+The well-known *Benamou-Brenier theorem* claims that if $\mu$ is absolutely continuous with respect to the Lebesgue measure, then $X_t$ is an optimal path if and only if there exists a convex function $F$ such that $\nabla F(X_0) = X_1$. In such case, $X_t = t X_0 + (1 - t) X_1$ for all $t \in [0, 1]$.
+
+It follows that $\nu_t = X_0 - X_1 = X_0 - \nabla F(X_0)$ gives a constant velocity. Furthermore, such an optimal path is unique in the sense of path law, or equivalently, finite-dimensional distribution.
+
+To ask for a dynamic formulation of martingale optimal transport is then to ask for transforming the optimization over martingale couplings to optimization over martingale paths between two target marginals.
+
+# Set-up and Basic Problems {#sec-problemsetup}
+
+We recall the fundamental *Strassen's theorem*, which states that for $\mu_0, \mu_1 \in P^1(\Omega)$ where $\Omega = \mathbb{R}^d$, there exists a **martingale coupling** between them, that is, a probability measure $\mathbb{P}$ and random variables $X_0, X_1$ such that $X_i \sim \mu_i$ for $i = 0, 1$ with $\mathbb{E}(X_1 \mid X_0) = X_0$, if and only if $\mu_0 \leq_c \mu_1$, where $\leq_c$ denotes the convex order. This translates to the condition that $\int \phi(x) \mu_0(dx) \leq \int \phi(x)\mu_1(dx)$ for all convex $\phi: \Omega \to \mathbb{R}$. A remark is that $\mu_0 \leq_c \mu_1$ automatically implies $\int x \mu_0(dx) = \int x \mu_1(dy)$ by considering linear $\phi$.
+
+Following [@BB20], for $\mu, \nu \in P^2(\Omega)$ with $\mu \leq_c \nu$, we define the dynamic martingale transport cost from $\mu$ to $\nu$ as \begin{align}
+    MT(\mu, \nu) := \sup \left\{ \mathbb{E} \int_0^1 \text{tr}(\sigma_t) \, dt : (X_0, \sigma_t, \mathcal{F}_t, \mathbb{P}) \text{ such that } X_0 \overset{\mathbb{P}}{\sim} \mu, X_1 := X_0 + \int_0^1 \sigma_t \, dB_t \sim \nu \right\}
+\end{align} where the supremum runs through all choices of filtrations $\mathcal{F}_t$ and standard Brownian motions with $\mathcal{F}_t^B = \mathcal{F}_t$, and $X_0 \in \mathcal{F}_0$ being independent of $\mathcal{F}_t^B$, also with an adapted $\sigma_t$ that satisfies the distributional assumption. Note that here $B_t$ is a $d$-dimensional Brownian motion with $\sigma_t$ being a $d \times d$ matrix-valued process.
+
+Basic problems related to this dynamic martingale transport cost include, but are not limited to:
+
+-   The respective static formulation of $MT(\mu, \nu)$
+
+-   Well-posedness of $MT(\mu, \nu)$, i.e., whether a unique-in-law optimal path that attains $MT(\mu, \nu)$ exists
+
+-   Basic properties of the solution to $MT(\mu, \nu)$
+
+We address these problems in the sections below.
+
+# Well-posedness of $MT(\mu, \nu)$
+
+Below we always consider $\mu \leq_c \nu$ with $\mu, \nu \in P^2(\mathbb{R}^d)$ and use the notations in @sec-problemsetup.
+
+## A static formulation
+
+A first observation is to claim the equivalence of $MT(\mu, \nu)$ with the static formulation \begin{align}
+    WOT(\mu, \nu):= \sup \{\int \mu(dx) \sup_{q\in \Pi(\gamma^d, \pi_x)}\int b\cdot m q(db, dm):\{\pi_x\}_{x\in \Omega}, \overline{\pi_x} =x, \nu(dy) = \int \pi_x(dy) \mu(dx)\}
+\end{align} where the supremum runs through all kernels (hence conditional distributions) from $\mu$ to $\nu$ with the mean property $\overline{\pi_x}:= \int y \pi_x(dy) = x$. In terms of joint distributions, they corresponds precisely to all martingale couplings between $\mu$ and $\nu$.
+
+::: {#thm-equivalencebetweenMOTandMT}
+## Equivalence between WOT and MT
+
+For all $\mu \leq_c \nu \in P^2(\Omega)$, we have $MT(\mu, \nu) = WOT(\mu, \nu)$.
+:::
+
+:::::::::: proof
+$(\leq)$. Going from dynamic to static is easier. Suppose we have a path $X_t = X_0 + \int_0^t \sigma_s dB_s$ with $X_0\sim \mu$ and $X_1\in \nu$. The key observation is that by Ito's formula, using super-script to denote the coordinate components, we have \begin{align}
+    d(X_t^i B_t^i) = X_t^i dB_t^i + B_t^i dX_t^i + d\langle{X^i, B^i}\rangle_t 
+\end{align} where $d\langle{X^i, B^i}\rangle_t = \sum_j d(\sigma_{ij}B_t^j) dB_t^i= \sigma_{ii}dt$ is the cross variation between $X$ and $B$. Hence \begin{align}
+X_1\cdot B_1 =     X_1\cdot B_1 - X_0\cdot B_0 = \sum_i \int_0^1 X_t^i dB_t^i + \sum_{ij} \int_0^1 B_t^i B_t^j \sigma_{ij} dB_t^j + \sum_i \int_0^1 \sigma_{ii}dt
+\end{align} Taking expectation gives the following frequently used formula $$
+    \mathbb{E}(X_1\cdot B_1) = \mathbb{E}\int_0^1 tr(\sigma_t)dt 
+$$ {#eq-prodtrace} Using the tower law gives \begin{align}
+\mathbb{E}(X_1\cdot B_1) = \mathbb{E}(\mathbb{E}(X_1\cdot B_1\mid X_0)) = \int \mu(dx) \int_{q\in \Pi(\gamma, \pi_x)} b\cdot m q(dm, db) \leq WOT(\mu, \nu)
+\end{align}
+
+Considering all paths gives the inequality.
+
+$(\geq)$. The remaining direction relies on an important construction. Suppose $\pi\in \Pi(\mu, \nu)$. Then for all $x\in \Omega$, by Brenier's theorem, there exists a unique convex gradient map $\nabla F^x$ such that $\nabla F^x\# \gamma = \pi_x$ since $\gamma$ is absolutely continuous to $\mathcal{L}eb$ (recall $\gamma$ is the d-dim normal). Now we pick any filtration $\mathcal{F}_t$ and a standard Brownian motion $B_t$ adapted to it and define \begin{align}
+    M_t^x:= E(\nabla F^x (B_1) \mid \mathcal{F}_t^B) = E(\nabla F^x (B_1) \mid B_t)
+\end{align} where the second equality follows from the Markov property of $B_t$. It is clearly that $M_t^x$ is a martingale with $M_1^x = \nabla F^x(B_1)\sim \pi_x$ and $M_0^x = x$. Now we pick $X\sim \mu$ independent to $\mathcal{F}_t$. Then we define \begin{align}
+    M_t^X(\omega) = M_t^{X(\omega)}
+\end{align} which could be easily shown to be a martingale adapted to the filtration by $X$ and $\mathcal{F}_t$ in which $X$ is independent to $\mathcal{F}_t^B$. Let $\sigma_t$ be the volatility process of $M_t^X$ (for instance given by the \textit{martingale representation theorem}). Then by @eq-prodtrace, we have \begin{align}
+     \mathbb{E}\int_0^1 tr(\sigma_t)dt &= \mathbb{E}(M_1^X\cdot B_1) = \mathbb{E}(\mathbb{E}(\nabla F^x(B_1)\cdot B_1\mid X)) = \int \mu(dx) \mathbb{E}(\nabla F^x(B_1)\cdot B_1\mid X = x) \\
+    & \overset{X\perp B}{=} \int \mu(dx) \mathbb{E}(\nabla F^x (B_1)\cdot B_1)=\int \mu(dx)  \sup_{q\in \Pi(\gamma, \pi_x)}\int b\cdot m q(dm, db)\\
+    &\geq WOT(\mu, \nu)
+\end{align} in which the last equality follows from Brenier theorem for the choice of $\nabla F^x$. This of course implies that $MT(\mu, \nu)\geq WOT(\mu, \nu)$.
+
+## Well-posedness with unique-in-law solution
+
+With the equivalence between the static formulation and dynamic formulation one can then raise the well-established theory of the static case to the dynamic case.
+
+::: {#thm-well-posedness}
+## Well-posedness of MT and WOT
+
+Let $\mu\leq_c \nu\in P^2(\Omega)$. Then we have
+
+1.  There exists a unique martingale coupling $\pi^*$ attaining $WOT(\mu, \nu)$.
+
+2.  There exists a unique-in-law martingale $M_t$ attaining $MT(\mu, \nu)$.
+:::
+
+:::::::: proof
+1.  This follows from standard arguement so here we only give a sketch of proof. In particular recall that \begin{align}
+     WOT(\mu, \nu):= \sup \{\int \mu(dx) \sup_{q\in \Pi(\gamma^d, \pi_x)}\int b\cdot m q(db, dm):\{\pi_x\}_{x\in \Omega}, \overline{\pi_x} =x, \nu(dy) = \int \pi_x(dy) \mu(dx)\}
+    \end{align} We can then make use of tightness property of martingale measures as well as strict concavity of the functional $H(\eta):= \sup_{q\in \Pi(\gamma^d, \eta)} \int b\cdot m d(db, dm)$, which basically follows from that of the Wasserstein-2 metric, to claim the well-posedness of the static optimization.
+
+2.  We first consider the case where $\mu = \delta_x$. Suppose $N_t$ attains $MT(\mu, \nu)$ with filtration $\mathcal{F}_t$ and Brownian motion $B_t$. Then we have by @eq-prodtrace \begin{align}
+    \mathbb{E}(N_1 B_1) =\mathbb{E}\int_0^1 tr(\sigma_s) ds = MT(\delta_x,\nu) = WOT(\delta_x, \nu) = \sup_{q\in \Pi(\gamma, \nu)}\int b\cdot n q(db, dn)
+    \end{align} in which the last equality follows simply by definition of WOT. Since $N_1\sim \nu$ and $B_1\sim \gamma$, it follows that $N_t$ induces the optimal coupling for the last quantity. It follows the by Brenier's theorem we must have $N_1 = \nabla F^x (B_1)$. By the martingale property, we then have $N_t = E(\nabla F^x(B_1)\mid \mathcal{F}_t)  = \mathbb{E}(\nabla F^x(B_1)\mid B_t)$ (recall that in the definition of MT, we are restricted to martingale over Brownian filtrations). This determines a unique law. For general $\mu$, as we are assuming the initial condition of the optimal process has to be independent to the remaining of the process, we already determine the law.
+
+# Property of stretched Brownian motions
+
+Because of the well-posedness of $MT(\mu, \nu)$, it deserves to give a name to the unique-in-law optimizer.
+
+::: {#def-}
+## Stretched Brownian Motions
+
+Let $\mu\leq_c \nu$. Then we call the unique-in-law optimizer of $MT(\mu, \nu)$ the stretched Brownian motion (sBm) from $\mu$ to $\nu$, which is a martingale $M_t$ adapted to some Brownian filtration $\mathcal{F}_t$ and an independent $M_0\sim \mu$ with $M_1\sim \nu$.
+:::
+
+## Markov property of sBm
+
+To deduce the Markov property of sBm we are going to establish a dynamic programming principle (DPP) for $MT(\mu, \nu)$. To this end we define for $t\in [0, 1]$, \begin{align}
+    V(t, 1, \mu, \nu):= \sup\{\mathbb{E}\int_t^1 tr(\sigma_s)ds: (M_t, \sigma_t, \mathcal{F}_t, \mathbb{P}), M_t\sim \mu, M_1:=\int_t^1 \sigma_s dB_s \sim \nu\}
+\end{align} with filtration conditions similar to that of $MT(\mu, \nu)$ in which $M_t$ has to be independent to the rest of the process. In particular, we have $V(0, 1, \mu, \nu) = MT(\mu, \nu)$. The DPP is as follows
+
+::: {#thm-DPP}
+## DPP of $MT(\mu, \nu)$
+
+Let $\mu\leq_c \nu\in P^2(\Omega)$. Then \begin{align}
+    V(0, 1, \mu, \nu) = \sup\{\mathbb{E}(\int_0^t tr(\sigma_s)ds) + V(t, 1, \mathcal{L}(M_t), \nu): (M_0, \sigma_t, \mathcal{F}_t), M_0\sim \mu, M_t = \int_0^t \sigma_s dB_s\}
+\end{align}
+:::
+
+::::: proof
+The $\leq$ direction is trivial. We consider the opposite direction. Let $M_t$ be satisfying the condition on the right-hand-side so $dM_t = \sigma_t dB_t$ with $M_0\sim \mu$. Now we want to build an optimal path from time $t$ to $1$. Clearly by similar arguement to sections 3 the value $V(t, 1,\mathcal{L}(M_t), \nu)$ is attained by a unique-in-law processes with an independent initial condition. We now choose a Brownian filtration $\mathcal{G}_t = \sigma(W_t)$ independent to $\mathcal{F}_t$. Let $\sigma^{(2)}_t$ be the volatility process of the dynamics: $dM^{(2)}_s = \sigma^{(2)}_sdW_s$. We set the initial condition to be $M_t^{(2)} = M_t$. Since this initial condition is independent to the rest of the process, the resulting path gives a valid optimizer that attains the unique law. We then define \begin{align}
+    M_s^* := \mathbb{1}_{s\leq t}M_s + \mathbb{1}_{s>t} M_s^{(2)}
+\end{align} We now have to define a Browian motion for which the process is a martingale. Consider \begin{align}
+    B^*_s:= \mathbb{1}_{s\leq t} B_s + \mathbb{1}_{s>t} (W_s-W_t+ B_{t}) 
+\end{align} One can show that this is a Brownian motion! In addition, $M_s^*$ is then a martingale with respect to this Brownian filtration (either by definition or one can show that $dM_s^* =  (\sigma_s \mathbb{1}_{s\in [0, t]} + \sigma_s^{(2)}\mathbb{1}_{s\in [t, 1]})dB_s^*$). It then follows that \begin{align}
+    \mathbb{E}(\int_0^t \sigma_s dB_s) + V(t, 1, \mathcal{L}(M_t), \nu)=\mathbb{E}(\int_0^t \sigma_s dB_s + \int_t^1 \sigma^{(2)}_s dW_s) = \mathbb{E}(\int_0^1 \sigma^*_s dB_s^*)\leq V(0, 1, \mu, \nu)
+\end{align} which concludes the proof.
+
+::: {#cor-}
+The stretched Brownian motion from $\mu$ to $\nu$ is Markov
+:::
+
+::: proof
+Fix $t$ and a path of sBm $M_t$. Then we can construct another sBm (identified by the same law) by first restricting $M_s$ over $[0, t]$ and glue an independent path from $M_t$ (given by the flexibility of filtration in the optimizer of $V$). It follows that conditioning on the path up to time $t$ is the same as conditioning on the state at $t$.
+:::
+:::::
+::::::::
+::::::::::

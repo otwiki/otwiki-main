@@ -1,0 +1,73 @@
+---
+title: "The Back and Forth Method"
+format: html
+editor: visual
+bibliography: backandforthbibliography.bib
+---
+
+The Back and Forth Method is an iterative method introduced by Jacobs and Léger in [@backandforth] for solving the optimal transport problem for a class of strictly convex costs, including quadratic and $p$-power costs. This article closely follows [@backandforth].
+
+```{=tex}
+\newline
+\newline
+```
+#### **Preliminaries**
+
+Let $\Omega \subset \mathbb{R}^{d}$, be convex and compact. A cost on $\Omega$ is a continuous function $c: \Omega \times \Omega \rightarrow \mathbb{R}$. However, for this approach we will only focus on the case in which $$ c(x, y) = h(y-x) $$ for some strictly convex and even function $h: \mathbb{R}^d \rightarrow \mathbb{R}$. Let $\mu$ and $\nu$ be probability measures. We will concentrate on the special case where $\mu$ and $\nu$ are absolutely continuous with respect to Lebesgue measure. Because of this, we may commit a standard abuse of notation and identify a measure with its density function.
+
+#### **The Optimal Transport Problem Background**
+
+Given measures $\mu$ and $\nu$ which are supported in $\Omega$, we can define the [Monge formulation](https://www.otwiki.xyz/wiki/Monge_Problem) of the optimal transport problem (also known simply as the Monge Problem) as: $$ C(\mu, \nu) = \inf_{T} \int_{\Omega}c(x, T(x))d\mu(x) $$ where this infimum runs over maps $T: \Omega \rightarrow \Omega$ such that $T \# \mu = \nu$, where $T \# \mu$ is the pushforward of $\mu$ under $T$. The pushforward condition can be characterized by defining the integral of the pushforward measure against continuous test functions $f: \Omega \rightarrow \mathbb{R}$: $$ \int_{\Omega}f(y)d(T \# \mu)(y) = \int_{\Omega} f(T(x))d\mu(x) . $$
+
+If $\mu$ and $\nu$ are absolutely continuous with respect to Lebesgue, there exists a unique optimal map $T_{*}$ which pushed $\mu$ to $\nu$, and its inverse $T_{*}^{-1}$ is the optimal map that pushes $\nu$ to $\mu$ [@Gangbo1995].
+
+The pushforward constraint $T\#\mu = \nu$ holds if and only if $$ \int_{\Omega}\phi(T(x))d\mu(x) = \int_{\Omega} \phi(y) d\nu(y) $$ for every continuous function $\phi$.
+
+It follows that: $$ \inf_{T \# \mu = \nu} \int_{\Omega} c(x, T(x))d\mu(x) = \inf_{T} \sup_{\phi} \int_{\Omega} c(x, T(x)) d \mu(x) - \phi(T(x))d\mu(x) + \int_{\Omega}\phi(y)d\nu(y) . $$
+
+If $\mu$ is absolutely continuous, then we can interchange the supremum and infimum [@Santambrogio2015] and [obtain](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)): $$ \sup_{\phi} \inf_{T} \int_{\Omega}\left( c(x, T(x)) - \phi(T(x)) \right) d \mu(x) + \int_{\Omega}\phi(y) d\nu(y) . $$
+
+From here, we can see that the term $\inf_{T(x)} c(x, T(x)) - \phi(T(x))$ is important for the dual problem. To further analyze this, we will introduce a new operation, called the $c$-transform, which can be seen as a generalization of the Legendre transform.
+
+**Definition**: Given a continuous function $\phi: \Omega \rightarrow \mathbb{R}$, we define its $c$-transform $\phi^c : \Omega \rightarrow \mathbb{R}$ by $$ \phi^{c} (x) = \inf_{y \in \Omega} c(x, y) - \phi(y) . $$
+
+We can now introduce the **Kantorovich dual functional** $$ J(\phi) = \int_{\Omega} \phi d \nu + \int_{\Omega} \phi^{c} d\mu . $$ It can be seen from above that $$ C(\mu, \nu)= \sup_{\phi}J(\phi) $$ where the supremum runs over all continuous functions $\phi: \Omega \rightarrow \mathbb{R}$.
+
+```{=tex}
+\newline
+\newline
+```
+#### **Gradient Ascent**
+
+Let $(\mathcal{H}, || \cdot||_{\mathcal{H}})$ be a separable Hilbert space and suppose that $F$ is a smooth convex functional $F: \mathcal{H} \rightarrow \mathbb{R}$.
+
+**Definition:** Given a point $\phi \in \mathcal{H}$, we say that a bounded linear map $\delta F_{\phi} : \mathcal{H} \rightarrow \mathbb{R}$ is the Fréchet derivative of $F$ at $\phi$ if $$ \lim_{||h||_{\mathcal{H}} \rightarrow 0} \frac{||F(\phi + h) - F(\phi) - \delta F_{\delta}(h)||_{\mathcal{H}}}{||h||_{\mathcal{H}}} = 0 . $$
+
+**Definition:** Let $\langle \cdot, \cdot \rangle_{\mathcal{H}}$ be the inner product associated with the Hilbert space $\mathcal{H}$. We say that a map $\nabla_{\mathcal{H}} F : \mathcal{H} \rightarrow \mathcal{H}$ is the $\mathcal{H}$-gradient of $F$ if $$ \langle \nabla_{\mathcal{H}} F(\phi), h \rangle_{\mathcal{H}} = \delta F_{\phi}(h) $$ for all $(\phi, h) \in \mathcal{H} \times \mathcal{H}$.
+
+To define the back-and-forth method we will need to compute the gradient with respect to $\dot{H^{1}}$, where $\dot{H^{1}}(\Omega)$ is the Hilbert space $$ \dot{H^{1}}(\Omega) = \{ \varphi : \Omega \rightarrow \mathbb{R} : \int_{\Omega} \varphi(x)dx = 0 \text{ and } \int_{\Omega} \|\nabla \varphi(x)||^{2}dx < \infty \} $$ equipped with the inner product $$ \langle \varphi_{1}, \varphi_2 \rangle_{\dot{H^{1}}(\Omega)} = \int_{\Omega} \nabla \varphi_{1}(x) \cdot \nabla \varphi_{2}(x) dx . $$
+
+#### **The Back and Forth Method**
+
+We will consider the dual functional in the following equivalent forms $$ J(\phi) = \int_{\Omega} \phi d \nu + \int_{\Omega} \phi^{c} d\mu $$ and $$ I(\psi) = \int_{\Omega} \psi^{c} d \nu + \int_{\Omega} \psi d\mu . $$
+
+Note that these two functionals are identical, just with the roles of $\mu$ and $\nu$ are flipped.
+
+We are now ready to define the back-and-forth method.
+
+#### **The Back and Forth Algorithm**
+
+**Algorithm 1: The Back and Forth Method**
+
+Given probability densities $\mu$ and $\nu$, set $\phi_0 = 0, \psi_0 = 0$, and iterate:
+
+$$
+\begin{aligned}
+    \phi_{n+\frac{1}{2}} &\leftarrow \phi_n + \sigma \nabla_{\dot{H}^1} J(\phi_n), \\
+    \psi_{n+\frac{1}{2}} &\leftarrow (\phi_{n+\frac{1}{2}})^c, \\
+    \psi_{n+1} &\leftarrow \psi_{n+\frac{1}{2}} + \sigma \nabla_{\dot{H}^1} I(\psi_{n+\frac{1}{2}}), \\
+    \phi_{n+1} &\leftarrow (\psi_{n+1})^c.
+\end{aligned}
+$$
+
+We will note that given two probability measures supported on a discrete grid with $n$ points, we compute the optimal map using $O(n)$ storage space and $O(n \log(n))$ operations per iteration, with an approximately exponential convergence rate. For more information and numerical examples, please see [@{backandforth}].
