@@ -1,0 +1,94 @@
+---
+title: "Gaussian Measures"
+bibliography: GaussianMeasuresbibliography.bibtex
+---
+
+Gaussian Measures are ubiquitous throughout analysis, statistics, and many applied subjects. To a large extent this may be seen as a consequence of the central limit theorem, which in plain terms says that rescaled sums of sufficiently uncorrelated random variables converge to Gaussian variables. In particular quantities like height that depend on many variables will often times follow a gaussian distribution. For reasons we will see later, they also help us understand analysis in infinite dimensional spaces.
+
+# In Finite Dimensions
+
+**Definition**: We say a borel measure on $\mathbb{R}^n$ is Gaussian if either of the following equivalent characterizations hold
+
+1.  $\mu=0$ or else $\mu$ is absolutely continuous w.r.t. Lebesgue with either $$
+    \frac{d\mu}{dx}=\frac{1}{\sqrt{2\pi|\det \Sigma|}}\exp\{-\frac{1}{2}\langle x-m, \Sigma^{-1}(x-m)\rangle\}
+     $$
+2.  the fourier transform of $\mu$, $\hat{\mu}$ is given by $$
+    \hat{\mu}(x)=\exp\{-i\langle x,m\rangle-\frac{1}{2}\langle x,\Sigma x\rangle\}
+     $$
+
+For some $\mu\in \mathbb{R}^n$ called the *mean* and a positive definite symmetric matrix $\Sigma$ called the covariance matrix.
+
+In general, it will be useful to work with the Fourier transforms of probability measures since we'd like to frame the theory of Gaussian measures in terms of mathematical objects that make sense in infinite dimensions. Unfortunately as we will see, Gaussian measures can't be described in terms of a density with respect to some analog of Lebesgue measure (or even other gaussian measures in general). Thus the key properties of Gaussian measures that will be relevant to understanding applications to stochastic processes and quantum field theory are the following
+
+3.  Gaussian measures are uniquely determined by their Fourier transform by Bochner's theorem in the sense that there's a correspondence $$
+    \{\text{Gaussian measures } \mu\} \leftrightarrow \{\text{positive semi-definite symmetric matrices } \Sigma\} \\
+     $$ where $\mu$ determines its covariance matrix, and from each p.d. symmetric matrix $\Sigma$ we can define $\hat{\mu}(x)=\exp\{-\frac{1}{2}\langle x,\Sigma x\rangle\}$ which determines $\mu$ by Fourier inversion.
+4.  If $\mu$ and $\nu$ are two Gaussian measures on $\mathbb{R}^n$ then $\mu$ and $\nu$ are mutually absolutely continuous and $$
+    \frac{d\mu}{d\nu} = \frac{d\mu}{dx}\left(\frac{d\nu}{dx}\right)^{-1}=  \exp\{\langle x,m_\mu-m_\nu\rangle-\frac{1}{2}\left(\langle m_\mu,\Sigma^{-1}m_\mu\rangle-\langle m_\nu,\Sigma^{-1}m_\nu\rangle\right)\}
+     $$ As an important special case, we see that translating a Gaussian measure $\mu$ by a vector $y$ to create a new measure $\mu_y$ given by $\mu_y(B)=\mu(B-y)$. If we take $\mu$ to be the *standard* gaussian in $\mathbb{R}^n$ (i.e. $\mu=0$ and $\Sigma=\operatorname{Id}$) then this reduces to $$
+    \frac{d\mu_y}{d\mu} =  \exp\{\langle x,y\rangle-\frac{1}{2}\|y\|^2\}
+     $$ I emphasize this point because it will allow for a nice comparison with its generalization to infinite dimensions. For proofs of the above facts, see [@Stroock] or [@BogachevGM].
+
+# In Infinite Dimensions
+
+When working on infinite dimensional spaces, for example spaces of all possible paths between points or all possible distributions, we'd like to have an analog of integral calculus. For example, the translation invariance of Lebesgue measure gives us integration by parts formulas and the tools of Fourier analysis amongst other tools. In particular, we'd like to have a translation invariant measure on infinite dimensional Banach spaces. Unfortunately, in such spaces, the unit ball contains **infinitely many disjoint balls of radius** $\frac{\sqrt{2}}{2}$, which will imply that any translation invariant measure must assign infinite or zero mass to balls. We give the formal statement and proof.
+
+## Lebesgue Measure Does not Exist in Infinite Dimensions
+
+Here is the formal statement that captures the fact that we can't have a Lebesgue measure in infinite dimensions.
+
+**Theorem**: Let $X$ be an infinite dimensional separable Banach space. If $\mu$ is a translation invariant Borel measure on $X$ then either $\mu$ assigns infinite measure to each ball or it assigns measure $0$ to each ball in $X$.
+
+For a full proof, see [@Eldredge] or [@Stroock]. Here is a sketch of the proof in the case where $X=l^2$ is the space of square summable sequences. This special case, however, illustrates the key idea of the proof: namely that any ball contains infinitely many disjoint balls. Let $e_n$ be the \`\`standard basis" in $l^2$. That is, the entries of $e_n$ are given by $$
+e_n(m) = \begin{cases}
+    0 & m\neq n \\
+    1 & m=n
+\end{cases}
+$$ Now observe that if $m\neq n$, $|e_n-e_m|=\sqrt{2}$ so if $B(x,r)$ denotes the open ball of radius $r$, we see that $\left\{B\left(e_n,\frac{\sqrt{2}}{2}\right)\right\}_{n=1}^\infty$ is a countable collection of disjoint open balls, each of which is contained in $B(0,2)$ since if $x\in B\left(e_n,\frac{\sqrt{2}}{2}\right)$ then $$
+    |x|\leq |x-e_n|+|e_n|<\frac{\sqrt{2}}{2}+1<2
+$$ But then by additivity and translation invariance, $$
+\begin{align*}
+    \mu(B(0,2)) &= \sum_{n=1}^\infty \mu\left(B\left(e_n,\frac{\sqrt{2}}{2}\right)\right) \\
+    &= \sum_{n=1}^\infty \mu\left(B\left(0,\frac{\sqrt{2}}{2}\right)\right)
+\end{align*}
+$$ hence if $\mu$ assigns positive measure to $B\left(0,\frac{\sqrt{2}}{2}\right)$ then it must give infinite measure to $B\left(0,2\right)$. By translation invariance we can show that any ball of radius $2$ must have positive measure. More generally we can use this argument with the radii appropriately rescales to show that if $\mu$ assigns positive measure to some ball, it must assign infinite measure to all balls.
+
+## Probability Measures in Infinite Dimension
+
+Throughout, suppose that $\mu$ is a borel probability measure on a a separable Banach space $X$. In finite dimensions, we saw that the [covariance matrix](https://en.wikipedia.org/wiki/Covariance) and mean characterized Gaussian measures. As usual, when we jump to infinite dimensions, matrices should be replaced with operators. Since any $f\in X^*$ is continuous, it is in particular borel measurable. In this setting, we define the covariance of two linear functionals as $$
+    q(f,g) := \langle f,g\rangle_{L^2(X,\mu)}=\int_X f(x)g(x)d\mu(x)
+$$ which is a bounded bilinear form. For gaussian measures on finite dimensional spaces, one can check that $q(f,g)=\langle f,\Sigma g\rangle$.
+
+Since there is no infinite dimensional Lebesgue measure, we'd hope to be able to define a Gaussian measure in terms of its Fourier transform. One can indeed define a Gaussian measure on $X$ as one whose Fourier transform is $\exp\{-\frac{1}{2}q(x,x)^2\}$ for a sufficiently nice bilinear form $q$ on $X^*$. The details of this definition are not relevant to us, but the theory of Fourier transforms of measures on Banach spaces (called characteristic functionals) is developed in [@BogachevRef] Chapter 7 and [@Kuo] Chapter 1. Intuitively what it means to say that $\mu$ is a Gaussian measure is that it "looks" Gaussian on every finite dimensional subspace. A more concrete definition that coincides with the definition in terms of the Fourier tranform is the following.
+
+**Definition**: A borel probability measure $\mu$ on $X$ is *Gaussian* if for every linear functional $f\in X^*$, $f_\#\mu$ is a Gaussian measure on $\mathbb{R}$. Necesarily
+
+If we specifically look at the case where $X$ is a Hilbert space, more can be said about Gaussian measures on $X$. Note that by the Riesz representation theorem, $H$ is canonically identified with its dual, so $q$ is identified with a unique bounded bilinear form on $H$. Just like the corresponded outlined in fact (3) for the finite dimensional setting, there is the following correspondence.
+
+**Theorem**: [@Kuo] There is a bijective correspondence between gaussian measures on $X$ and positive semi-definite, self adjoint, [trace class](https://en.wikipedia.org/wiki/Trace_class) operators on $X$. Specifically,
+
+-   For each Gaussian measure $\mu$ on $X$, its covariance form $q$ is given by \$q(f,g)=\langle f, S\_\mu g\rangle \$ for a unique positive semi-definite, self adjoint, trace class operator $S_\mu$.
+-   For each positive semi-definite, self adjoint, trace class operator $S$ on $X$, there exists a unique mean $0$ Gaussian measure $\mu_S$ with covariance form $q_S(f,g):=\langle f,S g\rangle_X$.
+
+The construction of $\mu$ from $q_S$ is given by an infinite dimensional analogue of [Bochner's Theorem](https://en.wikipedia.org/wiki/Bochner%27s_theorem) and [Levy-Inversion](https://en.wikipedia.org/wiki/Characteristic_function_(probability_theory)#Inversion_formula). The upshot of this result is that we can construct whole families of Gaussian measures on Hilbert spaces very easily whereas it can be difficult for general Banach spaces.
+
+## Cameron-Martin Theorem & Integration by Parts
+
+An infinite dimensional analogue of equation (4) would be useful for giving us an integration by parts analogue and related analytic techniques. These are frequently used (not always rigorously) in Quantum Field Theory and the study of Gaussian processes [@QFT]. The main theorem that answers this question is the *Cameron-Martin theorem* (see [@BogachevGM], [@Kuo], or [@Stroock] for a detailed exposition). Intuitively, this theorem says is that for almost every $h\in X$, $\mu_h$ and $\mu$ are mutually singular, while for very particular choices of $h$ and analogue of equation (4) holds.
+
+Now for the technical statement. Note that for any continuous linear functional $f\in X^*$, $$
+\int_X|f(x)|^2 d\mu(x) = \int_\mathbb{R}x^2d(f_\#\mu)(x) <\infty
+$$ since $f_\#\mu$ is a Gaussian measure and $|x|^2$ is integrable w.r.t. any Gaussian measure. In particular, there is an inclusion $X^*\hookrightarrow L^2(X,\mu)$. Considering $X^*$ as a subset of $L^2(X,\mu)$, let the completion $\overline{X^*}^{L^2(X,\mu)}$ be denoted $K$. Now define $$
+    H:=\{h\in X: \text{ the evaluation map }\phi_h:X^*\rightarrow \mathbb{R} \text{ given by } f\mapsto f(h) \text{ is continuous}\}
+$$ By the [continuous linear extension theorem](https://en.wikipedia.org/wiki/Continuous_linear_extension) it follows that for any $h\in H$, $\phi_h$ extends to a continuous linear functional on $K$, the $L^2(X,\mu)$ closure of $X^*$. Since $K$ is a hilbert space with the $L^2(X,\mu)$ norm, it is identified with its dual. Thus we have a map $T:H\rightarrow K$ where $T(h)$ is characterized by the fact that for any $f\in X^*$, $q(Th,f)=f(h)$. One can prove that this is an isometry, hence it induces a complete inner product on $H$, which we denote by $\langle\cdot,\cdot \rangle_H$. We now have the language to state the following striking result.
+
+**Theorem** *(Cameron-Martin)*: Let $\mu$ be a Gaussian measure on a a separable Banach space $X$ with Cameron-Martin space $H$. Then $\mu(H)=0$ and
+
+1.  If $h\in H$ then $\mu_h << \mu$ and $$
+    \frac{d\mu_h}{d\mu} = \exp\left\{-\frac{1}{2}\|h\|_H^2+\langle h,x\rangle\right\}
+     $$
+2.  If $h\in X\setminus H$ then $\mu_h$ and $\mu$ are mutually singular.
+
+This makes precise the intuitive statement that equation (4) fails for $\mu$ almost every $h$ For these pathological $h$, there is no hope for an integration by parts formula or similar tools. For an explanation on the associated integration by parts formula (and why translation invariance leads to integration by parts) see [@driver].
+
+The situation is analogous to have a measure on $\mathbb{R}^2$ which is a Gaussian measure on the $x$-axis and zero elswhere. If we translate this measure along the $x$ direction, the resulting measure will be mutually absolutely continuous. If we translate this measure by any other direction, however, the two measures will be mutually singular.
