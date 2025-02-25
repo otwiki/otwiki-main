@@ -1,5 +1,6 @@
 ---
 title: "Gaussian Measures"
+author: Connor Marrs
 bibliography: GaussianMeasuresbibliography.bibtex
 ---
 
