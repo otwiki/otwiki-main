@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Arie Ogranovich">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Bures-Wasserstein Gradient Flow – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -138,13 +159,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Bures-Wasserstein Gradient Flow</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arie Ogranovich </p>
+          </div>
+  </div>
     
   
     
@@ -155,104 +182,91 @@ window.Quarto = {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a> <em>(has already been updated to quarto)</em></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_in_One_Dimension">Optimal Transport in One Dimension</a> - will be revised by Yusen</li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric)">Kantorovich Dual Problem (for <span class="math inline">\(c(x,y) = d(x,y)^2\)</span> where <span class="math inline">\(d\)</span> is a metric)</a> - Evan Tufte will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">1-Wasserstein metric and generalizations</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>The Bures-Wasserstein gradient flow is a Wasserstein gradient flow in the space of Gaussian measures. Descriptions of Bures-Wasserstein gradient flows take advantage of the simplicity of transport maps between Gaussian distributions in order to provide an alternate, computationally tractable viewpoint on certain types of Wasserstein gradient flows <span class="citation" data-cites="chen2019 delon2020">(<a href="#ref-chen2019" role="doc-biblioref">Chen, Georgiou, and Tannenbaum 2019</a>; <a href="#ref-delon2020" role="doc-biblioref">Delon and Desolneux 2020</a>)</span>.</p>
+<section id="definition-of-bures-wasserstein-space-and-gradient" class="level1">
+<h1>Definition of Bures-Wasserstein Space and Gradient</h1>
+<p>The Bures-Wasserstein Space <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> is the Riemannian manifold of non-degenerate Gaussian distributions over <span class="math inline">\(\mathbb R^d\)</span> endowed with the Wasserstein metric.</p>
+<p>Letting <span class="math inline">\(S^d_{++}\)</span> denote the cone of symmetric positive definite <span class="math inline">\(d \times d\)</span> matrices, <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> can be identified with the set <span class="math inline">\(\mathbb R^d \times S^d_{++}\)</span> by identifying a Gaussian <span class="math inline">\(\mu\)</span> with its mean <span class="math inline">\(\mathbb E[\mu] \in \mathbb R^d\)</span> together with its variance <span class="math inline">\(\Sigma_{\mu} \in S^d_{++}\)</span>.</p>
+<p>The space <span class="math inline">\(\mathbb R^d \times S^d_{++}\)</span> carries a smooth structure, and the Wasserstein metric is a smooth metric on this space which is what gives <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> the structure of a Riemannian manifold (in constrast to Wasserstein spaces <span class="math inline">\(\mathcal{P}_2(\mathbb R^d)\)</span> or <span class="math inline">\(\mathcal{P}_{2,\text{ac}}(\mathbb R^d)\)</span>, see <span class="citation" data-cites="chewi2024">(<a href="#ref-chewi2024" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2024</a>)</span>).</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a> - Connor Marrs</li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="properties-of-textbwmathbb-rd" class="level1">
+<h1>Properties of <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span></h1>
+<p>As a smooth manifold, the tangent space <span class="math inline">\(T_{\mu}\text{BW}(\mathbb R^d)\)</span> has a convenient characterization.</p>
+<section id="tangent-space-of-textbwmathbb-rd" class="level3">
+<h3 class="anchored" data-anchor-id="tangent-space-of-textbwmathbb-rd">Tangent Space of <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span></h3>
+<p>The tangent space of <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> at a measure <span class="math inline">\(\mu = \mathcal{N}(m,\Sigma)\)</span> satisfies <span class="math display">\[T_{\mu}\text{BW}(\mathbb R^d)= \big\{x \rightarrow Sx+a \,\big|\, a \in \mathbb R^d, S \in S^d\big\}\]</span> or alternatively <span class="math display">\[T_{\mu}\text{BW}(\mathbb R^d)= \big\{x \rightarrow S(x-m)+a \,\big|\, a \in \mathbb R^d, S \in S^d\big\}.\]</span></p>
+<p>It is also possible to analytically characterize the optimal transport plan between two non-degenerate Gaussian distributions in terms of their means and covariances.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a> - will be edited by Haosheng Zhou and Qijin Shi</li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing">Wasserstein barycenters and applications in image processing</a> - Charles will revise</li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li>Continuous time martingale OT and Skorohod Embedding - Qijin Shi</li>
-</ul>
+<section id="optimal-transport-plans-and-geodesic-convexity" class="level3">
+<h3 class="anchored" data-anchor-id="optimal-transport-plans-and-geodesic-convexity">Optimal Transport Plans and Geodesic Convexity</h3>
+<p>Let <span class="math inline">\(\mu_1, \mu_2 \in \text{BW}(\mathbb R^d)\)</span> be two Gaussian measures with <span class="math inline">\(\mu_1 = \mathcal{N}(m_1, \Sigma_1)\)</span> and <span class="math inline">\(\mu_2 = \mathcal{N}(m_2, \Sigma_2)\)</span>. The optimal transport map <span class="math inline">\(T_{\mu_1 \rightarrow \mu_2}\)</span> is affine-linear and given by <span class="math display">\[T_{\mu_1 \rightarrow \mu_2}(x) = \Sigma_1^{-1/2} \Big( \Sigma_1^{1/2} \Sigma_2 \Sigma_1^{1/2} \Big)^{1/2} \Sigma_1^{-1/2} (x-m_1) + m_2\]</span> with Wasserstein distance given by <span class="math display">\[W_2^2(\mu_1,\mu_2) = ||m_1-m_2||^2 + \text{tr}\Big[ \Sigma_1 + \Sigma_2 - 2 \big( \Sigma_1^{1/2} \Sigma_2 \Sigma_1^{1/2} \big)^{1/2} \Big]\]</span></p>
+<p>In particular, the Benamou-Brenier Theorem (https://arxiv.org/pdf/2407.18163) implies that the Wasserstein geodesic, i.e the displacement interpolation, between Gaussian measures <span class="math inline">\(\mu_1 = \mathcal{N}(m_1, \Sigma_1)\)</span> and <span class="math inline">\(\mu_2 = \mathcal{N}(m_2, \Sigma_2)\)</span> is given as the curve <span class="math display">\[\mu_t = \Big[(1-t) x + t\Sigma_1^{-1/2} \Big( \Sigma_1^{1/2} \Sigma_2 \Sigma_1^{1/2} \Big)^{1/2} \Sigma_1^{-1/2} (x-m_1) + m_2\Big]\#\mu_0.\]</span> This means that <span class="math inline">\(\mu_t\)</span> is the pushforward of <span class="math inline">\(\mu_0\)</span> with respect to an invertible affine-linear map, which implies that <span class="math inline">\(\mu_t\)</span> is itself a nondegenerate Gaussian measure. Then the geodesic <span class="math inline">\((\mu_t)_{t\in [0,1]}\)</span> is contained inside <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span>, which gives us that <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> is geodesically convex.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm">Sinkhorn’s Algorithm</a> - Jack Pfaffinger will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal Transport and Statistics</h3>
-<ul>
-<li>Estimation of transport maps - Evan Tufte, Chewi, Niles-Weed, Rigollet Ch.3</li>
-</ul>
+<section id="characterizations-of-the-bures-wasserstein-gradient-flow" class="level1">
+<h1>Characterizations of the Bures-Wasserstein Gradient Flow</h1>
+<p>We are now prepared to compute the Bures-Wasserstein gradient and the corresponding gradient flow. Recall that <span class="math inline">\(\mathcal{P}_{2,\text{ac}}(\mathbb R^d)\)</span> has its own tangent structure and the tangent space <span class="math inline">\(T_{\mu}\text{BW}(\mathbb R^d)\)</span> is a subspace of <span class="math inline">\(T_{\mu}\mathcal{P}_{2,\text{ac}}(\mathbb R^d)\)</span>, which means the Bures-Wasserstein gradient is the projection of the Wasserstein gradient to <span class="math inline">\(T_{\mu}\text{BW}(\mathbb R^d)\)</span>. The Bures-Wasserstein gradient can be characterized in terms of first variations based on the variational characterization of the Wasserstein gradient. From this characterization it is possible to describe the Bures-Wasserstein gradient flow in terms of the mean and covariance.</p>
+<section id="variational-characterization" class="level2">
+<h2 class="anchored" data-anchor-id="variational-characterization">Variational Characterization</h2>
+<p>Let <span class="math inline">\(\mathcal{F} : \mathcal{P}_{2,\text{ac}}(\mathbb R^d)\rightarrow \mathbb R\)</span> be a functional with first variation <span class="math inline">\(\delta \mathcal{F}(\mu)\)</span> at <span class="math inline">\(\mu = \mathcal{N}(m,\Sigma) \in \text{BW}(\mathbb R^d)\)</span>. Then the Bures-Wasserstein gradient of <span class="math inline">\(\mathcal{F}\)</span> at <span class="math inline">\(\mu\)</span> is the affine mapping <span class="math display">\[x \mapsto \bigg( \int\nabla^2  \delta \mathcal{F}(\mu) d\mu\bigg)(x-m) + \int\nabla  \delta \mathcal{F}(\mu) d\mu\]</span> where <span class="math inline">\(m\)</span> is the mean of <span class="math inline">\(\mu\)</span>.</p>
+<section id="characterization-in-terms-of-mean-and-variance" class="level3">
+<h3 class="anchored" data-anchor-id="characterization-in-terms-of-mean-and-variance">Characterization in terms of Mean and Variance</h3>
+<p>The Bures-Wasserstein gradient flow of the functional <span class="math inline">\(\mathcal{F}\)</span> is the curve <span class="math inline">\((\mu_t=\mathcal{N}(m_t,\Sigma_t))_{t \geq 0}\)</span>, where <span class="math display">\[\begin{align*}
+        \dot{m}_t &amp;= - \mathbb E\nabla  \delta \mathcal{F}(\mu_t) (X_t)\\
+        \dot{\Sigma}_t &amp;= -\mathbb E\nabla^2  \delta \mathcal{F}(\mu_t) (X_t)\Sigma_t - \Sigma_t \mathbb E\nabla^2  \delta \mathcal{F}(\mu_t) (X_t)
+\end{align*}\]</span> where <span class="math inline">\(X_t \sim \mu_t\)</span>.</p>
+<p>The theorem stated above provides a characterization of the Bures-Wasserstein gradient flow based entirely on the mean and covariance of each measure <span class="math inline">\(\mu_t\)</span> in the gradient flow. This can also be viewed as a Lagrangian or particle-based interpretation of the gradient flow.</p>
 </section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein Gradient Flows</h3>
-<ul>
-<li>Probability flow solution of the Fokker–Planck equation - Simone Betteti - <a href="https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta">Boffi and Vanden-Eijnden 2023</a></li>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-<li>Hellinger-Kantorvich Gradient flows - Djordje Nikolic</li>
-</ul>
 </section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
 </section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
+<section id="extensions-and-applications" class="level1">
+<h1>Extensions and Applications</h1>
+<section id="wasserstein-gradients-flows-over-gaussian-mixture-models" class="level2">
+<h2 class="anchored" data-anchor-id="wasserstein-gradients-flows-over-gaussian-mixture-models">Wasserstein Gradients flows over Gaussian Mixture Models</h2>
+<p>Bures-Wasserstein gradients can be used to provide an alternative interpretation of gradient flows in <span class="math inline">\(\mathcal{P}_{2,\text{ac}}(\mathbb R^d)\)</span> by treating probability measures as mixtures of (possibly degenerate) Gaussians. Traditionally, a Gaussian mixture is a measure whose density is a convex combination of Gaussian densities. This is generalized by defining a Gaussian mixture in terms of what is known as a mixing measure <span class="math inline">\(\nu \in \mathcal{P}_2(\text{BW}(\mathbb R^d)) \cong \mathcal{P}_2(\mathbb R^d \times S^d_{++})\)</span>, so that the corresponding Gaussian mixture <span class="math inline">\(G_{\nu}\)</span> is defined as <span class="math inline">\(G_{\nu} = \int \mathcal{N}(m,\Sigma) \nu(dm, d\Sigma)\)</span>. One may treat <span class="math inline">\(\nu\)</span> as the distribution of mean and covariance variables <span class="math inline">\(m, \Sigma\)</span>, i.e <span class="math inline">\(\nu = \text{law}(m,\Sigma)\)</span> for some random variables <span class="math inline">\(m\)</span> and <span class="math inline">\(\Sigma\)</span>.</p>
+<p>A Wasserstein metric can be defined on <span class="math inline">\(\mathcal{P}_2(\text{BW}(\mathbb R^d))\)</span> in the same fashion as <span class="math inline">\(\mathcal{P}_2(\mathbb R^d)\)</span> is defined, with the underlying metric space changed but the fundamental concepts unaltered. The mapping <span class="math inline">\(\nu \mapsto G_{\nu}\)</span> provides a surjective mapping from <span class="math inline">\(\mathcal{P}_2(\text{BW}(\mathbb R^d))\)</span> to <span class="math inline">\(\mathcal{P}_2(\mathbb R^d)\)</span>, which allows us to reinterpret gradient flows of a functional <span class="math inline">\(\mathcal{F} : \mathcal{P}_2(\mathbb R^d)\rightarrow \mathbb R\)</span> in terms of the functional <span class="math inline">\(\mathcal{G}: \nu \mapsto \mathcal{F}(G_{\nu})\)</span> via the proposition below.</p>
+<section id="gradient-flow-expression-in-mathcalp_2textbwmathbb-rd" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-flow-expression-in-mathcalp_2textbwmathbb-rd">Gradient Flow Expression in <span class="math inline">\(\mathcal{P}_2(\text{BW}(\mathbb R^d))\)</span></h3>
+<p>Let <span class="math inline">\(\nu \in \mathcal{P}_2(\text{BW}(\mathbb R^d))\)</span> be given and let <span class="math inline">\(G_{\nu} = \int \mathcal{N}(m,\Sigma) \nu(dm, d\Sigma)\)</span> denote the Gaussian mixture corresponding to <span class="math inline">\(\nu\)</span>. Let <span class="math inline">\(\mathcal{F}\)</span> be a functional over <span class="math inline">\(\mathcal{P}_2(\mathbb R^d)\)</span> and let <span class="math inline">\(\mathcal{G}\)</span> be the functional over <span class="math inline">\(\mathcal{P}_2(\text{BW}(\mathbb R^d))\)</span> defined by <span class="math inline">\(\mathcal{G}(\nu) = \mathcal{F}(G_{\nu})\)</span>. The Wasserstein gradient flow of <span class="math inline">\(\mathcal{G}\)</span> in <span class="math inline">\(\mathcal{P}_2(\text{BW}(\mathbb R^d))\)</span> is given by the curve <span class="math inline">\((\text{law}(m_t,\Sigma_t))_{t \geq 0}\)</span> for random variables <span class="math inline">\(m_t\)</span> and <span class="math inline">\(\Sigma_t\)</span> that follow the equations <span class="math display">\[\begin{align*}
+        \dot{m}_t &amp;= - \mathbb E\nabla  \delta \mathcal{F}(G_t) (X_t)\\
+        \dot{\Sigma}_t &amp;= -\mathbb E\nabla^2  \delta \mathcal{F}(G_t) (X_t)\Sigma_t - \Sigma_t \mathbb E\nabla^2  \delta \mathcal{F}(G_t) (X_t)
+\end{align*}\]</span> where <span class="math inline">\(X_t \sim \mathcal{N}(m_t,\Sigma_t)\)</span>.</p>
 </section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="tbd.qmd">Distraction Recommendations</a></li>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+</section>
+<section id="gaussian-variational-inference" class="level2">
+<h2 class="anchored" data-anchor-id="gaussian-variational-inference">Gaussian Variational Inference</h2>
+<p>Bures-Wasserstein gradient flows can be used to solve variational inference problems when the set of admissible measures is <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> <span class="citation" data-cites="lambert2023">(<a href="#ref-lambert2023" role="doc-biblioref">Lambert et al. 2023</a>)</span>.</p>
+<p>The variational inference is an optimization problem which seeks to find a simple distribution in an admissible set <span class="math inline">\(\Omega\)</span> which closely approximates a given measure <span class="math inline">\(\pi \in \mathcal{P}_2(\mathbb R^d)\)</span> in terms of KL divergence. More precisely, variational inference is the problem of finding a measure <span class="math inline">\(q_*\)</span> such that <span class="math display">\[q_* = \underset{q \in \Omega}{\arg\min}\, \text{KL}(q || \pi).\]</span> Gaussian variational inference is the problem <span class="math display">\[q_* = \underset{q \in \text{BW}(\mathbb R^d)}{\arg\min}\, \text{KL}(q || \pi).\]</span></p>
+<p>Recent work (cite https://arxiv.org/pdf/2205.15902) takes a gradient flow approach to solving Gaussian variational inference. By computing the Bures-Wasserstein gradient flow of the functional $ = (,,|| ) $, one can discretize the gradient flow and obtain a numerical algorithm to approximate a local minimizer of <span class="math inline">\(\mathcal{F}\)</span>.</p>
+<p>In order to do so, one must derive the Bures-Wasserstein gradient of <span class="math inline">\(\mathcal{F}\)</span>. This is done via the variational characterization of Bures-Wasserstein gradients. For an absolutely continuous measure <span class="math inline">\(\pi\)</span> with a density <span class="math inline">\(\exp(-V)\)</span> (<span class="math inline">\(V\)</span> is called the potential), the first variation of $ = (,,|| ) $ is <span class="math display">\[\nabla\delta\mathcal{F}(q) = \nabla V + \nabla \log q\]</span> and <span class="math display">\[\nabla^2\delta\mathcal{F}(q) = \nabla^2 V + \nabla^2 \log q\]</span> where <span class="math inline">\(\log q(x)\)</span> denotes the logarithm of the density of <span class="math inline">\(q\)</span> at <span class="math inline">\(x\)</span>.</p>
+<p>By the formula for Bures-Wasserstein gradients, we see that <span class="math display">\[\begin{align*}      \nabla_{\text{BW}}\mathcal{F}(q)(x) &amp;= \bigg( \int \big( \nabla^2 V + \nabla^2 \log q \big) dq \bigg) (x-m_q) + \int \big( \nabla V + \nabla \log q \big) dq\\
+    &amp;= \bigg( \int \big( \nabla^2 V + \nabla^2 \log q \big) dq \bigg) (x-m_q) + \int \nabla V dq + \int \nabla \log q dq.
+\end{align*}\]</span> Because <span class="math inline">\(q = \mathcal{N}(m,\Sigma)\)</span> is Gaussian we know <span class="math inline">\(\log q (x) = - \frac{1}{2}(x-m)\Sigma^{-1}(x-m) + c\)</span> where <span class="math inline">\(c\)</span> is some constant. This implies <span class="math inline">\(\log q\)</span> symmetric about the mean <span class="math inline">\(m\)</span> of <span class="math inline">\(q\)</span>, <span class="math inline">\(\nabla \log q\)</span> is antisymmetric about <span class="math inline">\(m\)</span>, and hence the integral <span class="math inline">\(\int_{\mathbb R} \nabla \log q dq = 0\)</span>. Thus, <span class="math display">\[\begin{align*}                 
+\nabla_{\text{BW}}\mathcal{F}(q)(x) &amp;= \bigg( \int \big( \nabla^2 V + \nabla^2 \log q \big) dq \bigg) (x-m_q) + \int \nabla V dq.
+\end{align*}\]</span> Further, since <span class="math inline">\(\log q (x) = (x-m)\Sigma^{-1}(x-m) + c\)</span> we know that <span class="math inline">\(\nabla^2 \log q (x) = -\Sigma^{-1}\)</span>, so we conclude that <span class="math display">\[\begin{align*}                 
+\nabla_{\text{BW}}\mathcal{F}(q)(x) &amp;= \bigg( \int \nabla^2 V dq - \Sigma^{-1} \bigg) (x-m_q) + \int \nabla V dq.
+\end{align*}\]</span></p>
+<p>In addition, since <span class="math inline">\(\text{KL}(\,\cdot\,|| \pi)\)</span> is convex on <span class="math inline">\(\mathcal{P}_2(\mathbb R^d)\)</span>, its restriction to <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> is also a convex functional because <span class="math inline">\(\text{BW}(\mathbb R^d)\)</span> is geodesically convex. This implies that <span class="math inline">\(\text{KL}(q_t|| \pi)\)</span> will converge to <span class="math inline">\(\text{KL}(q_*|| \pi)\)</span> exponentially for any gradient flow <span class="math inline">\((q_t)_{t\geq 0}\)</span> of <span class="math inline">\(\text{KL}(\,\cdot\,|| \pi)\)</span>.</p>
+
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-chen2019" class="csl-entry" role="listitem">
+Chen, Yongxin, Tryphon T. Georgiou, and Allen Tannenbaum. 2019. <span>“Optimal Transport for Gaussian Mixture Models.”</span> <em>IEEE Access</em> 7: 6269–78. <a href="https://doi.org/10.1109/ACCESS.2018.2889838">https://doi.org/10.1109/ACCESS.2018.2889838</a>.
+</div>
+<div id="ref-chewi2024" class="csl-entry" role="listitem">
+Chewi, Sinho, Jonathan Niles-Weed, and Philippe Rigollet. 2024. <span>“Statistical Optimal Transport.”</span> <a href="https://arxiv.org/abs/2407.18163">https://arxiv.org/abs/2407.18163</a>.
+</div>
+<div id="ref-delon2020" class="csl-entry" role="listitem">
+Delon, Julie, and Agnès Desolneux. 2020. <span>“A Wasserstein-Type Distance in the Space of Gaussian Mixture Models.”</span> <em>SIAM Journal on Imaging Sciences</em> 13 (2): 936–70. <a href="https://doi.org/10.1137/19M1301047">https://doi.org/10.1137/19M1301047</a>.
+</div>
+<div id="ref-lambert2023" class="csl-entry" role="listitem">
+Lambert, Marc, Sinho Chewi, Francis Bach, Silvère Bonnabel, and Philippe Rigollet. 2023. <span>“Variational Inference via Wasserstein Gradient Flows.”</span> <a href="https://arxiv.org/abs/2205.15902">https://arxiv.org/abs/2205.15902</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
