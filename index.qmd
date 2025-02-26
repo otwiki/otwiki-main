@@ -52,7 +52,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 ### Wasserstein Gradient Flows
 
 -   Probability flow solution of the Fokker–Planck equation - Simone Betteti - [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
--   Bures-Wasserstein Gradient flows - Arie Ogranovich - Chewi, Niles-Weed, Rigollet (149-153)
+-   [Bures-Wasserstein Gradient flows](Bures-Wasserstein Gradient Flows.qmd)
 -   Hellinger-Kantorvich Gradient flows - Djordje Nikolic
 
 ### Mathematical foundations
