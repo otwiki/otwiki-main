@@ -1,138 +1,102 @@
 ---
 title: "Estimation of Transport Maps"
+author: Evan Tufte
 bibliography: bibliography.bibtex
 ---
- 
+
 # Introduction
 
-Ordinarily in optimal transport, you're given two probability measures $\mu$ and $\nu$, and tasked to find the cheapest way to transport $\mu$ to $\nu$. But in many applications, you don't know explicitly what the probability measures $\mu$ and/or $\nu$ are, but are able to obtain samples from either of them through experiments or data collection. 
+Ordinarily in optimal transport, you're given two probability measures $\mu$ and $\nu$, and tasked to find the cheapest way to transport $\mu$ to $\nu$. But in many applications, you don't know explicitly what the probability measures $\mu$ and/or $\nu$ are, but are able to obtain samples from either of them through experiments or data collection.
 
 This article discusses two approaches to estimate optimal transport maps only given samples from $\mu$ and $\nu$. The below follows the presentation in [@CNWR2019]. The first approach is to immediately replace $\mu$ and $\nu$ by their empirical measures (which are discrete approximations of $\mu$, $\nu$), solve for an optimal transport plan, then use this to construct an approximate transport map. The other approach is to go to the semidual reformulation of the optimal transport problem, replace $\mu$ ad $\nu$ by their empirical measures, then use the optimal transport map of this modified problem as an estimator for the optimal transport map.
 
-
 # Setting
 
-Let $(X,d)$ be a [complete](https://en.wikipedia.org/wiki/Complete_metric_space), [separable](https://en.wikipedia.org/wiki/Separable_space) [metric space](https://en.wikipedia.org/wiki/Metric_space). Let $\mathcal{P}(X)$ be the set of all ([Borel](https://en.wikipedia.org/wiki/Borel_set)) [probability measures](https://en.wikipedia.org/wiki/Probability_measure) on $X$. For a measurable function $T:X \to X$, and $\mu \in \mathcal{P}(X)$, the [pushforward](https://en.wikipedia.org/wiki/Pushforward_measure) of $\mu$ by $T$, denoted $T \# \mu$, is defined by
-$$
+Let $(X,d)$ be a [complete](https://en.wikipedia.org/wiki/Complete_metric_space), [separable](https://en.wikipedia.org/wiki/Separable_space) [metric space](https://en.wikipedia.org/wiki/Metric_space). Let $\mathcal{P}(X)$ be the set of all ([Borel](https://en.wikipedia.org/wiki/Borel_set)) [probability measures](https://en.wikipedia.org/wiki/Probability_measure) on $X$. For a measurable function $T:X \to X$, and $\mu \in \mathcal{P}(X)$, the [pushforward](https://en.wikipedia.org/wiki/Pushforward_measure) of $\mu$ by $T$, denoted $T \# \mu$, is defined by $$
 T \# \mu(A) = \mu(T^{-1}(A)).
-$$
-If $T \# \mu = \nu$, we say $T$ transports $\mu$ to $\nu$.
+$$ If $T \# \mu = \nu$, we say $T$ transports $\mu$ to $\nu$.
 
-The [Monge problem](https://www.otwiki.xyz/wiki/Monge_Problem) is: given probability measures $\mu , \nu \in \mathcal{P}(X)$ and a cost function $c:X \times X \to [0,\infty)$, find a function $T$ which minimizes
-$$
+The [Monge problem](https://www.otwiki.xyz/wiki/Monge_Problem) is: given probability measures $\mu , \nu \in \mathcal{P}(X)$ and a cost function $c:X \times X \to [0,\infty)$, find a function $T$ which minimizes $$
 \min_T \mathbb{M}(T) = \min_T \int c(x,T(x)) d \mu(x),
-$$  {#eq-Monge}
-where the minimum is taken over all (measurable) functions $T:X \to X$ with $T \# \mu =\nu$. A mimizer $T$ of @eq-Monge is called an optimal transport map. In general an optimal transport map need not exist, and may not be unique.
+$$ {#eq-Monge} where the minimum is taken over all (measurable) functions $T:X \to X$ with $T \# \mu =\nu$. A mimizer $T$ of @eq-Monge is called an optimal transport map. In general an optimal transport map need not exist, and may not be unique.
 
+One usefull sufficient condition for existance and uniqueness is Brenier's theorem (stated [here](https://www.otwiki.xyz/wiki/Monge_Problem))
 
-One usefull sufficient condition for existance and uniqueness is Brenier's theorem (stated [here](https://www.otwiki.xyz/wiki/Monge_Problem)) 
-
+```{=html}
 <!---Throughout the rest of the article, we will assume $X = \mathbb{R}^d$, and the cost function $c$ is $c(x,y) = |x-y|^2$. This makes the the minimum value equal to the 2-Wasserstein distance between $\mu$ and $\nu$ (link!!) ($W_2(\mu,\nu)$). 
 --->
+```
 
 # Problem Description
 
 The problem of esitimating transport maps is: given samples $X_1,...,X_n$ which are [independent identically distributed](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) (i.i.d.) with distribution $\mu$, and $Y_1,...,Y_n$ which are i.i.d. with distribution $\nu$, find an estimator $\widehat{T}$ for the optimal transport map $T$ for the Monge Problem.
 
-
-
-# Empirical Measures 
+# Empirical Measures
 
 ## Definition of Empirical Measures
-For a point $x \in \mathbb{R}^d$, define the dirac mass at $x$ to be 
-$$
+
+For a point $x \in \mathbb{R}^d$, define the dirac mass at $x$ to be $$
 \delta_x(A) = \begin{cases} 1 & \text{ if } x \in A\\
 0 & \text{ if } x \not\in A
 \end{cases}
-$$
-This is the measure which gives one unit of mass to $x$, and zero to everything else. Now, given the samples $X_1,...,X_n$ and $Y_1,...,Y_n$ we can define the empirical measures
-$$
+$$ This is the measure which gives one unit of mass to $x$, and zero to everything else. Now, given the samples $X_1,...,X_n$ and $Y_1,...,Y_n$ we can define the empirical measures $$
 \mu_n = \frac{1}{n} ( \delta_{X_1} + \cdots + \delta_{X_n})
-$$
-$$
+$$ $$
 \nu_n = \frac{1}{n} ( \delta_{Y_1} + \cdots + \delta_{Y_n})
-$$
-Technically, the empirical measures are families of measures: one for each realization of the random variables $X_1,...,X_n$ (for $\mu_n$), $Y_1,...,Y_n$ (for $\nu_n$).
-The intuition for $\mu_n$ is this; 
-$$
+$$ Technically, the empirical measures are families of measures: one for each realization of the random variables $X_1,...,X_n$ (for $\mu_n$), $Y_1,...,Y_n$ (for $\nu_n$). The intuition for $\mu_n$ is this; $$
 \mu_n(A) = \frac{(\text{number of } X_i \text{'s in } A)}{n},
-$$
-and when $n$ is large this will be approximately equal to $\mu(A)$. And indeed, for any measurable $A \subseteq \mathbb{R}^d$, we have $\mu_n(A) \to \mu(A)$ almost surely.
+$$ and when $n$ is large this will be approximately equal to $\mu(A)$. And indeed, for any measurable $A \subseteq \mathbb{R}^d$, we have $\mu_n(A) \to \mu(A)$ almost surely.
 
-
-
-## Kantorovich Problem 
+## Kantorovich Problem
 
 The [Kantorovich](https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html) formulation of optimal transport is very often used in place of the Monge problem. It has several better properties for analysis (discussed [here](https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html)). Moreover, the discrete Kantorovich problem is a linear progaming problem (as discussed on p.13--14 in [@CNWR2019]).
 
-Here is the formal problem statement of the Kantorovich problem. Let $\mu, \nu \in \mathcal{P}(X)$, and let $c:X \times X \to [0,\infty)$ be a cost function. The set of addmissible transport plans is defined to be
-$$
+Here is the formal problem statement of the Kantorovich problem. Let $\mu, \nu \in \mathcal{P}(X)$, and let $c:X \times X \to [0,\infty)$ be a cost function. The set of addmissible transport plans is defined to be $$
 \Gamma(\mu,\nu) = \{ \gamma \in P(X \times X): \pi_1\# \gamma = \mu \text{ and } \pi_2 \# \gamma = \nu\}
-$$
-where $\pi_1, \pi_2:X \times X \to X$ are the canonical projections $\pi_1(x,y) = x$, $\pi_2(x,y)=y$. The Kantorovich optimal transport problem is:
+$$ where $\pi_1, \pi_2:X \times X \to X$ are the canonical projections $\pi_1(x,y) = x$, $\pi_2(x,y)=y$. The Kantorovich optimal transport problem is:
 
 $$
 \min_{\gamma \in \Gamma(\mu,\nu)} \mathbb{K}( \gamma) = \min_{\gamma \in \Gamma(\mu,\nu)} \int_{X \times Y} c(x,y) d \gamma.
-$${#eq-Kant}
+$$ {#eq-Kant}
 
- A $\gamma \in \Gamma(\mu,\nu)$ which achieves this minimum is called an optimal transport plan. 
+A $\gamma \in \Gamma(\mu,\nu)$ which achieves this minimum is called an optimal transport plan.
 
 Given any transport map $T$, you can construct a transport plan: $\gamma = (id,T)\# \mu$. This transport plan just sends mass at $x$ to $T(x)$. Under the hypothoses of Brenier's theorem, the minimum in Monge's and Kantorovich's problems is the same, the minimizers of both are unique, and the relationship is this: if $T$ is an optimal transport map, then $(id,T) \# \mu$ is an optimal transport plan, and any optimal transport plan $\gamma$ is of this form.
 
 ## First Estimator
 
-One possible approach to estimating $T$ is to replace $\mu$ and $\nu$ by their empirical measure counterparts $\mu_n$ and $\nu_n$. Then, solve the empirical version of the Kantorovich problem:
-$$
+One possible approach to estimating $T$ is to replace $\mu$ and $\nu$ by their empirical measure counterparts $\mu_n$ and $\nu_n$. Then, solve the empirical version of the Kantorovich problem: $$
   \min_{\gamma \in \Gamma(\mu_n,\nu_n)} \mathbb{K}_n( \gamma) = \min_{\gamma \in \Gamma(\mu_n,\nu_n)} \int_{X \times X} c(x,y) d \gamma(x,y)
-$$
-Let $\gamma_n$ be the minimizer. Then, try to find a transport map $\widehat{T}$ which induces the transport plan $\gamma_n$ (that is, find a function $\widehat{T}:X \to X$ such that $(id,\widehat{T}) \# \mu_n = \gamma_n$). 
+$$ Let $\gamma_n$ be the minimizer. Then, try to find a transport map $\widehat{T}$ which induces the transport plan $\gamma_n$ (that is, find a function $\widehat{T}:X \to X$ such that $(id,\widehat{T}) \# \mu_n = \gamma_n$).
 
-To do this, note: every element of $\Gamma(\mu_n,\nu_n)$ is a convex combination of dirac masses at sample points $(X_i,Y_j)$. So, $\gamma_n$ will be a convex combination of dirac masses at sample points $(X_i,Y_j)$. Whenever one of the dirac masses $\delta_{(X_i,Y_j)}$ appears in $\gamma_n$ with positive coefficient, you should define $T(X_i) = Y_j$. However, if the transport plan ever splits mass (that is, sends positive mass from $X_i$ to $Y_{j_1}$, and sends more positive mass from $X_i$ to $Y_{j_2}$) there will be no optimal transport map. 
+To do this, note: every element of $\Gamma(\mu_n,\nu_n)$ is a convex combination of dirac masses at sample points $(X_i,Y_j)$. So, $\gamma_n$ will be a convex combination of dirac masses at sample points $(X_i,Y_j)$. Whenever one of the dirac masses $\delta_{(X_i,Y_j)}$ appears in $\gamma_n$ with positive coefficient, you should define $T(X_i) = Y_j$. However, if the transport plan ever splits mass (that is, sends positive mass from $X_i$ to $Y_{j_1}$, and sends more positive mass from $X_i$ to $Y_{j_2}$) there will be no optimal transport map.
 
 There are two major drawbacks to this approach: (1) as mentioned above, $\widehat{T}$ might not even exist, and (2) this approach only tells you what $\widehat{T}(X_1)$, ..., $\widehat{T}(X_n)$ are, but doesn't tell you what $T_n(x)$ is for any other $x$. There is no standard choice from this for how $\widehat{T}$ should be defined anywhere but at $X_1,...,X_n$. Several methods have been proposed. One simple way is to define $\widehat{T}(x)$ to be $\widehat{T}(X_i)$ where $X_i$ is the nearest sample to $x$.
 
-# The Semidual Formulation 
+# The Semidual Formulation
 
 ## The Dual Problem
 
-The dual of the Kantorovich problem is
-$$\sup \int_X f(x) d\mu (x) + \int_Y g(y) d \mu(y)$$
-where the supremum is taken over all $f \in L^1(\mu), g \in L^1(\nu)$ such that $f(x) + g(y) \leq c(x,y)$. Here, 
-$$L^1(\mu) = \{ f:X \to X \text{ measurable }: \int_X |f|d \mu < \infty\}.$$
-Moreover, we have the follwing theorm (this is Theorem 1.3 in [@villani2021topics], you can find a proof there):
+The dual of the Kantorovich problem is $$\sup \int_X f(x) d\mu (x) + \int_Y g(y) d \mu(y)$$ where the supremum is taken over all $f \in L^1(\mu), g \in L^1(\nu)$ such that $f(x) + g(y) \leq c(x,y)$. Here, $$L^1(\mu) = \{ f:X \to X \text{ measurable }: \int_X |f|d \mu < \infty\}.$$ Moreover, we have the follwing theorm (this is Theorem 1.3 in [@villani2021topics], you can find a proof there):
 
-:::{#thm-dualEquiv} 
-
+::: {#thm-dualEquiv}
 ## Equivalence of Primal and Dual
-Suppose that $c: X \times X \to [0,\infty)$ is lower semi-continuous. Then,
-$$\sup_{f(x)+ g(y) \leq c(x,y)} \int_X f(x) d\mu (x) + \int_X g(y) d \nu(y)= \inf_{\gamma \in \Gamma(\mu,\nu)} \mathbb{K}(\gamma)
-$$
-moreover, the infimum on the right hand side is attained.
+
+Suppose that $c: X \times X \to [0,\infty)$ is lower semi-continuous. Then, $$\sup_{f(x)+ g(y) \leq c(x,y)} \int_X f(x) d\mu (x) + \int_X g(y) d \nu(y)= \inf_{\gamma \in \Gamma(\mu,\nu)} \mathbb{K}(\gamma)
+$$ moreover, the infimum on the right hand side is attained.
 :::
 
 ## The Semidual problem
 
-Assume $\mu, \nu \in \mathcal{P}(\mathbb{R}^d)$ have finite second moments. That is, assume
-$$\int_{\mathbb{R}^d} |x|^2 d \mu(x), \quad\int_{\mathbb{R}^d} |y|^2 d \nu(y)< \infty.
-$$
-Also, assume the cost function is $c(x,y) = |x-y|^2$. The dual problem be further transformed into a problem of optimizing over just one function. 
-$$\sup_{f(x)+ g(y) \leq c(x,y)} \int_X f(x) d\mu (x) + \int_Y g(y) d \mu(y) = \inf_{\phi \in L^1(\mu)} S(\phi)$$
-where
-$$S(\phi) = \int \phi d \mu + \int \phi^* d \nu$$ {#eq-semidual}
-Here, $\phi^*$ is the [convex conjugate](https://en.wikipedia.org/wiki/Convex_conjugate) of $\phi$, defined by
-$$
+Assume $\mu, \nu \in \mathcal{P}(\mathbb{R}^d)$ have finite second moments. That is, assume $$\int_{\mathbb{R}^d} |x|^2 d \mu(x), \quad\int_{\mathbb{R}^d} |y|^2 d \nu(y)< \infty.
+$$ Also, assume the cost function is $c(x,y) = |x-y|^2$. The dual problem be further transformed into a problem of optimizing over just one function. $$\sup_{f(x)+ g(y) \leq c(x,y)} \int_X f(x) d\mu (x) + \int_Y g(y) d \mu(y) = \inf_{\phi \in L^1(\mu)} S(\phi)$$ where $$S(\phi) = \int \phi d \mu + \int \phi^* d \nu$$ {#eq-semidual} Here, $\phi^*$ is the [convex conjugate](https://en.wikipedia.org/wiki/Convex_conjugate) of $\phi$, defined by $$
 \phi^*(y) = \sup_{x \in \mathbb{R}^d} (\langle x,y\rangle - \phi(x)).
-$$
-Moreover, the minimizer of [@eq-semidual] may be taken to be a convex, lower semicontinuous function $\phi$. For this convex, lower semicontinuous minimizer $\phi$, the function $T = \nabla \phi$ is an optimal transport map. (see sections 1.5.2 and 1.5.3 in [@CNWR2019]).
+$$ Moreover, the minimizer of [@eq-semidual] may be taken to be a convex, lower semicontinuous function $\phi$. For this convex, lower semicontinuous minimizer $\phi$, the function $T = \nabla \phi$ is an optimal transport map. (see sections 1.5.2 and 1.5.3 in [@CNWR2019]).
 
-## Semidual Estimator 
-This way of rewriting the Monge problem suggests a way to approximate $T$: replace $\mu, \nu$ by the empirical measures in the expression for $S(\phi)$. That is, find a minimizer $\widehat{\phi}$ for
-$$ 
+## Semidual Estimator
+
+This way of rewriting the Monge problem suggests a way to approximate $T$: replace $\mu, \nu$ by the empirical measures in the expression for $S(\phi)$. That is, find a minimizer $\widehat{\phi}$ for $$ 
  \min_{\phi \in \mathcal{F}} S_n(\phi) =  \min_{\phi \in \mathcal{F}}\int \phi d \mu_n + \int \phi^* d \nu_n.
-$$
-(the class of functions minimized over $\mathcal{F}$ is chosen to suit the problem at hand, see sections 3.2-3.6 of [@CNWR2019]). Then define $\widehat{T} = \nabla \widehat{\phi}$. This has the advantage over the empirical exitmator that $\widehat{T}(x)$ is defined for all $x \in \mathbb{R}^d$. 
+$$ (the class of functions minimized over $\mathcal{F}$ is chosen to suit the problem at hand, see sections 3.2-3.6 of [@CNWR2019]). Then define $\widehat{T} = \nabla \widehat{\phi}$. This has the advantage over the empirical exitmator that $\widehat{T}(x)$ is defined for all $x \in \mathbb{R}^d$.
 
 [@CNWR2019] discusses the convergence of $\widehat{T}$ to $T$ (in the $L^2(\mu)$ sense) under certain circumstances and proves bounds for the convergence rate.
-
-
-
