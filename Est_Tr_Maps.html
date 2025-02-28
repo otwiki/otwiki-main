@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Estimation of Transport Maps – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -138,7 +158,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Estimation of Transport Maps</h1>
 </div>
 
 
@@ -155,104 +175,101 @@ window.Quarto = {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a> <em>(has already been updated to quarto)</em></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_in_One_Dimension">Optimal Transport in One Dimension</a> - will be revised by Yusen</li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric)">Kantorovich Dual Problem (for <span class="math inline">\(c(x,y) = d(x,y)^2\)</span> where <span class="math inline">\(d\)</span> is a metric)</a> - Evan Tufte will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">1-Wasserstein metric and generalizations</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Ordinarily in optimal transport, you’re given two probability measures <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>, and tasked to find the cheapest way to transport <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>. But in many applications, you don’t know explicitly what the probability measures <span class="math inline">\(\mu\)</span> and/or <span class="math inline">\(\nu\)</span> are, but are able to obtain samples from either of them through experiments or data collection.</p>
+<p>This article discusses two approaches to estimate optimal transport maps only given samples from <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>. The below follows the presentation in <span class="citation" data-cites="CNWR2019">(<a href="#ref-CNWR2019" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2019</a>)</span>. The first approach is to immediately replace <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> by their empirical measures (which are discrete approximations of <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\nu\)</span>), solve for an optimal transport plan, then use this to construct an approximate transport map. The other approach is to go to the semidual reformulation of the optimal transport problem, replace <span class="math inline">\(\mu\)</span> ad <span class="math inline">\(\nu\)</span> by their empirical measures, then use the optimal transport map of this modified problem as an estimator for the optimal transport map.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a> - Connor Marrs</li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="setting" class="level1">
+<h1>Setting</h1>
+<p>Let <span class="math inline">\((X,d)\)</span> be a <a href="https://en.wikipedia.org/wiki/Complete_metric_space">complete</a>, <a href="https://en.wikipedia.org/wiki/Separable_space">separable</a> <a href="https://en.wikipedia.org/wiki/Metric_space">metric space</a>. Let <span class="math inline">\(\mathcal{P}(X)\)</span> be the set of all (<a href="https://en.wikipedia.org/wiki/Borel_set">Borel</a>) <a href="https://en.wikipedia.org/wiki/Probability_measure">probability measures</a> on <span class="math inline">\(X\)</span>. For a measurable function <span class="math inline">\(T:X \to X\)</span>, and <span class="math inline">\(\mu \in \mathcal{P}(X)\)</span>, the <a href="https://en.wikipedia.org/wiki/Pushforward_measure">pushforward</a> of <span class="math inline">\(\mu\)</span> by <span class="math inline">\(T\)</span>, denoted <span class="math inline">\(T \# \mu\)</span>, is defined by <span class="math display">\[
+T \# \mu(A) = \mu(T^{-1}(A)).
+\]</span> If <span class="math inline">\(T \# \mu = \nu\)</span>, we say <span class="math inline">\(T\)</span> transports <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>.</p>
+<p>The <a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge problem</a> is: given probability measures <span class="math inline">\(\mu , \nu \in \mathcal{P}(X)\)</span> and a cost function <span class="math inline">\(c:X \times X \to [0,\infty)\)</span>, find a function <span class="math inline">\(T\)</span> which minimizes <span id="eq-Monge"><span class="math display">\[
+\min_T \mathbb{M}(T) = \min_T \int c(x,T(x)) d \mu(x),
+\tag{1}\]</span></span> where the minimum is taken over all (measurable) functions <span class="math inline">\(T:X \to X\)</span> with <span class="math inline">\(T \# \mu =\nu\)</span>. A mimizer <span class="math inline">\(T\)</span> of <a href="#eq-Monge" class="quarto-xref">Equation&nbsp;1</a> is called an optimal transport map. In general an optimal transport map need not exist, and may not be unique.</p>
+<p>One usefull sufficient condition for existance and uniqueness is Brenier’s theorem (stated <a href="https://www.otwiki.xyz/wiki/Monge_Problem">here</a>)</p>
+<!---Throughout the rest of the article, we will assume $X = \mathbb{R}^d$, and the cost function $c$ is $c(x,y) = |x-y|^2$. This makes the the minimum value equal to the 2-Wasserstein distance between $\mu$ and $\nu$ (link!!) ($W_2(\mu,\nu)$). 
+--->
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a> - will be edited by Haosheng Zhou and Qijin Shi</li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing">Wasserstein barycenters and applications in image processing</a> - Charles will revise</li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li>Continuous time martingale OT and Skorohod Embedding - Qijin Shi</li>
-</ul>
+<section id="problem-description" class="level1">
+<h1>Problem Description</h1>
+<p>The problem of esitimating transport maps is: given samples <span class="math inline">\(X_1,...,X_n\)</span> which are <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables">independent identically distributed</a> (i.i.d.) with distribution <span class="math inline">\(\mu\)</span>, and <span class="math inline">\(Y_1,...,Y_n\)</span> which are i.i.d. with distribution <span class="math inline">\(\nu\)</span>, find an estimator <span class="math inline">\(\widehat{T}\)</span> for the optimal transport map <span class="math inline">\(T\)</span> for the Monge Problem.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm">Sinkhorn’s Algorithm</a> - Jack Pfaffinger will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance">Sliced Wasserstein Distance</a> - Arie</li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="empirical-measures" class="level1">
+<h1>Empirical Measures</h1>
+<section id="definition-of-empirical-measures" class="level2">
+<h2 class="anchored" data-anchor-id="definition-of-empirical-measures">Definition of Empirical Measures</h2>
+<p>For a point <span class="math inline">\(x \in \mathbb{R}^d\)</span>, define the dirac mass at <span class="math inline">\(x\)</span> to be <span class="math display">\[
+\delta_x(A) = \begin{cases} 1 &amp; \text{ if } x \in A\\
+0 &amp; \text{ if } x \not\in A
+\end{cases}
+\]</span> This is the measure which gives one unit of mass to <span class="math inline">\(x\)</span>, and zero to everything else. Now, given the samples <span class="math inline">\(X_1,...,X_n\)</span> and <span class="math inline">\(Y_1,...,Y_n\)</span> we can define the empirical measures <span class="math display">\[
+\mu_n = \frac{1}{n} ( \delta_{X_1} + \cdots + \delta_{X_n})
+\]</span> <span class="math display">\[
+\nu_n = \frac{1}{n} ( \delta_{Y_1} + \cdots + \delta_{Y_n})
+\]</span> Technically, the empirical measures are families of measures: one for each realization of the random variables <span class="math inline">\(X_1,...,X_n\)</span> (for <span class="math inline">\(\mu_n\)</span>), <span class="math inline">\(Y_1,...,Y_n\)</span> (for <span class="math inline">\(\nu_n\)</span>). The intuition for <span class="math inline">\(\mu_n\)</span> is this; <span class="math display">\[
+\mu_n(A) = \frac{(\text{number of } X_i \text{'s in } A)}{n},
+\]</span> and when <span class="math inline">\(n\)</span> is large this will be approximately equal to <span class="math inline">\(\mu(A)\)</span>. And indeed, for any measurable <span class="math inline">\(A \subseteq \mathbb{R}^d\)</span>, we have <span class="math inline">\(\mu_n(A) \to \mu(A)\)</span> almost surely.</p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal Transport and Statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
+<section id="kantorovich-problem" class="level2">
+<h2 class="anchored" data-anchor-id="kantorovich-problem">Kantorovich Problem</h2>
+<p>The <a href="https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html">Kantorovich</a> formulation of optimal transport is very often used in place of the Monge problem. It has several better properties for analysis (discussed <a href="https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html">here</a>). Moreover, the discrete Kantorovich problem is a linear progaming problem (as discussed on p.13–14 in <span class="citation" data-cites="CNWR2019">(<a href="#ref-CNWR2019" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2019</a>)</span>).</p>
+<p>Here is the formal problem statement of the Kantorovich problem. Let <span class="math inline">\(\mu, \nu \in \mathcal{P}(X)\)</span>, and let <span class="math inline">\(c:X \times X \to [0,\infty)\)</span> be a cost function. The set of addmissible transport plans is defined to be <span class="math display">\[
+\Gamma(\mu,\nu) = \{ \gamma \in P(X \times X): \pi_1\# \gamma = \mu \text{ and } \pi_2 \# \gamma = \nu\}
+\]</span> where <span class="math inline">\(\pi_1, \pi_2:X \times X \to X\)</span> are the canonical projections <span class="math inline">\(\pi_1(x,y) = x\)</span>, <span class="math inline">\(\pi_2(x,y)=y\)</span>. The Kantorovich optimal transport problem is:</p>
+<p><span id="eq-Kant"><span class="math display">\[
+\min_{\gamma \in \Gamma(\mu,\nu)} \mathbb{K}( \gamma) = \min_{\gamma \in \Gamma(\mu,\nu)} \int_{X \times Y} c(x,y) d \gamma.
+\tag{2}\]</span></span></p>
+<p>A <span class="math inline">\(\gamma \in \Gamma(\mu,\nu)\)</span> which achieves this minimum is called an optimal transport plan.</p>
+<p>Given any transport map <span class="math inline">\(T\)</span>, you can construct a transport plan: <span class="math inline">\(\gamma = (id,T)\# \mu\)</span>. This transport plan just sends mass at <span class="math inline">\(x\)</span> to <span class="math inline">\(T(x)\)</span>. Under the hypothoses of Brenier’s theorem, the minimum in Monge’s and Kantorovich’s problems is the same, the minimizers of both are unique, and the relationship is this: if <span class="math inline">\(T\)</span> is an optimal transport map, then <span class="math inline">\((id,T) \# \mu\)</span> is an optimal transport plan, and any optimal transport plan <span class="math inline">\(\gamma\)</span> is of this form.</p>
 </section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein Gradient Flows</h3>
-<ul>
-<li>Probability flow solution of the Fokker–Planck equation - Simone Betteti - <a href="https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta">Boffi and Vanden-Eijnden 2023</a></li>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-<li>Hellinger-Kantorvich Gradient flows - Djordje Nikolic</li>
-</ul>
+<section id="first-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="first-estimator">First Estimator</h2>
+<p>One possible approach to estimating <span class="math inline">\(T\)</span> is to replace <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> by their empirical measure counterparts <span class="math inline">\(\mu_n\)</span> and <span class="math inline">\(\nu_n\)</span>. Then, solve the empirical version of the Kantorovich problem: <span class="math display">\[
+  \min_{\gamma \in \Gamma(\mu_n,\nu_n)} \mathbb{K}_n( \gamma) = \min_{\gamma \in \Gamma(\mu_n,\nu_n)} \int_{X \times X} c(x,y) d \gamma(x,y)
+\]</span> Let <span class="math inline">\(\gamma_n\)</span> be the minimizer. Then, try to find a transport map <span class="math inline">\(\widehat{T}\)</span> which induces the transport plan <span class="math inline">\(\gamma_n\)</span> (that is, find a function <span class="math inline">\(\widehat{T}:X \to X\)</span> such that <span class="math inline">\((id,\widehat{T}) \# \mu_n = \gamma_n\)</span>).</p>
+<p>To do this, note: every element of <span class="math inline">\(\Gamma(\mu_n,\nu_n)\)</span> is a convex combination of dirac masses at sample points <span class="math inline">\((X_i,Y_j)\)</span>. So, <span class="math inline">\(\gamma_n\)</span> will be a convex combination of dirac masses at sample points <span class="math inline">\((X_i,Y_j)\)</span>. Whenever one of the dirac masses <span class="math inline">\(\delta_{(X_i,Y_j)}\)</span> appears in <span class="math inline">\(\gamma_n\)</span> with positive coefficient, you should define <span class="math inline">\(T(X_i) = Y_j\)</span>. However, if the transport plan ever splits mass (that is, sends positive mass from <span class="math inline">\(X_i\)</span> to <span class="math inline">\(Y_{j_1}\)</span>, and sends more positive mass from <span class="math inline">\(X_i\)</span> to <span class="math inline">\(Y_{j_2}\)</span>) there will be no optimal transport map.</p>
+<p>There are two major drawbacks to this approach: (1) as mentioned above, <span class="math inline">\(\widehat{T}\)</span> might not even exist, and (2) this approach only tells you what <span class="math inline">\(\widehat{T}(X_1)\)</span>, …, <span class="math inline">\(\widehat{T}(X_n)\)</span> are, but doesn’t tell you what <span class="math inline">\(T_n(x)\)</span> is for any other <span class="math inline">\(x\)</span>. There is no standard choice from this for how <span class="math inline">\(\widehat{T}\)</span> should be defined anywhere but at <span class="math inline">\(X_1,...,X_n\)</span>. Several methods have been proposed. One simple way is to define <span class="math inline">\(\widehat{T}(x)\)</span> to be <span class="math inline">\(\widehat{T}(X_i)\)</span> where <span class="math inline">\(X_i\)</span> is the nearest sample to <span class="math inline">\(x\)</span>.</p>
 </section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
 </section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
+<section id="the-semidual-formulation" class="level1">
+<h1>The Semidual Formulation</h1>
+<section id="the-dual-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-dual-problem">The Dual Problem</h2>
+<p>The dual of the Kantorovich problem is <span class="math display">\[\sup \int_X f(x) d\mu (x) + \int_Y g(y) d \mu(y)\]</span> where the supremum is taken over all <span class="math inline">\(f \in L^1(\mu), g \in L^1(\nu)\)</span> such that <span class="math inline">\(f(x) + g(y) \leq c(x,y)\)</span>. Here, <span class="math display">\[L^1(\mu) = \{ f:X \to X \text{ measurable }: \int_X |f|d \mu &lt; \infty\}.\]</span> Moreover, we have the follwing theorm (this is Theorem 1.3 in <span class="citation" data-cites="villani2021topics">(<a href="#ref-villani2021topics" role="doc-biblioref">Villani 2021</a>)</span>, you can find a proof there):</p>
+<div id="thm-dualEquiv" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Equivalence of Primal and Dual)</strong></span> Suppose that <span class="math inline">\(c: X \times X \to [0,\infty)\)</span> is lower semi-continuous. Then, <span class="math display">\[\sup_{f(x)+ g(y) \leq c(x,y)} \int_X f(x) d\mu (x) + \int_X g(y) d \nu(y)= \inf_{\gamma \in \Gamma(\mu,\nu)} \mathbb{K}(\gamma)
+\]</span> moreover, the infimum on the right hand side is attained.</p>
+</div>
 </section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="tbd.qmd">Distraction Recommendations</a></li>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="the-semidual-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-semidual-problem">The Semidual problem</h2>
+<p>Assume <span class="math inline">\(\mu, \nu \in \mathcal{P}(\mathbb{R}^d)\)</span> have finite second moments. That is, assume <span class="math display">\[\int_{\mathbb{R}^d} |x|^2 d \mu(x), \quad\int_{\mathbb{R}^d} |y|^2 d \nu(y)&lt; \infty.
+\]</span> Also, assume the cost function is <span class="math inline">\(c(x,y) = |x-y|^2\)</span>. The dual problem be further transformed into a problem of optimizing over just one function. <span class="math display">\[\sup_{f(x)+ g(y) \leq c(x,y)} \int_X f(x) d\mu (x) + \int_Y g(y) d \mu(y) = \inf_{\phi \in L^1(\mu)} S(\phi)\]</span> where <span id="eq-semidual"><span class="math display">\[S(\phi) = \int \phi d \mu + \int \phi^* d \nu \tag{3}\]</span></span> Here, <span class="math inline">\(\phi^*\)</span> is the <a href="https://en.wikipedia.org/wiki/Convex_conjugate">convex conjugate</a> of <span class="math inline">\(\phi\)</span>, defined by <span class="math display">\[
+\phi^*(y) = \sup_{x \in \mathbb{R}^d} (\langle x,y\rangle - \phi(x)).
+\]</span> Moreover, the minimizer of <a href="#eq-semidual" class="quarto-xref">Equation&nbsp;3</a> may be taken to be a convex, lower semicontinuous function <span class="math inline">\(\phi\)</span>. For this convex, lower semicontinuous minimizer <span class="math inline">\(\phi\)</span>, the function <span class="math inline">\(T = \nabla \phi\)</span> is an optimal transport map. (see sections 1.5.2 and 1.5.3 in <span class="citation" data-cites="CNWR2019">(<a href="#ref-CNWR2019" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2019</a>)</span>).</p>
+</section>
+<section id="semidual-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="semidual-estimator">Semidual Estimator</h2>
+<p>This way of rewriting the Monge problem suggests a way to approximate <span class="math inline">\(T\)</span>: replace <span class="math inline">\(\mu, \nu\)</span> by the empirical measures in the expression for <span class="math inline">\(S(\phi)\)</span>. That is, find a minimizer <span class="math inline">\(\widehat{\phi}\)</span> for <span class="math display">\[
+\min_{\phi \in \mathcal{F}} S_n(\phi) =  \min_{\phi \in \mathcal{F}}\int \phi d \mu_n + \int \phi^* d \nu_n.
+\]</span> (the class of functions minimized over <span class="math inline">\(\mathcal{F}\)</span> is chosen to suit the problem at hand, see sections 3.2-3.6 of <span class="citation" data-cites="CNWR2019">(<a href="#ref-CNWR2019" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2019</a>)</span>). Then define <span class="math inline">\(\widehat{T} = \nabla \widehat{\phi}\)</span>. This has the advantage over the empirical exitmator that <span class="math inline">\(\widehat{T}(x)\)</span> is defined for all <span class="math inline">\(x \in \mathbb{R}^d\)</span>.</p>
+<p><span class="citation" data-cites="CNWR2019">(<a href="#ref-CNWR2019" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2019</a>)</span> discusses the convergence of <span class="math inline">\(\widehat{T}\)</span> to <span class="math inline">\(T\)</span> (in the <span class="math inline">\(L^2(\mu)\)</span> sense) under certain circumstances and proves bounds for the convergence rate.</p>
+
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-CNWR2019" class="csl-entry" role="listitem">
+Chewi, Sinho, Jonathan Niles-Weed, and Philippe Rigollet. 2019. <em>Statistical Optimal Transport</em>. Springer. <a href="https://arxiv.org/abs/2407.18163">https://arxiv.org/abs/2407.18163</a>.
+</div>
+<div id="ref-villani2021topics" class="csl-entry" role="listitem">
+Villani, Cédric. 2021. <em>Topics in Optimal Transportation</em>. Vol. 58. American Mathematical Soc.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
