@@ -47,7 +47,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 ### Optimal Transport and Statistics
 
--   Estimation of transport maps - Evan Tufte, Chewi, Niles-Weed, Rigollet Ch.3
+-   [Estimation of transport maps](Est_Tr_Maps.qmd)
 
 ### Wasserstein Gradient Flows
 
