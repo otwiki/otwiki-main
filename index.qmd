@@ -14,7 +14,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 ### The optimal transportation problem
 
 -   [Monge Problem](https://www.otwiki.xyz/wiki/Monge_Problem)
--   [Kantorovich Problem](Kantorovich_Problem.qmd) *(has already been updated to quarto)*
+-   [Kantorovich Problem](Kantorovich_Problem.qmd)  
 -   [Optimal Transport in One Dimension](https://www.otwiki.xyz/wiki/Optimal_Transport_in_One_Dimension) - will be revised by Yusen
 -   [Kantorovich Dual Problem (for general costs)](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs))
 -   [Kantorovich Dual Problem (for $c(x,y) = d(x,y)^2$ where $d$ is a metric)](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric)) - Evan Tufte will revise
@@ -78,7 +78,6 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 ### Other
 
--   [Distraction Recommendations](tbd.qmd)
 -   [Nonlocal Equations Wiki](https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?)
 -   [Proteopedia](http://proteopedia.org/wiki/index.php/Main_Page)
 -   [Quantum Information Wiki](https://www.quantiki.org)
