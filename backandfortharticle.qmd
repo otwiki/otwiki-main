@@ -2,15 +2,15 @@
 title: "The Back and Forth Method"
 format: html
 editor: visual
+author: Jack Pfaffinger
 bibliography: backandforthbibliography.bib
 ---
 
 The Back and Forth Method is an iterative method introduced by Jacobs and Léger in [@backandforth] for solving the optimal transport problem for a class of strictly convex costs, including quadratic and $p$-power costs. This article closely follows [@backandforth].
 
-```{=tex}
 \newline
 \newline
-```
+
 #### **Preliminaries**
 
 Let $\Omega \subset \mathbb{R}^{d}$, be convex and compact. A cost on $\Omega$ is a continuous function $c: \Omega \times \Omega \rightarrow \mathbb{R}$. However, for this approach we will only focus on the case in which $$ c(x, y) = h(y-x) $$ for some strictly convex and even function $h: \mathbb{R}^d \rightarrow \mathbb{R}$. Let $\mu$ and $\nu$ be probability measures. We will concentrate on the special case where $\mu$ and $\nu$ are absolutely continuous with respect to Lebesgue measure. Because of this, we may commit a standard abuse of notation and identify a measure with its density function.
@@ -33,10 +33,9 @@ From here, we can see that the term $\inf_{T(x)} c(x, T(x)) - \phi(T(x))$ is imp
 
 We can now introduce the **Kantorovich dual functional** $$ J(\phi) = \int_{\Omega} \phi d \nu + \int_{\Omega} \phi^{c} d\mu . $$ It can be seen from above that $$ C(\mu, \nu)= \sup_{\phi}J(\phi) $$ where the supremum runs over all continuous functions $\phi: \Omega \rightarrow \mathbb{R}$.
 
-```{=tex}
 \newline
 \newline
-```
+
 #### **Gradient Ascent**
 
 Let $(\mathcal{H}, || \cdot||_{\mathcal{H}})$ be a separable Hilbert space and suppose that $F$ is a smooth convex functional $F: \mathcal{H} \rightarrow \mathbb{R}$.
@@ -70,4 +69,4 @@ $$
 \end{aligned}
 $$
 
-We will note that given two probability measures supported on a discrete grid with $n$ points, we compute the optimal map using $O(n)$ storage space and $O(n \log(n))$ operations per iteration, with an approximately exponential convergence rate. For more information and numerical examples, please see [@{backandforth}].
+We will note that given two probability measures supported on a discrete grid with $n$ points, we compute the optimal map using $O(n)$ storage space and $O(n \log(n))$ operations per iteration, with an approximately exponential convergence rate. For more information and numerical examples, please see [@backandforth].
