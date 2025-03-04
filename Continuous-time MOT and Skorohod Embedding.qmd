@@ -1,7 +1,7 @@
 ---
 title: "Continuous-Time MOT and Skorokhod Embedding"
 author: Qijin Shi
-bibliography: bibliography.bib
+bibliography: CTMOT_bibliography.bib
 ---
 
 This article is an extension of the previous Wiki article [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance). We set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging without assuming a specific stochastic model for the asset dynamics. The main technical difficulty in the continuous-time setting is the construction of a martingale coupling measure on the space of sample paths, e.g., $C([0, T], \mathbb{R})$; or equivalently, the construction of a continuous martingale price process matching all the given marginals. The [Skorokhod embedding problem (SEP)](https://en.wikipedia.org/wiki/Skorokhod%27s_embedding_theorem) plays the role of converting this technical difficulty into the problem of finding a stopping time for a Brownian motion that reproduces the target marginals. By illustrating several explicit SEP solutions, we give applications to robust hedging and pricing in the settings of continuous-time MOT.
