@@ -35,6 +35,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 - [Martingale optimal transport: dynamic formulation](DynamicMOT.qmd)
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing) - Charles will revise
 -   [Wasserstein-like Metrics on Graphs](WassersteinOnGraphs.qmd)
+- [Hellinger-Kantorovich Distance](HKdistance.qmd)
 - Continuous time martingale OT and Skorohod Embedding - Qijin Shi
 
 ### Numerical methods for optimal transport
@@ -54,7 +55,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 -   Probability flow solution of the Fokker–Planck equation - Simone Betteti - [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
 -   [Bures-Wasserstein Gradient flows](Bures-Wasserstein Gradient Flows.qmd)
--   Hellinger-Kantorvich Gradient flows - Djordje Nikolic
+
 
 ### Mathematical foundations
 
