@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Djordje Nikolic">
 
-<title>Wasserstein-like Metrics on Graphs – OT WIKI</title>
+<title>Hellinger-Kantorovich distance – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,13 +159,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Wasserstein-like Metrics on Graphs</h1>
+<h1 class="title">Hellinger-Kantorovich distance</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Djordje Nikolic </p>
+          </div>
+  </div>
     
   
     
@@ -175,75 +182,90 @@ window.Quarto = {
 </header>
 
 
-<section id="motivation" class="level1">
-<h1>Motivation</h1>
-<p>On Euclidean space, it is known that the solution to the heat equation can be viewed as a gradient flow. In other words, consider the heat equation <span class="math display">\[ \begin{cases}
-          \partial_t u(t, x) = \Delta u(t, x) \\
-          u(0,\cdot)=u_0(\cdot) . \\  
-       \end{cases}
-    \]</span> We define the energy functional <span class="math inline">\(\mathcal{F}\)</span> by <span class="math display">\[ \mathcal{F}(f)=\int_{\mathbb{R}^d}f(x)\ln(f(x))dx . \]</span> We restrict the domain of <span class="math inline">\(\mathcal{F}\)</span> to a suitable class of functions on <span class="math inline">\(\mathbb{R}^d\)</span> such that <span class="math inline">\(\mathcal{F}(f)\)</span> is well-defined and finite. Consider the metric space <span class="math inline">\((P_2(\mathbb{R}^d), W_2)\)</span>, where <span class="math inline">\(W_2\)</span> denotes the 2-Wasserstein metric, and <span class="math display">\[ P_2(\mathbb{R}^d) = \left \{ \mu \in P(\mathbb{R}^d) : \int_{\mathbb{R}^d} |x|^2 d \mu(x) &lt; \infty \right \} . \]</span> This metric space has a formal Riemannian structure (see <a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Amp%C3%A9re_Equation_on_Riemannian_Manifolds">this article</a> for more information), so the operator <span class="math inline">\(\nabla_{W_2}\)</span> is well-defined. Based on the seminal work of Jordan, Kinderlehrer and Otto in <span class="citation" data-cites="JKO">(<a href="#ref-JKO" role="doc-biblioref">Jordan 1998</a>)</span>, we know that the solution to the heat equation, <span class="math inline">\(u(t, x)\)</span>, satisfies <span id="eq-grad-flows"><span class="math display">\[
-    \partial_t u(t, x) = -\nabla_{W_2}\mathcal{F}(u(t,x)) .
-\tag{1}\]</span></span> This result has been extended to non-Euclidean base spaces. In other words, in many instances, we may replace <span class="math inline">\(\mathbb{R}^d\)</span> with a more general space (e.g.&nbsp;a Riemannian manifold). Then, we may develop an analogue to <span class="math inline">\(W_2\)</span> so that <a href="#eq-grad-flows" class="quarto-xref">Equation&nbsp;1</a> still holds. In this article, we will replace <span class="math inline">\(\mathbb{R}^d\)</span> with a finite directed graph <span class="math inline">\(G\)</span> and then construct an analogue to the 2-Wasserstein metric so that heat flow is the gradient flow of the entropy.</p>
+<p>Major disadvantage of <a href="https://en.wikipedia.org/wiki/Wasserstein_metric">Wasserstein distance</a> is that it is meaningful only for measures of equal total mass. For purpose of applications, in signal processing, image classification, machine learning, medical imaging etc, it is essential to describe an distance optimal transport distance on the space of positive measures. In 2015, three different research groups introduced new optimal transport distance on the space of positive Radon measures with various applications in mind; imaging applications, primal/dual and static formulations, population dynamics and gradient flows <span class="citation" data-cites="chizat2015unbalanced">(<a href="#ref-chizat2015unbalanced" role="doc-biblioref">Chizat et al. 2015</a>)</span>,<span class="citation" data-cites="chizat2018interpolating">(<a href="#ref-chizat2018interpolating" role="doc-biblioref">Chizat et al. 2018</a>)</span>,<span class="citation" data-cites="kondratyev2016new">(<a href="#ref-kondratyev2016new" role="doc-biblioref">Kondratyev, Monsaingeon, and Vorotnikov 2016</a>)</span>,<span class="citation" data-cites="liero2016optimal">(<a href="#ref-liero2016optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2016</a>)</span>,<span class="citation" data-cites="liero2018optimal">(<a href="#ref-liero2018optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2018</a>)</span>. Some authors call it Hellinger-Kantorovich (<span class="math inline">\(HK\)</span>) distance, since it is an interpolation between Kantorovich/Wasserstein and Hellinger distances; others call it Kantorovich-Fischer-Rao (<span class="math inline">\(FR\)</span>) distance, since it is an interpolation between Kantorovich/Wasserstein and Fischer-Rao distance. For detailed explanation of terminology issues, see Remark 2.2 <span class="citation" data-cites="mielke2025hellinger">(<a href="#ref-mielke2025hellinger" role="doc-biblioref">Mielke and Zhu 2025</a>)</span>.</p>
+<section id="dynamic-and-static-formulation-of-the-hellinger-kantorovich-distance" class="level1">
+<h1>Dynamic and Static Formulation of the Hellinger-Kantorovich Distance</h1>
+<section id="dynamic-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="dynamic-formulation">Dynamic Formulation</h2>
+<p>One way to define the Hellinger-Kantorovich distance between positive measures is in the dynamic sense of <a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">Benamou-Brenier</a>, <a href="https://otwiki.github.io/otwiki-main/Dynamic_OT.html">Dynamic Optimal Transport</a> via</p>
+<p><span class="math display">\[
+\mathbf{HK}(\mu,\nu) := \min \left\{ \int_{0}^{1} \int_\Omega (\alpha | \nabla u |^{2} + \beta |u |^{2}) d\rho_{t} dt : \partial_{t}\rho = \alpha \hspace{1mm} div (\rho\nabla u) - \beta \rho u, \rho(0) = \mu,  \rho(1) = \nu \right\},
+\]</span> where we minimize an action over the curves with endpoints <span class="math inline">\(\mu,\)</span> <span class="math inline">\(\nu\)</span> that solve continuity equation with source <span class="math display">\[
+    \partial_{t}\rho = \alpha \hspace{1mm} div(\rho\nabla u) - \beta \rho u
+\]</span> in the sense of distributions.</p>
 </section>
-<section id="setting-graphs-and-markov-chains" class="level1">
-<h1>Setting: Graphs and Markov Chains</h1>
-<p>Consider a complete finite weighted graph <span class="math inline">\(G\)</span> with nodes <span class="math inline">\(X = \{x_1, \ldots, x_n \}\)</span>. Let the edge weight from <span class="math inline">\(x_i\)</span> to <span class="math inline">\(x_j\)</span> be given by <span class="math inline">\(K(x_i, x_j)\)</span>. We may view our graph as a continuous-time Markov chain with states <span class="math inline">\(\{ x_1, \ldots, x_n \}\)</span>. By a slight abuse of notation, we let <span class="math inline">\(K\)</span> denote the <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrix with entry <span class="math inline">\((i, j)\)</span> equal to <span class="math inline">\(K(x_i, x_j)\)</span>. Then, we let <span class="math inline">\(Q = K - I\)</span> be the transition matrix associated with our Markov chain. The associated continuous time semigroup is given by <span class="math display">\[ H(t) = e^{tQ} . \]</span> We will assume that <span class="math display">\[ K_{ij} \geq 0 \; \forall i, j, \; \sum \limits_{j = 1}^n K_{ij} = 1 \; \forall i . \]</span> We will further assume that <span class="math inline">\(K\)</span> is irreducible, and hence the Markov chain has a unique steady state <span class="math inline">\(\pi\)</span>, where <span class="math inline">\(\pi = \pi K\)</span>. By elementary Markov chain theory, we know that <span class="math inline">\(\pi\)</span> is strictly positive. Consider the set <span class="math display">\[ P(X) = \left \{ \rho: X \rightarrow \mathbb{R} : \rho(x) \geq 0 \; \forall x \in X : \sum \limits_{x \in X} \rho(x)\pi(x) = 1 \right \} . \]</span> Intuitively, <span class="math inline">\(P(X)\)</span> can be thought of as the set of all probability density functions on <span class="math inline">\(X\)</span>; for each <span class="math inline">\(\rho \in P(X)\)</span>, there is a corresponding measure <span class="math inline">\(\mu\)</span> on <span class="math inline">\(X\)</span>, where <span class="math display">\[ \mu(A) = \sum \limits_{x \in A} \rho(x) \pi(x) \; \forall A \subseteq X . \]</span></p>
+<section id="static-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="static-formulation">Static Formulation</h2>
+<p>On the other hand, to generalize the optimal transport <a href="https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html">Kantorovich problem</a> to the setting of the positive measures, we define the entropy-transport functional:</p>
+<p><span class="math display">\[ \mathbf{ET}_{c,\Psi}(\Pi|\mu,\nu) := \int c(x_0,x_1) d\Pi(x_0, x_1) + \Psi(\pi_{0}|\mu) + \Psi(\pi_{1}|\nu),
+\]</span> where <span class="math inline">\(\pi_0(dx_0):= \Pi(dx_0,\Omega), \pi_1(dx_1):= \Pi(\Omega,dx_1).\)</span> In this approach, we compute the standard optimal transport distance between <span class="math inline">\(\pi_0\)</span> and <span class="math inline">\(\pi_1,\)</span> and penalize difference between <span class="math inline">\(\pi_0\)</span> and <span class="math inline">\(\mu,\)</span> <span class="math inline">\(\pi_1\)</span> and <span class="math inline">\(\nu,\)</span> using the divergence functional <span class="math inline">\(\Psi.\)</span></p>
 </section>
-<section id="a-new-metric-on-px" class="level1">
-<h1>A New Metric on <span class="math inline">\(P(X)\)</span></h1>
-<p>Let <span class="math inline">\(\theta: \mathbb{R}_+ \times \mathbb{R}_+ \rightarrow \mathbb{R}_+\)</span> denote the logarithmic mean, i.e. <span class="math display">\[ \theta(s, t) = \begin{cases}
-    s &amp; s = t \\
-    \frac{s - t}{\ln(s) - \ln(t)} &amp; \text{otherwise}.
-\end{cases}\]</span> Then, we define <span class="math inline">\(\rho(x, y) = \theta(\rho(x), \rho(y))\)</span>. For <span class="math inline">\(\rho_0, \rho_1 \in P(X)\)</span>, we define <span class="math display">\[ W(\rho_0, \rho_1)^2 = \inf \limits_{\rho, \psi} \left \{ \frac{1}{2} \int_0^1 \sum \limits_{x, y \in X} \left ( \psi_t(x) - \psi_t(y)\right )^2 K(x, y) \rho_t(x, y) \pi(x) dt \right \} , \]</span> where the infimum runs over all piecewise <span class="math inline">\(C^1\)</span> curves <span class="math inline">\(\rho:[0, 1] \rightarrow P(X)\)</span> and all measurable functions <span class="math inline">\(\psi:[0, 1] \rightarrow \mathbb{R}^X\)</span> satisfying for a.e. <span class="math inline">\(t \in [0, 1]\)</span>, <span class="math display">\[ \begin{cases}
-    \frac{d}{dt} \rho_t(x) + \sum \limits_{y \in X}  ( \psi_t(x) - \psi_t(y) ) K(x, y) \rho_t(x, y) = 0 &amp; \forall x \in X \\
-    \rho(0) = \rho_0, \rho(1) = \rho_1 .
-\end{cases} \]</span> Readers who are familiar with the <a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">Benamou-Brenier formula</a> will note the similarity between this definition and that formula. We have the following:</p>
-<div id="thm-1" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1</strong></span> The following assertions hold:</p>
-<ol type="1">
-<li><span class="math inline">\(W\)</span> defines a pseudo-metric on <span class="math inline">\(P(X)\)</span>.</li>
-<li><span class="math inline">\(W(\rho_0, \rho_1) &lt; \infty\)</span> for all <span class="math inline">\(\rho_0, \rho_1 \in P(X)\)</span>.</li>
-<li><span class="math inline">\(W\)</span> metrises the topology of weak convergence.</li>
-</ol>
-</div>
-<div id="thm-2" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2</strong></span> Let <span class="math inline">\(H(\rho) = \sum \limits_{x \in X} \pi(x) \rho(x) \ln(\rho(x))\)</span> be the entropy functional. For <span class="math inline">\(\rho \in P(X)\)</span> and <span class="math inline">\(t \geq 0\)</span>, set <span class="math inline">\(\rho_t = e^{t(K - I)}\)</span>. Then the gradient flow equation <span class="math display">\[ \frac{d}{dt} \rho = - \nabla H(\rho_t) \]</span> holds for all <span class="math inline">\(t &gt; 0\)</span>.</p>
-</div>
-<p>Proofs for these theorems can be found in <span class="citation" data-cites="Maas2011">(<a href="#ref-Maas2011" role="doc-biblioref">Maas 2011</a>)</span>.</p>
+<section id="connection-between-the-two-descriptions" class="level2">
+<h2 class="anchored" data-anchor-id="connection-between-the-two-descriptions">Connection between the two descriptions</h2>
+<p>For suitable choice of <span class="math inline">\(\Psi = \frac{1}{\beta}D_{KL},\)</span> for <span class="math inline">\(KL\)</span> divergence (<a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a>), and a cost function:</p>
+<p><span class="math display">\[  c(x_0,x_1) := \begin{cases} \frac{-2}{\beta} \log(\cos \left( \sqrt{\frac{\beta}{4\alpha}}|x_0-x_1| \right))   &amp;\text{ if } |x_0-x_1|&lt;\pi \sqrt{\frac{\alpha}{\beta}} , \\ +\infty &amp;\text{ otherwise.} \end{cases}
+\]</span> we obtain connection between the two definitions</p>
+<p><span class="math display">\[
+\mathbf{HK}^{2}(\mu,\nu) := \inf_{\Pi \in \mathcal{M}^{+}(\Omega \times \Omega)} \mathbf{ET}_{c,\Psi} (\Pi|\mu,\nu).
+\]</span>See <span class="citation" data-cites="liero2016optimal">(<a href="#ref-liero2016optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2016</a>)</span> for the proof.</p>
 </section>
-<section id="the-two-point-space" class="level1">
-<h1>The Two Point Space</h1>
-<p>Consider the case <span class="math inline">\(X = (a, b)\)</span>, <span class="math display">\[ K = \begin{bmatrix}
-    1 - p &amp; p \\
-    q &amp; 1 - q
-\end{bmatrix}, \]</span> where <span class="math inline">\(p, q \in (0, 1]\)</span>. If we define <span class="math inline">\(\rho^{\beta} = \frac{1}{2} \left ( (1 - \beta)\delta_a + (1 + \beta) \delta_b \right )\)</span>, then <span class="math display">\[ P(X) = \left \{ \rho^{\beta} : \beta \in [-1, 1] \right \} . \]</span> In this special case, our metric <span class="math inline">\(W\)</span> reduces to <span class="math display">\[ W(\rho^{\alpha}, \rho^{\beta}) =  \int_{\alpha}^{\beta} \frac{1}{\sqrt{2\theta(q(1 + r), p(1 - r))}} dr , \]</span> where <span class="math inline">\(\alpha \leq \beta\)</span>. Notice that if we define <span class="math display">\[ \varphi(\beta) = \int_{0}^{\beta}  \frac{1}{\sqrt{2 \theta(q(1 + r), p(1 - r))}}dr , \]</span> then for any <span class="math inline">\(\alpha, \beta \in [-1, 1]\)</span>, <span class="math display">\[ W(\rho^{\alpha}, \rho^{\beta}) = |\varphi(\alpha) - \varphi(\beta)| . \]</span> As a result, the function <span class="math inline">\(J: P(X) \rightarrow [-1, 1]\)</span>, <span class="math display">\[ J(\rho^{\beta}) = \varphi(\beta) \]</span> defines an isometry from <span class="math inline">\((P(X), W)\)</span> to <span class="math inline">\(([-1, 1], |\cdot|)\)</span>. We can exploit this isometry when identifying constant-speed geodesics in <span class="math inline">\((P(X), W)\)</span>.</p>
-<div id="thm-3" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3</strong></span> Choose <span class="math inline">\(\alpha, \beta \in [-1, 1]\)</span>. There exists a unique constant speed geodesic <span class="math inline">\(\{ p^{\gamma(t)} \}_{t \in [0, 1]}\)</span>, where <span class="math inline">\(\gamma \in C^1([0, 1], \mathbb{R})\)</span> and <span class="math display">\[ \begin{cases}
-    \gamma'(t) = \omega \sqrt{ 2 \theta(q(1 + \gamma(t)), p(1 - \gamma(t))) } \\
-    \gamma(0) = \alpha \\
-    \gamma(1) = \beta,
-\end{cases} \]</span> where <span class="math inline">\(\omega = sgn(\beta - \alpha) W(\rho^{\alpha}, \rho^{\beta})\)</span>.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Since <span class="math inline">\(J\)</span> is an isometry, existence and uniqueness of <span class="math inline">\(\gamma(t)\)</span> immediately follows. To show <span class="math inline">\(\rho^{\gamma(t)}\)</span> is a constant speed geodesic, let <span class="math inline">\(\gamma\)</span> be the curve described above. Choose <span class="math inline">\(0 \leq s &lt; t \leq 1\)</span>, and note <span class="math display">\[\begin{align*}
-    W \left (\rho^{\gamma(t)}, \rho^{\gamma(s)} \right )
-    &amp; = |\varphi(\gamma(t)) - \varphi(\gamma(s))| \\
-    &amp; = \left | \int_s^t \varphi'(\gamma(r)) \cdot \gamma'(r) dr \right | \\
-    &amp; = \left | \int_s^t  \frac{1}{\sqrt{2 \theta(q(1 + \gamma(t)), p(1 - \gamma(t)))}} \cdot \omega \sqrt{ 2 \theta(p(1 - \gamma(t)), q(1 + \gamma(t))) } dr \right | \\
-    &amp; = |t - s| W\left(\rho^{\alpha}, \rho^{\beta}\right) .
-\end{align*}\]</span></p>
-</div>
+</section>
+<section id="gradient-flows" class="level1">
+<h1>Gradient Flows</h1>
+<p>In works by Jordan-Kinderlehrer-Otto (JKO) <span class="citation" data-cites="jordan1998variational">(<a href="#ref-jordan1998variational" role="doc-biblioref">Jordan, Kinderlehrer, and Otto 1998</a>)</span> and Otto <span class="citation" data-cites="otto2001geometry">(<a href="#ref-otto2001geometry" role="doc-biblioref">Otto 2001</a>)</span>, motivated by the optimization problem <span class="math inline">\(min_{\rho \in \mathcal{P}_{2}(\mathbb{R}^{d})} \hspace{0.1cm} F(\rho),\)</span> for the energy functional <span class="math inline">\(F\)</span> in the Wasserstein space, authors studied partial differential equations of type <span class="math display">\[
+\partial_{t}\rho + div\left(\rho \nabla \frac{\delta F}{\delta \rho} [\rho]\right) = 0,
+\]</span> as gradient flows of <span class="math inline">\(F,\)</span> where <span class="math inline">\(\frac{\delta F}{\delta \rho} [\rho]\)</span> is its first variation.</p>
+<p>For the energy functional <span class="math display">\[
+F(\rho) = \int_{\Omega} \left( U(\rho) + V(x)\rho + \frac{1}{2}\rho K\star \rho \right)dx,
+\]</span> where <span class="math inline">\(U\)</span> is internal energy, <span class="math inline">\(V\)</span> potential function, and <span class="math inline">\(K\)</span> interaction kernel, we have associated weak solutions of the partial differential equation <span class="math display">\[
+    \partial_{t}\rho = div(\rho \nabla(U'(\rho)+V+K*\rho))
+\]</span> to the gradient flow <span class="math display">\[
+    \partial_{t} \rho = - grad_{W_{2}} F(\rho).
+\]</span></p>
+<p>Following the paper on the JKO scheme for Hellinger-Kantorovich distance <span class="citation" data-cites="gallouet2017jko">(<a href="#ref-gallouet2017jko" role="doc-biblioref">Gallouët and Monsaingeon 2017</a>)</span>, in a local sense, infinitesimally, we have<br>
+<span class="math display">\[
+    \mathbf{HK}^{2} \approx \mathbf{W}_{2}^{2} + \mathbf{FR}^{2},
+\]</span> using <a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of Wasserstein Metric</a> and Riemannian structure of Fischer-Rao metric. Hence, we obtain <span class="math display">\[
+    \| grad_{HK} F(\rho) \|^{2} = \| grad_{W_{2}} F(\rho) \|^{2} + \| grad_{FR} F(\rho) \|^{2}
+\]</span></p>
+<p>Now, we can observe existence of weak solutions of the partial differential equation <span class="math display">\[
+    \partial_{t}\rho = div(\rho \nabla(U'(\rho)+V+K*\rho)) - \rho(U'(\rho)+V+K*\rho),
+\]</span> associated with <span class="math inline">\(HK\)</span> gradient flows, <span class="math display">\[
+    \partial_{t} \rho = - grad_{HK} F(\rho)..
+\]</span><br>
+Under reasonable conditions, metric gradient flows can be characterized in this case <span class="citation" data-cites="gallouet2017jko">(<a href="#ref-gallouet2017jko" role="doc-biblioref">Gallouët and Monsaingeon 2017</a>)</span>. For complete characterization of gradient flows of positive, and probability measures, with respect to Hellinger-Kantorovich geometry, and applications in computational algorithms machine learning, see <span class="citation" data-cites="mielke2025hellinger">(<a href="#ref-mielke2025hellinger" role="doc-biblioref">Mielke and Zhu 2025</a>)</span>.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-JKO" class="csl-entry" role="listitem">
-Jordan, et al. 1998. <span>“The Variational Formulation of the Fokker–Planck Equation.”</span>
+<div id="ref-chizat2015unbalanced" class="csl-entry" role="listitem">
+Chizat, Lenaic, Gabriel Peyré, Bernhard Schmitzer, and François-Xavier Vialard. 2015. <span>“Unbalanced Optimal Transport: Geometry and Kantorovich Formulation (2015).”</span> <em>arXiv Preprint arXiv:1508.05216</em>.
 </div>
-<div id="ref-Maas2011" class="csl-entry" role="listitem">
-Maas, Jan. 2011. <span>“Gradient Flows of the Entropy for Finite Markov Chains.”</span>
+<div id="ref-chizat2018interpolating" class="csl-entry" role="listitem">
+———. 2018. <span>“An Interpolating Distance Between Optimal Transport and Fisher–Rao Metrics.”</span> <em>Foundations of Computational Mathematics</em> 18: 1–44.
+</div>
+<div id="ref-gallouet2017jko" class="csl-entry" role="listitem">
+Gallouët, Thomas O, and Leonard Monsaingeon. 2017. <span>“A JKO Splitting Scheme for Kantorovich–Fisher–Rao Gradient Flows.”</span> <em>SIAM Journal on Mathematical Analysis</em> 49 (2): 1100–1130.
+</div>
+<div id="ref-jordan1998variational" class="csl-entry" role="listitem">
+Jordan, Richard, David Kinderlehrer, and Felix Otto. 1998. <span>“The Variational Formulation of the Fokker–Planck Equation.”</span> <em>SIAM Journal on Mathematical Analysis</em> 29 (1): 1–17.
+</div>
+<div id="ref-kondratyev2016new" class="csl-entry" role="listitem">
+Kondratyev, Stanislav, Léonard Monsaingeon, and Dmitry Vorotnikov. 2016. <span>“A New Optimal Transport Distance on the Space of Finite Radon Measures.”</span>
+</div>
+<div id="ref-liero2016optimal" class="csl-entry" role="listitem">
+Liero, Matthias, Alexander Mielke, and Giuseppe Savaré. 2016. <span>“Optimal Transport in Competition with Reaction: The Hellinger–Kantorovich Distance and Geodesic Curves.”</span> <em>SIAM Journal on Mathematical Analysis</em> 48 (4): 2869–2911.
+</div>
+<div id="ref-liero2018optimal" class="csl-entry" role="listitem">
+———. 2018. <span>“Optimal Entropy-Transport Problems and a New Hellinger–Kantorovich Distance Between Positive Measures.”</span> <em>Inventiones Mathematicae</em> 211 (3): 969–1117.
+</div>
+<div id="ref-mielke2025hellinger" class="csl-entry" role="listitem">
+Mielke, Alexander, and Jia-Jie Zhu. 2025. <span>“Hellinger-Kantorovich Gradient Flows: Global Exponential Decay of Entropy Functionals.”</span> <em>arXiv Preprint arXiv:2501.17049</em>.
+</div>
+<div id="ref-otto2001geometry" class="csl-entry" role="listitem">
+Otto, Felix. 2001. <span>“The Geometry of Dissipative Evolution Equations: The Porous Medium Equation.”</span>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
