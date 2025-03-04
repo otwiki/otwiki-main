@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Qijin Shi">
+
+<title>Continuous-Time MOT and Skorokhod Embedding – OT WIKI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">OT WIKI</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Continuous-Time MOT and Skorokhod Embedding</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Qijin Shi </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This article is an extension of the previous Wiki article <a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a>. We set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging without assuming a specific stochastic model for the asset dynamics. The main technical difficulty in the continuous-time setting is the construction of a martingale coupling measure on the space of sample paths, e.g., <span class="math inline">\(C([0, T], \mathbb{R})\)</span>; or equivalently, the construction of a continuous martingale price process matching all the given marginals. The <a href="https://en.wikipedia.org/wiki/Skorokhod%27s_embedding_theorem">Skorokhod embedding problem (SEP)</a> plays the role of converting this technical difficulty into the problem of finding a stopping time for a Brownian motion that reproduces the target marginals. By illustrating several explicit SEP solutions, we give applications to robust hedging and pricing in the settings of continuous-time MOT.</p>
+<p>This article requires basic knowledge of stochastic analysis, mainly <a href="https://en.wikipedia.org/wiki/Stochastic_calculus">stochastic calculus</a> and <a href="https://en.wikipedia.org/wiki/It%C3%B4%27s_lemma">Itô’s formula</a>. The main reference is <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span>, Chapter 4.</p>
+<section id="continuous-time-mot" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-time-mot">Continuous-time MOT</h2>
+<p>The setting of continuous-time MOT is similar to the discrete case in the previous Wiki article <a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a>, except the underlying price process is continuous. We describe it via a probability measure on a path space, e.g., <span class="math inline">\(C([0, T], \mathbb{R}_+)\)</span>. Throughout this article, we assume a zero interest rate.</p>
+<section id="probabilistic-setup" class="level3">
+<h3 class="anchored" data-anchor-id="probabilistic-setup">Probabilistic setup</h3>
+<p>Let <span class="math inline">\(\Omega \equiv\left\{\omega \in C\left([0, T], \mathbb{R}_{+}\right): \omega_0=0\right\}\)</span> be the canonical space equipped with the uniform norm <span class="math inline">\(\|\omega\|_{\infty} \equiv \sup _{0 \leq t \leq T}|\omega(t)|, B\)</span> the canonical process, i.e., <span class="math inline">\(B_t(\omega) \equiv \omega(t)\)</span> and <span class="math inline">\(\mathcal{F} \equiv\left\{\mathcal{F}_t\right\}_{0 \leq t \leq T}\)</span> the filtration generated by <span class="math inline">\(B: \mathcal{F}_t=\)</span> <span class="math inline">\(\sigma\left\{B_s, s \leq t\right\}. \mathbb{P}^0\)</span> is the Wiener measure. <span class="math inline">\(S_0\)</span> is some given initial value in <span class="math inline">\(\mathbb{R}_{+}\)</span>, and we denote</p>
+<p><span class="math display">\[
+S_t \equiv S_0+B_t \text { for } t \in[0, T]
+\]</span></p>
+<p>For any <span class="math inline">\(\mathcal{F}\)</span>-adapted process <span class="math inline">\(\sigma\)</span> and satisfying <span class="math inline">\(\int_0^T \sigma_s^2 d s&lt;\infty, \mathbb{P}^0\)</span>-a.s., we define the probability measure on <span class="math inline">\((\Omega, \mathcal{F})\)</span> :</p>
+<p><span class="math display">\[
+\mathbb{P}^\sigma \equiv \mathbb{P}^0 \circ\left(S^\sigma\right)^{-1} \text { where } S_t^\sigma \equiv S_0+\int_0^t \sigma_r d B_r, t \in[0, T], \mathbb{P}^0-\text { a.s. }
+\]</span></p>
+<p>Then <span class="math inline">\(S\)</span> is a <span class="math inline">\(\mathbb{P}^\sigma\)</span>-local martingale. We denote by <span class="math inline">\(\mathcal{M}^c\)</span> the collection of all such probability martingale measures on <span class="math inline">\((\Omega, \mathcal{F})\)</span>, i.e.</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathbb{P}^\sigma}\left[S_s \mid \mathcal{F}_t\right]=S_t \quad \forall 0\leq t\leq s\leq T.
+\]</span></p>
+<p>In other words, the set of all <span class="math inline">\(S^{\sigma}\)</span> is the set of all martingale price processes we consider and <span class="math inline">\(\mathcal{M}^c\)</span> is the set of all martingale probability measures induced on the canonical space by these price processes.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Quadratic_variation">quadratic variation process</a> <span class="math inline">\(\langle S\rangle=\langle B\rangle\)</span> takes values in the set of all nondecreasing continuous functions. Note that the quadratic variation can be defined pathwise as the limsup of the corresponding discrete counterpart with conveniently chosen mesh of the time partition. The dependence of the quadratic variation on the underlying probability measure <span class="math inline">\(\mathbb{P} \in \mathcal{M}^{\text {c }}\)</span> can therefore be dropped. Finally, <span class="math inline">\(\mathcal{M}^c(\mu) \equiv\left\{\mathbb{P}^\sigma \in \mathcal{M}^c: S_T^\sigma \stackrel{\mathbb{P}^\sigma}{\sim} \mu\right\}\)</span> where <span class="math inline">\(\mu\)</span> is supported on <span class="math inline">\(\mathbb{R}_{+}\)</span>. For the ease of notation, we will delete the superscript <span class="math inline">\(\sigma\)</span> on <span class="math inline">\(S^\sigma\)</span> below.</p>
+<p>Additionally, for all <span class="math inline">\(\mathbb{P} \in \mathcal{M}^c\)</span>, we denote the set of trading portfolios:</p>
+<p><span class="math display">\[
+\mathbb{H}_{\mathrm{loc}}^2(\mathbb{P}) \equiv\left\{H \in \mathbb{H}^0(\mathbb{P}): \int_0^T H_t^2 d\langle S\rangle_t&lt;\infty, \mathbb{P}-\text { a.s. }\right\}
+\]</span> Under the self-financing condition, for any admissible portfolio <span class="math inline">\(H\)</span>, the portfolio value process</p>
+<p><span class="math display">\[
+Y_t^H \equiv Y_0+\int_0^t H_s d S_s, t \in[0, T]
+\]</span> is well-defined <span class="math inline">\(\mathbb{P}\)</span>-a.s. for every <span class="math inline">\(\mathbb{P} \in \mathcal{M}^c\)</span>, whenever <span class="math inline">\(H \in \mathbb{H}_{\text {loc }}^2\)</span>. In order to avoid doubling strategies, we introduce the set of admissible portfolios:</p>
+<p><span class="math display">\[
+\mathcal{H} \equiv\left\{H: H \in \mathbb{H}_{\text {loc }}^2 \text { and } Y^H \text { is a } \mathbb{P}-\text { supermartingale for all } \mathbb{P} \in \mathcal{M}^c\right\}
+\]</span></p>
+</section>
+<section id="duality-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="duality-formulation">Duality formulation</h3>
+<p>Let <span class="math inline">\(\xi\)</span> be the payoff of an option, defined as an <span class="math inline">\(\mathcal{F}_T\)</span>-measurable random variable. This means that the payoff might not depend only on the final price <span class="math inline">\(S_T\)</span>, but also on the whole price path. In addition to the continuous-time trading, we assume that the investor can take static positions in Vanilla options with maturities <span class="math inline">\(\left(t_i\right)_{i=1, \ldots, n}\)</span>. From the theory of , <span class="math inline">\(t_i\)</span>-Vanilla defined by the payoff <span class="math inline">\(\lambda_i\left(S_{t_i}\right) \in \mathrm{L}^1\left(\mathbb{P}^i\right)\)</span> has an unambiguous market price given by <span class="math inline">\(\mathbb{E}^{\mathbb{P}^i}\left[\lambda_i\left(S_{t_i}\right)\right]\)</span>, see also . The robust super-replication price is then defined by:</p>
+<p><span class="math display">\[
+\begin{array}{r}
+\operatorname{MK}_n^{\mathrm{c}}\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right) \equiv \inf \left\{Y_0: \exists\left(\lambda_i \in \mathrm{~L}^1\left(\mathbb{P}^i\right)\right)_{i=1, \ldots, n} \text { and } H \in \mathcal{H}\right. \\
+\left.\bar{Y}_T^{H, \lambda} \geq \xi, \mathbb{P}-\text { a.s. for all } \mathbb{P} \in \mathcal{M}^c\right\}
+\end{array}
+\]</span> where <span class="math inline">\(\bar{Y}^{H, \lambda}\)</span> denotes the portfolio value of a self-financing strategy with continuous trading <span class="math inline">\(H\)</span> in the underlying, and static trading <span class="math inline">\(\left(\lambda_i\right)_{i=1, \ldots, n}\)</span> in the <span class="math inline">\(t_i\)</span>-Vanillas:</p>
+<p><span class="math display">\[
+\bar{Y}_T^{H, \lambda} \equiv Y_0+\int_0^T H_s d S_s+\sum_{i=1}^n \lambda_i\left(S_{t_i}\right)-\sum_{i=1}^n \mathbb{E}^{\mathbb{P}^i}\left[\lambda_i\left(S_{t_i}\right)\right]
+\]</span></p>
+<p>The financial interpretation is the following: The investor buys at time 0 any Vanilla with payoff <span class="math inline">\(\lambda_i\left(S_{t_i}\right)\)</span> for the price <span class="math inline">\(\mathbb{E}^{\mathbb{P}^i}\left[\lambda_i\left(S_{t_i}\right)\right]\)</span>, while trading using the portfolio <span class="math inline">\(H\)</span>. That <span class="math inline">\(\bar{Y}_T^{H, \lambda} \geq \xi,\)</span> <span class="math inline">\(\mathbb{P}-\)</span> a.s. for all <span class="math inline">\(\mathbb{P} \in \mathcal{M}^c\)</span> essentially means that under all possible price process, the final wealth of our self-financing strategy is larger than the pay-off of the option <span class="math inline">\(\xi\)</span> with probability one. Thus, <span class="math inline">\(\mathrm{MK}_n^c\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)\)</span> is an upper bound on the price of <span class="math inline">\(\xi\)</span> necessary for absence of strong (model-independent) arbitrage opportunities: selling <span class="math inline">\(\xi\)</span> at a higher price, the hedger could set up a portfolio with a negative initial cost and a non-negative payoff under any market scenario.</p>
+<p>Similarly, in the case of continuous-time static hedging in Vanillas, we define</p>
+<p><span class="math display">\[
+\begin{array}{r}
+\mathrm{MK}_{\infty}^{\mathrm{c}}\left(\left(\mathbb{P}^t\right)_{t \in(0, T]}\right) \equiv \inf \left\{Y_0: \exists\left(\lambda(t, \cdot) \in \mathrm{L}^1\left(\mathbb{P}^t\right)\right)_{t \in(0, T]} \text { and } H \in \mathcal{H}\right. \\
+\left.\bar{Y}_T^{H, \lambda} \geq \xi, \mathbb{P}-\text { a.s. for all } \mathbb{P} \in \mathcal{M}^c\right\},
+\end{array}
+\]</span> where <span class="math inline">\(t \mapsto \mathbb{E}^{\mathbb{P}^t}\left[\lambda\left(t, S_t\right)\right] \in \mathrm{L}^1([0, T])\)</span> and <span class="math display">\[
+\bar{Y}_T^{H, \lambda} \equiv Y_0+\int_0^T H_s d S_s+\int_0^T \lambda\left(t, S_t\right) d t-\int_0^T \mathbb{E}^{\mathrm{P}^t}\left[\lambda\left(t, S_t\right)\right] d t
+\]</span></p>
+<p>Now we give the key result from the perspective of OT, the dual formulation of the above robust superhedging price:</p>
+<p><strong>Proposition 4.1 <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref">Henry-Labordère 2017</a>)</span></strong></p>
+<p>Assume <span class="math inline">\(\sup_{\mathbb{P} \in \mathcal{M}^c} \mathbb{E}^\mathbb{P}[\xi^+] &lt; \infty\)</span>. Then:</p>
+<ol type="i">
+<li><p><span class="math display">\[
+\operatorname{MK}_n^c(\mathbb{P}^1, \ldots, \mathbb{P}^n) = \inf_{(\lambda_i)} \sum_{i=1}^n \mathbb{E}^{\mathbb{P}^i}[\lambda_i(S_{t_i})] + \sup_{\mathbb{P} \in \mathcal{M}^c} \mathbb{E}^\mathbb{P}\left[\xi - \sum_{i=1}^n \lambda_i(S_{t_i})\right].
+\]</span></p></li>
+<li><p><span class="math display">\[
+\operatorname{MK}_\infty^c((\mathbb{P}^t)) = \inf_{\lambda(t,\cdot)} \int_0^T \mathbb{E}^{\mathbb{P}^t}[\lambda(t, S_t)] dt + \sup_{\mathbb{P} \in \mathcal{M}^c} \mathbb{E}^\mathbb{P}\left[\xi - \int_0^T \lambda(t, S_t) dt\right].
+\]</span></p></li>
+</ol>
+<p><strong>Proof</strong>: See <span class="citation" data-cites="galichon2014stochastic guo2016optimal">(<a href="#ref-galichon2014stochastic" role="doc-biblioref">Galichon, Henry-Labordère, and Touzi 2014</a>; <a href="#ref-guo2016optimal" role="doc-biblioref">Guo, Tan, and Touzi 2016</a>)</span>.</p>
+</section>
+<section id="an-intuitive-duality-formulation-assuming-a-minimax-argument" class="level3">
+<h3 class="anchored" data-anchor-id="an-intuitive-duality-formulation-assuming-a-minimax-argument">An intuitive duality formulation assuming a minimax argument</h3>
+<p>The above dual formulation might seem less intuitive at first glance. Now we give a more intuitive dual formulation assuming a minimax argument holds.</p>
+<p>Taking for granted that we can permute the supremum over <span class="math inline">\(\mathbb{P} \in \mathcal{M}^c\)</span> and the infimum over <span class="math inline">\(\left(\lambda_i \in \mathrm{~L}^1\left(\mathbb{P}^i\right)\right)_{i=1, \ldots, n}\)</span>, we get <span class="math display">\[
+\operatorname{MK}_n^{\mathrm{c}}\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)=\sup _{\mathbb{P} \in \mathcal{M}^c\left(\lambda_i \in \mathrm{~L}^1\left(\mathbb{P}^i\right)\right)_{i=1, \ldots, n}} \sum_{i=1}^n \mathbb{E}^{\mathbb{P}^i}\left[\lambda_i\left(S_{t_i}\right)\right] +\mathbb{E}^{\mathbb{P}}\left[\xi-\sum_{i=1}^n \lambda_i\left(S_{t_i}\right)\right]
+\]</span> Then, taking the infimum over <span class="math inline">\(\left(\lambda_i \in \mathrm{~L}^1\left(\mathbb{P}^i\right)\right)_{i=1, \ldots, n}\)</span>, we deduce <span class="math display">\[\begin{equation}\label{4.8}
+    \operatorname{MK}_n^{\mathrm{c}}\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)=\sup _{\mathbb{P} \in \mathcal{M}^c\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)} \mathbb{E}^{\mathbb{P}}[\xi]
+\end{equation}\]</span> where <span class="math display">\[
+\mathcal{M}^c\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right) \equiv\left\{\mathbb{P} \in \mathcal{M}^c: S_{t_i} \stackrel{\mathbb{P}}{\sim} \mathbb{P}^i, \quad \forall i=1, \ldots, n\right\}
+\]</span> Similarly, taking for granted that we can permute the supremum over <span class="math inline">\(\mathbb{P} \in \mathcal{M}^c\)</span> and the infimum over <span class="math inline">\(\lambda(t, \cdot) \in \mathrm{L}^1\left(\mathbb{P}^t\right), \forall t \in(0, T]\)</span>, we get <span class="math display">\[\begin{equation}\label{4.10}
+\mathrm{MK}_{\infty}^{\mathrm{c}}\left(\left(\mathbb{P}^t\right)_{t \in(0, T]}\right)=\sup _{\mathbb{P} \in \mathcal{M}^c\left(\left(\mathbb{P}^t\right)_{t \in(0, T]}\right)} \mathbb{E}^{\mathbb{P}}[\xi]
+\end{equation}\]</span> where <span class="math display">\[
+\mathcal{M}^c\left(\left(\mathbb{P}^t\right)_{t \in(0, T]}\right) \equiv\left\{\mathbb{P} \in \mathcal{M}^c: S_t \stackrel{\mathbb{P}}{\sim} \mathbb{P}^t, \quad \forall t \in(0, T]\right\}
+\]</span></p>
+<p>So providing we could justify this minimax argument, our robust superhedging is connected to a MOT: we maximize the cost <span class="math inline">\(\mathbb{E}^{\mathbb{P}}[\xi]\)</span> over the space of martingale measures with marginals <span class="math inline">\(\left(\mathbb{P}^i\right)_{i=1, \ldots, n}\left(\right.\)</span> or <span class="math inline">\(\left.\left(\mathbb{P}^t\right)_{t \in(0, T]}\right)\)</span> and <span class="math inline">\(\mathbb{P}^0=\delta_{S_0}\)</span>. If the dual is attained, <span class="math inline">\(\mathrm{MK}_n^{\mathrm{c}}\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)=\mathbb{E}^{\mathbb{P}^*}[\xi]\)</span> should be attained by a martingale measure <span class="math inline">\(\mathbb{P}^* \in\)</span> <span class="math inline">\(\mathcal{M}^c\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)\)</span>. Similarly, <span class="math inline">\(\mathrm{MK}_{\infty}^{\mathrm{c}}\left(\mathbb{P}^t\right)\)</span> should be attained by a martingale measure in <span class="math inline">\(\mathcal{M}^c\left(\left(\mathbb{P}^t\right)_{t \in(0, T]}\right)\)</span>. We note that this corresponds to the core idea of option pricing in mathematical finance: the price of an option from the seller’s perspective (the right-hand side of the equations) should coincide with its price from the buyer’s perspective (the left-hand side of the equations). In the rest of this article, we mean the above strong dualities when we say the dual formulation.</p>
+<p><strong>Remark</strong>: Although we do not provide proofs for the above duality, we mention that the mathematical justification of the dualities above has been covered by various authors under various assumptions on the canonical space <span class="math inline">\(\Omega\)</span> and on <span class="math inline">\(\xi\)</span>. See for example <span class="citation" data-cites="beiglboeck2015complete bouchard2015arbitrage dolinsky2014robust dolinsky2014robusttc dolinsky2016martingale guo2016optimal">(<a href="#ref-beiglboeck2015complete" role="doc-biblioref">Beiglböck, Nutz, and Touzi 2015</a>; <a href="#ref-bouchard2015arbitrage" role="doc-biblioref">Bouchard and Nutz 2015</a>; <a href="#ref-dolinsky2014robust" role="doc-biblioref">Dolinsky and Soner 2014a</a>, <a href="#ref-dolinsky2014robusttc" role="doc-biblioref">2014b</a>, <a href="#ref-dolinsky2016martingale" role="doc-biblioref">2016</a>; <a href="#ref-guo2016optimal" role="doc-biblioref">Guo, Tan, and Touzi 2016</a>)</span>.</p>
+</section>
+</section>
+<section id="link-with-skorokhod-embedding-problem" class="level2">
+<h2 class="anchored" data-anchor-id="link-with-skorokhod-embedding-problem">Link with Skorokhod embedding problem</h2>
+<p>In this section, we assume that the payoff <span class="math inline">\(\xi\left(S_T, M_T, m_T,\langle S\rangle_T\right)\)</span> depends on the spot <span class="math inline">\(S_T\)</span>, the running maximum <span class="math inline">\(M_T\)</span>, minimum <span class="math inline">\(m_T\)</span> or the quadratic variation <span class="math inline">\(\langle S\rangle_T\)</span> at <span class="math inline">\(T\)</span>.</p>
+<p>To link the strong dual formula above with the Skorohod embedding problem, we first review the classical <a href="https://en.wikipedia.org/wiki/Dubins%E2%80%93Schwarz_theorem">Dubins–Schwarz theorem</a> from stochastic analysis, indicating that every continuous martingale is a stochastic time-change of a standard Brownian motion:</p>
+<p><strong>Lemma (Dubins–Schwarz)</strong><br>
+Let <span class="math inline">\(M\)</span> be a continuous martingale with respect to a filtration <span class="math inline">\(\mathcal{F}_t\)</span> and <span class="math inline">\(\langle M\rangle_{\infty}=\infty\)</span> and define for all <span class="math inline">\(t \geq 0\)</span> the time-changes (i.e.&nbsp;stopping times) <span class="math display">\[
+T_t=\inf \left\{s:\langle M\rangle_s&gt;t\right\}
+\]</span> Then <span class="math inline">\(B:=\left(B_t\right):=\left(M_{T_t}\right)\)</span> is a <span class="math inline">\(\mathcal{F}_{T_t}\)</span>-Brownian motion and <span class="math inline">\(\left(M_t\right)=\left(B_{\langle M\rangle_t}\right)\)</span>.</p>
+<p>A proof of this lemma can be found in any textbook on stochastic analysis. Moreover, applying this lemma to the payoff <span class="math inline">\(\xi\left(S_T, M_T, m_T,\langle S\rangle_T\right)\)</span>, the dual price given one marginal,<span class="math inline">\(\mathrm{MK}_1^c(\mu)\)</span> as given by strong dual formulation above, can be framed as a constrained perpetual American options: <span class="math display">\[\begin{equation}\label{SEPinvolved}
+    \operatorname{MK}_1^c(\mu)=\sup _{\tau \in \mathcal{T}: B_\tau \sim \mu} \mathbb{E}^{\mathbb{P}}\left[\xi\left(B_\tau, \max _{0 \leq s \leq \tau} B_s, \min _{0 \leq s \leq \tau} B_s, \tau\right)\right]
+\end{equation}\]</span> This problem corresponds then to the determination of an (optimal) stopping time <span class="math inline">\(\tau^*\)</span> such that <span class="math inline">\(B_{\tau^*} \sim \mu\)</span>. This is a Skorokhod embedding problem (in short SEP). More precisely,</p>
+<p><strong>Definition (Skorokhod Embedding Problem)</strong><br>
+Find a stopping time <span class="math inline">\(\tau\)</span> such that <span class="math inline">\(B_\tau \sim \mu\)</span> and <span class="math inline">\(B^\tau \equiv\left(B_{t \wedge \tau}\right)_{t \geq 0}\)</span> is uniformly integrable.</p>
+<section id="explicit-sep-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="explicit-sep-solutions">Explicit SEP solutions</h3>
+<p>In this section, we cite several explicit solutions to SEP. For more details, see Section 4.6. We set <span class="math inline">\(M_t \equiv \max _{0&lt;s&lt;t} B_t\)</span> and <span class="math inline">\(m_t \equiv \min _{0&lt;s&lt;t} B_t\)</span>.</p>
+<p><strong>Azéma–Yor Solution <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref">Henry-Labordère 2017</a>)</span></strong><br>
+Define <span class="math inline">\(\tau_{AY} = \inf \{ t \geq 0 : B_t \leq \psi_\mu(M_t) \}\)</span> with <span class="math inline">\(\psi_\mu^{-1}(x) = \frac{\mathbb{E}^\mu[S_T 1_{S_T \geq x}]}{\mathbb{E}^\mu[1_{S_T \geq x}]}\)</span>. Then <span class="math inline">\(B_{\tau_{AY}} \sim \mu\)</span>.</p>
+<p>As the strong dual formulation of the option price requires finding an optimal solution of the SEP under some loss function, we also cite the following optimality solution of the Az`ema-Yor solution.</p>
+<p><strong>Optimality</strong>: For increasing <span class="math inline">\(g\)</span>, <span class="math inline">\(\mathbb{E}[g(M_\tau)] \leq \mathbb{E}[g(M_{\tau_{AY}})]\)</span> <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref">Henry-Labordère 2017</a>)</span>.</p>
+<p><strong>Perkins Solution<span class="citation" data-cites="perkins1986cereteli">(<a href="#ref-perkins1986cereteli" role="doc-biblioref">Perkins 1986</a>)</span></strong><br>
+Define <span class="math inline">\(\tau_{\text{Perkins}} = \inf \{ t &gt; 0 : B_t \notin (\gamma_+(M_t), \gamma_-(m_t)) \}\)</span> with <span class="math inline">\(\gamma_{+}(j)=\operatorname{argmax}_{x&lt;S_0} \frac{C^\mu(j)-P^\mu(x)}{j-x}\)</span> and <span class="math inline">\(\gamma_{-}(i)=\operatorname{argmin}_{x&gt;S_0} \frac{P^\mu(i)-C^\mu(x)}{x-i}\)</span>. Here <span class="math inline">\(C^\mu(x) \equiv \mathbb{E}^\mu\left[\left(S_T-x\right)^{+}\right]\)</span> and <span class="math inline">\(P^\mu(x) \equiv \mathbb{E}^\mu\left[\left(x-S_T\right)^{+}\right]\)</span>. Then <span class="math inline">\(B_{\tau_{Perkins}} \sim \mu\)</span>. The Perkins embedding has the property that it simultaneously minimizes the law of the maximum <span class="math inline">\(M\)</span> and maximizes the law of the minimum <span class="math inline">\(m\)</span> :</p>
+<p><strong>Optimality</strong>: Let <span class="math inline">\(\tau\)</span> be a solution to SEP. Then for all increasing function <span class="math inline">\(g\)</span>, <span class="math display">\[
+\begin{aligned}
+\mathbb{E}\left[g\left(M_\tau\right)\right] &amp; \geq \mathbb{E}\left[g\left(M_{\tau_{\text {Perkins }}}\right)\right] \\
+\mathbb{E}\left[g\left(m_\tau\right)\right] &amp; \leq \mathbb{E}\left[g\left(m_{\tau_{\text {Perkins }}}\right)\right].
+\end{aligned}
+\]</span></p>
+<p><strong>Vallois’ Solution <span class="citation" data-cites="vallois1983probleme vallois1992quelques">(<a href="#ref-vallois1983probleme" role="doc-biblioref">Vallois 1983</a>, <a href="#ref-vallois1992quelques" role="doc-biblioref">1992</a>)</span></strong><br>
+Vallois’ embedding uses the <a href="https://en.wikipedia.org/wiki/Local_time_(mathematics)">local time</a> <span class="math inline">\(L_t^a\)</span> of the Brownian motion at a level <span class="math inline">\(a\)</span>. The stopping time is given by</p>
+<p><span class="math display">\[
+\tau_{\mathrm{V}} = \inf\left\{ t \ge 0 : \int_0^t \varphi(B_s)\,dL_s^a \ge \lambda \right\},
+\]</span></p>
+<p>with <span class="math inline">\(\varphi\)</span> and <span class="math inline">\(\lambda\)</span> chosen to ensure</p>
+<p><span class="math display">\[
+B_{\tau_{\mathrm{V}}} \sim \mu.
+\]</span> Details can be found in <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span>.</p>
+</section>
+<section id="application-to-lookback-options" class="level3">
+<h3 class="anchored" data-anchor-id="application-to-lookback-options">Application to lookback options</h3>
+<p>Applying the optimality results above to special types of payoff <span class="math inline">\(\xi\)</span> (more precisely, lookback options) in the strong dual pricing formula, we obtain the following robust pricing formula.</p>
+<p><strong>Corollary</strong><br>
+Suppose that the payoff <span class="math inline">\(\xi\)</span> depends non-decreasingly only on the running maximum of the price process, i.e., <span class="math inline">\(\xi = g(\max_{0\leq t\leq T} S_t)\)</span>, the, we have <span class="math display">\[\begin{equation}
+        \mathrm{MK}_1^c(\mu) = \mathbb{E}[g(\max_{0\leq t\leq \tau_{AY}} B_t)]
+    \end{equation}\]</span> where <span class="math inline">\(B\)</span> is a Brownian motion. Similarly, suppose that the payoff <span class="math inline">\(\xi\)</span> depends non-decreasingly only on the running minimum of the price process, i.e., <span class="math inline">\(\xi = g(\min_{0\leq t\leq T} S_t)\)</span>, the, we have <span class="math display">\[\begin{equation}
+        \mathrm{MK}_1^c(\mu) = \mathbb{E}[g(\min_{0\leq t\leq \tau_{Perkins}} B_t)]
+    \end{equation}\]</span> where <span class="math inline">\(B\)</span> is a Brownian motion.</p>
+<p><strong>Proof</strong>: Follows from the optimality of Azéma–Yor and Perkins embeddings.</p>
+<p>At the end of this section, we emphasis the significance of this result. The above robust pricing formulas for lookback options significantly simplify the numerical procedure. Previously, one had to optimize over an entire family of hedging strategies or martingale measures to determine the robust price. Now, by leveraging the optimality of the Azéma–Yor and Perkins embeddings, the pricing problem is reduced to simulating a standard Brownian motion along with the corresponding stopping time. This transformation—from a complex, high-dimensional optimization problem to a simulation-based approach—greatly enhances the tractability and efficiency of computing robust prices for path-dependent options.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this article, we have developed a dynamic formulation of continuous-time martingale optimal transport and its connection with the Skorokhod embedding problem. Starting from a robust hedging problem, we derived a dual minimax formulation of the pricing formula. We then showed how explicit SEP solutions can be used to price lookback options and indicate the significance.</p>
+<p>The following topics are not sufficiently discussed in this article (or in existing research) and we refer interested readers to <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span> (or independent research) for some more details: First, our SEP approach allows matching only one marginal; general SEP, however, includes embedding several marginals into a Brownian motion via stopping times; it is worth a finer study of the general SEP in the setting of continuous-time MOT; the author believes that extension to matching a finite number of marginals shall not bring new technical difficulties, however, matching continuous marginals might require new techniques. Second, the application of SEP in pricing is currently only limited to certain lookback options; it seems rather hard to extend the application to more complex options since the optimality results above are in general hard to acquire for general option payoffs. Third, in the SEP approach, the price is obtained by computing an optimal stopping time; it is not discussed what optimal price process (and what hedging strategy) this stopping time corresponds to; fortunately, there are some discussions on this topic in <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span> Section 4.5 and Section 4.7.</p>
+</section>
+<section id="references" class="level2">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-beiglboeck2015complete" class="csl-entry" role="listitem">
+Beiglböck, Marcel, Marcel Nutz, and Nizar Touzi. 2015. <span>“Complete Duality for Martingale Optimal Transport on the Line.”</span> <em>Annals of Probability</em>. <a href="https://arxiv.org/abs/1507.00671">https://arxiv.org/abs/1507.00671</a>.
+</div>
+<div id="ref-bouchard2015arbitrage" class="csl-entry" role="listitem">
+Bouchard, B., and M. Nutz. 2015. <span>“Arbitrage and Duality in Nondominated Discrete-Time Models.”</span> <em>The Annals of Applied Probability</em> 25 (2): 823–59.
+</div>
+<div id="ref-dolinsky2014robust" class="csl-entry" role="listitem">
+Dolinsky, Yan, and H. Mete Soner. 2014a. <span>“Robust Hedging and Martingale Optimal Transport in Continuous Time.”</span> <em>Probability Theory and Related Fields</em> 160 (1): 391–427.
+</div>
+<div id="ref-dolinsky2014robusttc" class="csl-entry" role="listitem">
+———. 2014b. <span>“Robust Hedging Under Proportional Transaction Costs.”</span> <em>Finance and Stochastics</em> 18 (2): 327–47.
+</div>
+<div id="ref-dolinsky2016martingale" class="csl-entry" role="listitem">
+———. 2016. <span>“Martingale Optimal Transport in the Skorokhod Space.”</span> <em>Stochastic Processes and Their Applications</em> 126 (1): 312–13.
+</div>
+<div id="ref-galichon2014stochastic" class="csl-entry" role="listitem">
+Galichon, A., P. Henry-Labordère, and N. Touzi. 2014. <span>“A Stochastic Control Approach to No-Arbitrage Bounds Given Marginals, with an Application to Lookback Options.”</span> <em>Annals of Applied Probability</em> 24 (1): 312–36.
+</div>
+<div id="ref-guo2016optimal" class="csl-entry" role="listitem">
+Guo, Guannan, Xun Tan, and Nizar Touzi. 2016. <span>“Optimal Skorokhod Embedding Under Finitely-Many Marginal Constraints.”</span> <em>SIAM Journal on Control and Optimization</em> 54 (4): 2174–2201.
+</div>
+<div id="ref-henrylabordere2017model" class="csl-entry" role="listitem">
+Henry-Labordère, Pierre. 2017. <em>Model-Free Hedging: A Martingale Optimal Transport Viewpoint</em>. Chapman &amp; Hall/CRC Financial Mathematics Series. Boca Raton, FL: CRC Press, Taylor &amp; Francis Group.
+</div>
+<div id="ref-perkins1986cereteli" class="csl-entry" role="listitem">
+Perkins, E. 1986. <span>“The Cereteli-Davis Solution to the h<sup>1</sup>-Embedding Problem and an Optimal Embedding in Brownian Motion.”</span> In <em>Seminar on Stochastic Processes, 1985 (Gainesville, Fla., 1985)</em>, 12:172–223. Progress in Probability and Statistics. Birkhäuser, Boston.
+</div>
+<div id="ref-vallois1983probleme" class="csl-entry" role="listitem">
+Vallois, P. 1983. <span>“Le Problème de <span>S</span>korokhod Sur <span><span class="math inline">\(\mathbb{R}\)</span></span>: Une Approche Avec Le Temps Local.”</span> <em>Séminaire de Probabilités de Strasbourg</em> 17: 227–39.
+</div>
+<div id="ref-vallois1992quelques" class="csl-entry" role="listitem">
+———. 1992. <span>“Quelques Inégalités Avec Le Temps Local En Zéro Du Mouvement Brownien.”</span> <em>Stochastic Processes and Their Applications</em> 41: 117–55.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/otwiki\.github\.io\/otwiki-main\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

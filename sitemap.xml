@@ -18,39 +18,43 @@
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/index.html</loc>
-    <lastmod>2025-03-04T04:49:25.326Z</lastmod>
+    <lastmod>2025-03-04T17:14:20.660Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html</loc>
-    <lastmod>2025-02-10T04:02:29.268Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/HKdistance.html</loc>
-    <lastmod>2025-03-04T04:46:42.634Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/Est_Tr_Maps.html</loc>
-    <lastmod>2025-02-28T17:50:20.055Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/Knothe_Maps_Conditional_Sampling.html</loc>
-    <lastmod>2025-02-18T23:56:02.283Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/ArticlesToRevise.html</loc>
-    <lastmod>2025-02-26T04:42:49.520Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/NewArticleIdeas.html</loc>
-    <lastmod>2025-02-25T19:36:05.739Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/backandfortharticle.html</loc>
+    <lastmod>2025-03-01T00:29:56.027Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/DynamicMOT.html</loc>
     <lastmod>2025-02-24T16:33:07.610Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/backandfortharticle.html</loc>
-    <lastmod>2025-03-01T00:29:56.027Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/NewArticleIdeas.html</loc>
+    <lastmod>2025-02-25T19:36:05.739Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/ArticlesToRevise.html</loc>
+    <lastmod>2025-02-26T04:42:49.520Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/Knothe_Maps_Conditional_Sampling.html</loc>
+    <lastmod>2025-02-18T23:56:02.283Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/Est_Tr_Maps.html</loc>
+    <lastmod>2025-02-28T17:50:20.055Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/HKdistance.html</loc>
+    <lastmod>2025-03-04T04:46:42.634Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html</loc>
+    <lastmod>2025-02-10T04:02:29.268Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/Continuous-time MOT and Skorohod Embedding.html</loc>
+    <lastmod>2025-03-04T17:25:04.735Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/Bures-Wasserstein Gradient Flows.html</loc>
