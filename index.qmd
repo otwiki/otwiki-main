@@ -36,7 +36,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing) - Charles will revise
 -   [Wasserstein-like Metrics on Graphs](WassersteinOnGraphs.qmd)
 - [Hellinger-Kantorovich Distance](HKdistance.qmd)
-- Continuous time martingale OT and Skorohod Embedding - Qijin Shi
+- [Continuous time martingale OT and Skorohod Embedding](Continuous-time MOT and Skorohod Embedding.qmd)
 
 ### Numerical methods for optimal transport
 
