@@ -31,7 +31,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 ### Variants of the optimal transport problem
 
--   [Martingale optimal transport and mathematical finance](MOD.qmd)
+-   [Martingale optimal transport and mathematical finance](MOT.qmd)
 - [Martingale optimal transport: dynamic formulation](DynamicMOT.qmd)
 -   [Wasserstein barycenters and applications in image processing](https://www.otwiki.xyz/wiki/Wasserstein_barycenters_and_applications_in_image_processing) - Charles will revise
 -   [Wasserstein-like Metrics on Graphs](WassersteinOnGraphs.qmd)
