@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Xiang Fang, Qiji Shi, and Haosheng Zhou,">
+<meta name="author" content="Haosheng Zhou, Qijin Shi, Xiang Fang">
 
 <title>Applications of Optimal Transport and Martingale Optimal Transport in Mathematical Finance – OT WIKI</title>
 <style>
@@ -169,7 +169,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Xiang Fang, Qiji Shi, and Haosheng Zhou, </p>
+             <p>Haosheng Zhou, Qijin Shi, Xiang Fang </p>
           </div>
   </div>
     
@@ -263,7 +263,7 @@ S_t = e^{(r-\frac{\sigma^2}{2})t + \sigma W_t^{\mathbb{Q}}},
 </section>
 <section id="market-completeness-and-super-replication" class="level2">
 <h2 class="anchored" data-anchor-id="market-completeness-and-super-replication">Market Completeness and Super-Replication</h2>
-<p>Martingale measures serve as a crucial component in mathematical finance and are known to be associated with several fundamental theorems. To name a few, the <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing">First Fundamental Theorem of Asset Pricing</a> states that the market is viable (arbitrage-free) if and only if at least one martingale measure exists. The <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing">Second Fundamental Theorem of Asset Pricing</a> claims that the market is complete iff the martingale measure exists and is unique. Without even realizing it, the market completness greatly simplifies the problem of option pricing in a Black-Scholes market.</p>
+<p>Martingale measures serve as a crucial component in mathematical finance and are known to be associated with several fundamental theorems. To name a few, the <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing">First Fundamental Theorem of Asset Pricing</a> states that the market is viable (arbitrage-free) if and only if at least one martingale measure exists. The <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing">Second Fundamental Theorem of Asset Pricing</a> claims that the market is complete iff the martingale measure exists and is unique. Without even realizing it, the market completeness greatly simplifies the problem of option pricing in a Black-Scholes market.</p>
 <p>A viable market is called <strong>complete</strong> if any European payoffs at any time of maturity <span class="math inline">\(T\)</span> can be perfectly replicated. It turns out that the perfect replicability of European call and put payoffs implies the perfect replicability of any European payoff functions (<a href="https://gregorygundersen.com/blog/2023/01/26/carr-madan/">Carr-Madan formula</a>). That means, the European call and put payoffs serve as the “basis” for all European payoffs. Option pricing in a complete market (e.g., the Black-Scholes market) is therefore easy, but unfortunately is almost never the case in real life.</p>
 <p>One of the common examples of an incomplete market is the stochastic volatility model, where the volatility <span class="math inline">\(\{\sigma_t\}\)</span> is also a stochastic process with its dynamics given by an SDE under a different Brownian motion. There is only one risky asset but two sources of randomness (i.e., one Brownian motion for <span class="math inline">\(S\)</span> and one for <span class="math inline">\(\sigma\)</span>), which causes the failure of perfect replication. Intuitively understanding through an analogue to the solvability of linear systems, the market is complete (a linear system has a unique solution) if and only if the number of different risky assets (number of equations) equals the number of different sources of randomness (number of unknowns).</p>
 <p>As we would naturally expect, pricing becomes much harder in an incomplete market, since the arbitrage-free price is an interval, rather than a single number. On the side of hedging, perfectly hedging becomes impossible. On the side of risk-neutral pricing, there exist infinitely many martingale measures. A new pricing criterion is given by super-replication instead, i.e., ensuring the payoff of the replicating portfolio is larger than the payoff of the option. The minimal cost of super-replication for an option writer, denoted by <span class="math inline">\(C_{\text{sell}}\)</span>, is the highest arbitrage-free price on the market. Conversely, taking the perspective of an option buyer, one can define <span class="math inline">\(C_{\text{buy}}\)</span> as the maximal cost of sub-replication, which is the lowest arbitrage-free price on the market. Therefore, the interval of arbitrage-free price is provided by <span class="math inline">\([C_{\text{buy}},C_{\text{sell}}]\)</span>.</p>
@@ -312,6 +312,93 @@ S_t = e^{(r-\frac{\sigma^2}{2})t + \sigma W_t^{\mathbb{Q}}},
 <p>Note that unlike <span class="math inline">\(\mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2)\)</span> which always contains the trivial coupling, extra conditions are required to ensure that <span class="math inline">\(\mathscr{M}(\mathbb{P}^1,\mathbb{P}^2)\)</span> is not empty. An if and only if condition is given by the <strong>convex order</strong> between two measures, denoted <span class="math inline">\(\mathbb{P}^1\leq \mathbb{P}^2\)</span>, which is defined as <span class="math display">\[
 \mathbb{E}_{\mathbb{P}^1}(S_1-K)_+\leq \mathbb{E}_{\mathbb{P}^2}(S_2-K)_+,\ \forall K.
 \]</span> Through the Black-Scholes formula, one can easily check that if <span class="math inline">\(\{S_t\}\)</span> denotes the stock price in a Black-Scholes market with a single stock, then <span class="math inline">\(\mathbb{P}^1\leq \mathbb{P}^2\)</span> for <span class="math inline">\(\forall 0\leq t_1&lt;t_2\)</span>.</p>
+</section>
+</section>
+<section id="pricing-via-mot-in-more-general-settings" class="level1">
+<h1>Pricing via MOT in more general settings</h1>
+<p>The above discussions yield a core fact in mathematical finance: the price of a financial derivative from the seller’s perspective (the primal side via hedging) should match the price from the buyer’s perspective (the dual side via risk-free measure). However, the models discussed above are somewhat simplistic for two reasons:</p>
+<ol type="1">
+<li><p>In practice, traders use a much wider range of financial instruments than just European options and stock holdings to hedge their positions. Consequently, the set of superhedging strategies available in the market is far more extensive than the one we have considered above. As a result, the pricing formula derived from the trader’s perspective (the primal side) tends to overestimate the true price.</p></li>
+<li><p>Moreover, our setting assumes trading only at discrete times, considering only a finite number of marginals. In real financial markets, asset prices evolve continuously, and one typically requires a martingale measure defined on the entire path space, e.g.&nbsp;<span class="math inline">\(C([0,T], \mathbb{R}^+)\)</span> to capture the dynamics accurately.</p></li>
+</ol>
+<p>Now, we discuss how to broaden the settings to resolve these issues.</p>
+<section id="a-vix-constrained-martingale-optimal-transport" class="level2">
+<h2 class="anchored" data-anchor-id="a-vix-constrained-martingale-optimal-transport">A VIX-constrained martingale optimal transport</h2>
+<p>To capture the broader array of hedging instruments within the model-free pricing framework based on martingale optimal transport, recent literature has studied several constrained MOT problems that extend the basic setting. In this section, we introduce one such extension by incorporating the trading of VIX-index options into the framework.</p>
+<p>The main literature for this section is <span class="citation" data-cites="demarco2015linking">(<a href="#ref-demarco2015linking" role="doc-biblioref"><strong>demarco2015linking?</strong></a>)</span>.</p>
+<section id="vix-futures-and-vix-options" class="level3">
+<h3 class="anchored" data-anchor-id="vix-futures-and-vix-options">VIX futures and VIX options</h3>
+<p>VIX futures and VIX options, traded on the CBOE, have become popular volatility derivatives. The VIX index at a future expiry <span class="math inline">\(t_1\)</span> is by definition the price at <span class="math inline">\(t_1\)</span> of the 30 day log-contract which pays <span class="math inline">\(-\frac{2}{t_2-t_1} \ln \frac{S_2}{S_1}\)</span> at <span class="math inline">\(t_2=t_1+30\)</span> days:</p>
+<p><span class="math display">\[\begin{equation}
+    \mathrm{VIX}_{t_1}^2 \equiv-\frac{2}{\Delta} \mathbb{E}_{t_1}^{\mathbb{P}^{\mathrm{mkt}}}\left[\ln \left(\frac{S_2}{S_1}\right)\right], \quad \Delta=t_2-t_1
+\end{equation}\]</span></p>
+<p>This definition is at first sight strange as <span class="math inline">\(\mathrm{VIX}_{t_1}\)</span> seems to depend on the probability measure <span class="math inline">\(\mathbb{P}^{m k t}\)</span> (i.e., pricing model) used to value the log-contract at <span class="math inline">\(t_1\)</span>. A choice should therefore be made and the probability measure <span class="math inline">\(\mathbb{P}^{\text {mkt }}\)</span> selected should be included in the term sheet which describes the payoff to the client. In fact, this conclusion is not correct and the value VIX <span class="math inline">\(_{t_1}\)</span> is independent of the choice of <span class="math inline">\(\mathbb{P}^{\text {mkt }}\)</span> (i.e., model-independence).</p>
+<p>Indeed, by an application of <a href="https://en.wikipedia.org/wiki/Carr%E2%80%93Madan_formula">Carr-Madan formula</a>, the arbitrage-free price (model-independent) at <span class="math inline">\(t_1\)</span> can be implied from the <span class="math inline">\(t_1\)</span> market value of <span class="math inline">\(t_2\)</span>-Vanillas:</p>
+<p><span class="math display">\[
+\mathrm{VIX}_{t_1}^2 \equiv \frac{2}{\Delta}\left(\int_0^{S_1} \frac{P\left(t_1, t_2, K\right)}{K^2} d K+\int_0^{S_1} \frac{C\left(t_1, t_2, K\right)}{K^2} d K\right)
+\]</span></p>
+<p>with <span class="math inline">\(P\left(t_1, t_2, K\right)\)</span> (resp. <span class="math inline">\(\left.C\left(t_1, t_2, K\right)\right)\)</span> the undiscounted market price at <span class="math inline">\(t_1\)</span> of a put (resp. call) option with strike <span class="math inline">\(K\)</span> and maturity <span class="math inline">\(t_2\)</span>. The payoff of a call option on VIX expiring at <span class="math inline">\(t_1\)</span> with strike <span class="math inline">\(K\)</span> is <span class="math inline">\(\left(\mathrm{VIX}_{t_1}-K\right)^{+}\)</span>. Below, the market value (at <span class="math inline">\(t=0\)</span> ) for the VIX future (i.e., <span class="math inline">\(K=0\)</span> ) is denoted VIX.</p>
+</section>
+<section id="the-constrained-mot-duality" class="level3">
+<h3 class="anchored" data-anchor-id="the-constrained-mot-duality">The constrained MOT duality</h3>
+<p>Now we may include the trading of VIX options in our settings.</p>
+<p>For further reference, we denote by <span class="math inline">\(\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.\)</span>, VIX <span class="math inline">\()\)</span> the set of all martingale measures <span class="math inline">\(\mathbb{P}\)</span> on <span class="math inline">\(I_1 \times I_2 \times I_X\)</span> having marginals <span class="math inline">\(\mathbb{P}^1, \mathbb{P}^2\)</span> with mean <span class="math inline">\(S_0\)</span> and such that VIX <span class="math inline">\(=\mathbb{E}^{\mathbb{P}}\left[\mathrm{VIX}_{t_1}\right]\)</span>, that is:</p>
+<p><span class="math display">\[\begin{equation}
+    \begin{aligned}
+\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2, \mathrm{VIX}\right)=\{\mathbb{P} &amp; \in \mathcal{P}\left(I_1 \times I_2 \times I_X\right): S_1 \stackrel{\mathbb{P}}{\sim} \mathbb{P}^1, S_2 \stackrel{\mathbb{P}}{\sim} \mathbb{P}^2, \quad\mathbb{E}^{\mathbb{P}}\left[\mathrm{VIX}_{t_1}\right]=\mathrm{VIX}, \\
+&amp; \mathbb{E}^{\mathbb{P}}\left[S_2 \mid S_1, \mathrm{VIX}_{t_1}\right]=S_1, \quad \left.\mathbb{E}^{\mathbb{P}}\left[\left.-\frac{2}{\Delta} \log \frac{S_2}{S_1} \right\rvert\, S_1, \mathrm{VIX}_{t_1}\right]=\mathrm{VIX}_{t_1}^2\right\}.
+\end{aligned}
+\end{equation}\]</span></p>
+<p>In other words, we request both the stock price, and also the VIX index, as a traded derivative, to be martingale under the pricing measure.</p>
+<p>We define our constrained MOT for a VIX call option expiring at <span class="math inline">\(t_1\)</span> with strike <span class="math inline">\(K\)</span> as</p>
+<p><span class="math display">\[\begin{equation}
+\mathrm{MK}_{\mathrm{vix}} \equiv \inf _{\lambda_1 \in \mathrm{~L}^1\left(\mathbb{P}^1\right), \lambda_2 \in \mathrm{~L}^1\left(\mathbb{P}^2\right), \lambda \in \mathbb{R}, H_S, H_X} \mathbb{E}^{\mathbb{P}^1}\left[\lambda_1\left(S_1\right)\right]+\mathbb{E}^{\mathbb{P}^2}\left[\lambda_2\left(S_2\right)\right]+\lambda \mathrm{VIX}
+\end{equation}\]</span></p>
+<p>such that for all <span class="math inline">\(\left(s_1, s_2, x\right) \in I_1 \times I_2 \times I_X\)</span>,\ <span class="math display">\[\begin{equation}\label{eq6}
+\begin{aligned}
+        \lambda_1\left(s_1\right)+\lambda_2\left(s_2\right)+\lambda \sqrt{x} &amp; +H_S\left(s_1, x\right)\left(s_2-s_1\right) \\
+&amp; +H_X\left(s_1, x\right)\left(-\frac{2}{\Delta} \ln \left(\frac{s_2}{s_1}\right)-x\right) \geq(\sqrt{x}-K)^{+}.
+\end{aligned}
+\end{equation}\]</span></p>
+<p>In the above definition, the functions <span class="math inline">\(H_S, H_X: I_1 \times I_X \rightarrow \mathbb{R}\)</span> are assumed to be bounded continuous functions on <span class="math inline">\(I_1 \times I_X, \lambda_1 \in \mathrm{~L}^1\left(\mathbb{P}^1\right)\)</span> and <span class="math inline">\(\lambda_2 \in \mathrm{~L}^1\left(\mathbb{P}^2\right)\)</span>. The variable <span class="math inline">\(x\)</span> should be interpreted as the <span class="math inline">\(t_1\)</span>-value of a log-contract <span class="math inline">\(-2 / \Delta \ln \frac{s_2}{s_1}\)</span>, i.e., the square of the VIX index VIX<span class="math inline">\(_{t_1}^2\)</span>. This semi-static superreplication consists in holding statically <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span>-European payoffs with market prices <span class="math inline">\(\mathbb{E}^{\mathbb{P}^1}\left[\lambda_1\left(S_1\right)\right]\)</span> and <span class="math inline">\(\mathbb{E}^{\mathbb{P}^2}\left[\lambda_2\left(S_2\right)\right]\)</span>, a VIX future with market price VIX and delta hedging at <span class="math inline">\(t_1\)</span> (with zero-cost) on the spot and on a forward <span class="math inline">\(\log\)</span> contract with price <span class="math inline">\(x\)</span>. The value of this portfolio is greater than or equal to the payoff <span class="math inline">\((\sqrt{x}-K)^{+}\)</span>. If somebody offers this VIX option at a price <span class="math inline">\(p\)</span> above <span class="math inline">\(\mathrm{MK}_{\mathrm{vix}}\)</span>, the arbitrage can be locked in by selling this option and going long in the above super-replication: <span class="math display">\[\begin{equation}
+\begin{aligned}
+&amp; \lambda_1\left(s_1\right)+\lambda_2\left(s_2\right)+\lambda \sqrt{x}+H_S\left(s_1, x\right)\left(s_2-s_1\right)+H_X\left(s_1, x\right)\left(-\frac{2}{\Delta} \ln \left(\frac{s_2}{s_1}\right)-x\right) \\
+&amp;\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad-(\sqrt{x}-K)^{+}+\left(p-\mathrm{MK}_{\mathrm{vix}}\right) \geq 0, \quad \forall\left(s_1, s_2, x\right) \in I_1 \times I_2 \times I_X
+\end{aligned}
+\end{equation}\]</span></p>
+<p>Similarly to the above sections, the main duality theorem of this constrained martingale optimal transport problem can be constructed via <a href="https://en.wikipedia.org/wiki/Fenchel%27s_duality_theorem">Fenchel-Rockafeller duality</a>:</p>
+<p><strong>Theorem</strong> Assume that <span class="math inline">\(\mathbb{P}^1, \mathbb{P}^2\)</span> are probability measures respectively on <span class="math inline">\(I_1\)</span> and <span class="math inline">\(I_2\)</span> such that <span class="math inline">\(\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.\)</span>, VIX <span class="math inline">\()\)</span> is non-empty. Then, <span class="math display">\[\begin{equation}
+    \mathrm{MK}_{\mathrm{vix}}=\max _{\mathbb{P} \in \mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2, \mathrm{VIX}\right)} \mathbb{E}\left[\left(\mathrm{VIX}_{t_1}-K\right)^{+}\right]
+\end{equation}\]</span></p>
+<p>Again, the non-empty condition of the set of martingale measures depends on a convex-order-type condition on the known probability measures <span class="math inline">\(\mathbb{P}^1\)</span> and <span class="math inline">\(\mathbb{P}^2\)</span>. Moreover, the dual side of the above equation, admits concrete optimizer under certain further convex requirement on the known probability measures <span class="math inline">\(\mathbb{P}^1\)</span> and <span class="math inline">\(\mathbb{P}^2\)</span>. In that case, the price on the dual side can be converted to an expectation of the payoff of the VIX-option with respect to a bi-atomic measure on the VIX index on <span class="math inline">\(t_1\)</span> of the form</p>
+<p><span class="math display">\[\begin{equation}
+    \overline{\mathbb{P}}(d x)=p \delta_{x_0}(d x)+(1-p) \delta_{x_1}(d x)
+\end{equation}\]</span></p>
+<p>for some <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. See <span class="citation" data-cites="demarco2015linking">(<a href="#ref-demarco2015linking" role="doc-biblioref"><strong>demarco2015linking?</strong></a>)</span> and <span class="citation" data-cites="henry2017model">Henry-Labordère (<a href="#ref-henry2017model" role="doc-biblioref">2017</a>)</span> for more details.</p>
+</section>
+</section>
+<section id="pricing-via-continuous-time-mot" class="level2">
+<h2 class="anchored" data-anchor-id="pricing-via-continuous-time-mot">Pricing via continuous-time MOT</h2>
+<p>To resolve the second issue we mentioned above, we give a brief but descriptive introduction to continuous-time martingale optimal transport and the dual pricing formulas.</p>
+<p>Robust superhedging in continuous-time finance is formulated on the canonical path space</p>
+<p><span class="math display">\[
+\Omega = \{\omega \in C([0,T],\mathbb{R}_+): \omega(0)=0\},
+\]</span></p>
+<p>equipped with the canonical process <span class="math inline">\(B_t(\omega)=\omega(t)\)</span> and the Wiener measure <span class="math inline">\(\mathbb{P}^0\)</span>. The asset price process is defined by</p>
+<p><span class="math display">\[
+S_t = S_0+B_t,
+\]</span></p>
+<p>and by incorporating an adapted volatility process <span class="math inline">\(\sigma\)</span>, we obtain a modified price process</p>
+<p><span class="math display">\[
+S_t^\sigma = S_0 + \int_0^t \sigma_r\,dB_r.
+\]</span></p>
+<p>The induced probability measure <span class="math inline">\(\mathbb{P}^\sigma = \mathbb{P}^0 \circ (S^\sigma)^{-1}\)</span> makes <span class="math inline">\(S\)</span> a local martingale, and the collection of all such measures is denoted by <span class="math inline">\(\mathcal{M}^c\)</span>. Along with the appropriate set of admissible trading strategies, the robust superhedging price for an option with payoff <span class="math inline">\(\xi\)</span> is defined as the minimum initial capital needed to ensure that the hedged portfolio exceeds <span class="math inline">\(\xi\)</span> under every <span class="math inline">\(\mathbb{P} \in \mathcal{M}^c\)</span>.</p>
+<p>Assuming a minimax argument holds, one can interchange the infimum over hedging strategies and the supremum over martingale measures with prescribed marginals. This leads to the dual formulation:</p>
+<p><span class="math display">\[
+\operatorname{MK}_n^c(\mathbb{P}^1,\ldots,\mathbb{P}^n) = \sup_{\mathbb{P}\in\mathcal{M}^c(\mathbb{P}^1,\ldots,\mathbb{P}^n)} \mathbb{E}^\mathbb{P}[\xi],
+\]</span></p>
+<p>where <span class="math inline">\(\mathcal{M}^c(\mathbb{P}^1,\ldots,\mathbb{P}^n)\)</span> is the set of martingale measures whose marginals at the specified times match those observed in the market. This duality bridges the seller’s perspective—obtained via superhedging (primal side)—with the buyer’s perspective—based on risk-neutral valuation (dual side). In essence, it unifies the robust pricing framework by showing that the highest price acceptable by the buyer coincides with the lowest cost required by the seller to hedge against all market scenarios.</p>
+<p>Except for deriving the duality, the main technical difficulty in the continuous-setting is the construction of a martingale measure on the paths space, or equivalently, the construction of a martingale process matching the known marginal. The most common solution is to employ solutions of Skorokhod embedding problem from classical stochastic analysis and then covert the dual side to a supremum over a set of stopping times of a Brownian motion and then take expectation over that Brownian motion. In other words, we embed every possible martingale price process into a Brownian motion by a stopping time. This provide numerical efficiency in obtaining the dual price. The discussion of these topics lead to the follow-up article of this one, where we set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging without assuming a specific stochastic model for the asset dynamics. See <a href="https://otwiki.github.io/otwiki-main/Continuous-time%20MOT%20and%20Skorohod%20Embedding.html">Continuous-Time MOT and Skorokhod Embedding</a> for details.</p>
 
 
 
