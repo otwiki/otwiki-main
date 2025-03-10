@@ -26,7 +26,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 ### The 2-Wasserstein Metric
 
 -   [Geodesics and generalized geodesics](https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics)
--   [Formal Riemannian Structure of the Wasserstein metric](https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric) - Connor Marrs
+-   [Formal Riemannian Structure of the Wasserstein metric](Riemannian_Structure_Wasserstein_Space)
 -   [Asymptotic equivalence of W_2 and H\^-1](https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1)
 
 ### Variants of the optimal transport problem
