@@ -1,6 +1,7 @@
 ---
 title: "Riemannian Structure on 2-Wasserstein Space"
 bibliography: bibliography_riemannian_structure.bibtex
+author: Connor Marrs
 ---
 
 Much of this overview is found in Villani's text. For any Polish space $X$ let $P_p(X)$ be the set of all Borel probability measures on $X$ with finite $p$-th moment. Recall that $p\in[1,\infty]$, the $p$-Wasserstein metric turns $P_p(X)$ into a Polish space (see e.g. the [Wikipedia entry on Wasserstein spaces](https://en.wikipedia.org/wiki/Wasserstein_metric#Metric_structure) or [@AGS] Chapter 6). Using the general theory of gradient flows in metric spaces (which in general lack any differentiable structure), one can make precise the statement that "a solution to the heat equation is the 2-Wasserstein gradient flow with respect to the Boltzmann Entropy". This vane of research began with the seminal work of Jordan, Kinderlehrer, and Otto in [@JKO] during investigations of the Porous Media Equation, and was molded into a general framework by many authors including Ambrosio, Gigli, and Savaré that is well summarized in [@AGS].
@@ -8,47 +9,40 @@ Much of this overview is found in Villani's text. For any Polish space $X$ let $
 Identifying a given PDE as a Wasserstein gradient flow with respect to some functional is in general difficult and requires ad hoc methods. In [@Otto], Otto developed a formal Riemannian metric on the $2$-Wasserstein space over a compact Riemannian Manifold $M$. In this framework we can construct analogs of gradients, divergence, parallel transport, and related tools from Riemannian geometry. While this framework is not rigorous enough to prove results about PDE's, the formal structure does give us valuable heuristics for identifying with respect to which functional a PDE can be interpreted as a Wasserstein 2-Gradient flow.
 
 ## Notion of the Tangent Space on 2-Wasserstein Space
-From the Benamou-Brenier formula, we know that for two measures $\overline{\mu}_0,\overline{\mu}_1\in P_2(M)$,
-$$
+
+From the Benamou-Brenier formula, we know that for two measures $\overline{\mu}_0,\overline{\mu}_1\in P_2(M)$, $$
     W_2(\overline{\mu}_0,\overline{\mu}_1)^2 = \inf\left\{\int_0^1\left(
         \int_M|v_t|^2d\mu_t
     \right)dt: 
         \partial_t\mu_t+\operatorname{div}(v_t\mu_t)=0,  v_t\cdot\nu|_{\partial M}=0,  \mu_0=\overline{\mu}_0, \mu_1=\overline{\mu}_1
     \right\}
-$$
-In particular we can understand the $W_2$ distance as being the infimum of the "length" of "curves" in $P_2(M)$ much like the distance function on a Riemannian manifold is the infimum of lengths of paths between two points in the manifold. For our purposes, paths are solutions to the continuity equation. In particular, it seems that the natural inner product on the tangent space should induce the norm $\int_M|v|^2d\mu$ where $v$ is the velocity field corresponding to $\mu$ in the continuity equation. 
+$$ In particular we can understand the $W_2$ distance as being the infimum of the "length" of "curves" in $P_2(M)$ much like the distance function on a Riemannian manifold is the infimum of lengths of paths between two points in the manifold. For our purposes, paths are solutions to the continuity equation. In particular, it seems that the natural inner product on the tangent space should induce the norm $\int_M|v|^2d\mu$ where $v$ is the velocity field corresponding to $\mu$ in the continuity equation.
 
-To make the definitions cleaner, we will assume that our measures are absolutely continuous with respect to volume measure on $M$. Thus we may formally define
-$$
+To make the definitions cleaner, we will assume that our measures are absolutely continuous with respect to volume measure on $M$. Thus we may formally define $$
     T_\mu P_2(M)=cl(\{\nabla\varphi: \varphi \text{ convex}\})
-$$
-with the closure taken in the $L^2(M,\mu)$ topology. Given any $h_1,h_2:M\rightarrow \mathbb{R}$ such that $\int_Mh_jd\operatorname{Vol}(M)=0$, we can define their 2-Wasserstein inner product given by
-$$
+$$ with the closure taken in the $L^2(M,\mu)$ topology. Given any $h_1,h_2:M\rightarrow \mathbb{R}$ such that $\int_Mh_jd\operatorname{Vol}(M)=0$, we can define their 2-Wasserstein inner product given by $$
     \langle h_1,h_2\rangle_{W_2(M)} = \int_M \nabla \psi_1\cdot \nabla\psi_2 d\operatorname{Vol}(M)
-$$
-where $\psi_j$ solve
-$$
+$$ where $\psi_j$ solve $$
     \begin{cases}
         \operatorname{div}(\rho_j\nabla\psi_j)=-h_j & \text{ in } M \\
         \frac{\partial \psi_j}{\partial \nu}=0 & \text{ on } \partial M
     \end{cases}
-$$
-with $\mu_j=\rho_j d\operatorname{Vol}(M)$. In the next section we will see how this gives rise to the gradient operator on $P_2(M)$. For more exposition on the definitions, we refer the reader to [@ABS], [@AGS], and [@Figalli].
+$$ with $\mu_j=\rho_j d\operatorname{Vol}(M)$. In the next section we will see how this gives rise to the gradient operator on $P_2(M)$. For more exposition on the definitions, we refer the reader to [@ABS], [@AGS], and [@Figalli].
 
 ## The gradient operator on 2-Wasserstein Space
-Suppose that $\mathcal{F}:P_2(M)\rightarrow \mathbb{R}$ is a functional on the 2-Wasserstein space over $M$. We define its gradient to be the unique function $\operatorname{grad}_{W_2(M)} \mathcal{F}[\rho]$ such that
-$$
+
+Suppose that $\mathcal{F}:P_2(M)\rightarrow \mathbb{R}$ is a functional on the 2-Wasserstein space over $M$. We define its gradient to be the unique function $\operatorname{grad}_{W_2(M)} \mathcal{F}[\rho]$ such that $$
     \left\langle
        \operatorname{grad}_{W_2(M)} \mathcal{F}[\rho_0], \frac{\partial \rho}{\partial\varepsilon}\Big|_{\varepsilon=0} 
     \right\rangle_{\rho_0} = \frac{d}{d\varepsilon}\Big|_{\varepsilon=0}\mathcal{F}[\rho_{\varepsilon}]
-$$
-for any sufficiently nice (e.g. absolutely continuous) curve $\rho_t:(-\varepsilon,\varepsilon)\rightarrow P_2(M)$.
+$$ for any sufficiently nice (e.g. absolutely continuous) curve $\rho_t:(-\varepsilon,\varepsilon)\rightarrow P_2(M)$.
 
 ## Computations of 2-Wasserstein Gradients
+
 For these examples, let's specialize to the case where our manifold is $\Omega\subseteq \mathbb{R}^d$ with the usual riemannian metric.
 
- - In the case where we choose the Boltzman entropy, $\mathcal{F}[\rho]=\int_\Omega\rho\log\rho dx$ where $\rho$ is the absolute value of some measure, then $\operatorname{grad}_{W_2(M)} \mathcal{F}[\rho]=-\Delta\rho$. Thus we can interpret a solution to the heat equation as 2-Wasserstein gradient flow with respect to the Boltzmann entropy.
- - If $\mathcal{F}[\rho]=\int_\Omega\frac{\rho^m}{m-1} dx$ then $\operatorname{grad}_{W_2(M)} \mathcal{F}[\rho]=-\Delta(\rho^m)$. Thus a solution to the porous media equation (when $m>1$) is the 2-Wasserstein gradient flow with respect to the functional $\mathcal{F}$.
+-   In the case where we choose the Boltzman entropy, $\mathcal{F}[\rho]=\int_\Omega\rho\log\rho dx$ where $\rho$ is the absolute value of some measure, then $\operatorname{grad}_{W_2(M)} \mathcal{F}[\rho]=-\Delta\rho$. Thus we can interpret a solution to the heat equation as 2-Wasserstein gradient flow with respect to the Boltzmann entropy.
+-   If $\mathcal{F}[\rho]=\int_\Omega\frac{\rho^m}{m-1} dx$ then $\operatorname{grad}_{W_2(M)} \mathcal{F}[\rho]=-\Delta(\rho^m)$. Thus a solution to the porous media equation (when $m>1$) is the 2-Wasserstein gradient flow with respect to the functional $\mathcal{F}$.
 
 ## Further Reading
 
