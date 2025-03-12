@@ -1,0 +1,107 @@
+---
+title: "Optimal Transport Problem on the Real Line"
+author: Yusen Xia and Jose Zavala-Fonseca
+format: html
+---
+
+In this article, we briefly explore the optimal transport problem on the real line along with some examples.
+
+# Existence Of Monotone Transport Maps
+
+We first introduce the definition of **pseudo-inverse** of a cumulative density function (CDF) of probability measure $\mu$.
+
+**Definition**. Given a nondecreasing and right-continuous function $F: \mathbb{R} \rightarrow$ $[0,1]$, its pseudo-inverse is the function $F^{[-1]}:[0,1] \rightarrow \overline{\mathbb{R}}$ given by
+
+$$
+F^{[-1]}(x):=\inf \{t \in \mathbb{R}: F(t) \geq x\}
+$$
+
+where the infimum is a minimum as soon as the set is nonempty (otherwise it is $+\infty$ ) and bounded from below (otherwise it is $-\infty$ ), thanks to right continuity of $F$.
+
+Note, as a simple consequence of the definition of pseudo-inverse, that we have
+
+$$
+F^{[-1]}(x) \leq a \Leftrightarrow F(a) \geq x ; \quad F^{[-1]}(x)>a \Leftrightarrow F(a)<x .
+$$
+
+Note if the measure $\mu$ is atomless, the CDF of $\mu$ is simply strictly increasing and continuous, and so is its inverse.
+
+**Definition.** We will call the transport plan $\eta:=\left(F_\mu^{[-1]}, F_{\nu}^{[-1]}\right) \#\left(\mathscr{L}^1\llcorner[0,1])\right.$ the co-monotone transport plan between $\mu$ and $\nu$ and denote it by $\gamma_{\text {mon }}$.
+
+The following theorem asserts that for all atomless measure $\mu$ and measure $\nu$ (not necessarily atomless) on $\mathbb{R}$, we can always find a transport map (not just a plan) from $\mu$ to $\nu$:
+
+**Theorem.** Given $\mu, \nu \in \mathscr{P}(\mathbb{R})$, suppose that $\mu$ is atomless. Then, there exists a unique nondecreasing map $\mathrm{T}_{\text {mon }}: \mathbb{R} \rightarrow \mathbb{R}$ such that $\left(\mathrm{T}_{\mathrm{mon}}\right)_{\#} \mu=\nu$.
+
+Remark. The map is given by $\mathrm{T}_{\mathrm{mon}}(x):=F_{\nu}^{[-1]}\left(F_{\mu}(x)\right)$ . When $\nu$ is also atomless, it becomes simply $\mathrm{T}_{\mathrm{mon}}(x)=F_{\nu}^{-1}\left(F_{\mu}(x)\right)$ .
+
+# Optimality Of The Monotone Transport Map
+
+The monotone map is optimal in a variety of cases.
+
+**Theorem**. Let $h: \mathbb{R} \rightarrow \mathbb{R}_{+}$be a strictly convex function and $\mu, \nu \in \mathscr{P}(\mathbb{R})$ be probability measures. Consider the cost $c(x, y)=h(y-x)$ and suppose that (KP) has a finite value. Then, (KP) has a unique solution, which is given by $\gamma_{\text {mon }}$. In the case where $\mu$ is atomless, this optimal plan is induced by the map $\mathrm{T}_{\text {mon}}$. Moreover, if the strict convexity assumption is withdrawn and $h$ is only convex, then the same $\gamma_{\text {mon}}$ is actually an optimal transport plan, but no uniqueness is guaranteed anymore.
+
+The following are some examples.
+
+### Linear Cost Example
+
+For this example, consider the cost function $c(x,y) = L(x-y)$ along with a given linear map $A: \mathbb{R}^d \rightarrow \mathbb{R}$. Moreover, if we let ( $\gamma$ ) be any transport plan, then by direct computation we see that: $$
+\int L(x-y) d \gamma = \int L(x) d \gamma - \int L(y) d \gamma = \int L(x) d \mu - \int L(y) d \nu
+$$
+
+This suggests that this result only depends on the marginals of $\gamma$ (where $\mu$ and $\nu$ are compactly supported probability measures). In fact, in such cases, every transport plan/map is optimal.
+
+### Distance Cost Example
+
+Consider the cost function $c(x,y) = |x-y|$ along with probability measures (on $\mathbb{R}$) $\mu$ and $\nu$. Then, for any $((x,y) \in spt(\mu) \times spt(\nu) )$, we see that $c(x,y) = y-x$, which immediately puts us back in the linear cost position. Therefore, any transport map/plan is also optimal for such costs.
+
+### Book Shifting Example
+
+Consider the cost function $c(x,y) = |x-y|$ along with $\mu = \frac{1}{2} \lambda*{\[0,2\]}$ and $\nu = \frac{1}{2}\lambda{\[1,3\]}$ (where $\lambda$ is the one-dimensional Lebesgue measure). A (monotone) transport plan that rearranges $\mu$ to look like \$\nu \$ is given by $T_0(x) = x+1$, and its corresponding cost is:
+
+$$
+ M(T_0) = \int \|T_0(x)-x\| d\mu \equiv 1
+$$
+
+Furthermore, notice that the piecewise map $T_1(x)=x+2$ (for $x \leq 1$ ) and $T_1(x)=x$ (for $x>1$ ) satisfies $T_1 \# \mu=\nu$, i.e. $T_1$ is a transport map from $\mu$ to $\nu$;; moreover, the corresponding cost is:
+
+$$
+M\left(T_1\right)=\int\left|T_1(x)-x\right| d \mu=\frac{1}{2} \int_0^2 2 d x \equiv 1
+$$
+
+Thus, we conclude that $T_1$ is indeed optimal as well.
+
+### Quadratic Cost
+
+**Theorem:** Let $\mu, \nu$ be probability measures on $\mathbb{R}$ with cumulative distribution functions (CDFs) $F$ and $G$, respectively. Also, let $\pi$ be the probability measure on $\mathbb{R}^2$ with the CDF:
+
+$$
+H(x,y) = \min(F(x), G(y)) 
+$$
+
+Then, $\pi \in \Gamma(\mu, \nu)$ and is optimal (in the Kantorovich problem setting) between $\mu$ and $\nu$ for the (quadratic) cost function $c(x,y) = |x-y|^2$, and the corresponding cost is:
+
+$$
+T_2(\mu, \nu)=\int_0^1\left|F^{-1}(t)-G^{-1}(t)\right|^2 d t
+$$
+
+where $F^{-1}$ and $G^{-1}$ are the pseudo-inverses of the respective CDFs.
+
+#### Ideas and Remarks for the Proof
+
+Note the proof from Cedric-Villani gives this result in arbitrary dimensions. Below is a rough outline of the proof, and the full details can be found in *"Topics in Optimal Transportation"* (Villani, cite later). Moreover, the measure $\pi$ constructed in the theorem is indeed optimal provided that the cost function $c(x,y)$ is of the form $c(x-y)$, where $c$ is a convex, nonnegative symmetric function on $\mathbb{R}$.
+
+One of the first major steps in proving this theorem is showing that
+
+$$\operatorname{supp}(\pi) \subset\left\{(x, y) \in \mathbb{R}^2: F\left(x^{-}\right) \leq G(y)\right.  \text{ and } \left.G\left(y^{-}\right) \leq F(x)\right\}$$
+
+by considering specific cases. Upon showing this, we may conclude that $\pi$ is supported in a monotone subset of $\mathbb{R}^2$ and hence also supported in the sub-differential of some lower semi-continuous convex function. From here, we make use of the Knott-Smith optimality criterion (Villani, pg. 66) which establishes that $\pi$ is an optimal transference plan. Then, upon showing that:
+
+$\pi=\left(F^{-1} \times G^{-1}\right) \# \lambda_{[0,1]}$
+
+we see that for any nonnegative, measurable function $u$ on $\mathbb{R}^2$:
+
+$$
+\int_{\mathbb{R}^2} u(x, y) d \pi(x, y)=\int_0^1 u\left(F^{-1}(t), G^{-1}(t)\right) d t
+$$
+
+This then immediately yields the cost ( T_2(\mu, \nu) ) and completes the proof.
