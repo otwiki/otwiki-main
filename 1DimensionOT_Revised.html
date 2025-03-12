@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Yusen Xia and Jose Zavala-Fonseca">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Optimal Transport Problem on the Real Line – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -138,13 +139,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Optimal Transport Problem on the Real Line</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yusen Xia and Jose Zavala-Fonseca </p>
+          </div>
+  </div>
     
   
     
@@ -155,102 +162,80 @@ window.Quarto = {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a><br>
-</li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric)">Kantorovich Dual Problem (for <span class="math inline">\(c(x,y) = d(x,y)^2\)</span> where <span class="math inline">\(d\)</span> is a metric)</a> - Evan Tufte will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>In this article, we briefly explore the optimal transport problem on the real line along with some examples.</p>
+<section id="existence-of-monotone-transport-maps" class="level1">
+<h1>Existence Of Monotone Transport Maps</h1>
+<p>We first introduce the definition of <strong>pseudo-inverse</strong> of a cumulative density function (CDF) of probability measure <span class="math inline">\(\mu\)</span>.</p>
+<p><strong>Definition</strong>. Given a nondecreasing and right-continuous function <span class="math inline">\(F: \mathbb{R} \rightarrow\)</span> <span class="math inline">\([0,1]\)</span>, its pseudo-inverse is the function <span class="math inline">\(F^{[-1]}:[0,1] \rightarrow \overline{\mathbb{R}}\)</span> given by</p>
+<p><span class="math display">\[
+F^{[-1]}(x):=\inf \{t \in \mathbb{R}: F(t) \geq x\}
+\]</span></p>
+<p>where the infimum is a minimum as soon as the set is nonempty (otherwise it is <span class="math inline">\(+\infty\)</span> ) and bounded from below (otherwise it is <span class="math inline">\(-\infty\)</span> ), thanks to right continuity of <span class="math inline">\(F\)</span>.</p>
+<p>Note, as a simple consequence of the definition of pseudo-inverse, that we have</p>
+<p><span class="math display">\[
+F^{[-1]}(x) \leq a \Leftrightarrow F(a) \geq x ; \quad F^{[-1]}(x)&gt;a \Leftrightarrow F(a)&lt;x .
+\]</span></p>
+<p>Note if the measure <span class="math inline">\(\mu\)</span> is atomless, the CDF of <span class="math inline">\(\mu\)</span> is simply strictly increasing and continuous, and so is its inverse.</p>
+<p><strong>Definition.</strong> We will call the transport plan <span class="math inline">\(\eta:=\left(F_\mu^{[-1]}, F_{\nu}^{[-1]}\right) \#\left(\mathscr{L}^1\llcorner[0,1])\right.\)</span> the co-monotone transport plan between <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> and denote it by <span class="math inline">\(\gamma_{\text {mon }}\)</span>.</p>
+<p>The following theorem asserts that for all atomless measure <span class="math inline">\(\mu\)</span> and measure <span class="math inline">\(\nu\)</span> (not necessarily atomless) on <span class="math inline">\(\mathbb{R}\)</span>, we can always find a transport map (not just a plan) from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>:</p>
+<p><strong>Theorem.</strong> Given <span class="math inline">\(\mu, \nu \in \mathscr{P}(\mathbb{R})\)</span>, suppose that <span class="math inline">\(\mu\)</span> is atomless. Then, there exists a unique nondecreasing map <span class="math inline">\(\mathrm{T}_{\text {mon }}: \mathbb{R} \rightarrow \mathbb{R}\)</span> such that <span class="math inline">\(\left(\mathrm{T}_{\mathrm{mon}}\right)_{\#} \mu=\nu\)</span>.</p>
+<p>Remark. The map is given by <span class="math inline">\(\mathrm{T}_{\mathrm{mon}}(x):=F_{\nu}^{[-1]}\left(F_{\mu}(x)\right)\)</span> . When <span class="math inline">\(\nu\)</span> is also atomless, it becomes simply <span class="math inline">\(\mathrm{T}_{\mathrm{mon}}(x)=F_{\nu}^{-1}\left(F_{\mu}(x)\right)\)</span> .</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="optimality-of-the-monotone-transport-map" class="level1">
+<h1>Optimality Of The Monotone Transport Map</h1>
+<p>The monotone map is optimal in a variety of cases.</p>
+<p><strong>Theorem</strong>. Let <span class="math inline">\(h: \mathbb{R} \rightarrow \mathbb{R}_{+}\)</span>be a strictly convex function and <span class="math inline">\(\mu, \nu \in \mathscr{P}(\mathbb{R})\)</span> be probability measures. Consider the cost <span class="math inline">\(c(x, y)=h(y-x)\)</span> and suppose that (KP) has a finite value. Then, (KP) has a unique solution, which is given by <span class="math inline">\(\gamma_{\text {mon }}\)</span>. In the case where <span class="math inline">\(\mu\)</span> is atomless, this optimal plan is induced by the map <span class="math inline">\(\mathrm{T}_{\text {mon}}\)</span>. Moreover, if the strict convexity assumption is withdrawn and <span class="math inline">\(h\)</span> is only convex, then the same <span class="math inline">\(\gamma_{\text {mon}}\)</span> is actually an optimal transport plan, but no uniqueness is guaranteed anymore.</p>
+<p>The following are some examples.</p>
+<section id="linear-cost-example" class="level3">
+<h3 class="anchored" data-anchor-id="linear-cost-example">Linear Cost Example</h3>
+<p>For this example, consider the cost function <span class="math inline">\(c(x,y) = L(x-y)\)</span> along with a given linear map <span class="math inline">\(A: \mathbb{R}^d \rightarrow \mathbb{R}\)</span>. Moreover, if we let ( <span class="math inline">\(\gamma\)</span> ) be any transport plan, then by direct computation we see that: <span class="math display">\[
+\int L(x-y) d \gamma = \int L(x) d \gamma - \int L(y) d \gamma = \int L(x) d \mu - \int L(y) d \nu
+\]</span></p>
+<p>This suggests that this result only depends on the marginals of <span class="math inline">\(\gamma\)</span> (where <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> are compactly supported probability measures). In fact, in such cases, every transport plan/map is optimal.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-</ul>
+<section id="distance-cost-example" class="level3">
+<h3 class="anchored" data-anchor-id="distance-cost-example">Distance Cost Example</h3>
+<p>Consider the cost function <span class="math inline">\(c(x,y) = |x-y|\)</span> along with probability measures (on <span class="math inline">\(\mathbb{R}\)</span>) <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>. Then, for any <span class="math inline">\(((x,y) \in spt(\mu) \times spt(\nu) )\)</span>, we see that <span class="math inline">\(c(x,y) = y-x\)</span>, which immediately puts us back in the linear cost position. Therefore, any transport map/plan is also optimal for such costs.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm">Sinkhorn’s Algorithm</a> - Jack Pfaffinger will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance">Sliced Wasserstein Distance</a> - Arie</li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="book-shifting-example" class="level3">
+<h3 class="anchored" data-anchor-id="book-shifting-example">Book Shifting Example</h3>
+<p>Consider the cost function <span class="math inline">\(c(x,y) = |x-y|\)</span> along with <span class="math inline">\(\mu = \frac{1}{2} \lambda*{\[0,2\]}\)</span> and <span class="math inline">\(\nu = \frac{1}{2}\lambda{\[1,3\]}\)</span> (where <span class="math inline">\(\lambda\)</span> is the one-dimensional Lebesgue measure). A (monotone) transport plan that rearranges <span class="math inline">\(\mu\)</span> to look like $$ is given by <span class="math inline">\(T_0(x) = x+1\)</span>, and its corresponding cost is:</p>
+<p><span class="math display">\[
+M(T_0) = \int \|T_0(x)-x\| d\mu \equiv 1
+\]</span></p>
+<p>Furthermore, notice that the piecewise map <span class="math inline">\(T_1(x)=x+2\)</span> (for <span class="math inline">\(x \leq 1\)</span> ) and <span class="math inline">\(T_1(x)=x\)</span> (for <span class="math inline">\(x&gt;1\)</span> ) satisfies <span class="math inline">\(T_1 \# \mu=\nu\)</span>, i.e.&nbsp;<span class="math inline">\(T_1\)</span> is a transport map from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>;; moreover, the corresponding cost is:</p>
+<p><span class="math display">\[
+M\left(T_1\right)=\int\left|T_1(x)-x\right| d \mu=\frac{1}{2} \int_0^2 2 d x \equiv 1
+\]</span></p>
+<p>Thus, we conclude that <span class="math inline">\(T_1\)</span> is indeed optimal as well.</p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal Transport and Statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein Gradient Flows</h3>
-<ul>
-<li>Probability flow solution of the Fokker–Planck equation - Simone Betteti - <a href="https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta">Boffi and Vanden-Eijnden 2023</a></li>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="quadratic-cost" class="level3">
+<h3 class="anchored" data-anchor-id="quadratic-cost">Quadratic Cost</h3>
+<p><strong>Theorem:</strong> Let <span class="math inline">\(\mu, \nu\)</span> be probability measures on <span class="math inline">\(\mathbb{R}\)</span> with cumulative distribution functions (CDFs) <span class="math inline">\(F\)</span> and <span class="math inline">\(G\)</span>, respectively. Also, let <span class="math inline">\(\pi\)</span> be the probability measure on <span class="math inline">\(\mathbb{R}^2\)</span> with the CDF:</p>
+<p><span class="math display">\[
+H(x,y) = \min(F(x), G(y))
+\]</span></p>
+<p>Then, <span class="math inline">\(\pi \in \Gamma(\mu, \nu)\)</span> and is optimal (in the Kantorovich problem setting) between <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> for the (quadratic) cost function <span class="math inline">\(c(x,y) = |x-y|^2\)</span>, and the corresponding cost is:</p>
+<p><span class="math display">\[
+T_2(\mu, \nu)=\int_0^1\left|F^{-1}(t)-G^{-1}(t)\right|^2 d t
+\]</span></p>
+<p>where <span class="math inline">\(F^{-1}\)</span> and <span class="math inline">\(G^{-1}\)</span> are the pseudo-inverses of the respective CDFs.</p>
+<section id="ideas-and-remarks-for-the-proof" class="level4">
+<h4 class="anchored" data-anchor-id="ideas-and-remarks-for-the-proof">Ideas and Remarks for the Proof</h4>
+<p>Note the proof from Cedric-Villani gives this result in arbitrary dimensions. Below is a rough outline of the proof, and the full details can be found in <em>“Topics in Optimal Transportation”</em> (Villani, cite later). Moreover, the measure <span class="math inline">\(\pi\)</span> constructed in the theorem is indeed optimal provided that the cost function <span class="math inline">\(c(x,y)\)</span> is of the form <span class="math inline">\(c(x-y)\)</span>, where <span class="math inline">\(c\)</span> is a convex, nonnegative symmetric function on <span class="math inline">\(\mathbb{R}\)</span>.</p>
+<p>One of the first major steps in proving this theorem is showing that</p>
+<p><span class="math display">\[\operatorname{supp}(\pi) \subset\left\{(x, y) \in \mathbb{R}^2: F\left(x^{-}\right) \leq G(y)\right.  \text{ and } \left.G\left(y^{-}\right) \leq F(x)\right\}\]</span></p>
+<p>by considering specific cases. Upon showing this, we may conclude that <span class="math inline">\(\pi\)</span> is supported in a monotone subset of <span class="math inline">\(\mathbb{R}^2\)</span> and hence also supported in the sub-differential of some lower semi-continuous convex function. From here, we make use of the Knott-Smith optimality criterion (Villani, pg. 66) which establishes that <span class="math inline">\(\pi\)</span> is an optimal transference plan. Then, upon showing that:</p>
+<p><span class="math inline">\(\pi=\left(F^{-1} \times G^{-1}\right) \# \lambda_{[0,1]}\)</span></p>
+<p>we see that for any nonnegative, measurable function <span class="math inline">\(u\)</span> on <span class="math inline">\(\mathbb{R}^2\)</span>:</p>
+<p><span class="math display">\[
+\int_{\mathbb{R}^2} u(x, y) d \pi(x, y)=\int_0^1 u\left(F^{-1}(t), G^{-1}(t)\right) d t
+\]</span></p>
+<p>This then immediately yields the cost ( T_2(, ) ) and completes the proof.</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
