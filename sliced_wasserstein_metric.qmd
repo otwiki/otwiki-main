@@ -18,7 +18,7 @@
 ---
 title: "Sliced-Wasserstein Distance"
 bibliography: sliced_wasserstein_bibliography.bib
-author: Arie Ogranovich
+author: Christian Bueno and Arie Ogranovich
 ---
 
 The sliced Wasserstein distance ${\displaystyle SW_{p}}$ is an alternative distance metric between probability measures that integrates Wasserstein distances over 1-dimensional projections of measures in $\mathbb{R}^d$. It shares many properties with the Wasserstein distance while being computationally simpler. For further reading see [@santambrogio2015ot4am; @peyre2020cot]
