@@ -1,0 +1,63 @@
+---
+title: "Analysis in Metric Spaces"
+bibliography: library.bib
+author: Max Emerick
+---
+
+This article discusses several ideas which are foundational in the study of curves in metric spaces. In short, curves in a metric space can be given well-defined properties such as 'length' or 'speed', which generalize the classical notions from Euclidean space. These properties then allow one to define minimum-length curves (or geodesics), which then give a natural way to interpolate between points in a metric space. Beyond being useful in their own right, these ideas are widespread in optimal transport.
+
+### Curves in Metric Spaces
+
+Let $(X,d)$ be a metric space. A curve in $X$ is a function $\gamma: [a,b] \to X$, where $[a,b] \subset \mathbb{R}$. The independent variable $t \in [a,b]$ is typically considered to represent time. Notice that a curve is therefore time-dependent by definition -- that is, it is not merely a set of points in $X$.
+
+A curve $\gamma$ is said to be continuous is it satisfies the usual definition: for all $\epsilon > 0$ and for all $t,\tau \in [a,b]$, there exists $\delta = \delta(t,\epsilon) > 0$ such that $|t - \tau| < \delta$ implies $d(\gamma(t),\gamma(\tau)) < \epsilon$. Similarly, $\gamma$ is said to be uniformly continuous if $\delta$ can be chosen independently of $t$.
+
+However, we will mainly be interested in a stronger notion of continuity in this article: absolute continuity. In the case $X = \mathbb{R}$, a function $f: [a,b] \to \mathbb{R}$ is said to be absolutely continuous if there exists $g \in L^1([a,b])$ such that $$
+f(s) - f(r) ~=~ \int_r^s g(t) \, dt 
+$$ for all $r,s \in [a,b]$. In other words, $f$ has a derivative almost everywhere (i.e. $g$) and is equal to the integral of such. This is the class of curves for which notions such as 'length' or 'speed' are well-behaved.
+
+In a general metric space ($X \neq \mathbb{R}$), there is no way to define integrals or derivatives of curves, and so we must relax the definition above. In this setting, a curve $\gamma: [a,b] \to X$ is said to be absolutely continuous if there exists $g \in L^1([a,b])$ such that $$
+d(\gamma(r),\gamma(s)) ~\leq~ \int_r^s g(t) \, dt
+$$ for all $a \leq r \leq s \leq b$. We emphasize again that this is a stronger notion than continuity or uniform continuity, and remark that the original definition can indeed be recovered when $X = \mathbb{R}$. The space of absolutely continuous curves from $[a,b]$ to $X$ will be denoted $\text{AC}([a,b],X)$.
+
+### Length and Speed
+
+While there is no way to define the derivative of a curve $\gamma: [a,b] \to X$, there is a well-defined notion of speed: the metric derivative. For $\gamma \in \text{AC}([a,b],X)$, its metric derivative is defined as $$
+|\gamma'|(t) ~:=~ \lim_{h \to 0} \frac{d(\gamma(t),\gamma(t+h))}{|h|} .
+$$ The metric derivative exists for a.e. $t \in (a,b)$, and is the minimal $g$ that can be chosen in the definition of absolute continuity above \[Theorem 9.2, @Ambrosio2021\].
+
+The length of $\gamma$ is then defined as $$
+\ell(\gamma) ~:=~ \int_a^b |\gamma'|(t) \, dt .
+$$ Observe that the above definitions imply that for any curve $\gamma \in \text{AC}([a,b],X)$, it holds that $\ell(\gamma) \geq d(\gamma(a),\gamma(b))$, i.e., that the length of $\gamma$ is greater than the distance between its endpoints. This should be intuitively obvious.
+
+### Reparameterizations
+
+As remarked before, curves in a metric space are time-dependent by definition. However, it is often desirable to standardize this time-dependence as much as possible. For example, by reparameterizing the time variable, any curve $\gamma \in \text{AC}([a,b],X)$ can be transformed into a curve $\tilde{\gamma} \in \text{AC}([0,1],X)$ with constant speed (which is then equal to its length).
+
+This is done as follows. Let $\gamma \in \text{AC}([a,b],X)$ be a curve with time variable $t$, metric derivative $|\gamma'|(t)$, and length $\ell(\gamma)$. Define the function $$
+\sigma(t) ~:=~ \frac{1}{\ell(\gamma)} \int_a^t |\gamma'|(s) \, ds .
+$$ The function $\sigma(t)$ represents the fraction of $\gamma$ which has been traversed by time $t$. Since $|\gamma'|$ is integrable and nonnegative, $\sigma$ is an absolutely continuous and monotone nondecreasing function, and thus admits a right inverse $\sigma^{-R}$. We then define the new time variable $\tau := \sigma(t)$ and the reparameterized curve $\tilde{\gamma}$ by $$
+\tilde{\gamma}(\tau) ~:=~ \gamma(\sigma^{-R}(\tau)) ~=~ (\gamma \circ \sigma^{-R})(\tau) .
+$$ It can then be verified that $\tilde{\gamma}$ is an absolutely continuous curve on the interval $[0,1]$ with $\tilde{\gamma}(0) = \gamma(a)$, $\tilde{\gamma}(1) = \gamma(b)$, and $|\tilde{\gamma}'| \equiv \ell(\tilde{\gamma}) = \ell(\gamma) = \text{constant}$ \[Proposition 9.6, @Ambrosio2021\].
+
+It is then often conventient to work in the space of constant-speed absolutely continuous curves on $[0,1]$ rather than in the spaces $\text{AC}([a,b],X)$.
+
+### Geodesics
+
+As remarked before, for any curve $\gamma \in \text{AC}([a,b],X)$, it holds that $\ell(\gamma) \geq d(\gamma(a),\gamma(b))$. Any curve which achieves equality here (i.e. for which $\ell(\gamma) = d(\gamma(a),\gamma(b))$) is termed a geodesic. Geodesics are thus curves of minimal length between their endpoints, and in this way, generalize the notion of 'straight line' from Euclidean space to a general metric space. (In Euclidean space, 'straight' typically evokes a notion of angle, however, there is no notion of angle in a general metric space. Therefore, this generealization relies on the variational characterization of straight lines as the shortest paths between their endpoints.)
+
+Just as straight lines are a natural way to interpolate between points in a Euclidean space, geodesics are a natural way to interpolate between points in a metric space. We are thus led to the following question: Given two points $a,b$ in a metric space $(X,d)$, does a geodesic between them always exist, and if so, is it unique? The answer is generically 'no', and this can fail in many ways:
+
+1.  If the space is not path-connected, then curves connecting $a$ and $b$ may not exist at all.
+
+2.  Curves connecting $a$ and $b$ may exist, but there may not be one of minimum length (e.g. $\mathbb{R}^2 \backslash \{ 0 \}$ with $a = -b$).
+
+3.  A minimal curve connecting $a$ and $b$ may exist, but may have length strictly larger than $d(a,b)$ (e.g. the unit circle $\mathbb{S}^1$ embedded in $\mathbb{R}^2$ with the inherited metric).
+
+4.  Even when geodesics do exist, they are not always unique (e.g. the unit sphere $\mathbb{R}^2$ with $a,b$ antipodal points).
+
+We are thus led to make the following definitions. A metric space $(X,d)$ is said to be a length space if for all $x,y \in X$, $$
+d(x,y) ~=~ \inf \{ \ell(\gamma) ~:~ \gamma \in \text{AC}([a,b],X) ,~ \gamma(a) = x ,~ \gamma(b)=y \}.
+$$ It is said to be a geodesic space if there exists such a $\gamma$ achieving the infimum (i.e. a geodesic). It is said to be a uniquely geodesic space if such a $\gamma$ is unique.
+
+There are a large number of results in differential and metric geometry establishing necessary and sufficient conditions for a space to have these properties.
