@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jack Pfaffinger">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Entropic Regularization and Sinkhorn – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -138,13 +159,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Entropic Regularization and Sinkhorn</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jack Pfaffinger </p>
+          </div>
+  </div>
     
   
     
@@ -155,106 +182,70 @@ window.Quarto = {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a><br>
-</li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_c(x,y)_%3D_d(x,y)%5E2_where_d_is_a_metric)">Kantorovich Dual Problem (for <span class="math inline">\(c(x,y) = d(x,y)^2\)</span> where <span class="math inline">\(d\)</span> is a metric)</a> - Evan Tufte will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>Sinkhorn’s Algorithm is an iterative numerical method used to obtain an optimal transport plan <span class="math inline">\(\pi \in \Gamma(\alpha,\beta)\)</span> for the <a href="https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html">Kantorovich Problem</a> with entropic regularization in the case of finitely supported positive measures <span class="math inline">\(\alpha, \beta \in \mathcal M_{+}(X)\)</span>. For further reading see <span class="citation" data-cites="Peyre2018">(<a href="#ref-Peyre2018" role="doc-biblioref">Peyré and Cuturi 2018</a>)</span> (pg. 62-73).</p>
+<section id="continuous-problem-formulation" class="level4">
+<h4 class="anchored" data-anchor-id="continuous-problem-formulation"><strong>Continuous Problem Formulation</strong></h4>
+<p>Entropic regularization modifies the Kantorovich problem by adding a <a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence%20Kullback-Leibler">Kullback-Leibler divergence</a> term to the optimization goal. Specifically, the general form of the problem is now to determine</p>
+<p><span class="math display">\[
+L_c^\epsilon (\alpha, \beta) = \inf_{\pi \in \Gamma(\alpha, \beta)} \underbrace{\int_{X \times Y} c(x, y) \, d\pi(x, y)}_{\text{Kantorovich functional } \mathbb{K}(\pi)} + \epsilon \underbrace{\text{KL}(\pi \mid \alpha \otimes \beta)}_{\text{entropic term}}
+\]</span></p>
+<p>where <span class="math inline">\(\alpha\otimes\beta\)</span> is the product measure of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, and where</p>
+<p><span class="math display">\[ \operatorname{KL}(\mu\mid\nu) = \int_X \log\left(\frac{\mathrm{d}\mu}{\mathrm{d}\nu}(x) \right) \mathrm{d}\mu(x) + \int_X (\mathrm{d}\nu(x) - \mathrm{d}\mu(x)) \]</span></p>
+<p>whenever the Radon-Nikodym derivative <span class="math inline">\(\tfrac{\mathrm{d}\mu}{\mathrm{d}\nu}\)</span> exists (i.e.&nbsp;when <span class="math inline">\(\mu\)</span> is absolutely continuous w.r.t. <span class="math inline">\(\nu\)</span>) and <span class="math inline">\(+\infty\)</span> otherwise. This form of the KL divergence is applicable even when <span class="math inline">\(\mu,\nu \in \mathcal{M}_+(X)\)</span> differ in total mass and it reduces to the standard definition whenever <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> have equal total mass. From this definition it immediately follows that for <span class="math inline">\(\epsilon &gt; 0\)</span> an optimal coupling <span class="math inline">\(\pi^*\)</span> must be absolutely continuous w.r.t <span class="math inline">\(\alpha \otimes \beta\)</span>. As a result, the optimal plan is in some sense less singular and hence “smoothed out.”</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="discrete-problem-formulation" class="level4">
+<h4 class="anchored" data-anchor-id="discrete-problem-formulation"><strong>Discrete Problem Formulation</strong></h4>
+<p>To apply Sinkhorn’s algorithm to approximate <span class="math inline">\(L^{\epsilon}_c (\alpha,\beta)\)</span>, it will be necessary to assume finite support so let <span class="math inline">\(\alpha = \textstyle\sum_{i=1}^{n} a_i \delta_{x_i}\)</span> and <span class="math inline">\(\beta = \textstyle\sum_{j=1}^m b_j \delta_{y_j}\)</span> and denote the corresponding vector of weights by <span class="math inline">\(\mathbf{a} \in \mathbb{R}_{+}^n\)</span> and <span class="math inline">\(\mathbf{b} \in \mathbb{R}_{+}^m\)</span>. Additionally let <span class="math inline">\(C_{ij} = c(x_i, y_j)\)</span> and denote the discrete version of <span class="math inline">\(\Gamma(\alpha,\beta)\)</span> by <span class="math inline">\(U(a,b)= \{ P \in \mathbb{R}^{n \times m} \mid \textstyle\sum_{j} P_{ij}=a_i, \textstyle\sum_{i} P_{ij} = b_j \}\)</span>.</p>
+<p>The discrete entropy of a coupling matrix is defined as:</p>
+<p><span class="math display">\[
+H(P) := -\sum_{i,j}P_{i,j}(\log(P_{i,j}) - 1)
+\]</span></p>
+<p>with an analogous definition for vectors.</p>
+<p>This lets us write the entropically regularized Kantorovich problem as:</p>
+<p><span class="math display">\[L^{\epsilon}_{C}(\mathbf{a},\mathbf{b}) = \inf_{P\in U(\mathbf{a},\mathbf{b})} \sum_{i,j} C_{i,j} P_{i,j} -\epsilon H(P).\]</span></p>
+<p>Adding the entropy regularization guarantees uniqueness of the solution, and makes the solutions “less sparse” as <span class="math inline">\(\epsilon\)</span> increases.</p>
+<p>The unique solution <span class="math inline">\(P^{\epsilon}\)</span> of the entropically regularized Kantorovich problem converges to the optimal solution of the unregularized Kantorovich problem which has maximal entropy as <span class="math inline">\(\epsilon \rightarrow 0\)</span>. In other words,</p>
+<p><span class="math display">\[
+P_{\epsilon} \xrightarrow{\varepsilon \to 0} \underset{P \in U(\mathbf{a}, \mathbf{b})}{\operatorname{argmax}} \{ H(P) : \sum_{i, j} P_{i,j}C_{i,j} = L_{C}(\mathbf{a}, \mathbf{b}) \}
+\]</span></p>
+<p>where <span class="math inline">\(L_{C}(\mathbf{a}, \mathbf{b})\)</span> is the minimal cost of the unregularized Kantorovich problem. Thus we can see</p>
+<p><span class="math display">\[
+L^{\epsilon}_C(\mathbf{a}, \mathbf{b}) \xrightarrow{\varepsilon \to 0} L_{C}(\mathbf{a}, \mathbf{b}).
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+P_{\epsilon} \xrightarrow{\varepsilon \to 0} a \otimes b = ab^{T}.
+\]</span></p>
+<p>See here for more on <a href="https://otwiki.github.io/otwiki-main/DiscreteOT">Discrete Optimal Transport</a>.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-</ul>
+<section id="characterizing-the-solution" class="level4">
+<h4 class="anchored" data-anchor-id="characterizing-the-solution"><strong>Characterizing the Solution</strong></h4>
+<p>The solution to the discrete entropically regularized problem formulation is unique and has a special form. We can define the Kullback-Leibler divergence between couplings as</p>
+<p><span class="math display">\[\operatorname{KL}(P\mid K) := \sum_{i,j} P_{ij} \log\left(\frac{P_{i,j}}{K_{i.j}}\right) + - P_{i,j} + K_{i, j}.\]</span></p>
+<p><strong>Theorem (<span class="citation" data-cites="Peyre2018">Peyré and Cuturi (<a href="#ref-Peyre2018" role="doc-biblioref">2018</a>)</span>, Proposition 4.3 on pg. 63)</strong>:</p>
+<p>The solution <span class="math inline">\(P \in \mathbb{R}^{n\times m}\)</span> to discrete regularized Kantorovich problem is unique and has the form <span class="math inline">\(P_{ij} = u_iK_{ij}v_j\)</span> for some <span class="math inline">\(\mathbf{u} \in \mathbb{R}^n, \mathbf{v} \in \mathbb{R}^m\)</span> where <span class="math inline">\(K_{ij}=e^{-C_{ij}/\epsilon}\)</span>. Moreover, <span class="math inline">\(\mathbf u\)</span> and <span class="math inline">\(\mathbf v\)</span> are unique up to multiplication and division by some scaling factor.</p>
+<p>In fact, the optimal solution <span class="math inline">\(P_{\epsilon}\)</span> of <span class="math inline">\(L_{c}^{\epsilon}(\mathbf{a}, \mathbf{b})\)</span> satisfies:</p>
+<p><span class="math display">\[
+P_{\epsilon} = \underset{P \in U(\mathbf{a}, \mathbf{b})}{\operatorname{argmin}} KL(P| K)
+\]</span></p>
+<p>i.e.&nbsp;<span class="math inline">\(P^{\epsilon}\)</span> is the admissible coupling which has smallest KL-divergence with respect to <span class="math inline">\(K\)</span>.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance">Sliced Wasserstein Distance</a> - Arie</li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
-</section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal Transport and Statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein Gradient Flows</h3>
-<ul>
-<li>Probability flow solution of the Fokker–Planck equation - Simone Betteti - <a href="https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta">Boffi and Vanden-Eijnden 2023</a></li>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="sinkhorns-algorithm" class="level4">
+<h4 class="anchored" data-anchor-id="sinkhorns-algorithm"><strong>Sinkhorn’s Algorithm</strong></h4>
+<p>Sinkhorn’s algorithm takes advantage of the aforementioned characterization result to iteratively approximate the scaling factors <span class="math inline">\(\mathbf u\)</span> and <span class="math inline">\(\mathbf v\)</span>. The procedure is simple and only involves matrix-vector multiplication and entrywise division as follows</p>
+<p><span class="math display">\[ u^{(\ell +1)} = \frac{\textbf a}{K\textbf v^{(\ell)}} \quad\text{and}\quad v^{(\ell +1)} = \frac{\textbf a}{K^T\textbf u^{(\ell+1)}} \]</span></p>
+<p>Where <span class="math inline">\(\mathbf{v}^{(0)}\)</span> is initialized arbitrarily as a vector of all <span class="math inline">\(1's\)</span>. This problem is known known in the numerical analysis community as a matrix scaling problem.</p>
+<p>Once a sufficient number of iterations <span class="math inline">\(L\)</span> have been taken, we let <span class="math inline">\(\hat P_{ij}=u^{(L)}_i K_{i,j} v^{(L)}_j\)</span> be our approximation of the optimal plan.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Peyre2018" class="csl-entry" role="listitem">
+Peyré, Gabriel, and Marco Cuturi. 2018. <span>“Computational Optimal Transport.”</span> <em>arXiv Preprint</em>. <a href="https://arxiv.org/abs/1803.00567">https://arxiv.org/abs/1803.00567</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
