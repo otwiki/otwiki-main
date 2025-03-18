@@ -1,0 +1,66 @@
+---
+title: "Kantorivich Dual Problem with Quadratic Cost"
+bibliography: bibliography.bibtex
+author: Evan Tufte
+---
+
+# Introduction
+
+The Kantorovich dual problem is a common reformulation of the Kantorovich problem. The dual problem formulation and the intuition behind it is discussed [here](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)). The case $c(x,y) =\frac{1}{2} |x-y|^2$ is an important special case for several reasons. First off, the minimum cost is the [2-Wasserstein distance](https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations). From the point of view of mathematical analysis, the quadratic cost is special because the $c$-transform for $c(x,y)= \frac{1}{2} |x-y|^2$ is closely related to convex conjugates, and many tools from convex analysis can be used. Moreover, in the quadratic case the Monge optimal transport map is of the form $T = \nabla \phi$ for a convex function $\phi$ (as discussed in the section on Brenier's theorem [here](https://www.otwiki.xyz/wiki/Monge_Problem)).
+
+# Definitions
+
+## Definition of the c-Transform and c-Concavity
+
+Let $X$ and $Y$ be [Polish spaces](https://en.wikipedia.org/wiki/Polish_space), and let $c: X \times Y \to \mathbb{R} \cup \{ + \infty\}$ be a measurable function. The $c$-transform of $f:X \to \mathbb{R} \cup \{ -\infty\}$ is defined by $$ f^c (y) = \inf_{ x \in X} \left( c(x,y) - f(x) \right)$$ the $\overline{c}$-transform of $g:Y \to \mathbb{R} \cup \{ - \infty\}$ is $$g^{\overline{c}}(x) = \inf_{y \in Y} \left(c(x,y) - g(y)\right).$$ Moreover, a function $f$ is called $c$-concave if there exists $g:Y \to \mathbb{R} \cup \{ - \infty\}$ such that $f = g^{\overline{c}}$.
+
+A comment: when $c$ is symmetric (i.e., $X=Y$ and $c(x,y) = c(y,x)$ for all $x,y \in X=Y$), the $c$-transform and $\overline{c}$-transform are identical. In this case we will just call them both the $c$-transform.
+
+## Definition of the convex conjugate
+
+Suppose $f: \mathbb{R}^d \to \mathbb{R} \cup \{+\infty\}$. The *convex conjugate* of $f$ is defined by $$f^*(y) = \sup_{x \in \mathbb{R}^d} \left( x \cdot y - f(x)\right).$$ Here, $x \cdot y$ is the dot product of $x$ and $y$. The map $f \mapsto f^*$ is called the Legendre transform.
+
+# The Relationship between c-Concavity and Convex Conjugates
+
+The following is Proposition 1.21 in [@Santambrogio_2015]. The proof below mirrors the proof there.
+
+::: {#thm-relationship}
+## Relationship between the c-transform and Legendre transform
+
+Given a proper function $f: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}$, define $u_f:\mathbb{R}^d \to \mathbb{R} \cup \{+ \infty\}$ by $u_f(x) = \frac{1}{2} |x^2|$. Then $u_{f^c} = (u_f)^*$. Moreover, a proper function $g: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}$ is c-concave if and only if $x \mapsto \frac{1}{2} |x|^2 -g(x)$ is convex and lower semi-continuous.
+:::
+
+::: proof
+Let $f: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}$, and let $x \in \mathbb{R}^d$. We compute:
+
+\begin{align*} u_{f^c}(x) &= \frac{1}{2} |x|^2 -f^c(x)\\
+&= \frac{1}{2} |x|^2 - \inf_{ y \in \mathbb{R}^d} \left( \frac{1}{2}|x-y|^2 - f(y) \right)\\
+&= \frac{1}{2} |x|^2 + \sup_{ y \in \mathbb{R}^d} \left( -\frac{1}{2}|x-y|^2 + f(y) \right)\\
+&= \sup_{ y \in \mathbb{R}^d} \left(\frac{1}{2} |x|^2 -\frac{1}{2}|x-y|^2 + f(y)  \right)\\
+&=\sup_{ y \in \mathbb{R}^d} \left(\frac{1}{2} |x|^2 -\frac{1}{2}(|x|^2 - 2 x \cdot y + |y|^2) + f(y)  \right)\\
+&=\sup_{ y \in \mathbb{R}^d} \left( x \cdot y - \left(\frac{1}{2}|y|^2 - f(y) \right)\right)\\
+&= (u_f)^*(x). 
+\end{align*} This proves $u_{f^c} = (u_f)^*$.
+
+It remains to show that $g: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}$ is c-concave if and only if $u_g$ is convex and lower semi-continuous.
+
+Let $g: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}$. Assume $g$ is c-concave. Then, $g = f^c$ for some $f:\mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}$. Now, $u_g = u_{f^c} = u_f^*$. By [Fenchel Moreau](https://en.wikipedia.org/wiki/Fenchel%E2%80%93Moreau_theorem) this implies $u_g$ is convex and lower semicontinous.
+
+Now, assume $u_g$ is convex and lower semicontinuous. Then, by Fenchel Moreau, $u_g = h^*$ for some function $h:\mathbb{R}^d \to \mathbb{R} \cup \{+ \infty\}$. Define $f(x) = \frac{1}{2} |x|^2 - h(x)$ (so $u_f(x) = h(x)$). Then, $u_g = (u_f)^*=u_{f^c}$, which implies $g=f^c$. Thus, $g$ is $c$-concave.
+:::
+
+## The Dual problem
+
+Let $X$ and $Y$ be Polish spaces. Let $\mu$ and $\nu$ be probability measures on $X$ and $Y$ respectively. Let $c: X \times Y \to [0,\infty]$ be lower semicontinuous. The dual problem of the Kantorovich problem is $$
+\sup_{f(x)+g(y) \leq c(x,y)} \int f(x) d \mu(x) + \int g(y) d \nu(y)
+$$ {#eq-Dual} where the supremum is take over all $f \in L^1(\mu), g \in L^1(\nu)$ such that $f(x)+g(y) \leq c(x,y)$.
+
+There is one thing here that isn't standard: sometimes you take instead $f \in C_b(X)$, $g \in C_b(Y)$ instead of $f \in L^1(\mu), g \in L^1(\nu)$. That is, you maximize over the smaller set of continuous and bounded functions. Whenever $X$ and $Y$ are Polish spaces $C_b$ is dense in $L^1$ so the supremum is the same. However, working in $L^1$ is can be convenient because sometimes maximizers $(f,g)$ of @eq-Dual are non-continuous $L^1$ functions.
+
+# Solvability of the Dual Problem with Quadratic Cost
+
+::: {#thm-Solvability}
+Let $\mu$ and $\nu$ be (Borel) probability measures on $\mathbb{R}^d$. Assume $$\int_{\mathbb{R}^d} |x|^2 d \mu ( x) < +\infty \quad \text{and} \quad  \int_{\mathbb{R}^d} |y|^2 d \mu ( x) < +\infty.$$ Then, there is a maximizer $(f,g)$ to the dual Kantorovich problem. Moreover, $u_f$ and $u_g$ are both convex and $u_f^* = u_g$.
+:::
+
+This is Theorem 1.40 in [@Santambrogio_2015] (p.32), a proof can be found there. For more general $c(x,y)$, the dual problem still has a solution (and the maximum of the dual problem is equal to the infimum in the primal problem) as is discussed [here](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)). However, much of the proof in the non-quadratic case relies on theory of the $c$-transform instead of convex analysis. The book [@Santambrogio_2015] is also a good resource to see the proof in the general case.
