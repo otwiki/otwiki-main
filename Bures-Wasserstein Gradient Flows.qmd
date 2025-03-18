@@ -13,7 +13,7 @@
 
 ---
 title: "Bures-Wasserstein Gradient Flow"
-bibliography: bw_gradient_flows_bibliography.bibtex
+bibliography: bw_gradient_flows_bibliography.bib
 author: Arie Ogranovich
 ---
 
