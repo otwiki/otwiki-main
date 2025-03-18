@@ -1,0 +1,78 @@
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\E}{\mathbb E}
+\newcommand{\T}{\mathbb T}
+\newcommand{\BW}{\text{BW}(\R^d)}
+\newcommand{\Wass}{\mathcal{P}_p(\R^d)}
+\newcommand{\WassTwo}{\mathcal{P}_2(\R^d)}
+\newcommand{\WassOm}{\mathcal{P}_p(\Omega)}
+\newcommand{\WassTwoAC}{\mathcal{P}_{2,\text{ac}}(\R^d)}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\Cdf}{\mathcal{C}}
+
+---
+title: "Sliced-Wasserstein Distance"
+bibliography: sliced_wasserstein_bibliography.bib
+author: Arie Ogranovich
+---
+
+The sliced Wasserstein distance ${\displaystyle SW_{p}}$ is an alternative distance metric between probability measures that integrates Wasserstein distances over 1-dimensional projections of measures in $\mathbb{R}^d$. It shares many properties with the Wasserstein distance while being computationally simpler. For further reading see [@santambrogio2015ot4am; @peyre2020cot]
+
+# Motivation
+
+One situation in which the Wasserstein distance is easier to compute is the 1D case [@peyre2020cot]. In particular, if the the measures are of the form $\alpha ={\tfrac {1}{n}}\textstyle \sum _{i=1}^{n}\delta _{x_{i}}$ and $\beta ={\tfrac {1}{n}}\textstyle \sum _{i=1}^{n}\delta _{y_{i}}$ where $x_{1}\leq \ldots \leq x_{n}$ and $y_{1}\leq \ldots \leq y_{n}$ then the Wasserstein distance is given by $W_{p}(\alpha ,\beta )^{p}={\tfrac {1}{n}}\textstyle \sum _{i=1}^{n}|x_{i}-y_{i}|^{p}$.
+
+More generally, if $\alpha \in \mathcal{P}_p(\mathbb{R})$, we can define the cumulative distribution function (CDF) as a function $\mathcal{C}_{\alpha}: \mathbb{R}\rightarrow [0,1]$ defined by $$\mathcal{C}_{\alpha} = \int_{-\infty}^x d\alpha$$ as well as the pseudoinverse-CDF $\mathcal{C}_{\alpha}^{\dagger}: [0,1] \rightarrow \mathbb{R}\cup \{-\infty\}$ defined by $$\mathcal{C}_{\alpha}^{\dagger} (r) = \min \mathcal{C}_\alpha^{-1}([r,\infty]).$$ Using these notions, we can write down an explicit formula for the Wasserstein distance between probability distributions on $\mathbb{R}$: $$\mathcal{W}_p(\alpha,\beta)^p = ||\mathcal{C}_\alpha^{\dagger} -\mathcal{C}_{\beta}^\dagger||_{L^p([0,1])}^p = \int_{0}^1 |\mathcal{C}_\alpha^{\dagger}(r) -\mathcal{C}_{\beta}^\dagger(r)|^pdr$$
+
+The simplicity of the 1D case provokes one to consider whether a Wasserstein-like distance over $\mathbb {R} ^{d}$ could be built from knowledge of the Wasserstein distance along projections onto 1D axes. The sliced Wasserstein distance provides an affirmative answer to this question.
+
+# Definition
+
+Let $P_{\theta }:\mathbb {R} ^{d}\to \mathbb {R}$ be the projection onto a unit vector $\theta \in \mathbb {S} ^{d-1}$ i.e. $P_{\theta }(x)=x\cdot \theta$. The sliced Wasserstein distance $SW_p$ on ${\mathcal {P}}_p(\mathbb {R} ^{d})$ is given by $$SW_p(\mu ,\nu )=\left(\int _{\mathbb {S} ^{d-1}}W_p(P_{\theta \#}\mu ,P_{\theta \#}\nu )^pd\theta \right)^{1/p}.$$
+
+# Metric Structure of Sliced-Wasserstein Space
+
+The sliced Wasserstein distance satisfies all the axioms of a true metric on $\mathcal{P}_p(\mathbb{R}^d)$ [@peyre2020cot]. The metric space $(\mathcal{P}_p(\Omega), SW_p)$ is both complete and separable [@kitagawa2024suitable]. In addition, it has a Hilbert space structure, which we discuss below, as well as the fact that ${\displaystyle SW_p}$ and ${\displaystyle W_p}$ are homeomorphic when $\Omega$ is compact.
+
+We sketch how to show that the sliced Wasserstein distance is a proper metric. The triangle inequality is inherited from $\displaystyle \mathcal{P}_p(\mathbb{R}^d)$ and $\displaystyle L^p(\mathbb{S}^{d-1})$. To see this, if $\mu, \nu, \sigma$ are three measures in ${\mathcal {P}}_p(\mathbb {R} ^{d})$ then \begin{align}
+  SW_p(\mu ,\sigma )+SW_p(\sigma ,\nu )&=\left(\int _{\mathbb {S} ^{d-1}}W_p(P_{\theta \#}\mu ,P_{\theta \#}\sigma )^pd\theta \right)^{1/p} + \left(\int _{\mathbb {S} ^{d-1}}W_p(P_{\theta \#}\sigma ,P_{\theta \#}\nu )^pd\theta \right)^{1/p}\\
+  &\leq \left(\int _{\mathbb {S} ^{d-1}}W_p(P_{\theta \#}\mu ,P_{\theta \#}\sigma )^pd\theta + \int _{\mathbb {S} ^{d-1}}W_p(P_{\theta \#}\sigma ,P_{\theta \#}\nu )^pd\theta \right)^{1/p}\\
+  &= \left(\int _{\mathbb {S} ^{d-1}}W_p(P_{\theta \#}\mu ,P_{\theta \#}\sigma )^p+W_p(P_{\theta \#}\sigma ,P_{\theta \#}\nu )^p d\theta \right)^{1/p}\\
+  &\leq \left(\int _{\mathbb {S} ^{d-1}}\Big(W_p(P_{\theta \#}\mu ,P_{\theta \#}\sigma )+W_p(P_{\theta \#}\sigma ,P_{\theta \#}\nu )\Big)^p d\theta \right)^{1/p}\\
+  &\leq \left(\int _{\mathbb {S} ^{d-1}} W_p(P_{\theta \#}\mu,P_{\theta \#}\nu )^p d\theta \right)^{1/p}\\
+  &= SW_p(\mu ,\nu ).
+\end{align} Similarly, the positivity and symmetry of $\displaystyle SW_p$ can be shown from the positivity and symmetry of $\displaystyle W_p$. To show that $\displaystyle SW_p(\mu ,\nu )=0$ implies $\displaystyle \mu =\nu$, one first observes that if $\displaystyle SW_p(\mu ,\nu )=0$ then $\displaystyle P_{\theta \#}\mu =P_{\theta \#}\nu$ for any choice of $\theta$. This observation can be used to show that $\mu = \nu$ by way of Radon transforms [@santambrogio2015ot4am].
+
+## Hilbertian Property of ${\displaystyle SW_{p}}$
+
+There is an isometric embedding of $(\mathcal{P}_p(\mathbb{R}^d),SW_p)$ into a Hilbert space which demonstrates that $SW_p$ is a Hilbertian metric. This is a special property of $SW_p$ which is not satisfied by $\mathcal{W}_p$, which is generally not Hilbertian on $\mathbb{R}^d$ with $d > 1$ [@peyre2020cot].
+
+We now demonstrate the Hilbertian nature of $SW_p$ via an isometric embedding of $(\mathcal{P}_p(\mathbb{R}^d),SW_p)$ into an $L^p$ space. Recall the pseudoinverse-CDF formulation of Wasserstein distance in $\mathbb{R}$, which tells us that $$\mathcal{W}_p(P_{\theta \#}\mu, P_{\theta \#}\nu)^p = \int_{0}^1 |\mathcal{C}_{P_{\theta \#}\mu}^{\dagger}(r) -\mathcal{C}_{P_{\theta \#}\nu}^\dagger(r)|^pdr$$ which implies that $$SW_p(P_{\theta \#}\mu, P_{\theta \#}\nu)^p = \int_{\mathbb{S}^{d-1}}\int_{0}^1 |\mathcal{C}_{P_{\theta \#}\mu}^{\dagger}(r) -\mathcal{C}_{P_{\theta \#}\nu}^\dagger(r)|^pdrd\theta.$$ This tells us that the map $F: \mathcal{P}_p(\mathbb{R}^d)\rightarrow L^p(\mathbb{S}^{d-1} \times [0,1])$ defined by $F(\mu): (\theta,r) \mapsto \mathcal{C}_{P_{\theta \#}\mu}^{\dagger}(r)$ is an isometric embedding for $\mathcal{P}_p(\mathbb{R}^d)$ into $L^p(\mathbb{S}^{d-1} \times [0,1])$, which means that $SW_p$ is a Hilbertian metric.
+
+This embedding allows one to construct an analogue of displacement interpolation between measures $\mu$ and $\nu$. This is done via a gradient flow on the function $\sigma \mapsto SW_p(\nu,\sigma)^p$ with initial condition $\mu_0 = \mu$, as long as such a flow converges to $\nu$. In the case of $SW_2$, numerical simulations have shown that the flow indeed converges to $\nu$ [@peyre2020cot].
+
+## Topological Equivalence of ${\displaystyle SW_p}$ and ${\displaystyle W_p}$ on compact domains
+
+On compact domains $\Omega \subset \mathbb{R}$, the topologies on $(\mathcal{P}_p(\Omega), SW_p)$ and $(\mathcal{P}_p(\Omega), W_p)$ are the same. To see this, first notice that ${\displaystyle SW_p(\mu ,\nu )\leq W_p(\mu ,\nu )}$ from the property that $\displaystyle W_p(P_{\theta \#}\mu ,P_{\theta \#}\nu )\leq W_p(\mu ,\nu ).$ This implies that convergence of a sequence in ${\displaystyle W_p}$ implies convergence in ${\displaystyle SW_p}$, i.e the identity map on ${\displaystyle {\mathcal {P}}_p(\mathbb {R} ^{d})}$ is ${\displaystyle W_p}$-to-${\displaystyle SW_p}$-continuous. Moreover, since $\Omega$ is compact it follows that ${\displaystyle ({\mathcal {P}}_p(\Omega ),W_p)}$ is compact, and since $(\mathcal{P}_p(\Omega), SW_p)$ is a metric space it is Hausdorff. We conclude that the identity map from $(\mathcal{P}_p(\Omega), W_p)$ to $(\mathcal{P}_p(\Omega), SW_p)$ is a continuous bijection from a compact space to a Hausdorff space, and such a map must be a homeomorphism. This shows that $(\mathcal{P}_p(\Omega), W_p)$ and $(\mathcal{P}_p(\Omega), SW_p)$ are equivalent from a topological perspective.
+
+This result does not easily generalize beyond compact domains. In fact, it is known that $(\mathcal{P}_p(\mathbb{R}^d), W_p)$ and $(\mathcal{P}_p(\mathbb{R}^d), SW_p)$ have distinct topologies [@bayraktar2021equivalence].
+
+# Comparison of $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), W_2)$ and $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), SW_2)$
+
+There is a large body of work in Optimal Transport Theory devoted to the study of $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d),W_2)$ as a result of its highly geometric, Riemannian-esque structure. Recent work [@park2024geometry] has studied the properties of the 2-Sliced-Wasserstein metric in comparison to the 2-Wasserstein metric. They find for a discrete measure $\mu$ that $SW_2(\mu, \cdot)$ behaves similarly to $W_2(\mu,\cdot)$, and for certain classes of absolutely continuous measures $SW_2(\mu, \cdot)$ behaves similarly to a negative Sobolev norm.
+
+In terms of geodesic structure is known that $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), SW_2)$ is not a geodesic space, i.e there is not always a continuous curve between measures $\mu,\nu$ whose length is the distance $SW_2(\mu,\nu)$. This is in contrast with the fact that $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), W_2)$ gains much of its structure from being a geodesic space. However, it is still possible to put a tangential structure on $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), SW_2)$ in a fashion similar to the tangential structure on $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), W_2)$. All absolutely continuous curves $(\mu_t)_{t \in [0,1]}$ in $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), W_2)$ are solutions of the continuity equation with a flux $v_t \mu_t$ that is absolutely continuous with respect to $\mu_t$, and similarly curves in $(\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d), SW_2)$ are solutions of a continuity equation, although the corresponding flux is not necessarily absolutely continuous with respect to $\mu_t$. Owing to the lack of geodesics in Sliced Wasserstein space, [@park2024geometry] studied a length metric $l_{SW_2}$ on $\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d)$ with respect to $SW_2$, where $l_{SW_2}(\mu,\nu)$ is defined as the infimum of the $SW_2$-lengths of all curves between $\mu$ and $\nu$. Under this metric, geodesics do in fact exist between any two measures in $\mathcal{P}_{2,\text{ac}}(\mathbb{R}^d)$.
+
+# Dual Representation of the Sliced Wasserstein metric
+
+The dual representation of the Wasserstein metric is useful for computational problems. Analogously, there is a dual representation for the Sliced Wasserstein metric. The domain of test functions will be $\mathcal{A}_p$ and $\mathcal{Z}_{s}$, where $$\mathcal{A}_p := \left\{ (\Phi_{(\boldsymbol{\cdot})}, \Psi_{(\boldsymbol{\cdot})} \in C(\mathbb{S}^{d-1};C_b(\mathbb{R})))^2 \,\bigg|\, \begin{array}{ c }
+ -\Phi_{\omega}(t) - \Psi_{\omega}(s) \leq |t-s|^p \\ 
+ \text{for all } t,s\in \mathbb{R}\text{ and } \omega \in \mathbb{S}^{d-1}
+\end{array} \right\}$$ and $$\mathcal{Z} := \left\{ \zeta \in C(\mathbb{S}^{d-1}) \, \Big| \, |\zeta| < 1, \zeta > 0 \right\}.$$ Then the dual representation of the Sliced Wasserstein metric is $$SW_p(\mu,\nu)^p = \sup \left\{ -\int_{\mathbb{S}^{d-1}} \zeta \left( \int_{\mathbb{R}} \Phi_{\theta} dP_{\theta \#} \mu + \int_{\mathbb{R}} \Psi_{\theta} dP_{\theta \#} \nu \right) d\theta \, \bigg| \, \begin{array}{ c }(\Phi,\Psi) \in \mathcal{A}_p, \\ 
+\zeta \in \mathcal{Z}
+\end{array} \right\}.$$
