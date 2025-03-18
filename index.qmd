@@ -44,7 +44,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Discrete Optimal Transport](DiscreteOT)
 -   [Auction Algorithm](https://www.otwiki.xyz/wiki/Auction_Algorithm)
 -   [Semidiscrete Optimal Transport](https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport)
--   [Sinkhorn's Algorithm](entropic_regularization_and_sinkhorn.qmd) 
+-   [Entropic Regularization and Sinkhorn's Algorithm](entropic_regularization_and_sinkhorn.qmd) 
 -   [Sliced Wasserstein Distance](https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance) - Arie
 -   [Back and Forth Method](backandfortharticle.qmd)
 
