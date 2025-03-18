@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Djordje Nikolic">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Kantorovich Dual problem – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -67,6 +88,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +159,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Kantorovich Dual problem</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Djordje Nikolic </p>
+          </div>
+  </div>
     
   
     
@@ -126,106 +182,62 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a><br>
-</li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>The Kantorovich Dual Problem is one of the minimization problems in <a href="http://34.106.105.83/wiki/Main_Page">Optimal Transport</a> . It is a dual problem of the <a href="http://34.106.105.83/wiki/">Kantorovich Problem</a>.</p>
+<section id="the-shippers-problem" class="level1">
+<h1>The Shipper’s Problem</h1>
+<p>One of the ways to understand this problem is stated by Caffarelli. The statement is presented in the book by Villani <span class="citation" data-cites="villani2021topics">(<a href="#ref-villani2021topics" role="doc-biblioref">Villani 2021</a>)</span>. We will provide the modern rephrase of his statement.</p>
+<p>Every morning, people enjoy a coffee time at home. All in all, it costs Amazon <span class="math inline">\(c(x,y)\)</span> dollars to ship one box of necessary espresso capsules from place <span class="math inline">\(x\)</span> to place <span class="math inline">\(y\)</span>, i.e.&nbsp;from warehouses to homes. We want to optimize this expensive habit and consequently to solve appropriate Monge-Kantorovich problem. The mathematicians come to Amazon and propose the new kind of payment. For every box at place <span class="math inline">\(x\)</span> they will charge <span class="math inline">\(\varphi(x)\)</span> dollars and <span class="math inline">\(\psi(y)\)</span> dollars to deliver at place <span class="math inline">\(y\)</span>. However, mathematicians will not reveal their shipping routes. Of course, in order for Amazon to accept this offer, the price <span class="math inline">\(\varphi(x)+\psi(y) \leq c(x,y)\)</span>. The moral is that if the mathematicians are smart enough, they will be capable to make this shipment cheaper. This is provided by Kantorovich duality theorem. Take care that in the same cases, mathematicians will also give negative prices, if it is necessary!</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="statement-of-theorem" class="level1">
+<h1>Statement of Theorem</h1>
+<p>This is the statement of the Theorem in the book “Topics in Optimal Transportation”, by Cedric Villani <span class="citation" data-cites="villani2021topics">(<a href="#ref-villani2021topics" role="doc-biblioref">Villani 2021</a>)</span>.</p>
+<p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be Polish spaces, let <span class="math inline">\(\mu \in \mathcal{P}(X)\)</span> and <span class="math inline">\(\nu \in \mathcal{P}(Y)\)</span>, and let a cost function <span class="math inline">\(c:X \times Y \rightarrow[0,+\infty]\)</span> be lower semi-continuous. Whenever <span class="math inline">\(\pi \in \mathcal{P}(X \times Y)\)</span> and <span class="math inline">\((\varphi, \psi) \in L^{1}(d\mu) \times L^{1}(d\nu)\)</span>, define <span class="math display">\[
+I[\pi]= \int_{X\times Y} c(x,y) d\pi(x,y), \quad J(\varphi,\psi)=\int_{X}\varphi(x)d\mu(x)+\int_{Y}\psi(y) d\nu(y).
+\]</span></p>
+<p>Define <span class="math inline">\(\Pi(\mu,\nu)\)</span> to be the set of Borel probability measures <span class="math inline">\(\pi\)</span> on <span class="math inline">\(X\times Y\)</span> such that for all measurable sets <span class="math inline">\(A \subset X\)</span> and <span class="math inline">\(B \subset Y\)</span> , <span class="math inline">\(\pi[A\times Y]=\mu(A)\)</span> , <span class="math inline">\(\pi[X\times B]=\nu(B)\)</span> , and define <span class="math inline">\(\Phi_{c}\)</span> to be the set of all measurable functions <span class="math inline">\((\varphi, \psi) \in L^{1}(d\mu) \times L^{1}(d\nu)\)</span> satisfying <span class="math inline">\(\varphi(x)+\psi(y) \leq c(x,y)\)</span> for <span class="math inline">\(d\mu\)</span> almost everywhere in <span class="math inline">\(X\)</span> and <span class="math inline">\(d\nu\)</span> almost everywhere in <span class="math inline">\(Y\)</span>.</p>
+<p>Then <span class="math inline">\(\inf_{\Pi(\mu,\nu)} I[\pi] = \sup_{\Phi_{c}} J(\varphi,\psi)\)</span>.</p>
+<p>Moreover, the infimum <span class="math inline">\(\inf_{\Pi(\mu,\nu)} I[\pi]\)</span> is attained. In addition it is possible to restrict <span class="math inline">\(\varphi\)</span> and <span class="math inline">\(\psi\)</span> to be continuous and bounded.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-</ul>
+<section id="ideas-and-the-techniques-used-in-the-proof" class="level1">
+<h1>Ideas and the techniques used in the proof</h1>
+<p>First, we assume that our spaces <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are compact and that the cost function <span class="math inline">\(c(x,y)\)</span> is continuous. The general case follows by an approximation argument.</p>
+<p>The main idea is to use minimax principle, i.e.&nbsp;interchanging inf sup with sup inf in the proof. For this, we need some basic convex analysis techniques, namely Legendre-Fenchel transform and Theorem on Fenchel-Rockafellar Duality (its proof is based on <a href="https://en.wikipedia.org/wiki/Hahn%E2%80%93Banach_theorem">Hahn-Banach theorem</a> consequence on separating convex sets). The required statements can be found in the book by Rockafellar<span class="citation" data-cites="rockafellar1997convex">(<a href="#ref-rockafellar1997convex" role="doc-biblioref">Rockafellar 1997</a>)</span> and the book by Bauschke and Combettes<span class="citation" data-cites="bauschke2017correction">(<a href="#ref-bauschke2017correction" role="doc-biblioref">Bauschke et al. 2017</a>)</span>.</p>
+<p>Take a note that at some point we use <a href="https://en.wikipedia.org/wiki/Arzel%C3%A0%E2%80%93Ascoli_theorem">Arzela-Ascoli Theorem</a>. In a non-compact space this is not possible. In order to evade compactness property, we have to use Prokhorov’s theorem:</p>
+<p>Let <span class="math inline">\(\mu_{n}\)</span> be a tight sequence of probability measures on Polish space <span class="math inline">\(X\)</span>. Then, there exists <span class="math inline">\(\mu \in \mathcal{P}(X)\)</span> and convergent subsequence <span class="math inline">\(\mu_{n_{k}}\)</span> such that <span class="math inline">\(\mu_{n_{k}} \rightharpoonup \mu\)</span> in the dual of <span class="math inline">\(C_{b}(X)\)</span>. Conversely, every sequence <span class="math inline">\(\mu_{n} \rightharpoonup \mu\)</span> is tight.</p>
+<p>The proof of the previous Theorem can be found in <span class="citation" data-cites="bogachev2007measure">(<a href="#ref-bogachev2007measure" role="doc-biblioref">Bogachev and Ruas 2007</a>)</span>. For more information on <span class="math inline">\(C_{b}(X)\)</span> duality, take a look at <a href="http://34.106.105.83/wiki/">Dual space of C_0(x) vs C_b(x)</a>.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance">Sliced Wasserstein Distance</a> - Arie</li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
-</section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal Transport and Statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein Gradient Flows</h3>
-<ul>
-<li>Probability flow solution of the Fokker–Planck equation - Simone Betteti - <a href="https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta">Boffi and Vanden-Eijnden 2023</a></li>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="c-concave-functions" class="level1">
+<h1>C-concave functions</h1>
+<p>There are a few alternative proofs of the theorem above. First, we will discuss the conclusion of the Theorem.</p>
+<p>In Kantorovich Duality Theorem, the left-hand side of the last equality, the infimum <span class="math inline">\(\inf_{\Pi(\mu,\nu)} I[\pi]\)</span> is attained. For continuous and bounded cost function <span class="math inline">\(c(x,y)\)</span> we can restrict <span class="math inline">\(\sup_{\Phi_{c}} J(\varphi,\psi)\)</span> to pairs <span class="math inline">\((\varphi^{cc},\varphi^{c})\)</span> where <span class="math inline">\(\varphi\)</span> is bounded and</p>
+<p><span class="math display">\[ \varphi^{c}(y)=\inf_{y \in Y} [c(x,y) - \varphi(x)], \quad \varphi^{cc}(x)=\inf_{y \in Y} [c(x,y) - \varphi^{c}(y)].
+\]</span></p>
+<p>The pair <span class="math inline">\((\varphi^{cc},\varphi^{c})\)</span> is called a pair of conjugate c-concave functions. This way we improve the maximization functions for the dual problem (for motivation, think about shipper’s problem). It is known that under the reasonable assumptions <span class="math inline">\(\varphi^{cc}=\varphi\)</span> and that <span class="math inline">\(\varphi^{c}\)</span> is measurable, see <span class="citation" data-cites="santambrogio2015optimal">(<a href="#ref-santambrogio2015optimal" role="doc-biblioref">Santambrogio 2015</a>)</span>.</p>
+<p>Hence, it is possible to state the Kantorovich Duality theorem using c-concave functions: <span class="math display">\[
+\text{max}(DP) = \text{max}_{\varphi \in c-conc(X)} \int_{X} \varphi(x) d\mu + \int_{Y} \varphi^{c}(y)d\nu
+\]</span></p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bauschke2017correction" class="csl-entry" role="listitem">
+Bauschke, Heinz H, Patrick L Combettes, Heinz H Bauschke, and Patrick L Combettes. 2017. <em>Correction to: Convex Analysis and Monotone Operator Theory in Hilbert Spaces</em>. Springer.
+</div>
+<div id="ref-bogachev2007measure" class="csl-entry" role="listitem">
+Bogachev, Vladimir Igorevich, and Maria Aparecida Soares Ruas. 2007. <em>Measure Theory</em>. Vol. 1. 1. Springer.
+</div>
+<div id="ref-rockafellar1997convex" class="csl-entry" role="listitem">
+Rockafellar, R Tyrrell. 1997. <em>Convex Analysis</em>. Vol. 28. Princeton university press.
+</div>
+<div id="ref-santambrogio2015optimal" class="csl-entry" role="listitem">
+Santambrogio, Filippo. 2015. <em>Optimal Transport for Applied Mathematicians</em>. Vol. 87. Springer.
+</div>
+<div id="ref-villani2021topics" class="csl-entry" role="listitem">
+Villani, Cédric. 2021. <em>Topics in Optimal Transportation</em>. Vol. 58. American Mathematical Soc.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
