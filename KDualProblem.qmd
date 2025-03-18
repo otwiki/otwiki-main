@@ -1,0 +1,54 @@
+---
+title: "Kantorovich Dual problem"
+bibliography: bibliography_KDP.bibtex
+author: Djordje Nikolic
+---
+
+The Kantorovich Dual Problem is one of the minimization problems in [Optimal Transport](http://34.106.105.83/wiki/Main_Page) . It is a dual problem of the [Kantorovich Problem](http://34.106.105.83/wiki/).
+
+# The Shipper's Problem
+
+One of the ways to understand this problem is stated by Caffarelli. The statement is presented in the book by Villani [@villani2021topics]. We will provide the modern rephrase of his statement.
+
+Every morning, people enjoy a coffee time at home. All in all, it costs Amazon $c(x,y)$ dollars to ship one box of necessary espresso capsules from place $x$ to place $y$, i.e. from warehouses to homes. We want to optimize this expensive habit and consequently to solve appropriate Monge-Kantorovich problem. The mathematicians come to Amazon and propose the new kind of payment. For every box at place $x$ they will charge $\varphi(x)$ dollars and $\psi(y)$ dollars to deliver at place $y$. However, mathematicians will not reveal their shipping routes. Of course, in order for Amazon to accept this offer, the price $\varphi(x)+\psi(y) \leq c(x,y)$. The moral is that if the mathematicians are smart enough, they will be capable to make this shipment cheaper. This is provided by Kantorovich duality theorem. Take care that in the same cases, mathematicians will also give negative prices, if it is necessary!
+
+# Statement of Theorem
+
+This is the statement of the Theorem in the book "Topics in Optimal Transportation", by Cedric Villani [@villani2021topics].
+
+Let $X$ and $Y$ be Polish spaces, let $\mu \in \mathcal{P}(X)$ and $\nu \in \mathcal{P}(Y)$, and let a cost function $c:X \times Y \rightarrow[0,+\infty]$ be lower semi-continuous. Whenever $\pi \in \mathcal{P}(X \times Y)$ and $(\varphi, \psi) \in L^{1}(d\mu) \times L^{1}(d\nu)$, define $$
+I[\pi]= \int_{X\times Y} c(x,y) d\pi(x,y), \quad J(\varphi,\psi)=\int_{X}\varphi(x)d\mu(x)+\int_{Y}\psi(y) d\nu(y).
+ $$
+
+Define $\Pi(\mu,\nu)$ to be the set of Borel probability measures $\pi$ on $X\times Y$ such that for all measurable sets $A \subset X$ and $B \subset Y$ , $\pi[A\times Y]=\mu(A)$ , $\pi[X\times B]=\nu(B)$ , and define $\Phi_{c}$ to be the set of all measurable functions $(\varphi, \psi) \in L^{1}(d\mu) \times L^{1}(d\nu)$ satisfying $\varphi(x)+\psi(y) \leq c(x,y)$ for $d\mu$ almost everywhere in $X$ and $d\nu$ almost everywhere in $Y$.
+
+Then $\inf_{\Pi(\mu,\nu)} I[\pi] = \sup_{\Phi_{c}} J(\varphi,\psi)$.
+
+Moreover, the infimum $\inf_{\Pi(\mu,\nu)} I[\pi]$ is attained. In addition it is possible to restrict $\varphi$ and $\psi$ to be continuous and bounded.
+
+# Ideas and the techniques used in the proof
+
+First, we assume that our spaces $X$ and $Y$ are compact and that the cost function $c(x,y)$ is continuous. The general case follows by an approximation argument.
+
+The main idea is to use minimax principle, i.e. interchanging inf sup with sup inf in the proof. For this, we need some basic convex analysis techniques, namely Legendre-Fenchel transform and Theorem on Fenchel-Rockafellar Duality (its proof is based on [Hahn-Banach theorem](https://en.wikipedia.org/wiki/Hahn%E2%80%93Banach_theorem) consequence on separating convex sets). The required statements can be found in the book by Rockafellar[@rockafellar1997convex] and the book by Bauschke and Combettes[@bauschke2017correction].
+
+Take a note that at some point we use [Arzela-Ascoli Theorem](https://en.wikipedia.org/wiki/Arzel%C3%A0%E2%80%93Ascoli_theorem). In a non-compact space this is not possible. In order to evade compactness property, we have to use Prokhorov's theorem:
+
+Let $\mu_{n}$ be a tight sequence of probability measures on Polish space $X$. Then, there exists $\mu \in \mathcal{P}(X)$ and convergent subsequence $\mu_{n_{k}}$ such that $\mu_{n_{k}} \rightharpoonup \mu$ in the dual of $C_{b}(X)$. Conversely, every sequence $\mu_{n} \rightharpoonup \mu$ is tight.
+
+The proof of the previous Theorem can be found in [@bogachev2007measure]. For more information on $C_{b}(X)$ duality, take a look at [Dual space of C_0(x) vs C_b(x)](http://34.106.105.83/wiki/).
+
+# C-concave functions
+
+There are a few alternative proofs of the theorem above. First, we will discuss the conclusion of the Theorem.
+
+In Kantorovich Duality Theorem, the left-hand side of the last equality, the infimum $\inf_{\Pi(\mu,\nu)} I[\pi]$ is attained. For continuous and bounded cost function $c(x,y)$ we can restrict $\sup_{\Phi_{c}} J(\varphi,\psi)$ to pairs $(\varphi^{cc},\varphi^{c})$ where $\varphi$ is bounded and
+
+$$ \varphi^{c}(y)=\inf_{y \in Y} [c(x,y) - \varphi(x)], \quad \varphi^{cc}(x)=\inf_{y \in Y} [c(x,y) - \varphi^{c}(y)]. 
+$$
+
+The pair $(\varphi^{cc},\varphi^{c})$ is called a pair of conjugate c-concave functions. This way we improve the maximization functions for the dual problem (for motivation, think about shipper's problem). It is known that under the reasonable assumptions $\varphi^{cc}=\varphi$ and that $\varphi^{c}$ is measurable, see [@santambrogio2015optimal].
+
+Hence, it is possible to state the Kantorovich Duality theorem using c-concave functions: $$
+\text{max}(DP) = \text{max}_{\varphi \in c-conc(X)} \int_{X} \varphi(x) d\mu + \int_{Y} \varphi^{c}(y)d\nu
+$$
