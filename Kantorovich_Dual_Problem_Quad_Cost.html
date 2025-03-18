@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Evan Tufte">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Kantorivich Dual Problem with Quadratic Cost – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -67,6 +88,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +159,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Kantorivich Dual Problem with Quadratic Cost</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Evan Tufte </p>
+          </div>
+  </div>
     
   
     
@@ -126,106 +182,66 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a><br>
-</li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a> - Evan Tufte will revise</li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The Kantorovich dual problem is a common reformulation of the Kantorovich problem. The dual problem formulation and the intuition behind it is discussed <a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">here</a>. The case <span class="math inline">\(c(x,y) =\frac{1}{2} |x-y|^2\)</span> is an important special case for several reasons. First off, the minimum cost is the <a href="https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations">2-Wasserstein distance</a>. From the point of view of mathematical analysis, the quadratic cost is special because the <span class="math inline">\(c\)</span>-transform for <span class="math inline">\(c(x,y)= \frac{1}{2} |x-y|^2\)</span> is closely related to convex conjugates, and many tools from convex analysis can be used. Moreover, in the quadratic case the Monge optimal transport map is of the form <span class="math inline">\(T = \nabla \phi\)</span> for a convex function <span class="math inline">\(\phi\)</span> (as discussed in the section on Brenier’s theorem <a href="https://www.otwiki.xyz/wiki/Monge_Problem">here</a>).</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="definitions" class="level1">
+<h1>Definitions</h1>
+<section id="definition-of-the-c-transform-and-c-concavity" class="level2">
+<h2 class="anchored" data-anchor-id="definition-of-the-c-transform-and-c-concavity">Definition of the c-Transform and c-Concavity</h2>
+<p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be <a href="https://en.wikipedia.org/wiki/Polish_space">Polish spaces</a>, and let <span class="math inline">\(c: X \times Y \to \mathbb{R} \cup \{ + \infty\}\)</span> be a measurable function. The <span class="math inline">\(c\)</span>-transform of <span class="math inline">\(f:X \to \mathbb{R} \cup \{ -\infty\}\)</span> is defined by <span class="math display">\[ f^c (y) = \inf_{ x \in X} \left( c(x,y) - f(x) \right)\]</span> the <span class="math inline">\(\overline{c}\)</span>-transform of <span class="math inline">\(g:Y \to \mathbb{R} \cup \{ - \infty\}\)</span> is <span class="math display">\[g^{\overline{c}}(x) = \inf_{y \in Y} \left(c(x,y) - g(y)\right).\]</span> Moreover, a function <span class="math inline">\(f\)</span> is called <span class="math inline">\(c\)</span>-concave if there exists <span class="math inline">\(g:Y \to \mathbb{R} \cup \{ - \infty\}\)</span> such that <span class="math inline">\(f = g^{\overline{c}}\)</span>.</p>
+<p>A comment: when <span class="math inline">\(c\)</span> is symmetric (i.e., <span class="math inline">\(X=Y\)</span> and <span class="math inline">\(c(x,y) = c(y,x)\)</span> for all <span class="math inline">\(x,y \in X=Y\)</span>), the <span class="math inline">\(c\)</span>-transform and <span class="math inline">\(\overline{c}\)</span>-transform are identical. In this case we will just call them both the <span class="math inline">\(c\)</span>-transform.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-</ul>
+<section id="definition-of-the-convex-conjugate" class="level2">
+<h2 class="anchored" data-anchor-id="definition-of-the-convex-conjugate">Definition of the convex conjugate</h2>
+<p>Suppose <span class="math inline">\(f: \mathbb{R}^d \to \mathbb{R} \cup \{+\infty\}\)</span>. The <em>convex conjugate</em> of <span class="math inline">\(f\)</span> is defined by <span class="math display">\[f^*(y) = \sup_{x \in \mathbb{R}^d} \left( x \cdot y - f(x)\right).\]</span> Here, <span class="math inline">\(x \cdot y\)</span> is the dot product of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. The map <span class="math inline">\(f \mapsto f^*\)</span> is called the Legendre transform.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Sliced_Wasserstein_Distance">Sliced Wasserstein Distance</a> - Arie</li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal Transport and Statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
+<section id="the-relationship-between-c-concavity-and-convex-conjugates" class="level1">
+<h1>The Relationship between c-Concavity and Convex Conjugates</h1>
+<p>The following is Proposition 1.21 in <span class="citation" data-cites="Santambrogio_2015">(<a href="#ref-Santambrogio_2015" role="doc-biblioref">Santambrogio 2015</a>)</span>. The proof below mirrors the proof there.</p>
+<div id="thm-relationship" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Relationship between the c-transform and Legendre transform)</strong></span> Given a proper function <span class="math inline">\(f: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}\)</span>, define <span class="math inline">\(u_f:\mathbb{R}^d \to \mathbb{R} \cup \{+ \infty\}\)</span> by <span class="math inline">\(u_f(x) = \frac{1}{2} |x^2|\)</span>. Then <span class="math inline">\(u_{f^c} = (u_f)^*\)</span>. Moreover, a proper function <span class="math inline">\(g: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}\)</span> is c-concave if and only if <span class="math inline">\(x \mapsto \frac{1}{2} |x|^2 -g(x)\)</span> is convex and lower semi-continuous.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Let <span class="math inline">\(f: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}\)</span>, and let <span class="math inline">\(x \in \mathbb{R}^d\)</span>. We compute:</p>
+<p><span class="math display">\[\begin{align*} u_{f^c}(x) &amp;= \frac{1}{2} |x|^2 -f^c(x)\\
+&amp;= \frac{1}{2} |x|^2 - \inf_{ y \in \mathbb{R}^d} \left( \frac{1}{2}|x-y|^2 - f(y) \right)\\
+&amp;= \frac{1}{2} |x|^2 + \sup_{ y \in \mathbb{R}^d} \left( -\frac{1}{2}|x-y|^2 + f(y) \right)\\
+&amp;= \sup_{ y \in \mathbb{R}^d} \left(\frac{1}{2} |x|^2 -\frac{1}{2}|x-y|^2 + f(y)  \right)\\
+&amp;=\sup_{ y \in \mathbb{R}^d} \left(\frac{1}{2} |x|^2 -\frac{1}{2}(|x|^2 - 2 x \cdot y + |y|^2) + f(y)  \right)\\
+&amp;=\sup_{ y \in \mathbb{R}^d} \left( x \cdot y - \left(\frac{1}{2}|y|^2 - f(y) \right)\right)\\
+&amp;= (u_f)^*(x).
+\end{align*}\]</span> This proves <span class="math inline">\(u_{f^c} = (u_f)^*\)</span>.</p>
+<p>It remains to show that <span class="math inline">\(g: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}\)</span> is c-concave if and only if <span class="math inline">\(u_g\)</span> is convex and lower semi-continuous.</p>
+<p>Let <span class="math inline">\(g: \mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}\)</span>. Assume <span class="math inline">\(g\)</span> is c-concave. Then, <span class="math inline">\(g = f^c\)</span> for some <span class="math inline">\(f:\mathbb{R}^d \to \mathbb{R} \cup \{-\infty\}\)</span>. Now, <span class="math inline">\(u_g = u_{f^c} = u_f^*\)</span>. By <a href="https://en.wikipedia.org/wiki/Fenchel%E2%80%93Moreau_theorem">Fenchel Moreau</a> this implies <span class="math inline">\(u_g\)</span> is convex and lower semicontinous.</p>
+<p>Now, assume <span class="math inline">\(u_g\)</span> is convex and lower semicontinuous. Then, by Fenchel Moreau, <span class="math inline">\(u_g = h^*\)</span> for some function <span class="math inline">\(h:\mathbb{R}^d \to \mathbb{R} \cup \{+ \infty\}\)</span>. Define <span class="math inline">\(f(x) = \frac{1}{2} |x|^2 - h(x)\)</span> (so <span class="math inline">\(u_f(x) = h(x)\)</span>). Then, <span class="math inline">\(u_g = (u_f)^*=u_{f^c}\)</span>, which implies <span class="math inline">\(g=f^c\)</span>. Thus, <span class="math inline">\(g\)</span> is <span class="math inline">\(c\)</span>-concave.</p>
+</div>
+<section id="the-dual-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-dual-problem">The Dual problem</h2>
+<p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be Polish spaces. Let <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> be probability measures on <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> respectively. Let <span class="math inline">\(c: X \times Y \to [0,\infty]\)</span> be lower semicontinuous. The dual problem of the Kantorovich problem is <span id="eq-Dual"><span class="math display">\[
+\sup_{f(x)+g(y) \leq c(x,y)} \int f(x) d \mu(x) + \int g(y) d \nu(y)
+\tag{1}\]</span></span> where the supremum is take over all <span class="math inline">\(f \in L^1(\mu), g \in L^1(\nu)\)</span> such that <span class="math inline">\(f(x)+g(y) \leq c(x,y)\)</span>.</p>
+<p>There is one thing here that isn’t standard: sometimes you take instead <span class="math inline">\(f \in C_b(X)\)</span>, <span class="math inline">\(g \in C_b(Y)\)</span> instead of <span class="math inline">\(f \in L^1(\mu), g \in L^1(\nu)\)</span>. That is, you maximize over the smaller set of continuous and bounded functions. Whenever <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are Polish spaces <span class="math inline">\(C_b\)</span> is dense in <span class="math inline">\(L^1\)</span> so the supremum is the same. However, working in <span class="math inline">\(L^1\)</span> is can be convenient because sometimes maximizers <span class="math inline">\((f,g)\)</span> of <a href="#eq-Dual" class="quarto-xref">Equation&nbsp;1</a> are non-continuous <span class="math inline">\(L^1\)</span> functions.</p>
 </section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein Gradient Flows</h3>
-<ul>
-<li>Probability flow solution of the Fokker–Planck equation - Simone Betteti - <a href="https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta">Boffi and Vanden-Eijnden 2023</a></li>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
 </section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="solvability-of-the-dual-problem-with-quadratic-cost" class="level1">
+<h1>Solvability of the Dual Problem with Quadratic Cost</h1>
+<div id="thm-Solvability" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2</strong></span> Let <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> be (Borel) probability measures on <span class="math inline">\(\mathbb{R}^d\)</span>. Assume <span class="math display">\[\int_{\mathbb{R}^d} |x|^2 d \mu ( x) &lt; +\infty \quad \text{and} \quad  \int_{\mathbb{R}^d} |y|^2 d \mu ( x) &lt; +\infty.\]</span> Then, there is a maximizer <span class="math inline">\((f,g)\)</span> to the dual Kantorovich problem. Moreover, <span class="math inline">\(u_f\)</span> and <span class="math inline">\(u_g\)</span> are both convex and <span class="math inline">\(u_f^* = u_g\)</span>.</p>
+</div>
+<p>This is Theorem 1.40 in <span class="citation" data-cites="Santambrogio_2015">(<a href="#ref-Santambrogio_2015" role="doc-biblioref">Santambrogio 2015</a>)</span> (p.32), a proof can be found there. For more general <span class="math inline">\(c(x,y)\)</span>, the dual problem still has a solution (and the maximum of the dual problem is equal to the infimum in the primal problem) as is discussed <a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">here</a>. However, much of the proof in the non-quadratic case relies on theory of the <span class="math inline">\(c\)</span>-transform instead of convex analysis. The book <span class="citation" data-cites="Santambrogio_2015">(<a href="#ref-Santambrogio_2015" role="doc-biblioref">Santambrogio 2015</a>)</span> is also a good resource to see the proof in the general case.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Santambrogio_2015" class="csl-entry" role="listitem">
+Santambrogio, Filippo. 2015. In <em>Optimal Transport for Applied Mathematicians</em>. Birkhäuser Cham. <a href="https://doi.org/10.1007/978-3-319-20828-2">https://doi.org/10.1007/978-3-319-20828-2</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
