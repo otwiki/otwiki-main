@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ka Lok Lam">
+
+<title>Different Formulations of the Schrödinger Bridge Problem – OT WIKI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">OT WIKI</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Different Formulations of the Schrödinger Bridge Problem</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ka Lok Lam </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We are mainly following section 2 - 4 of <span class="citation" data-cites="LeonardSurvey13">Léonard (<a href="#ref-LeonardSurvey13" role="doc-biblioref">2013</a>)</span> to describe different formulations of the Schrödinger bridge problem.</p>
+<section id="motivation-and-problem-setup" class="level2">
+<h2 class="anchored" data-anchor-id="motivation-and-problem-setup">Motivation and problem setup</h2>
+<p>The Schrödinger bridge problem could be viewed as applying <em>entropy maximizing principle</em> on finding the most likely path of a particle given its <em>spatial distribution</em> at two time instances. Mathematically speaking, consider <span class="math inline">\(\mathcal{X}:= \mathbb{R}^d\)</span> as our spatial state space and <span class="math inline">\(\Omega:= C([0, 1]; \mathcal{X})\)</span> our space of continuous path equipped with the uniform metric. Let <span class="math inline">\(R\)</span> be the <em>reversible Brownian motion</em> on <span class="math inline">\(\mathcal{X}\)</span>, which is the law of a Brownian motion starting at the Lebesgue measure of <span class="math inline">\(\mathcal{X}\)</span>; more precisely if <span class="math inline">\(W\in P(\Omega)\)</span> (space of probability Borel measure over <span class="math inline">\(\Omega\)</span>) is the law of a Brownian motion (Wiener measure) over <span class="math inline">\(\mathcal{X}\)</span>; then we define the reversible Brownian motion to be the <em>positive measure</em> defined as <span class="math display">\[\begin{align}
+    R(A):= \int_{\mathcal{X}} W_x(A) dx
+\end{align}\]</span> and so <span class="math inline">\(R\in M^+(\Omega)\)</span> (space of positive Borel measure over <span class="math inline">\(\Omega\)</span>). Treating <span class="math inline">\(R\)</span> as an analogue of uniform distribution over path space, the Schrödinger bridge problem asks to solve for the following minimization problem <span class="math display">\[\begin{align} \tag{SB}\label{pathformulation}
+    \min \{H(P\mid R)\mid P\in P(\Omega),  P_0 = \mu_0, P_1=\mu_1\}
+\end{align}\]</span> where <span class="math inline">\(P_0:=X_0\# P\)</span> and <span class="math inline">\(P_1:= X_1\# P\)</span> with <span class="math inline">\(X_t:\Omega\to \mathbb{R}\)</span> being the canonical projection; <span class="math inline">\(\mu_0, \mu_1\in P(\mathcal{X})\)</span> are given, and <span class="math display">\[\begin{align}
+    H(P\mid R):=
+\begin{cases}
+    \frac{dP}{dR}(\omega) &amp;P&lt;&lt;R\\
+    0&amp; \textit{otherwise}
+\end{cases}
+\end{align}\]</span> being the differential entropy, which could possibly be negative and hence not bounded below.</p>
+<p>In the following we will be describing different formulation of the Schrödinger bridge problem under the slight generalization to allow <span class="math inline">\(R\in M_+(\Omega)\)</span> to be any reference measure (not necessarily reversible Brownian motion), namely</p>
+<ul>
+<li><p>the static formulation <span class="math inline">\(\ref{staticformulation}\)</span></p></li>
+<li><p>the dual formulation <span class="math inline">\(\ref{staticdual}\)</span>, <span class="math inline">\(\ref{dual}\)</span></p></li>
+<li><p>the dynamic formulation <span class="math inline">\(\ref{dynformulation}\)</span> (only for reversible Brownian motion)</p></li>
+</ul>
+<p>Due to technicality of proofs, we would either give only proof ideas or skip them entirely; this article is thus meant to be a companion to <span class="citation" data-cites="LeonardSurvey13">Léonard (<a href="#ref-LeonardSurvey13" role="doc-biblioref">2013</a>)</span>.</p>
+</section>
+<section id="static-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="static-formulation">Static Formulation</h2>
+<p>A common theme in optimization with boundary constrains is the equivalence between searching over path measures <span class="math inline">\(P(\Omega)\)</span> and the seemingly easier problem of searching over joint distributions <span class="math inline">\(P(\mathcal{X}^2)\)</span>. Let <span class="math inline">\(R\in M^+(\Omega)\)</span> be our reference measure and <span class="math inline">\(R_{01}:= (X_0, X_1)\#R\in M^+(\mathcal{X}^2)\)</span>. Then the static analog of the problem asks to find the minimizing joint distribution of <span class="math display">\[\begin{align}\tag{StaticSB}\label{staticformulation}
+    \min \{H(\pi\mid R_{01}): \pi\in P(\mathcal{X}^2), \pi_0:=X_0\# \pi = \mu_0, \pi_1:= X_1\#\pi = \mu_1\}
+\end{align}\]</span> where <span class="math inline">\(\mu_0, \mu_1\in P(\mathcal{X})\)</span> are given marginals and <span class="math inline">\(H\)</span> is defined similarly. The first approach to Schrödinger bridge is to establish equivalence between the static and orignal (path) formulation.</p>
+<div id="thm-Prop2.3" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Proposition 2.3)</strong></span> If <span class="math inline">\(\hat P\)</span> is the solution to the path formulation <span class="math inline">\(\ref{pathformulation}\)</span> then <span class="math inline">\(\hat\pi := \hat P_{01}\)</span> is the solution to the static one <span class="math inline">\(\ref{staticformulation}\)</span>. Conversely if <span class="math inline">\(\hat \pi\)</span> is the static solution then the solution to <span class="math inline">\(\ref{pathformulation}\)</span> is obtained via the disintegration formula <span class="math display">\[\begin{align}
+    \hat P(\cdot) := \int_{\mathcal{X}^2} R^{xy}(\cdot)\hat\pi (dx, dy)
+\end{align}\]</span> where <span class="math inline">\(R^{xy}\)</span> is the law of the reference path measure <em>conditioning on</em> <span class="math inline">\(X_0 = x, X_1 = y\)</span>.</p>
+</div>
+<p>The disintegration formula is typical and is related to some technicality that follows from <span class="math inline">\(\Omega, \mathcal{X}\)</span> being Polish. To give an example of the law induced by the <em>bridge</em> <span class="math inline">\(R^{xy}\)</span>, if <span class="math inline">\(R\)</span> is the reversible Brownian motion, then <span class="math inline">\(R^{xy}\)</span> is simply the Brownian bridge connecting the points <span class="math inline">\(x, y\)</span>.</p>
+<section id="well-posedness-of-entropic-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="well-posedness-of-entropic-formulation">Well-posedness of Entropic formulation</h3>
+<p>The optimization <span class="math inline">\(\ref{pathformulation}\)</span> and <span class="math inline">\(\ref{staticformulation}\)</span> are called the entropic formulation of Schrödinger bridge. The next question is to ask for their well-posedness. Uniqueness is rather direct, which follows from the strict convexity of entropy functionals. Nonetheless, existence is an issue since differential entropy could be negative and unbounded in general; we are also in the case of allowing general <span class="math inline">\(R\)</span>. Here we state a sufficient condition that could overcome these obstacles,</p>
+<div id="thm-well-posedness" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Proposition 2.5)</strong></span> The problems <span class="math inline">\(\ref{pathformulation}\)</span> and <span class="math inline">\(\ref{staticformulation}\)</span> admit a unique solution if the problem data <span class="math inline">\((\mu_0, \mu_1, R)\)</span> satisfy</p>
+<ul>
+<li><p><span class="math inline">\(R_0 = R_1=:m\)</span></p></li>
+<li><p><span class="math inline">\(H(\mu_0\mid m), H(\mu_1\mid m)&lt;\infty\)</span></p></li>
+<li><p>there exists non-negative measurable functions <span class="math inline">\(A, B:\mathcal{X}\to [0, \infty)\)</span> such that we have the moment estimates for the problem data <span class="math inline">\(R\)</span></p>
+<ul>
+<li><p><span class="math inline">\(R_{01}(dx, dy)\geq \exp(-A(x)-A(y))m(dx)m(dy)\)</span></p></li>
+<li><p><span class="math inline">\(\int_{\mathcal{X}^2}\exp(-B(x)-B(y))R_{01}(dxdy)&lt;\infty\)</span></p></li>
+<li><p><span class="math inline">\(\int_\mathcal{X} \exp(\alpha(A+B))dm&lt;\infty\)</span> for some <span class="math inline">\(\alpha&gt;0\)</span></p></li>
+</ul></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="dual-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="dual-formulation">Dual Formulation</h2>
+<p>As usual, we consider the dual formulation of our optimization problem. It has been shown that the correct candidate is given by <span class="math display">\[\begin{align}\label{staticdual}
+    \max \{\int_\mathcal{X} \phi d\mu_0 + \int_\mathcal{X} \psi d\mu_1 - \log\int_{\mathcal{X}^2} \exp(\phi\oplus\psi) dR_{01}: \phi, \psi\in C_B(\mathcal{X})\} \tag{StaticDual}
+\end{align}\]</span> for the static formulation and by <span class="math display">\[\begin{align}\label{dual}
+        \max \{\int_\mathcal{X} \phi d\mu_0 + \int_\mathcal{X} \psi d\mu_1 - \log\int_{\Omega} \exp(f(X_0)+g(X_1)) dR: \phi, \psi\in C_B(\mathcal{X})\}\tag{Dual}
+\end{align}\]</span> for the original formulation, where we have the flexibility to choose <span class="math inline">\(B\)</span> that satisfies the condition in <a href="#thm-well-posedness" class="quarto-xref">Theorem&nbsp;2</a>, that is, <span class="math inline">\(\int_{\mathcal{X}^2}\exp(-B(x)-B(y))R_{01}(dxdy)&lt;\infty\)</span> and <span class="math inline">\(u\in C_B(\mathcal{X})\)</span> if and only if <span class="math inline">\(\sup_{\mathcal{X}}\frac{u(x)}{1+B(x)}&lt;\infty\)</span>. The proof could be found in <span class="citation" data-cites="Leonard01">Léonard (<a href="#ref-Leonard01" role="doc-biblioref">2001</a>)</span>. It is clear that the two formulation above yields the same solution of <span class="math inline">\((\phi, \psi)\)</span> and as a remark, the need of <span class="math inline">\(B\)</span> is due to the possible unboundedness of <span class="math inline">\(R\)</span>.</p>
+<section id="primal-dual-relation" class="level3">
+<h3 class="anchored" data-anchor-id="primal-dual-relation">Primal-Dual relation</h3>
+<p>An important feature of the Schrödinger bridge problem is that we have a well-established relation between the solution to the dual problem with the original problem. To motivate the relation, we recall that if <span class="math inline">\(\Omega\)</span> is Polish, and <span class="math inline">\(R\)</span> is a positive measure over <span class="math inline">\(\Omega\)</span>; then by one can use convex conjugate technique to deduce the variational formulation of the entropy functional <span class="citation" data-cites="Leonard14Path">Léonard (<a href="#ref-Leonard14Path" role="doc-biblioref">2014</a>)</span> <span class="math display">\[\begin{align}
+    H(P\mid R):= \sup \{\int u dP - \log (\int \exp(u)dR):u\in C_W(\Omega)\}
+\end{align}\]</span> where <span class="math inline">\(W:\Omega\to [0, \infty)\)</span> is a function of your choice such that <span class="math inline">\(\int_\Omega \exp(-W) dR&lt;\infty\)</span> and <span class="math inline">\(u\in C_W(\Omega)\)</span> if and only if <span class="math inline">\(\sup_\Omega
+\frac{|u|}{(1+W)}\)</span>. In addition . Hence if <span class="math inline">\((\hat\phi, \hat\psi)\)</span> is a solution to the dual formulation, <span class="math inline">\(\hat\pi\)</span> is the solution to the static formulation and <span class="math inline">\(\hat P\)</span> is the solution to the path formulation, we must have (modulo some technicality) <span class="math display">\[\begin{align}
+    \hat \pi(dx, dy) = \exp(\hat \psi(x)\oplus \hat\psi(y))R_{01}(dx, dy) &amp;&amp; d\hat P = \exp(\hat\psi(X_0) + \hat\phi(X_1)) dR  
+\end{align}\]</span> where the Radon-Nikodym derivative terms <span class="math inline">\(\exp(\hat\phi(x) \oplus \hat \psi(y))\)</span> are <em>strictly positive</em> with respect to the reference measure. If we let <span class="math inline">\(f :=e^\phi\)</span> and <span class="math inline">\(g^\psi\)</span> then the relation could be written as <span class="math display">\[\begin{align}
+    \hat \pi (dx, dy) = f(x)g(y) R_{01}(dx, dy) &amp;&amp; d\hat P = f(X_0)g(X_1) dR
+\end{align}\]</span></p>
+</section>
+<section id="the-fg-transform" class="level3">
+<h3 class="anchored" data-anchor-id="the-fg-transform">The <span class="math inline">\((f,g)\)</span>-transform</h3>
+<p>The primal dual relation has restricted us to consider only <span class="math inline">\((f, g)\)</span> transform of a path measure <span class="math inline">\(R\)</span>, which yields powerful result when the reference measure <span class="math inline">\(R\)</span> is Markov and reversible. As an example, reversible Brownian motion is both Markov and reversible.</p>
+<div id="def-fgtransform" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (<span class="math inline">\((f, g)\)</span>-transform)</strong></span> Let <span class="math inline">\(f_0, g_1:\mathcal{X}\to [0, \infty)\)</span> be non-negative functions such that <span class="math inline">\(\mathbb{E}_R(f_0(X_0)g_1(X_1)) = 1\)</span>. Then we call that path measure <span class="math display">\[\begin{align}
+    P:= f_0(X_0) g_1(X_1) R\in P(\Omega)
+\end{align}\]</span> the <span class="math inline">\((f,g)-\)</span>transform of <span class="math inline">\(R\)</span> with respect to <span class="math inline">\((f_0, g_1)\)</span>. We further define the conditional expectations <span class="math display">\[\begin{align}
+    f_t(z):= \mathbb{E}_R( f_0(X_0) \mid X_t = z) &amp;&amp; g_t(z):= \mathbb{E}_R (g_1(X_1)\mid X_t = z)
+\end{align}\]</span> for <span class="math inline">\(P_t-\)</span>almost all <span class="math inline">\(z\in \mathcal{X}\)</span>.</p>
+</div>
+<div id="rem-" class="proof remark">
+<p><span class="proof-title"><em>Remark 1</em>. </span>Note that <span class="math inline">\(f_t, g_t\)</span> are solutions to the Feymann-Kac formula on the backward and forward dynamics of <span class="math inline">\(R\)</span> respectively: <span class="math display">\[\begin{align}
+    (-\partial_t  + L)f(t, x) = 0 &amp;&amp; f(0, x)= f_0(x)\\
+    (\partial_t + L)g(t, x) = 0 &amp;&amp; g(1, x) = g_1(x)
+\end{align}\]</span> with <span class="math inline">\(f_t(x) = f(t, x)\)</span> and <span class="math inline">\(g_t(x) = g(t, x)\)</span> where <span class="math inline">\(L\)</span> is the infinitestimal generator of <span class="math inline">\(R\)</span>.</p>
+</div>
+<p>The important observation is that <span class="math inline">\((f, g)\)</span>-transform preserves Markov property and <em>every marginal</em> is described fully by <span class="math inline">\(f, g\)</span> via conditional expectation.</p>
+<div id="thm-theoremom3.4" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3 (Theorem 3.4)</strong></span> Let <span class="math inline">\(P = f_0(X_0) g_1(X_1)R\)</span> be a <span class="math inline">\((f, g)\)</span>-transform of <span class="math inline">\(R\)</span>. Then <span class="math inline">\(P_t\in P(\mathcal{X})\)</span> has Randon-Nikodym derivative with respect to the reversible measure <span class="math inline">\(m\)</span> given by <span class="math display">\[\begin{align}
+        P_t = f_t g_t m
+    \end{align}\]</span> which follows that <span class="math inline">\(f_t g_t&gt;0\)</span> a.s. in <span class="math inline">\(P_t\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em> (Idea of Proof). </span>Markov property could be shown by a careful analysis by acting on bounded measurable functions to <span class="math inline">\(P\)</span>. The statement for Radon-Nikodym derivative follows from the calculations: <span class="math display">\[\begin{align}
+    \frac{dP_t}{dm}(X_t) &amp;\overset{R\textit{ is reversible}}{=} \frac{dP_t}{dR_t}(X_t) \overset{(*)}{=} \mathbb{E}_R(\frac{dP}{dR} \mid X_t)\\
+    &amp; = \mathbb{E}_R(f_0(X_0)g_1(X_1)\mid X_t)\\
+    &amp;  \overset{Markov}{=} \mathbb{E}_R(f_0(X_0)\mid X_t) \mathbb{E}_R(g_1(X_1)\mid X_t) = f_tg_t(X_t)
+\end{align}\]</span> in which <span class="math inline">\((*)\)</span> could be checked by definition of conditional expectation.</p>
+</div>
+<p>We are now motivated to describe the dynamics, in particular, the Markov generator of <span class="math inline">\(P\)</span> using <span class="math inline">\(f_t, g_t\)</span>. It turns out <span class="math inline">\(f_t, g_t\)</span> can describe the forward generator and the backward generator of <span class="math inline">\(P\)</span> respectively, which is the content of</p>
+<div id="thm-informal3.6" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4 (Informal Statement 3.6)</strong></span> Under hypotheses on the reference measure <span class="math inline">\(R\)</span> and suitably chosen test functions <span class="math inline">\(u\in U_R\)</span> with <span class="math inline">\(u:[0, 1]\times \mathcal\to \mathbb{R}\)</span>, then we have the forward generator given by <span class="math display">\[\begin{align}
+    \vec{A_t}u(x) = Lu(x) + \frac{\Gamma(g_t, u)(x)}{g_t(x)} &amp;&amp; (t, x)\in [0, 1)\times \mathcal{X}
+\end{align}\]</span> and the backward generator given by <span class="math display">\[\begin{align}
+    A_t^{\textit{back}} u(x) = Lu(x) + \frac{\Gamma(f_t, u)(x)}{f_t(x)}&amp;&amp; (t, x)\in 0, 1]\times \mathcal{X}
+\end{align}\]</span> where <span class="math inline">\(L\)</span> is the generator of the reversible process <span class="math inline">\(R\)</span> (which does not differentiate between the forward and backward case) and <span class="math inline">\(\Gamma(u, v):= L(uv) - uLv - vLu\)</span> is the of <span class="math inline">\(R\)</span> which measures the tendency of <span class="math inline">\(L\)</span> from being a derivation.</p>
+</div>
+</section>
+<section id="schrödingers-system" class="level3">
+<h3 class="anchored" data-anchor-id="schrödingers-system">Schrödinger’s system</h3>
+<p>What remains is to characterize the <span class="math inline">\((f, g)\)</span> transform that would give the solution to <span class="math inline">\(\ref{pathformulation}\)</span>. We see that it is the case when <span class="math inline">\((f_0, g_1)\)</span> solves the Schrödinger system.</p>
+<div id="thm-Theorem2.12" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5 (Theorem 2.12)</strong></span> Under regularity assumption of <span class="math inline">\(R\)</span> (still assumed to be Markovian and reversible),then <span class="math inline">\(\hat P = f_0(X_0) g_1(X_1) R\)</span> is the solution to Schrödinger problem if and only if <span class="math inline">\(f_0, g_1\)</span> are solutions to <span class="math display">\[\begin{align} \label{SchrodingerSystem}\tag{S-system}
+    \begin{cases}
+        f_0 g_0(x) = f_0(x) \mathbb{E}_R(g_1(X_1)\mid X_0 = x) = \frac{d\mu_0}{dm}(x) \\
+        f_1 g_1(y) = g_1(y) \mathbb{E}_R(f_0(X_0)\mid X_1 = y) = \frac{d\mu_1}{dm}(y)
+    \end{cases}
+\end{align}\]</span> where <span class="math inline">\(R_0 =R_1 := m\)</span> and the boundary constrain <span class="math inline">\(\mu_0, \mu_1\)</span> are absolute continuous to <span class="math inline">\(m\)</span> hence having Radon-nikodym derivatives.</p>
+</div>
+</section>
+</section>
+<section id="dynamic-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="dynamic-formulation">Dynamic formulation</h2>
+<p>Now we go back to the case where <span class="math inline">\(R\)</span> is the reversible Brownian motion (which we recall is the Brownian motion with initial distribution given by <span class="math inline">\(Leb\)</span>) and see how the machneries of <span class="math inline">\((f, g)\)</span> transform provides us with the dynamic formulation of Schrödinger bridge, which is the content of</p>
+<div id="thm-Proposition4.1" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6 (Proposition 4.1)</strong></span> Let <span class="math inline">\(\mu_0, \mu_1\in P_2(\mathbb{R}^d)\)</span> be such that <span class="math inline">\(H(\mu_0\mid Leb), H(\mu_1\mid Leb)&lt;\infty\)</span>. Then we are in the assumption of <a href="#thm-well-posedness" class="quarto-xref">Theorem&nbsp;2</a> for the reversible Brownian motion <span class="math inline">\(R\)</span>. Let <span class="math inline">\(\hat P\in P(\Omega)\)</span> be the unique path measure that satisfies <span class="math inline">\(\ref{pathformulation}\)</span> then <span class="math inline">\(\mu_t:= \hat P_t\)</span> with <span class="math inline">\(v_t = \nabla \psi_t\)</span> where <span class="math inline">\(\psi_t = \log g_t\)</span> is the unique minimizer of the problem</p>
+<p><span class="math display">\[\begin{align}\tag{dynSB}\label{dynformulation}
+    \min \{\int_{0}^1\int_{\mathcal{X}} \frac{|v_t(x)|^2}{2}\mu_t(dx)dt: (\mu, v) \textit{ satisfies Fokker-Planck}\}
+\end{align}\]</span></p>
+<p>where <span class="math inline">\(g_t(z):= \mathbb{E}_P(g_1(X_1)\mid X_t=z)\)</span> is part of the solution to <span class="math inline">\(\ref{SchrodingerSystem}\)</span> and the constrain to <span class="math inline">\(\mu, v\)</span> is <span class="math display">\[\begin{align}\label{FokkerPlanck}\tag{Fokker-Planck}
+    \partial_t \mu_t - \frac{1}{2}\Delta\mu_t - \nabla\cdot(\mu_t \nabla v_t) = 0
+\end{align}\]</span> Conversely, if <span class="math inline">\((\mu, v)\)</span> is the minimizer of <span class="math inline">\(\ref{dynformulation}\)</span>, then they describes the optimizer of <span class="math inline">\(\ref{pathformulation}\)</span> via its marginals and conditional expectations.</p>
+</div>
+<p>To see an idea of the proof, we recall an important corollary about path entropy from Girsanov’s theory (stated in <span class="citation" data-cites="Leonard12Gir">Léonard (<a href="#ref-Leonard12Gir" role="doc-biblioref">2012</a>)</span>) in stochastic calculus</p>
+<div id="lem-Girsanov" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1 (Girsanov’s corollary)</strong></span> Let <span class="math inline">\(Q\in P(\Omega)\)</span> and <span class="math inline">\(H(Q\mid R)&lt;\infty\)</span> with respect to the reversible Brownian motion <span class="math inline">\(R\)</span>. Then there exists some (predictable) <span class="math inline">\(\mathcal{X}-\)</span>valued drift <span class="math inline">\(\beta\)</span> such that <span class="math inline">\(\mathbb{E}_Q\int_{[0, 1]} |\beta_t|^2dt&lt;\infty\)</span> and <span class="math inline">\(Q\)</span> solves the martingale problem (so is a Makorv diffusion) associted with the forward generator <span class="math display">\[\begin{equation}
+    (\partial_t + \Delta /2 + \beta_t \cdot \nabla)_{t\in [0, 1]}
+\end{equation}\]</span>. In addition in such case, we have <span class="math display">\[\begin{align}
+    H(Q\mid R) - H(Q_0\mid m) = E_Q\int_{[0, 1]}\frac{|\beta_t|^2}{2}dt \label{Girsanov}
+\end{align}\]</span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em> (For the theorem). </span>To apply the Lemma, we shall look at the forward generators of any given <span class="math inline">\((f, g)\)</span> transform of <span class="math inline">\(R\)</span>. To this end we first compute the infinitestimal generator and the carr’{e} du champ operator of <span class="math inline">\(R\)</span>: <span class="math display">\[\begin{align}
+    L &amp;= \frac{1}{2}\Delta \\
+    \Gamma(u, v) &amp;= L(uv) - uLv-vLu = \nabla u \cdot \nabla v
+\end{align}\]</span> It follows that the generators of an <span class="math inline">\((f, g)\)</span> transform is given by <span class="math display">\[\begin{align}
+    \vec{A}_t u(x) = Lu(x) + \frac{\Gamma(g_t, u)(x)}{g_t(x)} = \frac{1}{2}\Delta u(x) + \frac{\nabla g_t\cdot \nabla u(x)}{g_t(x)} = \frac{1}{2}\Delta u+\nabla (\log g_t)\cdot \nabla u
+\end{align}\]</span> and similarly <span class="math display">\[\begin{align}
+    A_t^{\textit{back}} u(x) = Lu(x) + \frac{\Gamma(f_t, u)(x)}{f_t(x)} = \frac{1}{2}\Delta u(x) + \frac{\nabla f_t\cdot \nabla u(x)}{f_t(x)} = \frac{1}{2}\Delta u+\nabla (\log f_t)\cdot \nabla u
+\end{align}\]</span> It then follows that if <span class="math inline">\(Q\)</span> is an <span class="math inline">\((f, g)\)</span> transform with the boundary distribution <span class="math inline">\(\mu_0, \mu_1\)</span>, we must have from <a href="#lem-Girsanov" class="quarto-xref">Lemma&nbsp;1</a> that <span class="math display">\[\begin{align}
+    H(Q\mid R) - H(\mu_0\mid m) = E_Q\int_{[0, 1]}\frac{|\nabla \log g_t|^2}{2}dt
+\end{align}\]</span> To further expand the expectation, we know from standard Markov diffusion theory that the path marginals have to satisfies the Fokker-Planck equation induced by <span class="math inline">\(\vec{A_t}\)</span>, that is, <span class="math display">\[\begin{align}
+    \partial_t \mu_t(x) - \vec{A_t^*}\mu(x) = \partial_t \mu_t - \frac{1}{2}\Delta\mu_t - \nabla\cdot(\mu_t \nabla (\log g_t)) = 0 \label{FPE}
+\end{align}\]</span> which implies precisely that <span class="math inline">\((\mu_t, \nabla\log g_t)\)</span> satisfies <span class="math inline">\(\ref{FokkerPlanck}\)</span>. Hence taking infimum on <a href="#lem-Girsanov" class="quarto-xref">Lemma&nbsp;1</a> (over <span class="math inline">\((f, g)\)</span> transform) gives us <span class="math display">\[\begin{align}
+    \inf_{Q} H(Q\mid R) - H(\mu_0\mid m) = \inf_{(\mu_t, g_t)} \int_{\mathcal{X}}\int_0^1 \frac{1}{2}|\nabla \log g_t|^2 \mu_t(x) dtdx
+\end{align}\]</span> where <span class="math inline">\((\mu_t, g_t)\)</span> satisfies <span class="math inline">\(\ref{FokkerPlanck}\)</span>.</p>
+</div>
+<p>From the derivation, we actually see that the value of <span class="math inline">\(\ref{pathformulation}\)</span> and <span class="math inline">\(\ref{dynformulation}\)</span> is off by a constant <span class="math inline">\(H(\mu_0\mid m)\)</span> from the problem data.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Leonard01" class="csl-entry" role="listitem">
+Léonard, Christian. 2001. <span>“Minimization of <span>Energy</span> <span>Functionals</span> <span>Applied</span> to <span>Some</span> <span>Inverse</span> <span>Problems</span>.”</span> <em>Applied Mathematics &amp; Optimization</em> 44 (3): 273–97. <a href="https://doi.org/10.1007/s00245-001-0019-5">https://doi.org/10.1007/s00245-001-0019-5</a>.
+</div>
+<div id="ref-Leonard12Gir" class="csl-entry" role="listitem">
+———. 2012. <span>“Girsanov <span>Theory</span> <span>Under</span> a <span>Finite</span> <span>Entropy</span> <span>Condition</span>.”</span> In <em>Séminaire de <span>Probabilités</span> <span>XLIV</span></em>, edited by Catherine Donati-Martin, Antoine Lejay, and Alain Rouault, 2046:429–65. Berlin, Heidelberg: Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-27461-9_20">https://doi.org/10.1007/978-3-642-27461-9_20</a>.
+</div>
+<div id="ref-LeonardSurvey13" class="csl-entry" role="listitem">
+———. 2013. <span>“A Survey of the Schrödinger Problem and Some of Its Connections with Optimal Transport.”</span> <a href="https://arxiv.org/abs/1308.0215">https://arxiv.org/abs/1308.0215</a>.
+</div>
+<div id="ref-Leonard14Path" class="csl-entry" role="listitem">
+———. 2014. <span>“Some <span>Properties</span> of <span>Path</span> <span>Measures</span>.”</span> In <em>Séminaire de <span>Probabilités</span> <span>XLVI</span></em>, edited by Catherine Donati-Martin, Antoine Lejay, and Alain Rouault, 2123:207–30. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-11970-0_8">https://doi.org/10.1007/978-3-319-11970-0_8</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/otwiki\.github\.io\/otwiki-main\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
