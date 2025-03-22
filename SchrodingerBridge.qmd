@@ -1,0 +1,207 @@
+---
+title: "Different Formulations of the Schrödinger Bridge Problem"
+bibliography: SchrodingerBridge_refs.bib
+author: Ka Lok Lam
+---
+
+We are mainly following section 2 - 4 of @LeonardSurvey13 to describe different formulations of the Schrödinger bridge problem.
+
+## Motivation and problem setup
+
+The Schrödinger bridge problem could be viewed as applying *entropy maximizing principle* on finding the most likely path of a particle given its *spatial distribution* at two time instances. Mathematically speaking, consider $\mathcal{X}:= \mathbb{R}^d$ as our spatial state space and $\Omega:= C([0, 1]; \mathcal{X})$ our space of continuous path equipped with the uniform metric. Let $R$ be the *reversible Brownian motion* on $\mathcal{X}$, which is the law of a Brownian motion starting at the Lebesgue measure of $\mathcal{X}$; more precisely if $W\in P(\Omega)$ (space of probability Borel measure over $\Omega$) is the law of a Brownian motion (Wiener measure) over $\mathcal{X}$; then we define the reversible Brownian motion to be the *positive measure* defined as \begin{align}
+    R(A):= \int_{\mathcal{X}} W_x(A) dx
+\end{align} and so $R\in M^+(\Omega)$ (space of positive Borel measure over $\Omega$). Treating $R$ as an analogue of uniform distribution over path space, the Schrödinger bridge problem asks to solve for the following minimization problem \begin{align} \tag{SB}\label{pathformulation}
+    \min \{H(P\mid R)\mid P\in P(\Omega),  P_0 = \mu_0, P_1=\mu_1\} 
+\end{align} where $P_0:=X_0\# P$ and $P_1:= X_1\# P$ with $X_t:\Omega\to \mathbb{R}$ being the canonical projection; $\mu_0, \mu_1\in P(\mathcal{X})$ are given, and \begin{align} 
+    H(P\mid R):= 
+\begin{cases}
+    \frac{dP}{dR}(\omega) &P<<R\\
+    0& \textit{otherwise}
+\end{cases}
+\end{align} being the differential entropy, which could possibly be negative and hence not bounded below.
+
+In the following we will be describing different formulation of the Schrödinger bridge problem under the slight generalization to allow $R\in M_+(\Omega)$ to be any reference measure (not necessarily reversible Brownian motion), namely
+
+-   the static formulation \ref{staticformulation}
+
+-   the dual formulation \ref{staticdual}, \ref{dual}
+
+-   the dynamic formulation \ref{dynformulation} (only for reversible Brownian motion)
+
+Due to technicality of proofs, we would either give only proof ideas or skip them entirely; this article is thus meant to be a companion to @LeonardSurvey13.
+
+## Static Formulation
+
+A common theme in optimization with boundary constrains is the equivalence between searching over path measures $P(\Omega)$ and the seemingly easier problem of searching over joint distributions $P(\mathcal{X}^2)$. Let $R\in M^+(\Omega)$ be our reference measure and $R_{01}:= (X_0, X_1)\#R\in M^+(\mathcal{X}^2)$. Then the static analog of the problem asks to find the minimizing joint distribution of \begin{align}\tag{StaticSB}\label{staticformulation}
+    \min \{H(\pi\mid R_{01}): \pi\in P(\mathcal{X}^2), \pi_0:=X_0\# \pi = \mu_0, \pi_1:= X_1\#\pi = \mu_1\}
+\end{align} where $\mu_0, \mu_1\in P(\mathcal{X})$ are given marginals and $H$ is defined similarly. The first approach to Schrödinger bridge is to establish equivalence between the static and orignal (path) formulation.
+
+::: {#thm-Prop2.3}
+## Proposition 2.3
+
+If $\hat P$ is the solution to the path formulation \ref{pathformulation} then $\hat\pi := \hat P_{01}$ is the solution to the static one \ref{staticformulation}. Conversely if $\hat \pi$ is the static solution then the solution to \ref{pathformulation} is obtained via the disintegration formula \begin{align}
+    \hat P(\cdot) := \int_{\mathcal{X}^2} R^{xy}(\cdot)\hat\pi (dx, dy) 
+\end{align} where $R^{xy}$ is the law of the reference path measure *conditioning on* $X_0 = x, X_1 = y$.
+:::
+
+The disintegration formula is typical and is related to some technicality that follows from $\Omega, \mathcal{X}$ being Polish. To give an example of the law induced by the *bridge* $R^{xy}$, if $R$ is the reversible Brownian motion, then $R^{xy}$ is simply the Brownian bridge connecting the points $x, y$.
+
+### Well-posedness of Entropic formulation
+
+The optimization \ref{pathformulation} and \ref{staticformulation} are called the entropic formulation of Schrödinger bridge. The next question is to ask for their well-posedness. Uniqueness is rather direct, which follows from the strict convexity of entropy functionals. Nonetheless, existence is an issue since differential entropy could be negative and unbounded in general; we are also in the case of allowing general $R$. Here we state a sufficient condition that could overcome these obstacles,
+
+::: {#thm-well-posedness}
+## Proposition 2.5
+
+The problems \ref{pathformulation} and \ref{staticformulation} admit a unique solution if the problem data $(\mu_0, \mu_1, R)$ satisfy
+
+-   $R_0 = R_1=:m$
+
+-   $H(\mu_0\mid m), H(\mu_1\mid m)<\infty$
+
+-   there exists non-negative measurable functions $A, B:\mathcal{X}\to [0, \infty)$ such that we have the moment estimates for the problem data $R$
+
+    -   $R_{01}(dx, dy)\geq \exp(-A(x)-A(y))m(dx)m(dy)$
+
+    -   $\int_{\mathcal{X}^2}\exp(-B(x)-B(y))R_{01}(dxdy)<\infty$
+
+    -   $\int_\mathcal{X} \exp(\alpha(A+B))dm<\infty$ for some $\alpha>0$
+:::
+
+## Dual Formulation
+
+As usual, we consider the dual formulation of our optimization problem. It has been shown that the correct candidate is given by \begin{align}\label{staticdual}
+    \max \{\int_\mathcal{X} \phi d\mu_0 + \int_\mathcal{X} \psi d\mu_1 - \log\int_{\mathcal{X}^2} \exp(\phi\oplus\psi) dR_{01}: \phi, \psi\in C_B(\mathcal{X})\} \tag{StaticDual}
+\end{align} for the static formulation and by \begin{align}\label{dual}
+        \max \{\int_\mathcal{X} \phi d\mu_0 + \int_\mathcal{X} \psi d\mu_1 - \log\int_{\Omega} \exp(f(X_0)+g(X_1)) dR: \phi, \psi\in C_B(\mathcal{X})\}\tag{Dual}
+\end{align} for the original formulation, where we have the flexibility to choose $B$ that satisfies the condition in @thm-well-posedness, that is, $\int_{\mathcal{X}^2}\exp(-B(x)-B(y))R_{01}(dxdy)<\infty$ and $u\in C_B(\mathcal{X})$ if and only if $\sup_{\mathcal{X}}\frac{u(x)}{1+B(x)}<\infty$. The proof could be found in @Leonard01. It is clear that the two formulation above yields the same solution of $(\phi, \psi)$ and as a remark, the need of $B$ is due to the possible unboundedness of $R$.
+
+### Primal-Dual relation
+
+An important feature of the Schrödinger bridge problem is that we have a well-established relation between the solution to the dual problem with the original problem. To motivate the relation, we recall that if $\Omega$ is Polish, and $R$ is a positive measure over $\Omega$; then by one can use convex conjugate technique to deduce the variational formulation of the entropy functional @Leonard14Path \begin{align}
+    H(P\mid R):= \sup \{\int u dP - \log (\int \exp(u)dR):u\in C_W(\Omega)\}
+\end{align} where $W:\Omega\to [0, \infty)$ is a function of your choice such that $\int_\Omega \exp(-W) dR<\infty$ and $u\in C_W(\Omega)$ if and only if $\sup_\Omega
+\frac{|u|}{(1+W)}$. In addition \textbf{the supremum is attained if and only if $u = \frac{dP}{dR}$}. Hence if $(\hat\phi, \hat\psi)$ is a solution to the dual formulation, $\hat\pi$ is the solution to the static formulation and $\hat P$ is the solution to the path formulation, we must have (modulo some technicality) \begin{align}
+    \hat \pi(dx, dy) = \exp(\hat \psi(x)\oplus \hat\psi(y))R_{01}(dx, dy) && d\hat P = \exp(\hat\psi(X_0) + \hat\phi(X_1)) dR  
+\end{align} where the Radon-Nikodym derivative terms $\exp(\hat\phi(x) \oplus \hat \psi(y))$ are *strictly positive* with respect to the reference measure. If we let $f :=e^\phi$ and $g^\psi$ then the relation could be written as \begin{align}
+    \hat \pi (dx, dy) = f(x)g(y) R_{01}(dx, dy) && d\hat P = f(X_0)g(X_1) dR
+\end{align}
+
+### The $(f,g)$-transform
+
+The primal dual relation has restricted us to consider only $(f, g)$ transform of a path measure $R$, which yields powerful result when the reference measure $R$ is Markov and reversible. As an example, reversible Brownian motion is both Markov and reversible.
+
+::: {#def-fgtransform}
+## $(f, g)$-transform
+
+Let $f_0, g_1:\mathcal{X}\to [0, \infty)$ be non-negative functions such that $\mathbb{E}_R(f_0(X_0)g_1(X_1)) = 1$. Then we call that path measure \begin{align}
+    P:= f_0(X_0) g_1(X_1) R\in P(\Omega)
+\end{align} the $(f,g)-$transform of $R$ with respect to $(f_0, g_1)$. We further define the conditional expectations \begin{align}
+    f_t(z):= \mathbb{E}_R( f_0(X_0) \mid X_t = z) && g_t(z):= \mathbb{E}_R (g_1(X_1)\mid X_t = z)
+\end{align} for $P_t-$almost all $z\in \mathcal{X}$.
+:::
+
+::: {#rem-}
+Note that $f_t, g_t$ are solutions to the Feymann-Kac formula on the backward and forward dynamics of $R$ respectively: \begin{align}
+    (-\partial_t  + L)f(t, x) = 0 && f(0, x)= f_0(x)\\
+    (\partial_t + L)g(t, x) = 0 && g(1, x) = g_1(x)
+\end{align} with $f_t(x) = f(t, x)$ and $g_t(x) = g(t, x)$ where $L$ is the infinitestimal generator of $R$.
+:::
+
+The important observation is that $(f, g)$-transform preserves Markov property and *every marginal* is described fully by $f, g$ via conditional expectation.
+
+::: {#thm-theoremom3.4}
+## Theorem 3.4
+
+Let $P = f_0(X_0) g_1(X_1)R$ be a $(f, g)$-transform of $R$. Then $P_t\in P(\mathcal{X})$ has Randon-Nikodym derivative with respect to the reversible measure $m$ given by \begin{align}
+        P_t = f_t g_t m
+    \end{align} which follows that $f_t g_t>0$ a.s. in $P_t$.
+:::
+
+::: proof
+## Idea of Proof
+
+Markov property could be shown by a careful analysis by acting on bounded measurable functions to $P$. The statement for Radon-Nikodym derivative follows from the calculations: \begin{align}
+    \frac{dP_t}{dm}(X_t) &\overset{R\textit{ is reversible}}{=} \frac{dP_t}{dR_t}(X_t) \overset{(*)}{=} \mathbb{E}_R(\frac{dP}{dR} \mid X_t)\\
+    & = \mathbb{E}_R(f_0(X_0)g_1(X_1)\mid X_t)\\
+    &  \overset{Markov}{=} \mathbb{E}_R(f_0(X_0)\mid X_t) \mathbb{E}_R(g_1(X_1)\mid X_t) = f_tg_t(X_t)
+\end{align} in which $(*)$ could be checked by definition of conditional expectation.
+:::
+
+We are now motivated to describe the dynamics, in particular, the Markov generator of $P$ using $f_t, g_t$. It turns out $f_t, g_t$ can describe the forward generator and the backward generator of $P$ respectively, which is the content of
+
+::: {#thm-informal3.6}
+## Informal Statement 3.6
+
+Under hypotheses on the reference measure $R$ and suitably chosen test functions $u\in U_R$ with $u:[0, 1]\times \mathcal\to \mathbb{R}$, then we have the forward generator given by \begin{align}
+    \vec{A_t}u(x) = Lu(x) + \frac{\Gamma(g_t, u)(x)}{g_t(x)} && (t, x)\in [0, 1)\times \mathcal{X}
+\end{align} and the backward generator given by \begin{align}
+    A_t^{\textit{back}} u(x) = Lu(x) + \frac{\Gamma(f_t, u)(x)}{f_t(x)}&& (t, x)\in 0, 1]\times \mathcal{X}
+\end{align} where $L$ is the generator of the reversible process $R$ (which does not differentiate between the forward and backward case) and $\Gamma(u, v):= L(uv) - uLv - vLu$ is the \textbf{carr\'{e} du champ operator} of $R$ which measures the tendency of $L$ from being a derivation.
+:::
+
+### Schrödinger's system
+
+What remains is to characterize the $(f, g)$ transform that would give the solution to $\ref{pathformulation}$. We see that it is the case when $(f_0, g_1)$ solves the Schrödinger system.
+
+::: {#thm-Theorem2.12}
+## Theorem 2.12
+
+Under regularity assumption of $R$ (still assumed to be Markovian and reversible),then $\hat P = f_0(X_0) g_1(X_1) R$ is the solution to Schrödinger problem if and only if $f_0, g_1$ are solutions to \begin{align} \label{SchrodingerSystem}\tag{S-system}
+    \begin{cases}
+        f_0 g_0(x) = f_0(x) \mathbb{E}_R(g_1(X_1)\mid X_0 = x) = \frac{d\mu_0}{dm}(x) \\
+        f_1 g_1(y) = g_1(y) \mathbb{E}_R(f_0(X_0)\mid X_1 = y) = \frac{d\mu_1}{dm}(y)
+    \end{cases}
+\end{align} where $R_0 =R_1 := m$ and the boundary constrain $\mu_0, \mu_1$ are absolute continuous to $m$ hence having Radon-nikodym derivatives.
+:::
+
+## Dynamic formulation
+
+Now we go back to the case where $R$ is the reversible Brownian motion (which we recall is the Brownian motion with initial distribution given by $Leb$) and see how the machneries of $(f, g)$ transform provides us with the dynamic formulation of Schrödinger bridge, which is the content of
+
+::: {#thm-Proposition4.1}
+## Proposition 4.1
+
+Let $\mu_0, \mu_1\in P_2(\mathbb{R}^d)$ be such that $H(\mu_0\mid Leb), H(\mu_1\mid Leb)<\infty$. Then we are in the assumption of @thm-well-posedness for the reversible Brownian motion $R$. Let $\hat P\in P(\Omega)$ be the unique path measure that satisfies \ref{pathformulation} then $\mu_t:= \hat P_t$ with $v_t = \nabla \psi_t$ where $\psi_t = \log g_t$ is the unique minimizer of the problem
+
+\begin{align}\tag{dynSB}\label{dynformulation}
+    \min \{\int_{0}^1\int_{\mathcal{X}} \frac{|v_t(x)|^2}{2}\mu_t(dx)dt: (\mu, v) \textit{ satisfies Fokker-Planck}\} 
+\end{align}
+
+where $g_t(z):= \mathbb{E}_P(g_1(X_1)\mid X_t=z)$ is part of the solution to \ref{SchrodingerSystem} and the constrain to $\mu, v$ is \begin{align}\label{FokkerPlanck}\tag{Fokker-Planck}
+    \partial_t \mu_t - \frac{1}{2}\Delta\mu_t - \nabla\cdot(\mu_t \nabla v_t) = 0 
+\end{align} Conversely, if $(\mu, v)$ is the minimizer of \ref{dynformulation}, then they describes the optimizer of \ref{pathformulation} via its marginals and conditional expectations.
+:::
+
+To see an idea of the proof, we recall an important corollary about path entropy from Girsanov's theory (stated in @Leonard12Gir) in stochastic calculus
+
+::: {#lem-Girsanov}
+## Girsanov's corollary
+
+Let $Q\in P(\Omega)$ and $H(Q\mid R)<\infty$ with respect to the reversible Brownian motion $R$. Then there exists some (predictable) $\mathcal{X}-$valued drift $\beta$ such that $\mathbb{E}_Q\int_{[0, 1]} |\beta_t|^2dt<\infty$ and $Q$ solves the martingale problem (so is a Makorv diffusion) associted with the forward generator \begin{equation}
+    (\partial_t + \Delta /2 + \beta_t \cdot \nabla)_{t\in [0, 1]}
+\end{equation}. In addition in such case, we have \begin{align}
+    H(Q\mid R) - H(Q_0\mid m) = E_Q\int_{[0, 1]}\frac{|\beta_t|^2}{2}dt \label{Girsanov}
+\end{align}
+:::
+
+::: proof
+## For the theorem
+
+To apply the Lemma, we shall look at the forward generators of any given $(f, g)$ transform of $R$. To this end we first compute the infinitestimal generator and the carr'{e} du champ operator of $R$: \begin{align}
+    L &= \frac{1}{2}\Delta \\
+    \Gamma(u, v) &= L(uv) - uLv-vLu = \nabla u \cdot \nabla v
+\end{align} It follows that the generators of an $(f, g)$ transform is given by \begin{align}
+    \vec{A}_t u(x) = Lu(x) + \frac{\Gamma(g_t, u)(x)}{g_t(x)} = \frac{1}{2}\Delta u(x) + \frac{\nabla g_t\cdot \nabla u(x)}{g_t(x)} = \frac{1}{2}\Delta u+\nabla (\log g_t)\cdot \nabla u
+\end{align} and similarly \begin{align}
+    A_t^{\textit{back}} u(x) = Lu(x) + \frac{\Gamma(f_t, u)(x)}{f_t(x)} = \frac{1}{2}\Delta u(x) + \frac{\nabla f_t\cdot \nabla u(x)}{f_t(x)} = \frac{1}{2}\Delta u+\nabla (\log f_t)\cdot \nabla u
+\end{align} It then follows that if $Q$ is an $(f, g)$ transform with the boundary distribution $\mu_0, \mu_1$, we must have from @lem-Girsanov that \begin{align}
+    H(Q\mid R) - H(\mu_0\mid m) = E_Q\int_{[0, 1]}\frac{|\nabla \log g_t|^2}{2}dt
+\end{align} To further expand the expectation, we know from standard Markov diffusion theory that the path marginals have to satisfies the Fokker-Planck equation induced by $\vec{A_t}$, that is, \begin{align}
+    \partial_t \mu_t(x) - \vec{A_t^*}\mu(x) = \partial_t \mu_t - \frac{1}{2}\Delta\mu_t - \nabla\cdot(\mu_t \nabla (\log g_t)) = 0 \label{FPE}
+\end{align} which implies precisely that $(\mu_t, \nabla\log g_t)$ satisfies \ref{FokkerPlanck}. Hence taking infimum on @lem-Girsanov (over $(f, g)$ transform) gives us \begin{align}
+    \inf_{Q} H(Q\mid R) - H(\mu_0\mid m) = \inf_{(\mu_t, g_t)} \int_{\mathcal{X}}\int_0^1 \frac{1}{2}|\nabla \log g_t|^2 \mu_t(x) dtdx 
+\end{align} where $(\mu_t, g_t)$ satisfies \ref{FokkerPlanck}.
+:::
+
+From the derivation, we actually see that the value of \ref{pathformulation} and \ref{dynformulation} is off by a constant $H(\mu_0\mid m)$ from the problem data.

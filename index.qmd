@@ -38,6 +38,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Wasserstein-like Metrics on Graphs](WassersteinOnGraphs.qmd)
 - [Hellinger-Kantorovich Distance](HKdistance.qmd)
 - [Continuous time martingale OT and Skorohod Embedding](Continuous-time MOT and Skorohod Embedding.qmd)
+- [Schrodinger Bridge Problem](SchrodingerBridge.qmd)
 
 ### Numerical methods for optimal transport
 
@@ -53,8 +54,6 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Estimation of transport maps](Est_Tr_Maps.qmd)
 
 ### Wasserstein Gradient Flows
-
--   Probability flow solution of the Fokker–Planck equation - Simone Betteti - [Boffi and Vanden-Eijnden 2023](https://iopscience.iop.org/article/10.1088/2632-2153/ace2aa/meta)
 -   [Bures-Wasserstein Gradient flows](Bures-Wasserstein Gradient Flows.qmd)
 
 
