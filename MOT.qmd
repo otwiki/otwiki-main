@@ -1,291 +1,179 @@
 ---
 title: "Applications of Optimal Transport and Martingale Optimal Transport in Mathematical Finance"
-bibliography: bibliography.bibtex
+bibliography: bibliography_MOT.bibtex
 author: Haosheng Zhou, Qijin Shi, Xiang Fang
 ---
 
-A central topic in mathematical finance is the pricing of financial derivatives---contracts that facilitate the exchange or allocation of resources across different time periods.
-We introduce the principle of arbitrage-free pricing in financial markets and focus on a fundamental class of financial derivatives known as options.
-Following the classical approach of model-based finance, we price options based on two different ideas: hedging and risk-neural pricing, which have essential underlying connections.
-Moving to an incomplete market, where the stock price dynamics are unknown, we motivate model-free finance, where the corresponding optimization problems for option pricing could be naturally interpreted in the context of optimal transport and martingale optimal transport.
-
+A central topic in mathematical finance is the pricing of financial derivatives---contracts that facilitate the exchange or allocation of resources across different time periods. We introduce the principle of arbitrage-free pricing in financial markets and focus on a fundamental class of financial derivatives known as options. Following the classical approach of model-based finance, we price options based on two different ideas: hedging and risk-neural pricing, which have essential underlying connections. Moving to an incomplete market, where the stock price dynamics are unknown, we motivate model-free finance, where the corresponding optimization problems for option pricing could be naturally interpreted in the context of optimal transport and martingale optimal transport.
 
 # Fundamentals of Mathematical Finance
 
-We begin by restricting our discussions to the continuous-time setting, with the current time as $0$ by default.
-Assume the market includes a risk-free asset (e.g., a bond), which we refer to as **cash**, with a constant risk-free interest rate $r$, i.e., $1$ dollor deterministically accumulates to $e^{rt}$ dollars in time $t$.
-In addition, there exists a risky asset, which we refer to as **stock**, whose price at time $t$ is denoted by $S_t$, a stochastic process on the filtered probability space $(\Omega,\{\mathscr{F_t}\}_{t\geq 0},\mathscr{F},\mathbb{P})$.
+We begin by restricting our discussions to the continuous-time setting, with the current time as $0$ by default. Assume the market includes a risk-free asset (e.g., a bond), which we refer to as **cash**, with a constant risk-free interest rate $r$, i.e., $1$ dollor deterministically accumulates to $e^{rt}$ dollars in time $t$. In addition, there exists a risky asset, which we refer to as **stock**, whose price at time $t$ is denoted by $S_t$, a stochastic process on the filtered probability space $(\Omega,\{\mathscr{F_t}\}_{t\geq 0},\mathscr{F},\mathbb{P})$.
 
 ## Arbitrage-Free Pricing
 
-The fundamental principle of derivative pricing requires no arbitrage to exist in the market.
-Intuitively, arbitrage refers to the existence of a self-financing portfolio that requires no external endowment, yet guarantees a non-negative payoff almost surely, and yields a strictly positive profit with a positive probability. A mathematically rigorous definition of arbitrage relies on the notion of market viability, as discussed in [@karatzas2021portfolio].
-Nevertheless, the concept of no-arbitrage pricing can be illustrated through the following simple example.
+The fundamental principle of derivative pricing requires no arbitrage to exist in the market. Intuitively, arbitrage refers to the existence of a self-financing portfolio that requires no external endowment, yet guarantees a non-negative payoff almost surely, and yields a strictly positive profit with a positive probability. A mathematically rigorous definition of arbitrage relies on the notion of market viability, as discussed in [@karatzas2021portfolio]. Nevertheless, the concept of no-arbitrage pricing can be illustrated through the following simple example.
 
-Consider a forward contract currently signed, which obligates the holder to receive one unit of stock at a future time $T$ and to pay the forward price $F(0,T)$ at time $T$.
-A self-financing arbitrage portfolio can be constructed as follows:
+Consider a forward contract currently signed, which obligates the holder to receive one unit of stock at a future time $T$ and to pay the forward price $F(0,T)$ at time $T$. A self-financing arbitrage portfolio can be constructed as follows:
 
-1. Enter the forward contract at time $0$.
+1.  Enter the forward contract at time $0$.
 
-2. Sell $1$ unit of stock at time $0$, receiving $S_0$ cash.
+2.  Sell $1$ unit of stock at time $0$, receiving $S_0$ cash.
 
-3. Pay the forward price $F(0,T)$ and receive $1$ unit of stock at time $T$.
+3.  Pay the forward price $F(0,T)$ and receive $1$ unit of stock at time $T$.
 
-Since the stock received at time $T$ exactly offsets the short position, this strategy gives a risk-free portfolio.
-The net cash flow (amount paid by the portfolio holder) at time $T$ is $F(0,T)-S_0e^{rT}$, which shall be non-negative to prevent arbitrage, i.e., $F(0,T)-S_0e^{rT}\geq 0$.
-Conversely, by reversing the strategy (buying the stock, shorting the forward contract), the no-arbitrage condition requires $F(0,T)-S_0e^{rT}\leq 0$.
-Combining both inequalities yields the arbitrage-free price of the forward contract: $F(0,T) = S_0e^{rT}$.
+Since the stock received at time $T$ exactly offsets the short position, this strategy gives a risk-free portfolio. The net cash flow (amount paid by the portfolio holder) at time $T$ is $F(0,T)-S_0e^{rT}$, which shall be non-negative to prevent arbitrage, i.e., $F(0,T)-S_0e^{rT}\geq 0$. Conversely, by reversing the strategy (buying the stock, shorting the forward contract), the no-arbitrage condition requires $F(0,T)-S_0e^{rT}\leq 0$. Combining both inequalities yields the arbitrage-free price of the forward contract: $F(0,T) = S_0e^{rT}$.
 
-This example, though simple, illustrates the concept of **hedging**---reducing or eliminating risk by trading other assets. In the example above, the forward contract carries risk because the future stock price $S_T$ is unknown at time $0$. However, perfect hedging is achieved by holding one unit of stock into the future. Since the initial stock price $S_0$ is observable at time $0$, this strategy eliminates uncertainty, ensuring a risk-free position. 
-
+This example, though simple, illustrates the concept of **hedging**---reducing or eliminating risk by trading other assets. In the example above, the forward contract carries risk because the future stock price $S_T$ is unknown at time $0$. However, perfect hedging is achieved by holding one unit of stock into the future. Since the initial stock price $S_0$ is observable at time $0$, this strategy eliminates uncertainty, ensuring a risk-free position.
 
 ## Options
-In real financial markets, more complex financial derivatives are traded, one of which is called **options**.
-An option is a contract written on an underlying asset, signed at present but granting the holder the **right**, rather than the obligation, to execute it in the future.
-Unlike a forward contract, the option holder can choose whether to exercise the option based on its profitability at maturity.
-In our discussion, we assume the underlying asset to be the stock with price $\{S_t\}$.
 
-A European call option with time to maturity $T$ and strike price $K$ grants the holder the right to buy one unit of stock at time $T$ at price $K$. 
-If $S_T>K$, the holder exercises the option, receiving an immediate payoff of $S_T - K$.
-If $S_T\leq K$, the holder does not exercise the option, resulting in a payoff of $0$.
-Written compactly, such a European call option has payoff
-$$
+In real financial markets, more complex financial derivatives are traded, one of which is called **options**. An option is a contract written on an underlying asset, signed at present but granting the holder the **right**, rather than the obligation, to execute it in the future. Unlike a forward contract, the option holder can choose whether to exercise the option based on its profitability at maturity. In our discussion, we assume the underlying asset to be the stock with price $\{S_t\}$.
+
+A European call option with time to maturity $T$ and strike price $K$ grants the holder the right to buy one unit of stock at time $T$ at price $K$. If $S_T>K$, the holder exercises the option, receiving an immediate payoff of $S_T - K$. If $S_T\leq K$, the holder does not exercise the option, resulting in a payoff of $0$. Written compactly, such a European call option has payoff $$
 (S_T - K)_+ := \max\{S_T-K,0\}.
-$$
-Similarly, a European put option with time to maturity $T$ and strike price $K$ grants the holder the right to sell one unit of stock at time $T$ at price $K$. Its payoff function is given by:
-$$
+$$ Similarly, a European put option with time to maturity $T$ and strike price $K$ grants the holder the right to sell one unit of stock at time $T$ at price $K$. Its payoff function is given by: $$
 (K-S_T)_+ := \max\{K-S_T,0\}.
-$$
-European options are the simplest ones, yet there exist various other types of options on the market.
-For example, American options allow the holder to exercise at any time before maturity.
-Path-dependent options have payoff functions of the form $g(S_{[0,T]})$, which depend on the entire stock price trajectory over $[0,T]$.
-A common example is the lookback option, where the payoff is given by
-$$
+$$ European options are the simplest ones, yet there exist various other types of options on the market. For example, American options allow the holder to exercise at any time before maturity. Path-dependent options have payoff functions of the form $g(S_{[0,T]})$, which depend on the entire stock price trajectory over $[0,T]$. A common example is the lookback option, where the payoff is given by $$
 g(S_{[0,T]}) = \sup_{t\in[0,T]} S_t.
-$$
-For a comprehensive introduction to continuous-time finance and option pricing, we refer the readers to [@bjork2009arbitrage].
+$$ For a comprehensive introduction to continuous-time finance and option pricing, we refer the readers to [@bjork2009arbitrage].
 
 # Option Pricing--- A Model-Based Approach
 
-We begin by introducing option pricing within the framework of model-based finance, which requires specifying an *a priori* model for the stock price dynamics $\{S_t\}$.
-A well-known and widely used example is the following [Black-Scholes (BS) Model](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model):
-$$
+We begin by introducing option pricing within the framework of model-based finance, which requires specifying an *a priori* model for the stock price dynamics $\{S_t\}$. A well-known and widely used example is the following [Black-Scholes (BS) Model](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model): $$
 dS_t = \mu S_t\,dt + \sigma S_t\,dW_t,
-$$
-where $\mu$ denotes the expected return of the stock, $\sigma>0$ denotes the volatility, and $\{W_t\}$ is a standard Brownian motion under measure $\mathbb{P}$.
+$$ where $\mu$ denotes the expected return of the stock, $\sigma>0$ denotes the volatility, and $\{W_t\}$ is a standard Brownian motion under measure $\mathbb{P}$.
 
 To illustrate option pricing under the Black-Scholes model, we present two fundamental approaches for pricing a European call option:
 
-1. The hedging approach.
+1.  The hedging approach.
 
-2. The risk-neutral pricing (martingale measure) approach.
+2.  The risk-neutral pricing (martingale measure) approach.
 
 Those two approches are fundamentally equivalent, providing different perspectives illustrating the same underlying principle.
 
 ## Pricing through Hedging
 
-The first approach to pricing a European call option is based on hedging, which is motivated by the fundamental principle: "If two portfolios have the same payoff, they must have the same price to prevent arbitrage".
-Therefore, if we can replicate the payoff of a European call option using a portfolio that consists of cash and stock, the option price is just the price of the replicating portfolio, which only requires trivial calculations. Replication is equivalent to perfect hedging, since selling the replicating portfolio while holding the option eliminates all risk.
+The first approach to pricing a European call option is based on hedging, which is motivated by the fundamental principle: "If two portfolios have the same payoff, they must have the same price to prevent arbitrage". Therefore, if we can replicate the payoff of a European call option using a portfolio that consists of cash and stock, the option price is just the price of the replicating portfolio, which only requires trivial calculations. Replication is equivalent to perfect hedging, since selling the replicating portfolio while holding the option eliminates all risk.
 
 Consider a replicating portfolio consisting of:
 
-1. $a_t$ units of stock at time $t$.
+1.  $a_t$ units of stock at time $t$.
 
-2. $b_t$ units of cash at time $t$.
+2.  $b_t$ units of cash at time $t$.
 
-The portfolio value at time $t$ is:
-$$
+The portfolio value at time $t$ is: $$
 V_t = a_tS_t + b_te^{rt}.
-$$
-By Itô's formula,
-$$
+$$ By Itô's formula, $$
 dV_t = a_t\,dS_t + S_t\,da_t + \,d\langle S,a\rangle_t + e^{rt}\,db_t + rb_te^{rt}\,dt,
-$$
-where $\langle \cdot,\cdot\rangle_t$ denotes the quadratic variation up to time $t$.
-The changes in the portfolio value are due to market movements $a_t\,dS_t + rb_te^{rt}\,dt$ and investor adjustments $S_t\,da_t + \,d\langle S,a\rangle_t + e^{rt}\,db_t$.
-Since no external endowments are allowed, the portfolio must be self-financing, meaning that the change in its value is only caused by market movements:
-$$
+$$ where $\langle \cdot,\cdot\rangle_t$ denotes the quadratic variation up to time $t$. The changes in the portfolio value are due to market movements $a_t\,dS_t + rb_te^{rt}\,dt$ and investor adjustments $S_t\,da_t + \,d\langle S,a\rangle_t + e^{rt}\,db_t$. Since no external endowments are allowed, the portfolio must be self-financing, meaning that the change in its value is only caused by market movements: $$
 dV_t = a_t\,dS_t  + rb_te^{rt}\,dt.
-$$
-To proceed, we assume the Markovian representation $V_t = u(t,S_t)$, where $u(t,s)$ denotes the portfolio value at time $t$ on observing $S_t = s$.
-Itô's formula implies
-$$
+$$ To proceed, we assume the Markovian representation $V_t = u(t,S_t)$, where $u(t,s)$ denotes the portfolio value at time $t$ on observing $S_t = s$. Itô's formula implies $$
 dV_t = \partial_t u\,dt + \partial_s u\,dS_t + \frac{1}{2}\partial_{ss} u\,d\langle S,S\rangle_t.
-$$
-Substituting the dynamics of the Black-Scholes model yields
-$$
+$$ Substituting the dynamics of the Black-Scholes model yields $$
 dV_t = \left(\partial_t u+ \mu S_t\partial_s u + \frac{\sigma^2}{2}S_t^2\partial_{ss}u\right)\,dt + \sigma S_t\partial_s u\,dW_t.
-$$
-By comparing the coefficients, we get
-$$
+$$ By comparing the coefficients, we get $$
 \begin{cases}
 a_t = \partial_s u(t,S_t)\\
 b_t = \frac{1}{r}e^{-rt}(\partial_t u(t,S_t)+ \frac{\sigma^2}{2}S_t^2\partial_{ss}u(t,S_t))
 \end{cases}.
-$$
-Recall that $a_tS_t + b_te^{rt} = V_t = u(t,S_t)$. Substituting $a_t,b_t$ yields the [Black-Scholes PDE](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_equation) for $u = u(t,s)$:
-$$
+$$ Recall that $a_tS_t + b_te^{rt} = V_t = u(t,S_t)$. Substituting $a_t,b_t$ yields the [Black-Scholes PDE](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_equation) for $u = u(t,s)$: $$
 \partial_t u + rs\partial_s u + \frac{\sigma^2}{2}s^2\partial_{ss}u - ru = 0,\quad u(T,s) = (s - K)_+.
-$$
-Solving this PDE (a technical step omitted here) provides the celebrated [Black-Scholes formula](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model) for the European call option price: 
-$$
+$$ Solving this PDE (a technical step omitted here) provides the celebrated [Black-Scholes formula](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model) for the European call option price: $$
 V_0 = u(0,S_0).
 $$
 
-
 ## Risk-Neutral Pricing
 
-The difficulty of pricing lies in the fact that under the physical measure $\mathbb{P}$, the discounted expected payoff is not equal to the price, due to the existence of risk premium to compensate for the uncertainty taken by the holders of the derivative.
-That means, if a holder is risk-neutral, the discounted expected payoff is just the price, in which situation the pricing problem reduces to simple calculations of expectations.
+The difficulty of pricing lies in the fact that under the physical measure $\mathbb{P}$, the discounted expected payoff, is not equal to the price, due to the existence of risk premium to compensate for the uncertainty taken by the holders of the derivative. That means, if a holder is risk-neutral, the discounted expected payoff is just the price, in which situation the pricing problem reduces to simple calculations of expectations.
 
-Risk-neutral pricing follows this main idea and aims to view the current world through the lens of a **risk-neutral (martingale) measure** $\mathbb{Q}$, under which all investors are risk-neutral, i.e., $\{e^{-rt}S_t\}$ is a martingale.
-The European call price is nothing but
-$$
+Risk-neutral pricing follows this main idea and aims to view the current world through the lens of a **risk-neutral (martingale) measure** $\mathbb{Q}$, under which all investors are risk-neutral, i.e., $\{e^{-rt}S_t\}$ is a martingale. The European call price is nothing but $$
 e^{-rT}\mathbb{E}_{\mathbb{Q}}(S_T - K)_+.
-$$
-When it comes to the calculation, one needs to guarantee the existence of $\mathbb{Q}$ and the knowledge on the distribution of $S_T$ under $\mathbb{Q}$.
-Followed from the fact that $\{e^{-rt}S_t\}$ is a martingale, we rewrite the stock price dynamics:
-$$
+$$ When it comes to the calculation, one needs to guarantee the existence of $\mathbb{Q}$ and the knowledge on the distribution of $S_T$ under $\mathbb{Q}$. Followed from the fact that $\{e^{-rt}S_t\}$ is a martingale, we rewrite the stock price dynamics: $$
 dS_t = rS_t\,dt + \sigma S_t\left(\frac{\mu - r}{\sigma}\,dt+dW_t\right),
-$$
-denoting $dW_t^\mathbb{Q}:= \frac{\mu - r}{\sigma}\,dt+dW_t$ as the BM under $\mathbb{Q}$.
-An application of Girsanov theorem guarantees the existence of $\mathbb{Q}$ and provides the Radon-Nikodym derivative between the physical measure and the risk-neutral measure.
-Solving for the SDE yields
-$$
+$$ denoting $dW_t^\mathbb{Q}:= \frac{\mu - r}{\sigma}\,dt+dW_t$ as the BM under $\mathbb{Q}$. An application of Girsanov theorem guarantees the existence of $\mathbb{Q}$ and provides the Radon-Nikodym derivative between the physical measure and the risk-neutral measure. Solving for the SDE yields $$
 S_t = e^{(r-\frac{\sigma^2}{2})t + \sigma W_t^{\mathbb{Q}}},
-$$
-which tells the explicit distribution of $S_T$ under $\mathbb{Q}$.
-After performing calculations, one yields exactly the same [Black-Scholes formula](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model) for the European call option price as the one derived from hedging.
+$$ which tells the explicit distribution of $S_T$ under $\mathbb{Q}$. After performing calculations, one yields exactly the same [Black-Scholes formula](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model) for the European call option price as the one derived from hedging.
 
 ## Market Completeness and Super-Replication
 
-Martingale measures serve as a crucial component in mathematical finance and are known to be associated with several fundamental theorems.
-To name a few, the [First Fundamental Theorem of Asset Pricing](https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing) states that the market is viable (arbitrage-free) if and only if at least one martingale measure exists.
-The [Second Fundamental Theorem of Asset Pricing](https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing) claims that the market is complete iff the martingale measure exists and is unique.
-Without even realizing it, the market completeness greatly simplifies the problem of option pricing in a Black-Scholes market.
+Martingale measures serve as a crucial component in mathematical finance and are known to be associated with several fundamental theorems. To name a few, the [First Fundamental Theorem of Asset Pricing](https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing) states that the market is viable (arbitrage-free) if and only if at least one martingale measure exists. The [Second Fundamental Theorem of Asset Pricing](https://en.wikipedia.org/wiki/Fundamental_theorem_of_asset_pricing) claims that the market is complete iff the martingale measure exists and is unique. Without even realizing it, the market completeness greatly simplifies the problem of option pricing in a Black-Scholes market.
 
-A viable market is called **complete** if any European payoffs at any time of maturity $T$ can be perfectly replicated.
-It turns out that the perfect replicability of European call and put payoffs implies the perfect replicability of any European payoff functions ([Carr-Madan formula](https://gregorygundersen.com/blog/2023/01/26/carr-madan/)).
-That means, the European call and put payoffs serve as the "basis" for all European payoffs.
-Option pricing in a complete market (e.g., the Black-Scholes market) is therefore easy, but unfortunately is almost never the case in real life.
+A viable market is called **complete** if any European payoffs at any time of maturity $T$ can be perfectly replicated. It turns out that the perfect replicability of European call and put payoffs implies the perfect replicability of any European payoff functions ([Carr-Madan formula](https://gregorygundersen.com/blog/2023/01/26/carr-madan/)). That means, the European call and put payoffs serve as the "basis" for all European payoffs. Option pricing in a complete market (e.g., the Black-Scholes market) is therefore easy, but unfortunately is almost never the case in real life.
 
-One of the common examples of an incomplete market is the stochastic volatility model, where the volatility $\{\sigma_t\}$ is also a stochastic process with its dynamics given by an SDE under a different Brownian motion. 
-There is only one risky asset but two sources of randomness (i.e., one Brownian motion for $S$ and one for $\sigma$), which causes the failure of perfect replication.
-Intuitively understanding through an analogue to the solvability of linear systems, the market is complete (a linear system has a unique solution) if and only if the number of different risky assets (number of equations) equals the number of different sources of randomness (number of unknowns).
+One of the common examples of an incomplete market is the stochastic volatility model, where the volatility $\{\sigma_t\}$ is also a stochastic process with its dynamics given by an SDE under a different Brownian motion. There is only one risky asset but two sources of randomness (i.e., one Brownian motion for $S$ and one for $\sigma$), which causes the failure of perfect replication. Intuitively understanding through an analogue to the solvability of linear systems, the market is complete (a linear system has a unique solution) if and only if the number of different risky assets (number of equations) equals the number of different sources of randomness (number of unknowns).
 
-As we would naturally expect, pricing becomes much harder in an incomplete market, since the arbitrage-free price is an interval, rather than a single number.
-On the side of hedging, perfectly hedging becomes impossible. 
-On the side of risk-neutral pricing, there exist infinitely many martingale measures.
-A new pricing criterion is given by super-replication instead, i.e., ensuring the payoff of the replicating portfolio is larger than the payoff of the option.
-The minimal cost of super-replication for an option writer, denoted by $C_{\text{sell}}$, is the highest arbitrage-free price on the market.
-Conversely, taking the perspective of an option buyer, one can define $C_{\text{buy}}$ as the maximal cost of sub-replication, which is the lowest arbitrage-free price on the market.
-Therefore, the interval of arbitrage-free price is provided by $[C_{\text{buy}},C_{\text{sell}}]$.
+As we would naturally expect, pricing becomes much harder in an incomplete market, since the arbitrage-free price is an interval, rather than a single number. On the side of hedging, perfectly hedging becomes impossible. On the side of risk-neutral pricing, there exist infinitely many martingale measures. A new pricing criterion is given by super-replication instead, i.e., ensuring the payoff of the replicating portfolio is larger than the payoff of the option. The minimal cost of super-replication for an option writer, denoted by $C_{\text{sell}}$, is the highest arbitrage-free price on the market. Conversely, taking the perspective of an option buyer, one can define $C_{\text{buy}}$ as the maximal cost of sub-replication, which is the lowest arbitrage-free price on the market. Therefore, the interval of arbitrage-free price is provided by $[C_{\text{buy}},C_{\text{sell}}]$.
 
-The super-replication approach sounds natural and attractive from the hedging perspective, but what can we say about martingale measures?
-Does that mean the hedging perspective would be superior over the martingale measure approach in an incomplete market?
-Surprisingly, the super-replication duality [@henry2017model] holds, which can be proved using the [Fenchel-Rockafeller Duality](https://en.wikipedia.org/wiki/Fenchel%27s_duality_theorem), stating that the minimum cost of super-replication is equal to the maximum martingale price.
-This result implies that hedging strategies and martingale measures are two sides of the same coin, in the sense that they should be understood as dual optimization variables of each other.
+The super-replication approach sounds natural and attractive from the hedging perspective, but what can we say about martingale measures? Does that mean the hedging perspective would be superior over the martingale measure approach in an incomplete market? Surprisingly, the super-replication duality [@henry2017model] holds, which can be proved using the [Fenchel-Rockafeller Duality](https://en.wikipedia.org/wiki/Fenchel%27s_duality_theorem), stating that the minimum cost of super-replication is equal to the maximum martingale price. This result implies that hedging strategies and martingale measures are two sides of the same coin, in the sense that they should be understood as dual optimization variables of each other.
 
 # Option Pricing--- A Model-Free Approach
 
-Motivated by the super-replication that goes beyond the requirement of market completeness, we introduce option pricing in the model-free finance context.
-The basic settings of model-free option pricing are:
+Motivated by the super-replication that goes beyond the requirement of market completeness, we introduce option pricing in the model-free finance context. The basic settings of model-free option pricing are:
 
-1. No *a priori* knowledge on the stock price dynamics is assumed.
+1.  No *a priori* knowledge on the stock price dynamics is assumed.
 
-2. The only information available are the empirical observations of derivative prices traded on the market.
+2.  The only information available are the empirical observations of derivative prices traded on the market.
 
-3. The market is incomplete.
+3.  The market is incomplete.
 
-By the [Breeden-Litzenberger Formula](https://github.com/PavanAnanthSharma/Breeden-Litzenberger-formula-for-risk-neutral-densities), empirical observations of European call prices for a continuum of strikes $K\in\mathbb{R}_+$ with maturity $T$ recovers the marginal distribution of the stock price $S_T$ under the martingale measure.
-Therefore, within the discussions below, we always assume the knowledge of the marginal distribution of $S_T$.
+By the [Breeden-Litzenberger Formula](https://github.com/PavanAnanthSharma/Breeden-Litzenberger-formula-for-risk-neutral-densities), empirical observations of European call prices for a continuum of strikes $K\in\mathbb{R}_+$ with maturity $T$ recovers the marginal distribution of the stock price $S_T$ under the martingale measure. Therefore, within the discussions below, we always assume the knowledge of the marginal distribution of $S_T$.
 
 Although it is practically impossible to observe European call prices for a continuum of strikes $K$, several approaches can be taken to fix this problem:
 
-1. Adding constraints to the optimization problems stated below [@henry2017model]. The constraints reflect the fact that European call prices are observed for only finitely many strikes $K$.
+1.  Adding constraints to the optimization problems stated below [@henry2017model]. The constraints reflect the fact that European call prices are observed for only finitely many strikes $K$.
 
-2. Interpolate or approximate the implied volatility surface to predict European call prices at unknown strikes $K$.
+2.  Interpolate or approximate the implied volatility surface to predict European call prices at unknown strikes $K$.
 
-In the following context, we always assume $r=0$ without loss of generality, and all optimization problems are stated based on the perspective of an option writer.
-In other words, the solutions to those optimization problems provide the maximum arbitrage-free prices of the options.
-Similar formulations can be adopted from the perspective of option buyers that provide the minimum arbitrage-free prices of the options.
-
+In the following context, we always assume $r=0$ without loss of generality, and all optimization problems are stated based on the perspective of an option writer. In other words, the solutions to those optimization problems provide the maximum arbitrage-free prices of the options. Similar formulations can be adopted from the perspective of option buyers that provide the minimum arbitrage-free prices of the options.
 
 ## Pricing Options with Joint Payoffs
 
-Assume there are two stocks on the market with stock prices $\{S^1_t\}$ and $\{S^2_t\}$.
-We wish to price a European option with maturity $T$ and a given payoff function $C$, which is a joint function in both stock prices, i.e. $c(S^1_T,S^2_T)$.
-Denote by $\mathbb{P}^1$ and $\mathbb{P}^2$ the laws of $S^1_T$ and $S^2_T$ under the martingale measure (known).
-The seller's price is the minimum cost of super-replication:
-$$
+Assume there are two stocks on the market with stock prices $\{S^1_t\}$ and $\{S^2_t\}$. We wish to price a European option with maturity $T$ and a given payoff function $C$, which is a joint function in both stock prices, i.e. $c(S^1_T,S^2_T)$. Denote by $\mathbb{P}^1$ and $\mathbb{P}^2$ the laws of $S^1_T$ and $S^2_T$ under the martingale measure (known). The seller's price is the minimum cost of super-replication: $$
 \text{MK}_2:=\inf_{(\lambda_1,\lambda_2)\in \mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2)} \mathbb{E}_{\mathbb{P}^1}\lambda_1(S^1_T) + \mathbb{E}_{\mathbb{P}^2}\lambda_2(S^2_T),
-$$
-where
-$$
+$$ where $$
 \mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2) := \{(\lambda_1,\lambda_2):\lambda_1(s_1) + \lambda_2(s_2)\geq c(s_1,s_2)\}.
-$$
-The objective function is the cost of replication with European payoffs $\lambda_1$ and $\lambda_2$, while $\mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of payoff functions that admits a super-replication.
+$$ The objective function is the cost of replication with European payoffs $\lambda_1$ and $\lambda_2$, while $\mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of payoff functions that admits a super-replication.
 
-Through the [Kantorovich Duality](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)), it is clear that
-$$
+Through the [Kantorovich Duality](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)), it is clear that $$
 \text{MK}_2=\sup_{\mathbb{P}\in\mathscr{P}(\mathbb{P}^1,\mathbb{P}^2)}\mathbb{E}_{\mathbb{P}}[c(S^1_T,S^2_T)],
-$$
-where $\mathscr{P}(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of probability measures, under which $S^1_T\sim \mathbb{P}^1$ and $S^2_T\sim \mathbb{P}^2$.
+$$ where $\mathscr{P}(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of probability measures, under which $S^1_T\sim \mathbb{P}^1$ and $S^2_T\sim \mathbb{P}^2$.
 
-We remark that, the primal and dual optimization problems align with those in optimal transport.
-However, those optimization problems no longer have the physical interpretation as transport problems, but are interpreted in the sense of hedging.
-Nevertheless, this optimization problem can be numerically solved through techniques that have been developed for optimal transport, e.g., [Sinkhorn's Algorithm](https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm).
-
+We remark that, the primal and dual optimization problems align with those in optimal transport. However, those optimization problems no longer have the physical interpretation as transport problems, but are interpreted in the sense of hedging. Nevertheless, this optimization problem can be numerically solved through techniques that have been developed for optimal transport, e.g., [Sinkhorn's Algorithm](https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm).
 
 ## Pricing Options with Path-dependent Payoffs
 
-Assume there is a single stock considered at two different time points $t_1<t_2$. For simplicity, we denote $S_1:= S_{t_1}$ and $S_2:= S_{t_2}$.
-The path-dependent option payoff has the form $c(S_1,S_2)$.
-Denote by $\mathbb{P}^1$ and $\mathbb{P}^2$ the laws of $S^1$ and $S^2$ under the martingale measure (known).
+Assume there is a single stock considered at two different time points $t_1<t_2$. For simplicity, we denote $S_1:= S_{t_1}$ and $S_2:= S_{t_2}$. The path-dependent option payoff has the form $c(S_1,S_2)$. Denote by $\mathbb{P}^1$ and $\mathbb{P}^2$ the laws of $S^1$ and $S^2$ under the martingale measure (known).
 
-The seller's price is the minimum cost of super-replication:
-$$
+The seller's price is the minimum cost of super-replication: $$
 \widetilde{\text{MK}}_2:=\inf_{(\lambda_1,\lambda_2,H)\in \mathscr{M}^*(\mathbb{P}^1,\mathbb{P}^2)} \mathbb{E}_{\mathbb{P}^1}\lambda_1(S_1) + \mathbb{E}_{\mathbb{P}^2}\lambda_2(S_2),
-$$
-where
-$$
+$$ where $$
 \mathscr{M}^*(\mathbb{P}^1,\mathbb{P}^2) := \{(\lambda_1,\lambda_2,H):\lambda_1(s_1) + \lambda_2(s_2) + H(s_1)(s_2-s_1)\geq c(s_1,s_2)\}.
-$$
-The objective function is the cost of replication with European payoffs $\lambda_1$ and $\lambda_2$, while $\mathscr{M}^*(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of payoff functions and the static trading strategy $H$ that admits a super-replication.
-Note that due to the presence of two different time points, one can trade the stock at time $0,t_1,t_2$, which results in the extra $H$ variable in the optimization problem.
+$$ The objective function is the cost of replication with European payoffs $\lambda_1$ and $\lambda_2$, while $\mathscr{M}^*(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of payoff functions and the static trading strategy $H$ that admits a super-replication. Note that due to the presence of two different time points, one can trade the stock at time $0,t_1,t_2$, which results in the extra $H$ variable in the optimization problem.
 
-
-Through [Fenchel-Rockafeller Duality](https://en.wikipedia.org/wiki/Fenchel%27s_duality_theorem), one can prove that
-$$
+Through [Fenchel-Rockafeller Duality](https://en.wikipedia.org/wiki/Fenchel%27s_duality_theorem), one can prove that $$
 \widetilde{\text{MK}}_2=\sup_{\mathbb{P}\in\mathscr{M}(\mathbb{P}^1,\mathbb{P}^2)}\mathbb{E}_{\mathbb{P}}[c(S_1,S_2)],
-$$
-where $\mathscr{M}(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of probability measures, under which $S^1_T\sim \mathbb{P}^1$ and $S^2_T\sim \mathbb{P}^2$ and $\mathbb{E}_{\mathbb{P}}(S_2|S_1) = S_1$.
-Clearly, the presence of the constraint $\mathbb{E}_{\mathbb{P}}(S_2|S_1) = S_1$ in the dual problem is the direct consequence of the extra $H$ variable in the primal problem, which is actually a martingale condition restricted to time points $t_1,t_2$.
+$$ where $\mathscr{M}(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of probability measures, under which $S^1_T\sim \mathbb{P}^1$ and $S^2_T\sim \mathbb{P}^2$ and $\mathbb{E}_{\mathbb{P}}(S_2|S_1) = S_1$. Clearly, the presence of the constraint $\mathbb{E}_{\mathbb{P}}(S_2|S_1) = S_1$ in the dual problem is the direct consequence of the extra $H$ variable in the primal problem, which is actually a martingale condition restricted to time points $t_1,t_2$.
 
-This problem is called **martingale optimal transport** due to the extra martingale constraint, which is reasonable to appear due to $\{S_t\}$ being a martingale under the martingale measure when $r=0$.
-In other words, the transport trajectory from $\mathbb{P}^1$ to $\mathbb{P}^2$ cannot be arbitrary due to the introduction of two different time points.
+This problem is called **martingale optimal transport** due to the extra martingale constraint, which is reasonable to appear due to $\{S_t\}$ being a martingale under the martingale measure when $r=0$. In other words, the transport trajectory from $\mathbb{P}^1$ to $\mathbb{P}^2$ cannot be arbitrary due to the introduction of two different time points.
 
-Note that unlike $\mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2)$ which always contains the trivial coupling, extra conditions are required to ensure that $\mathscr{M}(\mathbb{P}^1,\mathbb{P}^2)$ is not empty. An if and only if condition is given by the **convex order** between two measures, denoted $\mathbb{P}^1\leq \mathbb{P}^2$, which is defined as
-$$
+Note that unlike $\mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2)$ which always contains the trivial coupling, extra conditions are required to ensure that $\mathscr{M}(\mathbb{P}^1,\mathbb{P}^2)$ is not empty. An if and only if condition is given by the **convex order** between two measures, denoted $\mathbb{P}^1\leq \mathbb{P}^2$, which is defined as $$
 \mathbb{E}_{\mathbb{P}^1}(S_1-K)_+\leq \mathbb{E}_{\mathbb{P}^2}(S_2-K)_+,\ \forall K.
-$$
-Through the Black-Scholes formula, one can easily check that if $\{S_t\}$ denotes the stock price in a Black-Scholes market with a single stock, then $\mathbb{P}^1\leq \mathbb{P}^2$ for $\forall 0\leq t_1<t_2$.
-
+$$ Through the Black-Scholes formula, one can easily check that if $\{S_t\}$ denotes the stock price in a Black-Scholes market with a single stock, then $\mathbb{P}^1\leq \mathbb{P}^2$ for $\forall 0\leq t_1<t_2$.
 
 # Pricing via MOT in more general settings
 
 The above discussions yield a core fact in mathematical finance: the price of a financial derivative from the seller's perspective (the primal side via hedging) should match the price from the buyer's perspective (the dual side via risk-free measure). However, the models discussed above are somewhat simplistic for two reasons:
 
-1. In practice, traders use a much wider range of financial instruments than just European options and stock holdings to hedge their positions. Consequently, the set of superhedging strategies available in the market is far more extensive than the one we have considered above. As a result, the pricing formula derived from the trader’s perspective (the primal side) tends to overestimate the true price.
+1.  In practice, traders use a much wider range of financial instruments than just European options and stock holdings to hedge their positions. Consequently, the set of superhedging strategies available in the market is far more extensive than the one we have considered above. As a result, the pricing formula derived from the trader’s perspective (the primal side) tends to overestimate the true price.
 
-2. Moreover, our setting assumes trading only at discrete times, considering only a finite number of marginals. In real financial markets, asset prices evolve continuously, and one typically requires a martingale measure defined on the entire path space, e.g. $C([0,T], \mathbb{R}^+)$ to capture the dynamics accurately.
+2.  Moreover, our setting assumes trading only at discrete times, considering only a finite number of marginals. In real financial markets, asset prices evolve continuously, and one typically requires a martingale measure defined on the entire path space, e.g. $C([0,T], \mathbb{R}^+)$ to capture the dynamics accurately.
 
 Now, we discuss how to broaden the settings to resolve these issues.
 
-
 ## A VIX-constrained martingale optimal transport
 
-To capture the broader array of hedging instruments within the model-free pricing framework based on martingale optimal transport, recent literature has studied several constrained MOT problems that extend the basic setting. In this section, we introduce one such extension by incorporating the trading of VIX-index options into the framework.  
+To capture the broader array of hedging instruments within the model-free pricing framework based on martingale optimal transport, recent literature has studied several constrained MOT problems that extend the basic setting. In this section, we introduce one such extension by incorporating the trading of VIX-index options into the framework.
 
 The main literature for this section is [@demarco2015linking].
 
@@ -305,15 +193,13 @@ $$
 \mathrm{VIX}_{t_1}^2 \equiv \frac{2}{\Delta}\left(\int_0^{S_1} \frac{P\left(t_1, t_2, K\right)}{K^2} d K+\int_0^{S_1} \frac{C\left(t_1, t_2, K\right)}{K^2} d K\right)
 $$
 
-with $P\left(t_1, t_2, K\right)$ (resp. $\left.C\left(t_1, t_2, K\right)\right)$ the undiscounted market price at $t_1$ of a put (resp. call) option with strike $K$ and maturity $t_2$.
-The payoff of a call option on VIX expiring at $t_1$ with strike $K$ is $\left(\mathrm{VIX}_{t_1}-K\right)^{+}$. Below, the market value (at $t=0$ ) for the VIX future (i.e., $K=0$ ) is denoted VIX.
-
+with $P\left(t_1, t_2, K\right)$ (resp. $\left.C\left(t_1, t_2, K\right)\right)$ the undiscounted market price at $t_1$ of a put (resp. call) option with strike $K$ and maturity $t_2$. The payoff of a call option on VIX expiring at $t_1$ with strike $K$ is $\left(\mathrm{VIX}_{t_1}-K\right)^{+}$. Below, the market value (at $t=0$ ) for the VIX future (i.e., $K=0$ ) is denoted VIX.
 
 ### The constrained MOT duality
 
 Now we may include the trading of VIX options in our settings.
 
-For further reference, we denote by $\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.$, VIX $)$ the set of all martingale measures $\mathbb{P}$ on $I_1 \times I_2 \times I_X$ having marginals $\mathbb{P}^1, \mathbb{P}^2$ with mean $S_0$ and such that VIX $=\mathbb{E}^{\mathbb{P}}\left[\mathrm{VIX}_{t_1}\right]$, that is:
+For further reference, we denote by $\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.$, VIX $)$ the set of all martingale measures $\mathbb{P}$ on $I_1 \times I_2 \times I_X$ having marginals $\mathbb{P}^1, \mathbb{P}^2$ with mean $S_0$ and such that VIX $=\mathbb{E}^{\mathbb{P}}\left[\mathrm{VIX}_{t_1}\right],$ that is:
 
 \begin{equation}
     \begin{aligned}
@@ -326,34 +212,27 @@ In other words, we request both the stock price, and also the VIX index, as a tr
 
 We define our constrained MOT for a VIX call option expiring at $t_1$ with strike $K$ as
 
-
 \begin{equation}
 \mathrm{MK}_{\mathrm{vix}} \equiv \inf _{\lambda_1 \in \mathrm{~L}^1\left(\mathbb{P}^1\right), \lambda_2 \in \mathrm{~L}^1\left(\mathbb{P}^2\right), \lambda \in \mathbb{R}, H_S, H_X} \mathbb{E}^{\mathbb{P}^1}\left[\lambda_1\left(S_1\right)\right]+\mathbb{E}^{\mathbb{P}^2}\left[\lambda_2\left(S_2\right)\right]+\lambda \mathrm{VIX}
 \end{equation}
 
-such that for all $\left(s_1, s_2, x\right) \in I_1 \times I_2 \times I_X$,\\
-\begin{equation}\label{eq6}
+such that for all $\left(s_1, s_2, x\right) \in I_1 \times I_2 \times I_X$,\\ \begin{equation}\label{eq6}
 \begin{aligned}
         \lambda_1\left(s_1\right)+\lambda_2\left(s_2\right)+\lambda \sqrt{x} & +H_S\left(s_1, x\right)\left(s_2-s_1\right) \\
 & +H_X\left(s_1, x\right)\left(-\frac{2}{\Delta} \ln \left(\frac{s_2}{s_1}\right)-x\right) \geq(\sqrt{x}-K)^{+}.
 \end{aligned}
 \end{equation}
 
-In the above definition, the functions $H_S, H_X: I_1 \times I_X \rightarrow \mathbb{R}$ are assumed to be bounded continuous functions on $I_1 \times I_X, \lambda_1 \in \mathrm{~L}^1\left(\mathbb{P}^1\right)$ and $\lambda_2 \in \mathrm{~L}^1\left(\mathbb{P}^2\right)$. The variable $x$ should be interpreted as the $t_1$-value of a log-contract $-2 / \Delta \ln \frac{s_2}{s_1}$, i.e., the square of the VIX index VIX$_{t_1}^2$. This semi-static superreplication consists in holding statically $t_1$ and $t_2$-European payoffs with market prices $\mathbb{E}^{\mathbb{P}^1}\left[\lambda_1\left(S_1\right)\right]$ and $\mathbb{E}^{\mathbb{P}^2}\left[\lambda_2\left(S_2\right)\right]$, a VIX future with market price VIX and delta hedging at $t_1$ (with zero-cost) on the spot and on a forward $\log$ contract with price $x$. The value of this portfolio is greater than or equal to the payoff $(\sqrt{x}-K)^{+}$. If somebody offers this VIX option at a price $p$ above $\mathrm{MK}_{\mathrm{vix}}$, the arbitrage can be locked in by selling this option and going long in the above super-replication:
-\begin{equation}
+In the above definition, the functions $H_S, H_X: I_1 \times I_X \rightarrow \mathbb{R}$ are assumed to be bounded continuous functions on $I_1 \times I_X, \lambda_1 \in \mathrm{~L}^1\left(\mathbb{P}^1\right)$ and $\lambda_2 \in \mathrm{~L}^1\left(\mathbb{P}^2\right)$. The variable $x$ should be interpreted as the $t_1$-value of a log-contract $-2 / \Delta \ln \frac{s_2}{s_1}$, i.e., the square of the VIX index VIX$_{t_1}^2$. This semi-static superreplication consists in holding statically $t_1$ and $t_2$-European payoffs with market prices $\mathbb{E}^{\mathbb{P}^1}\left[\lambda_1\left(S_1\right)\right]$ and $\mathbb{E}^{\mathbb{P}^2}\left[\lambda_2\left(S_2\right)\right]$, a VIX future with market price VIX and delta hedging at $t_1$ (with zero-cost) on the spot and on a forward $\log$ contract with price $x$. The value of this portfolio is greater than or equal to the payoff $(\sqrt{x}-K)^{+}$. If somebody offers this VIX option at a price $p$ above $\mathrm{MK}_{\mathrm{vix}}$, the arbitrage can be locked in by selling this option and going long in the above super-replication: \begin{equation}
 \begin{aligned}
 & \lambda_1\left(s_1\right)+\lambda_2\left(s_2\right)+\lambda \sqrt{x}+H_S\left(s_1, x\right)\left(s_2-s_1\right)+H_X\left(s_1, x\right)\left(-\frac{2}{\Delta} \ln \left(\frac{s_2}{s_1}\right)-x\right) \\
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad-(\sqrt{x}-K)^{+}+\left(p-\mathrm{MK}_{\mathrm{vix}}\right) \geq 0, \quad \forall\left(s_1, s_2, x\right) \in I_1 \times I_2 \times I_X
 \end{aligned}
 \end{equation}
 
-Similarly to the above sections, the main duality theorem of this constrained martingale optimal
-transport problem can be constructed via [Fenchel-Rockafeller duality](https://en.wikipedia.org/wiki/Fenchel%27s_duality_theorem):
+Similarly to the above sections, the main duality theorem of this constrained martingale optimal transport problem can be constructed via [Fenchel-Rockafeller duality](https://en.wikipedia.org/wiki/Fenchel%27s_duality_theorem):
 
-
-**Theorem**
- Assume that $\mathbb{P}^1, \mathbb{P}^2$ are probability measures respectively on $I_1$ and $I_2$ such that $\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.$, VIX $)$ is non-empty. Then,
-\begin{equation}
+**Theorem** Assume that $\mathbb{P}^1, \mathbb{P}^2$ are probability measures respectively on $I_1$ and $I_2$ such that $\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.$, VIX $)$ is non-empty. Then, \begin{equation}
     \mathrm{MK}_{\mathrm{vix}}=\max _{\mathbb{P} \in \mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2, \mathrm{VIX}\right)} \mathbb{E}\left[\left(\mathrm{VIX}_{t_1}-K\right)^{+}\right]
 \end{equation}
 
@@ -369,19 +248,19 @@ for some $x_1$ and $x_2$. See @demarco2015linking and @henry2017model for more d
 
 To resolve the second issue we mentioned above, we give a brief but descriptive introduction to continuous-time martingale optimal transport and the dual pricing formulas.
 
-Robust superhedging in continuous-time finance is formulated on the canonical path space 
+Robust superhedging in continuous-time finance is formulated on the canonical path space
 
 $$
 \Omega = \{\omega \in C([0,T],\mathbb{R}_+): \omega(0)=0\},
 $$
 
-equipped with the canonical process $B_t(\omega)=\omega(t)$ and the Wiener measure $\mathbb{P}^0$. The asset price process is defined by 
+equipped with the canonical process $B_t(\omega)=\omega(t)$ and the Wiener measure $\mathbb{P}^0$. The asset price process is defined by
 
 $$
 S_t = S_0+B_t,
 $$
 
-and by incorporating an adapted volatility process $\sigma$, we obtain a modified price process 
+and by incorporating an adapted volatility process $\sigma$, we obtain a modified price process
 
 $$
 S_t^\sigma = S_0 + \int_0^t \sigma_r\,dB_r.
@@ -398,5 +277,3 @@ $$
 where $\mathcal{M}^c(\mathbb{P}^1,\ldots,\mathbb{P}^n)$ is the set of martingale measures whose marginals at the specified times match those observed in the market. This duality bridges the seller’s perspective—obtained via superhedging (primal side)—with the buyer’s perspective—based on risk-neutral valuation (dual side). In essence, it unifies the robust pricing framework by showing that the highest price acceptable by the buyer coincides with the lowest cost required by the seller to hedge against all market scenarios.
 
 Except for deriving the duality, the main technical difficulty in the continuous-setting is the construction of a martingale measure on the paths space, or equivalently, the construction of a martingale process matching the known marginal. The most common solution is to employ solutions of Skorokhod embedding problem from classical stochastic analysis and then covert the dual side to a supremum over a set of stopping times of a Brownian motion and then take expectation over that Brownian motion. In other words, we embed every possible martingale price process into a Brownian motion by a stopping time. This provide numerical efficiency in obtaining the dual price. The discussion of these topics lead to the follow-up article of this one, where we set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging without assuming a specific stochastic model for the asset dynamics. See [Continuous-Time MOT and Skorokhod Embedding](https://otwiki.github.io/otwiki-main/Continuous-time%20MOT%20and%20Skorohod%20Embedding.html) for details.
-
-
