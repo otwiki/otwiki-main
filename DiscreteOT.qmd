@@ -1,5 +1,6 @@
 ---
 title: "Discrete Optimal Transport"
+author: Claire Murphy
 bibliography: DiscreteOT_bibliography.bibtex
 ---
 
