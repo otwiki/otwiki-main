@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Claire Murphy and Micah Pedrick">
 
 <title>Discrete Optimal Transport – OT WIKI</title>
 <style>
@@ -165,6 +166,12 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Claire Murphy and Micah Pedrick </p>
+          </div>
+  </div>
     
   
     
@@ -175,10 +182,10 @@ window.Quarto = {
 </header>
 
 
-<p>For a given space <span class="math inline">\(X\)</span>, we call a measure <span class="math inline">\(\alpha\)</span> on <span class="math inline">\(X\)</span> a histogram if <span class="math display">\[ \alpha = \sum_{i=1}^{n} a_i \delta_{x_i} , \]</span> where <span class="math inline">\((a_1, \ldots, a_n) \in \mathbb{R}_+^n\)</span>, <span class="math inline">\(\sum \limits_{i = 1}^n a_i = 1\)</span>, and each <span class="math inline">\(x_i \in X\)</span>. When the source measure <span class="math inline">\(\mu\)</span> and target measure <span class="math inline">\(\nu\)</span> are historgrams, the <a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge problem</a> and the <a href="https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html">Kantorovich problem</a> may be stated as linear programs <span class="citation" data-cites="Villani2003">(<a href="#ref-Villani2003" role="doc-biblioref">Villani 2003</a>)</span>, and solved using classical methods <span class="citation" data-cites="Peyre">(<a href="#ref-Peyre" role="doc-biblioref">Peyré and Cuturi 2001</a>)</span>. This insight may be used to approximate the Wasserstein distances between general measures, by first discretizing the source and target with a known level of accuracy (a difficult problem), then computing the cost between the discrete measures.</p>
+<p>For a given space <span class="math inline">\(X\)</span>, we call a measure <span class="math inline">\(\alpha\)</span> on <span class="math inline">\(X\)</span> “finitely supported” if <span class="math display">\[ \alpha = \sum_{i=1}^{n} a_i \delta_{x_i} , \]</span> where <span class="math inline">\((a_1, \ldots, a_n) \in \mathbb{R}_+^n\)</span>, <span class="math inline">\(\sum \limits_{i = 1}^n a_i = 1\)</span>, and each <span class="math inline">\(x_i \in X\)</span>. When the source measure <span class="math inline">\(\mu\)</span> and target measure <span class="math inline">\(\nu\)</span> are finitely supported, the <a href="https://www.otwiki.xyz/wiki/Monge_Problem">Monge problem</a> and the <a href="https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html">Kantorovich problem</a> may be stated as linear programs <span class="citation" data-cites="Villani2003">(<a href="#ref-Villani2003" role="doc-biblioref">Villani 2003</a>)</span>, and solved using classical methods <span class="citation" data-cites="Peyre">(<a href="#ref-Peyre" role="doc-biblioref">Peyré and Cuturi 2001</a>)</span>. This insight may be used to approximate the Wasserstein distances between general measures, by first discretizing the source and target with a known level of accuracy (a difficult problem), then computing the cost between the discrete measures.</p>
 <section id="the-monge-problem" class="level1">
 <h1>The Monge Problem</h1>
-<p>Let <span class="math inline">\(\alpha = \sum_{i=1}^{n} a_i \delta_{x_i}\)</span> and <span class="math inline">\(\beta = \sum_{j=1}^{m} b_j \delta_{y_j}\)</span> be histograms. We say a function <span class="math inline">\(T: \{ x_1, \ldots, x_n \} \rightarrow \{ y_1, \ldots, y_m \}\)</span> is a transport map from <span class="math inline">\(\alpha\)</span> to <span class="math inline">\(\beta\)</span> if for all <span class="math inline">\(1 \leq j \leq m\)</span>, <span class="math display">\[ b_j = \sum \limits_{i : T(x_i) = y_j} a_i , \]</span> which we write in compact form as <span class="math inline">\(T \# \alpha = \beta\)</span>. In other words, for each <span class="math inline">\(j\)</span>, the mass <span class="math inline">\(T\)</span> “sends” to <span class="math inline">\(y_j\)</span> must equal <span class="math inline">\(b_j\)</span>.</p>
+<p>Let <span class="math inline">\(\alpha = \sum_{i=1}^{n} a_i \delta_{x_i}\)</span> and <span class="math inline">\(\beta = \sum_{j=1}^{m} b_j \delta_{y_j}\)</span> be finitely supported measures. We say a function <span class="math inline">\(T: \{ x_1, \ldots, x_n \} \rightarrow \{ y_1, \ldots, y_m \}\)</span> is a transport map from <span class="math inline">\(\alpha\)</span> to <span class="math inline">\(\beta\)</span> if for all <span class="math inline">\(1 \leq j \leq m\)</span>, <span class="math display">\[ b_j = \sum \limits_{i : T(x_i) = y_j} a_i , \]</span> which we write in compact form as <span class="math inline">\(T \# \alpha = \beta\)</span>. In other words, for each <span class="math inline">\(j\)</span>, the mass <span class="math inline">\(T\)</span> “sends” to <span class="math inline">\(y_j\)</span> must equal <span class="math inline">\(b_j\)</span>.</p>
 <p>Let <span class="math inline">\(c: X \times Y \rightarrow \mathbb{R}\)</span> be the cost function from <span class="math inline">\(\alpha\)</span> to <span class="math inline">\(\beta\)</span>. In other words, <span class="math inline">\(c(x, y)\)</span> equals the cost to send one unit of mass from point <span class="math inline">\(x\)</span> to point <span class="math inline">\(y\)</span>. Then, the Monge problem is defined as <span class="math display">\[ \min \limits_{T} \left \{ \sum \limits_{i = 1}^n c(x_i, T(x_i)) \right \} . \]</span> Notice the use of “<span class="math inline">\(\min\)</span>” rather than “<span class="math inline">\(\inf\)</span>” in this problem, since there are at most <span class="math inline">\(m!\)</span> transport maps from <span class="math inline">\(\alpha\)</span> to <span class="math inline">\(\beta\)</span>. A transport map that achieves this minimum is called an optimal transport map.</p>
 <section id="existence" class="level2">
 <h2 class="anchored" data-anchor-id="existence">Existence</h2>
@@ -193,23 +200,26 @@ window.Quarto = {
 </section>
 <section id="the-kantorovich-problem" class="level1">
 <h1>The Kantorovich Problem</h1>
-<p>Again, let <span class="math inline">\(\alpha = \sum_{i=1}^{n} a_i \delta_{x_i}\)</span> and <span class="math inline">\(\beta = \sum_{j=1}^{m} b_j \delta_{y_j}\)</span> be histograms. We say a matrix <span class="math inline">\(P \in \mathbb{R}_+^{n \times m}\)</span> is an admissible coupling if <span class="math display">\[ P 1_m = a \text{ and } P^T 1_n = b . \]</span> Here, <span class="math inline">\(a = (a_1, \ldots, a_n), b = (b_1, \ldots, b_m)\)</span> and <span class="math inline">\(1_n\)</span> equals the vector of size <span class="math inline">\(n\)</span> with each entry equal to one. For simplicity, we let <span class="math inline">\(U(a, b)\)</span> equal the set of all admissible couplings. Let <span class="math inline">\(c: X \times Y \rightarrow \mathbb{R}\)</span> be the cost function from <span class="math inline">\(\alpha\)</span> to <span class="math inline">\(\beta\)</span>. The Kantorovich problem is defined as <span class="math display">\[ \min \limits_{P \in U(a, b)} \sum \limits_{i, j} c(x_i, y_j) P_{ij} . \]</span> Again, notice that we use ““<span class="math inline">\(\min\)</span>” in our statement, rather than “<span class="math inline">\(\inf\)</span>”. We use the Calculus of Variations to show that this minimum is indeed achieved. A coupling that achieves this minimum is called an optimal coupling, or optimal transport plan.</p>
+<p>Again, let <span class="math inline">\(\alpha = \sum_{i=1}^{n} a_i \delta_{x_i}\)</span> and <span class="math inline">\(\beta = \sum_{j=1}^{m} b_j \delta_{y_j}\)</span> be finitely supported measures. We say a matrix <span class="math inline">\(P \in \mathbb{R}_+^{n \times m}\)</span> is an admissible coupling if <span class="math display">\[ P 1_m = a \text{ and } P^T 1_n = b . \]</span> Here, <span class="math inline">\(a = (a_1, \ldots, a_n), b = (b_1, \ldots, b_m)\)</span>, and <span class="math inline">\(1_n\)</span> equals the vector of size <span class="math inline">\(n\)</span> with each entry equal to one. For simplicity, we let <span class="math inline">\(U(a, b)\)</span> equal the set of all admissible couplings. Let <span class="math inline">\(c: X \times Y \rightarrow \mathbb{R}\)</span> be the cost function from <span class="math inline">\(\alpha\)</span> to <span class="math inline">\(\beta\)</span>. The Kantorovich problem is defined as <span class="math display">\[ \min \limits_{P \in U(a, b)} \sum \limits_{i, j} c(x_i, y_j) P_{ij} . \]</span> Again, notice that we use “<span class="math inline">\(\min\)</span>” in our statement, rather than “<span class="math inline">\(\inf\)</span>”. We use the Calculus of Variations to show that this minimum is indeed achieved. A coupling that achieves this minimum is called an optimal coupling, or optimal transport plan.</p>
 <section id="existence-1" class="level2">
 <h2 class="anchored" data-anchor-id="existence-1">Existence</h2>
 <p>We know there always exists an admissible coupling; take <span class="math inline">\(P_{ij} = a_i b_j\)</span>.</p>
 </section>
 <section id="uniqueness-1" class="level2">
 <h2 class="anchored" data-anchor-id="uniqueness-1">Uniqueness</h2>
-<p>Again, optimal solutions may not be unique. Consider the example first consider in the discussion of the uniqueness of the Monge problem, i.e.&nbsp;the square. Notice that for any <span class="math inline">\(i, j\)</span>, <span class="math inline">\(c(x_i, y_j) = 1\)</span>. Thus, the Kantorovich problem reduces to<br>
+<p>Again, optimal solutions may not be unique. Consider the same counterexample used to show non-uniqueness of the Monge problem, i.e.&nbsp;the unit square. Notice that for any <span class="math inline">\(i, j\)</span>, <span class="math inline">\(c(x_i, y_j) = 1\)</span>. Thus, the Kantorovich problem reduces to<br>
 <span class="math display">\[ \min \limits_{P \in U(a, b)} \sum \limits_{i, j} P_{ij} . \]</span> Because <span class="math inline">\(P \in U(a, b)\)</span>, we know that the entries of <span class="math inline">\(P_{ij}\)</span> sum to one. Thus, for any admissible coupling <span class="math inline">\(P\)</span>, we have <span class="math inline">\(\sum \limits_{i, j} c(x_i, y_j) P_{ij} = 1\)</span>.</p>
 <p>Consider <span class="math inline">\(P_1 = \begin{bmatrix}
 \frac{1}{2} &amp; 0 \\
 0 &amp; \frac{1}{2}
-\end{bmatrix}\)</span> and <span class="math inline">\(P_2 = (P_1)^T\)</span>. Both <span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span> are admissible couplings, and both achieve the minimum for the Kantorovich problem.</p>
+\end{bmatrix}\)</span> and <span class="math inline">\(P_2 = \begin{bmatrix}
+0 &amp; \frac{1}{2} \\
+\frac{1}{2} &amp; 0
+\end{bmatrix}\)</span>. Both <span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span> are admissible couplings, and both achieve the minimum for the Kantorovich problem.</p>
 </section>
 <section id="the-dual-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-dual-problem">The Dual Problem</h2>
-<p>Consider the theorem mentioned in <a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">this article</a>. In the discrete case, our dual problem reduces to <span class="math display">\[ \max \limits_{(f, g) \in R(c)} \left &lt; f, a \right &gt; + \left &lt; g, b \right &gt; , \]</span> where <span class="math inline">\(R(c) := \left \{ (f, g) \in \mathbb{R}^n \times \mathbb{R}^m :  \text{ for all } 1 \leq i \leq n, 1 \leq j \leq m, f_i + g_j \leq c_{ij} \right \}.\)</span> Again, we know that this maximum is achieved; see the article above for the rationale. We also know that the dual problem is equal to the primal problem.</p>
+<p>As the Kantorovich problem is a linear program, we may consider its dual. In the discrete case, the solution to the dual problem equals the solution to the primal problem, as discussed in the article <a href="https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich dual problem</a>. Our dual problem reduces to <span class="math display">\[ \max \limits_{(f, g) \in R(c)} \left &lt; f, a \right &gt; + \left &lt; g, b \right &gt; , \]</span> where <span class="math inline">\(R(c) := \left \{ (f, g) \in \mathbb{R}^n \times \mathbb{R}^m :  \text{ for all } 1 \leq i \leq n, 1 \leq j \leq m, f_i + g_j \leq c_{ij} \right \}.\)</span> Again, we know that this maximum is achieved; see the article above for the rationale.</p>
 
 
 

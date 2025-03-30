@@ -252,7 +252,7 @@ V_0 = u(0,S_0).
 </section>
 <section id="risk-neutral-pricing" class="level2">
 <h2 class="anchored" data-anchor-id="risk-neutral-pricing">Risk-Neutral Pricing</h2>
-<p>The difficulty of pricing lies in the fact that under the physical measure <span class="math inline">\(\mathbb{P}\)</span>, the discounted expected payoff is not equal to the price, due to the existence of risk premium to compensate for the uncertainty taken by the holders of the derivative. That means, if a holder is risk-neutral, the discounted expected payoff is just the price, in which situation the pricing problem reduces to simple calculations of expectations.</p>
+<p>The difficulty of pricing lies in the fact that under the physical measure <span class="math inline">\(\mathbb{P}\)</span>, the discounted expected payoff, is not equal to the price, due to the existence of risk premium to compensate for the uncertainty taken by the holders of the derivative. That means, if a holder is risk-neutral, the discounted expected payoff is just the price, in which situation the pricing problem reduces to simple calculations of expectations.</p>
 <p>Risk-neutral pricing follows this main idea and aims to view the current world through the lens of a <strong>risk-neutral (martingale) measure</strong> <span class="math inline">\(\mathbb{Q}\)</span>, under which all investors are risk-neutral, i.e., <span class="math inline">\(\{e^{-rt}S_t\}\)</span> is a martingale. The European call price is nothing but <span class="math display">\[
 e^{-rT}\mathbb{E}_{\mathbb{Q}}(S_T - K)_+.
 \]</span> When it comes to the calculation, one needs to guarantee the existence of <span class="math inline">\(\mathbb{Q}\)</span> and the knowledge on the distribution of <span class="math inline">\(S_T\)</span> under <span class="math inline">\(\mathbb{Q}\)</span>. Followed from the fact that <span class="math inline">\(\{e^{-rt}S_t\}\)</span> is a martingale, we rewrite the stock price dynamics: <span class="math display">\[
@@ -325,7 +325,7 @@ S_t = e^{(r-\frac{\sigma^2}{2})t + \sigma W_t^{\mathbb{Q}}},
 <section id="a-vix-constrained-martingale-optimal-transport" class="level2">
 <h2 class="anchored" data-anchor-id="a-vix-constrained-martingale-optimal-transport">A VIX-constrained martingale optimal transport</h2>
 <p>To capture the broader array of hedging instruments within the model-free pricing framework based on martingale optimal transport, recent literature has studied several constrained MOT problems that extend the basic setting. In this section, we introduce one such extension by incorporating the trading of VIX-index options into the framework.</p>
-<p>The main literature for this section is <span class="citation" data-cites="demarco2015linking">(<a href="#ref-demarco2015linking" role="doc-biblioref"><strong>demarco2015linking?</strong></a>)</span>.</p>
+<p>The main literature for this section is <span class="citation" data-cites="demarco2015linking">(<a href="#ref-demarco2015linking" role="doc-biblioref">De Marco and Henry-Labordère 2015</a>)</span>.</p>
 <section id="vix-futures-and-vix-options" class="level3">
 <h3 class="anchored" data-anchor-id="vix-futures-and-vix-options">VIX futures and VIX options</h3>
 <p>VIX futures and VIX options, traded on the CBOE, have become popular volatility derivatives. The VIX index at a future expiry <span class="math inline">\(t_1\)</span> is by definition the price at <span class="math inline">\(t_1\)</span> of the 30 day log-contract which pays <span class="math inline">\(-\frac{2}{t_2-t_1} \ln \frac{S_2}{S_1}\)</span> at <span class="math inline">\(t_2=t_1+30\)</span> days:</p>
@@ -342,7 +342,7 @@ S_t = e^{(r-\frac{\sigma^2}{2})t + \sigma W_t^{\mathbb{Q}}},
 <section id="the-constrained-mot-duality" class="level3">
 <h3 class="anchored" data-anchor-id="the-constrained-mot-duality">The constrained MOT duality</h3>
 <p>Now we may include the trading of VIX options in our settings.</p>
-<p>For further reference, we denote by <span class="math inline">\(\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.\)</span>, VIX <span class="math inline">\()\)</span> the set of all martingale measures <span class="math inline">\(\mathbb{P}\)</span> on <span class="math inline">\(I_1 \times I_2 \times I_X\)</span> having marginals <span class="math inline">\(\mathbb{P}^1, \mathbb{P}^2\)</span> with mean <span class="math inline">\(S_0\)</span> and such that VIX <span class="math inline">\(=\mathbb{E}^{\mathbb{P}}\left[\mathrm{VIX}_{t_1}\right]\)</span>, that is:</p>
+<p>For further reference, we denote by <span class="math inline">\(\mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2\right.\)</span>, VIX <span class="math inline">\()\)</span> the set of all martingale measures <span class="math inline">\(\mathbb{P}\)</span> on <span class="math inline">\(I_1 \times I_2 \times I_X\)</span> having marginals <span class="math inline">\(\mathbb{P}^1, \mathbb{P}^2\)</span> with mean <span class="math inline">\(S_0\)</span> and such that VIX <span class="math inline">\(=\mathbb{E}^{\mathbb{P}}\left[\mathrm{VIX}_{t_1}\right],\)</span> that is:</p>
 <p><span class="math display">\[\begin{equation}
     \begin{aligned}
 \mathcal{M}\left(\mathbb{P}^1, \mathbb{P}^2, \mathrm{VIX}\right)=\{\mathbb{P} &amp; \in \mathcal{P}\left(I_1 \times I_2 \times I_X\right): S_1 \stackrel{\mathbb{P}}{\sim} \mathbb{P}^1, S_2 \stackrel{\mathbb{P}}{\sim} \mathbb{P}^2, \quad\mathbb{E}^{\mathbb{P}}\left[\mathrm{VIX}_{t_1}\right]=\mathrm{VIX}, \\
@@ -374,7 +374,7 @@ S_t = e^{(r-\frac{\sigma^2}{2})t + \sigma W_t^{\mathbb{Q}}},
 <p><span class="math display">\[\begin{equation}
     \overline{\mathbb{P}}(d x)=p \delta_{x_0}(d x)+(1-p) \delta_{x_1}(d x)
 \end{equation}\]</span></p>
-<p>for some <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. See <span class="citation" data-cites="demarco2015linking">(<a href="#ref-demarco2015linking" role="doc-biblioref"><strong>demarco2015linking?</strong></a>)</span> and <span class="citation" data-cites="henry2017model">Henry-Labordère (<a href="#ref-henry2017model" role="doc-biblioref">2017</a>)</span> for more details.</p>
+<p>for some <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. See <span class="citation" data-cites="demarco2015linking">De Marco and Henry-Labordère (<a href="#ref-demarco2015linking" role="doc-biblioref">2015</a>)</span> and <span class="citation" data-cites="henry2017model">Henry-Labordère (<a href="#ref-henry2017model" role="doc-biblioref">2017</a>)</span> for more details.</p>
 </section>
 </section>
 <section id="pricing-via-continuous-time-mot" class="level2">
@@ -408,6 +408,9 @@ S_t^\sigma = S_0 + \int_0^t \sigma_r\,dB_r.
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bjork2009arbitrage" class="csl-entry" role="listitem">
 Björk, Tomas. 2009. <em>Arbitrage Theory in Continuous Time</em>. Oxford university press.
+</div>
+<div id="ref-demarco2015linking" class="csl-entry" role="listitem">
+De Marco, Stefano, and Pierre Henry-Labordère. 2015. <span>“Linking Vanillas and VIX Options: A Constrained Martingale Optimal Transport.”</span> <em>SIAM Journal on Financial Mathematics</em> 6 (1): 1171–94.
 </div>
 <div id="ref-henry2017model" class="csl-entry" role="listitem">
 Henry-Labordère, Pierre. 2017. <em>Model-Free Hedging: A Martingale Optimal Transport Viewpoint</em>. Chapman and Hall/CRC.

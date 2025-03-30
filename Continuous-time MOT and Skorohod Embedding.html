@@ -21,27 +21,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -182,8 +162,8 @@ window.Quarto = {
 </header>
 
 
-<p>This article is an extension of the previous Wiki article <a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a>. We set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging without assuming a specific stochastic model for the asset dynamics. The main technical difficulty in the continuous-time setting is the construction of a martingale coupling measure on the space of sample paths, e.g., <span class="math inline">\(C([0, T], \mathbb{R})\)</span>; or equivalently, the construction of a continuous martingale price process matching all the given marginals. The <a href="https://en.wikipedia.org/wiki/Skorokhod%27s_embedding_theorem">Skorokhod embedding problem (SEP)</a> plays the role of converting this technical difficulty into the problem of finding a stopping time for a Brownian motion that reproduces the target marginals. By illustrating several explicit SEP solutions, we give applications to robust hedging and pricing in the settings of continuous-time MOT.</p>
-<p>This article requires basic knowledge of stochastic analysis, mainly <a href="https://en.wikipedia.org/wiki/Stochastic_calculus">stochastic calculus</a> and <a href="https://en.wikipedia.org/wiki/It%C3%B4%27s_lemma">Itô’s formula</a>. The main reference is <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span>, Chapter 4.</p>
+<p>This article is an extension of the previous Wiki article <a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a>. We set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging, without assuming a specific stochastic model for the asset dynamics. The main technical difficulty in the continuous-time setting is the construction of a martingale coupling measure on the space of sample paths, e.g., <span class="math inline">\(C([0, T], \mathbb{R})\)</span>; or equivalently, the construction of a continuous martingale price process matching all the given marginals. The <a href="https://en.wikipedia.org/wiki/Skorokhod%27s_embedding_theorem">Skorokhod embedding problem (SEP)</a> plays the role of converting this technical difficulty into the problem of finding a stopping time for a Brownian motion that reproduces the target marginals. By illustrating several explicit SEP solutions, we give applications to robust hedging and pricing in the settings of continuous-time MOT.</p>
+<p>This article requires basic knowledge of stochastic analysis, mainly <a href="https://en.wikipedia.org/wiki/Stochastic_calculus">stochastic calculus</a> and <a href="https://en.wikipedia.org/wiki/It%C3%B4%27s_lemma">Itô’s formula</a>. The main reference is <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref"><strong>henrylabordere2017model?</strong></a>)</span>, Chapter 4.</p>
 <section id="continuous-time-mot" class="level2">
 <h2 class="anchored" data-anchor-id="continuous-time-mot">Continuous-time MOT</h2>
 <p>The setting of continuous-time MOT is similar to the discrete case in the previous Wiki article <a href="https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance">Martingale optimal transport and mathematical finance</a>, except the underlying price process is continuous. We describe it via a probability measure on a path space, e.g., <span class="math inline">\(C([0, T], \mathbb{R}_+)\)</span>. Throughout this article, we assume a zero interest rate.</p>
@@ -237,7 +217,7 @@ Y_t^H \equiv Y_0+\int_0^t H_s d S_s, t \in[0, T]
 \bar{Y}_T^{H, \lambda} \equiv Y_0+\int_0^T H_s d S_s+\int_0^T \lambda\left(t, S_t\right) d t-\int_0^T \mathbb{E}^{\mathrm{P}^t}\left[\lambda\left(t, S_t\right)\right] d t
 \]</span></p>
 <p>Now we give the key result from the perspective of OT, the dual formulation of the above robust superhedging price:</p>
-<p><strong>Proposition 4.1 <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref">Henry-Labordère 2017</a>)</span></strong></p>
+<p><strong>Proposition 4.1 <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref"><strong>henrylabordere2017model?</strong></a>)</span></strong></p>
 <p>Assume <span class="math inline">\(\sup_{\mathbb{P} \in \mathcal{M}^c} \mathbb{E}^\mathbb{P}[\xi^+] &lt; \infty\)</span>. Then:</p>
 <ol type="i">
 <li><p><span class="math display">\[
@@ -247,7 +227,7 @@ Y_t^H \equiv Y_0+\int_0^t H_s d S_s, t \in[0, T]
 \operatorname{MK}_\infty^c((\mathbb{P}^t)) = \inf_{\lambda(t,\cdot)} \int_0^T \mathbb{E}^{\mathbb{P}^t}[\lambda(t, S_t)] dt + \sup_{\mathbb{P} \in \mathcal{M}^c} \mathbb{E}^\mathbb{P}\left[\xi - \int_0^T \lambda(t, S_t) dt\right].
 \]</span></p></li>
 </ol>
-<p><strong>Proof</strong>: See <span class="citation" data-cites="galichon2014stochastic guo2016optimal">(<a href="#ref-galichon2014stochastic" role="doc-biblioref">Galichon, Henry-Labordère, and Touzi 2014</a>; <a href="#ref-guo2016optimal" role="doc-biblioref">Guo, Tan, and Touzi 2016</a>)</span>.</p>
+<p><strong>Proof</strong>: See <span class="citation" data-cites="galichon2014stochastic guo2016optimal">(<a href="#ref-galichon2014stochastic" role="doc-biblioref"><strong>galichon2014stochastic?</strong></a>; <a href="#ref-guo2016optimal" role="doc-biblioref"><strong>guo2016optimal?</strong></a>)</span>.</p>
 </section>
 <section id="an-intuitive-duality-formulation-assuming-a-minimax-argument" class="level3">
 <h3 class="anchored" data-anchor-id="an-intuitive-duality-formulation-assuming-a-minimax-argument">An intuitive duality formulation assuming a minimax argument</h3>
@@ -264,7 +244,7 @@ Y_t^H \equiv Y_0+\int_0^t H_s d S_s, t \in[0, T]
 \mathcal{M}^c\left(\left(\mathbb{P}^t\right)_{t \in(0, T]}\right) \equiv\left\{\mathbb{P} \in \mathcal{M}^c: S_t \stackrel{\mathbb{P}}{\sim} \mathbb{P}^t, \quad \forall t \in(0, T]\right\}
 \]</span></p>
 <p>So providing we could justify this minimax argument, our robust superhedging is connected to a MOT: we maximize the cost <span class="math inline">\(\mathbb{E}^{\mathbb{P}}[\xi]\)</span> over the space of martingale measures with marginals <span class="math inline">\(\left(\mathbb{P}^i\right)_{i=1, \ldots, n}\left(\right.\)</span> or <span class="math inline">\(\left.\left(\mathbb{P}^t\right)_{t \in(0, T]}\right)\)</span> and <span class="math inline">\(\mathbb{P}^0=\delta_{S_0}\)</span>. If the dual is attained, <span class="math inline">\(\mathrm{MK}_n^{\mathrm{c}}\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)=\mathbb{E}^{\mathbb{P}^*}[\xi]\)</span> should be attained by a martingale measure <span class="math inline">\(\mathbb{P}^* \in\)</span> <span class="math inline">\(\mathcal{M}^c\left(\mathbb{P}^1, \ldots, \mathbb{P}^n\right)\)</span>. Similarly, <span class="math inline">\(\mathrm{MK}_{\infty}^{\mathrm{c}}\left(\mathbb{P}^t\right)\)</span> should be attained by a martingale measure in <span class="math inline">\(\mathcal{M}^c\left(\left(\mathbb{P}^t\right)_{t \in(0, T]}\right)\)</span>. We note that this corresponds to the core idea of option pricing in mathematical finance: the price of an option from the seller’s perspective (the right-hand side of the equations) should coincide with its price from the buyer’s perspective (the left-hand side of the equations). In the rest of this article, we mean the above strong dualities when we say the dual formulation.</p>
-<p><strong>Remark</strong>: Although we do not provide proofs for the above duality, we mention that the mathematical justification of the dualities above has been covered by various authors under various assumptions on the canonical space <span class="math inline">\(\Omega\)</span> and on <span class="math inline">\(\xi\)</span>. See for example <span class="citation" data-cites="beiglboeck2015complete bouchard2015arbitrage dolinsky2014robust dolinsky2014robusttc dolinsky2016martingale guo2016optimal">(<a href="#ref-beiglboeck2015complete" role="doc-biblioref">Beiglböck, Nutz, and Touzi 2015</a>; <a href="#ref-bouchard2015arbitrage" role="doc-biblioref">Bouchard and Nutz 2015</a>; <a href="#ref-dolinsky2014robust" role="doc-biblioref">Dolinsky and Soner 2014a</a>, <a href="#ref-dolinsky2014robusttc" role="doc-biblioref">2014b</a>, <a href="#ref-dolinsky2016martingale" role="doc-biblioref">2016</a>; <a href="#ref-guo2016optimal" role="doc-biblioref">Guo, Tan, and Touzi 2016</a>)</span>.</p>
+<p><strong>Remark</strong>: Although we do not provide proofs for the above duality, we mention that the mathematical justification of the dualities above has been covered by various authors under various assumptions on the canonical space <span class="math inline">\(\Omega\)</span> and on <span class="math inline">\(\xi\)</span>. See for example <span class="citation" data-cites="beiglboeck2015complete bouchard2015arbitrage dolinsky2014robust dolinsky2014robusttc dolinsky2016martingale guo2016optimal">(<a href="#ref-beiglboeck2015complete" role="doc-biblioref"><strong>beiglboeck2015complete?</strong></a>; <a href="#ref-bouchard2015arbitrage" role="doc-biblioref"><strong>bouchard2015arbitrage?</strong></a>; <a href="#ref-dolinsky2014robust" role="doc-biblioref"><strong>dolinsky2014robust?</strong></a>; <a href="#ref-dolinsky2014robusttc" role="doc-biblioref"><strong>dolinsky2014robusttc?</strong></a>; <a href="#ref-dolinsky2016martingale" role="doc-biblioref"><strong>dolinsky2016martingale?</strong></a>; <a href="#ref-guo2016optimal" role="doc-biblioref"><strong>guo2016optimal?</strong></a>)</span>.</p>
 </section>
 </section>
 <section id="link-with-skorokhod-embedding-problem" class="level2">
@@ -283,11 +263,11 @@ Find a stopping time <span class="math inline">\(\tau\)</span> such that <span c
 <section id="explicit-sep-solutions" class="level3">
 <h3 class="anchored" data-anchor-id="explicit-sep-solutions">Explicit SEP solutions</h3>
 <p>In this section, we cite several explicit solutions to SEP. For more details, see Section 4.6. We set <span class="math inline">\(M_t \equiv \max _{0&lt;s&lt;t} B_t\)</span> and <span class="math inline">\(m_t \equiv \min _{0&lt;s&lt;t} B_t\)</span>.</p>
-<p><strong>Azéma–Yor Solution <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref">Henry-Labordère 2017</a>)</span></strong><br>
+<p><strong>Azéma–Yor Solution <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref"><strong>henrylabordere2017model?</strong></a>)</span></strong><br>
 Define <span class="math inline">\(\tau_{AY} = \inf \{ t \geq 0 : B_t \leq \psi_\mu(M_t) \}\)</span> with <span class="math inline">\(\psi_\mu^{-1}(x) = \frac{\mathbb{E}^\mu[S_T 1_{S_T \geq x}]}{\mathbb{E}^\mu[1_{S_T \geq x}]}\)</span>. Then <span class="math inline">\(B_{\tau_{AY}} \sim \mu\)</span>.</p>
 <p>As the strong dual formulation of the option price requires finding an optimal solution of the SEP under some loss function, we also cite the following optimality solution of the Az`ema-Yor solution.</p>
-<p><strong>Optimality</strong>: For increasing <span class="math inline">\(g\)</span>, <span class="math inline">\(\mathbb{E}[g(M_\tau)] \leq \mathbb{E}[g(M_{\tau_{AY}})]\)</span> <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref">Henry-Labordère 2017</a>)</span>.</p>
-<p><strong>Perkins Solution<span class="citation" data-cites="perkins1986cereteli">(<a href="#ref-perkins1986cereteli" role="doc-biblioref">Perkins 1986</a>)</span></strong><br>
+<p><strong>Optimality</strong>: For increasing <span class="math inline">\(g\)</span>, <span class="math inline">\(\mathbb{E}[g(M_\tau)] \leq \mathbb{E}[g(M_{\tau_{AY}})]\)</span> <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref"><strong>henrylabordere2017model?</strong></a>)</span>.</p>
+<p><strong>Perkins Solution<span class="citation" data-cites="perkins1986cereteli">(<a href="#ref-perkins1986cereteli" role="doc-biblioref"><strong>perkins1986cereteli?</strong></a>)</span></strong><br>
 Define <span class="math inline">\(\tau_{\text{Perkins}} = \inf \{ t &gt; 0 : B_t \notin (\gamma_+(M_t), \gamma_-(m_t)) \}\)</span> with <span class="math inline">\(\gamma_{+}(j)=\operatorname{argmax}_{x&lt;S_0} \frac{C^\mu(j)-P^\mu(x)}{j-x}\)</span> and <span class="math inline">\(\gamma_{-}(i)=\operatorname{argmin}_{x&gt;S_0} \frac{P^\mu(i)-C^\mu(x)}{x-i}\)</span>. Here <span class="math inline">\(C^\mu(x) \equiv \mathbb{E}^\mu\left[\left(S_T-x\right)^{+}\right]\)</span> and <span class="math inline">\(P^\mu(x) \equiv \mathbb{E}^\mu\left[\left(x-S_T\right)^{+}\right]\)</span>. Then <span class="math inline">\(B_{\tau_{Perkins}} \sim \mu\)</span>. The Perkins embedding has the property that it simultaneously minimizes the law of the maximum <span class="math inline">\(M\)</span> and maximizes the law of the minimum <span class="math inline">\(m\)</span> :</p>
 <p><strong>Optimality</strong>: Let <span class="math inline">\(\tau\)</span> be a solution to SEP. Then for all increasing function <span class="math inline">\(g\)</span>, <span class="math display">\[
 \begin{aligned}
@@ -295,7 +275,7 @@ Define <span class="math inline">\(\tau_{\text{Perkins}} = \inf \{ t &gt; 0 : B_
 \mathbb{E}\left[g\left(m_\tau\right)\right] &amp; \leq \mathbb{E}\left[g\left(m_{\tau_{\text {Perkins }}}\right)\right].
 \end{aligned}
 \]</span></p>
-<p><strong>Vallois’ Solution <span class="citation" data-cites="vallois1983probleme vallois1992quelques">(<a href="#ref-vallois1983probleme" role="doc-biblioref">Vallois 1983</a>, <a href="#ref-vallois1992quelques" role="doc-biblioref">1992</a>)</span></strong><br>
+<p><strong>Vallois’ Solution <span class="citation" data-cites="vallois1983probleme vallois1992quelques">(<a href="#ref-vallois1983probleme" role="doc-biblioref"><strong>vallois1983probleme?</strong></a>; <a href="#ref-vallois1992quelques" role="doc-biblioref"><strong>vallois1992quelques?</strong></a>)</span></strong><br>
 Vallois’ embedding uses the <a href="https://en.wikipedia.org/wiki/Local_time_(mathematics)">local time</a> <span class="math inline">\(L_t^a\)</span> of the Brownian motion at a level <span class="math inline">\(a\)</span>. The stopping time is given by</p>
 <p><span class="math display">\[
 \tau_{\mathrm{V}} = \inf\left\{ t \ge 0 : \int_0^t \varphi(B_s)\,dL_s^a \ge \lambda \right\},
@@ -303,7 +283,7 @@ Vallois’ embedding uses the <a href="https://en.wikipedia.org/wiki/Local_time_
 <p>with <span class="math inline">\(\varphi\)</span> and <span class="math inline">\(\lambda\)</span> chosen to ensure</p>
 <p><span class="math display">\[
 B_{\tau_{\mathrm{V}}} \sim \mu.
-\]</span> Details can be found in <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span>.</p>
+\]</span> Details can be found in <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref"><strong>henrylabordere2017model?</strong></a>)</span>.</p>
 </section>
 <section id="application-to-lookback-options" class="level3">
 <h3 class="anchored" data-anchor-id="application-to-lookback-options">Application to lookback options</h3>
@@ -315,56 +295,21 @@ Suppose that the payoff <span class="math inline">\(\xi\)</span> depends non-dec
         \mathrm{MK}_1^c(\mu) = \mathbb{E}[g(\min_{0\leq t\leq \tau_{Perkins}} B_t)]
     \end{equation}\]</span> where <span class="math inline">\(B\)</span> is a Brownian motion.</p>
 <p><strong>Proof</strong>: Follows from the optimality of Azéma–Yor and Perkins embeddings.</p>
-<p>At the end of this section, we emphasis the significance of this result. The above robust pricing formulas for lookback options significantly simplify the numerical procedure. Previously, one had to optimize over an entire family of hedging strategies or martingale measures to determine the robust price. Now, by leveraging the optimality of the Azéma–Yor and Perkins embeddings, the pricing problem is reduced to simulating a standard Brownian motion along with the corresponding stopping time. This transformation—from a complex, high-dimensional optimization problem to a simulation-based approach—greatly enhances the tractability and efficiency of computing robust prices for path-dependent options.</p>
+<p>At the end of this section, we emphasize the significance of this result. The above robust pricing formulas for lookback options significantly simplify the numerical procedure. Previously, one had to optimize over an entire family of hedging strategies or martingale measures to determine the robust price. Now, by leveraging the optimality of the Azéma–Yor and Perkins embeddings, the pricing problem is reduced to simulating a standard Brownian motion along with the corresponding stopping time. This transformation—from a complex, high-dimensional optimization problem to a simulation-based approach—greatly enhances the tractability and efficiency of computing robust prices for path-dependent options.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>In this article, we have developed a dynamic formulation of continuous-time martingale optimal transport and its connection with the Skorokhod embedding problem. Starting from a robust hedging problem, we derived a dual minimax formulation of the pricing formula. We then showed how explicit SEP solutions can be used to price lookback options and indicate the significance.</p>
-<p>The following topics are not sufficiently discussed in this article (or in existing research) and we refer interested readers to <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span> (or independent research) for some more details: First, our SEP approach allows matching only one marginal; general SEP, however, includes embedding several marginals into a Brownian motion via stopping times; it is worth a finer study of the general SEP in the setting of continuous-time MOT; the author believes that extension to matching a finite number of marginals shall not bring new technical difficulties, however, matching continuous marginals might require new techniques. Second, the application of SEP in pricing is currently only limited to certain lookback options; it seems rather hard to extend the application to more complex options since the optimality results above are in general hard to acquire for general option payoffs. Third, in the SEP approach, the price is obtained by computing an optimal stopping time; it is not discussed what optimal price process (and what hedging strategy) this stopping time corresponds to; fortunately, there are some discussions on this topic in <span class="citation" data-cites="henrylabordere2017model">Henry-Labordère (<a href="#ref-henrylabordere2017model" role="doc-biblioref">2017</a>)</span> Section 4.5 and Section 4.7.</p>
+<p>The following topics are not sufficiently discussed in this article (or in existing research) and we refer interested readers to <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref"><strong>henrylabordere2017model?</strong></a>)</span> (or independent research) for some more details: First, our SEP approach allows matching only one marginal; general SEP, however, includes embedding several marginals into a Brownian motion via stopping times; it is worth a finer study of the general SEP in the setting of continuous-time MOT; the author believes that extension to matching a finite number of marginals shall not bring new technical difficulties, however, matching continuous marginals might require new techniques. Second, the application of SEP in pricing is currently only limited to certain lookback options; it seems rather hard to extend the application to more complex options since the optimality results above are in general hard to acquire for general option payoffs. Third, in the SEP approach, the price is obtained by computing an optimal stopping time; it is not discussed what optimal price process (and what hedging strategy) this stopping time corresponds to; fortunately, there are some discussions on this topic in <span class="citation" data-cites="henrylabordere2017model">(<a href="#ref-henrylabordere2017model" role="doc-biblioref"><strong>henrylabordere2017model?</strong></a>)</span> Section 4.5 and Section 4.7.</p>
 </section>
 <section id="references" class="level2">
-
-
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-beiglboeck2015complete" class="csl-entry" role="listitem">
-Beiglböck, Marcel, Marcel Nutz, and Nizar Touzi. 2015. <span>“Complete Duality for Martingale Optimal Transport on the Line.”</span> <em>Annals of Probability</em>. <a href="https://arxiv.org/abs/1507.00671">https://arxiv.org/abs/1507.00671</a>.
-</div>
-<div id="ref-bouchard2015arbitrage" class="csl-entry" role="listitem">
-Bouchard, B., and M. Nutz. 2015. <span>“Arbitrage and Duality in Nondominated Discrete-Time Models.”</span> <em>The Annals of Applied Probability</em> 25 (2): 823–59.
-</div>
-<div id="ref-dolinsky2014robust" class="csl-entry" role="listitem">
-Dolinsky, Yan, and H. Mete Soner. 2014a. <span>“Robust Hedging and Martingale Optimal Transport in Continuous Time.”</span> <em>Probability Theory and Related Fields</em> 160 (1): 391–427.
-</div>
-<div id="ref-dolinsky2014robusttc" class="csl-entry" role="listitem">
-———. 2014b. <span>“Robust Hedging Under Proportional Transaction Costs.”</span> <em>Finance and Stochastics</em> 18 (2): 327–47.
-</div>
-<div id="ref-dolinsky2016martingale" class="csl-entry" role="listitem">
-———. 2016. <span>“Martingale Optimal Transport in the Skorokhod Space.”</span> <em>Stochastic Processes and Their Applications</em> 126 (1): 312–13.
-</div>
-<div id="ref-galichon2014stochastic" class="csl-entry" role="listitem">
-Galichon, A., P. Henry-Labordère, and N. Touzi. 2014. <span>“A Stochastic Control Approach to No-Arbitrage Bounds Given Marginals, with an Application to Lookback Options.”</span> <em>Annals of Applied Probability</em> 24 (1): 312–36.
-</div>
-<div id="ref-guo2016optimal" class="csl-entry" role="listitem">
-Guo, Guannan, Xun Tan, and Nizar Touzi. 2016. <span>“Optimal Skorokhod Embedding Under Finitely-Many Marginal Constraints.”</span> <em>SIAM Journal on Control and Optimization</em> 54 (4): 2174–2201.
-</div>
-<div id="ref-henrylabordere2017model" class="csl-entry" role="listitem">
-Henry-Labordère, Pierre. 2017. <em>Model-Free Hedging: A Martingale Optimal Transport Viewpoint</em>. Chapman &amp; Hall/CRC Financial Mathematics Series. Boca Raton, FL: CRC Press, Taylor &amp; Francis Group.
-</div>
-<div id="ref-perkins1986cereteli" class="csl-entry" role="listitem">
-Perkins, E. 1986. <span>“The Cereteli-Davis Solution to the h<sup>1</sup>-Embedding Problem and an Optimal Embedding in Brownian Motion.”</span> In <em>Seminar on Stochastic Processes, 1985 (Gainesville, Fla., 1985)</em>, 12:172–223. Progress in Probability and Statistics. Birkhäuser, Boston.
-</div>
-<div id="ref-vallois1983probleme" class="csl-entry" role="listitem">
-Vallois, P. 1983. <span>“Le Problème de <span>S</span>korokhod Sur <span><span class="math inline">\(\mathbb{R}\)</span></span>: Une Approche Avec Le Temps Local.”</span> <em>Séminaire de Probabilités de Strasbourg</em> 17: 227–39.
-</div>
-<div id="ref-vallois1992quelques" class="csl-entry" role="listitem">
-———. 1992. <span>“Quelques Inégalités Avec Le Temps Local En Zéro Du Mouvement Brownien.”</span> <em>Stochastic Processes and Their Applications</em> 41: 117–55.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
