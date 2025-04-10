@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Evan Tufte">
 
 <title>Estimation of Transport Maps – OT WIKI</title>
 <style>
@@ -166,12 +165,6 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Evan Tufte </p>
-          </div>
-  </div>
     
   
     
@@ -184,8 +177,8 @@ window.Quarto = {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Ordinarily in optimal transport, you’re given two probability measures <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>, and tasked to find the cheapest way to transport <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>. But in many applications, you don’t know explicitly what the probability measures <span class="math inline">\(\mu\)</span> and/or <span class="math inline">\(\nu\)</span> are, but are able to obtain samples from either of them through experiments or data collection.</p>
-<p>This article discusses two approaches to estimate optimal transport maps only given samples from <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>. The below follows the presentation in <span class="citation" data-cites="CNWR2019">(<a href="#ref-CNWR2019" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2019</a>)</span>. The first approach is to immediately replace <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> by their empirical measures (which are discrete approximations of <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\nu\)</span>), solve for an optimal transport plan, then use this to construct an approximate transport map. The other approach is to go to the semidual reformulation of the optimal transport problem, replace <span class="math inline">\(\mu\)</span> ad <span class="math inline">\(\nu\)</span> by their empirical measures, then use the optimal transport map of this modified problem as an estimator for the optimal transport map.</p>
+<p>Ordinarily in optimal transport, you’re given two probability measures <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> and tasked to find the cheapest way to transport <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>. But in many applications, you don’t know explicitly what the probability measures <span class="math inline">\(\mu\)</span> and/or <span class="math inline">\(\nu\)</span> are, but are able to obtain samples from either of them through experiments or data collection.</p>
+<p>This article discusses two approaches to estimate optimal transport maps, only given samples from <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>. The below follows the presentation in <span class="citation" data-cites="CNWR2019">(<a href="#ref-CNWR2019" role="doc-biblioref">Chewi, Niles-Weed, and Rigollet 2019</a>)</span>. The first approach is to immediately replace <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> by their empirical measures (which are discrete approximations of <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\nu\)</span>), solve for an optimal transport plan, then use this to construct an approximate transport map. The other approach is to go to the semidual reformulation of the optimal transport problem, replace <span class="math inline">\(\mu\)</span> ad <span class="math inline">\(\nu\)</span> by their empirical measures, then use the optimal transport map of this modified problem as an estimator for the optimal transport map.</p>
 </section>
 <section id="setting" class="level1">
 <h1>Setting</h1>
