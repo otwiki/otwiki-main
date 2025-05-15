@@ -4,17 +4,18 @@ bibliography: bibliography_HK.bibtex
 author: Djordje Nikolic
 ---
 
-Major disadvantage of [Wasserstein distance](https://en.wikipedia.org/wiki/Wasserstein_metric) is that it is meaningful only for measures of equal total mass. For purpose of applications, in signal processing, image classification, machine learning, medical imaging etc, it is essential to describe an distance optimal transport distance on the space of positive measures. In 2015, three different research groups introduced new optimal transport distance on the space of positive Radon measures with various applications in mind; imaging applications, primal/dual and static formulations, population dynamics and gradient flows [@chizat2015unbalanced],[@chizat2018interpolating],[@kondratyev2016new],[@liero2016optimal],[@liero2018optimal]. Some authors call it Hellinger-Kantorovich ($HK$) distance, since it is an interpolation between Kantorovich/Wasserstein and Hellinger distances; others call it Kantorovich-Fischer-Rao ($FR$) distance, since it is an interpolation between Kantorovich/Wasserstein and Fischer-Rao distance. For detailed explanation of terminology issues, see Remark 2.2 [@mielke2025hellinger].
+A major disadvantage of the [Wasserstein distance](https://en.wikipedia.org/wiki/Wasserstein_metric) is that it is meaningful only for measures of equal total mass. For purpose of applications, in signal processing, image classification, machine learning, medical imaging etc, it is essential to describe an distance optimal transport distance on the space of positive measures. In 2015, three different research groups introduced a new optimal transport distance on the space of positive Radon measures with various applications in mind; imaging applications, primal/dual and static formulations, population dynamics and gradient flows [@chizat2015unbalanced],[@chizat2018interpolating],[@kondratyev2016new],[@liero2016optimal],[@liero2018optimal]. Some authors call it the Hellinger-Kantorovich ($HK$) distance, since it is an interpolation between Kantorovich/Wasserstein and Hellinger distances; others call it Kantorovich-Fischer-Rao ($FR$) distance, since it is an interpolation between Kantorovich/Wasserstein and Fischer-Rao  distance. For a detailed explanation of terminology issues, see Remark 2.2 [@mielke2025hellinger].    
 
-# Dynamic and Static Formulation of the Hellinger-Kantorovich Distance
+# Dynamic and Static Formulation of the Hellinger-Kantorovich Distance 
 
-## Dynamic Formulation
+## Dynamic Formulation 
 
-One way to define the Hellinger-Kantorovich distance between positive measures is in the dynamic sense of [Benamou-Brenier](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula), [Dynamic Optimal Transport](https://otwiki.github.io/otwiki-main/Dynamic_OT.html) via
+One way to define the Hellinger-Kantorovich distance between positive measures is in the dynamic sense of [Benamou-Brenier](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula), [Dynamic Optimal Transport](https://otwiki.github.io/otwiki-main/Dynamic_OT.html) via 
 
 $$
 \mathbf{HK}(\mu,\nu) := \min \left\{ \int_{0}^{1} \int_\Omega (\alpha | \nabla u |^{2} + \beta |u |^{2}) d\rho_{t} dt : \partial_{t}\rho = \alpha \hspace{1mm} div (\rho\nabla u) - \beta \rho u, \rho(0) = \mu,  \rho(1) = \nu \right\},
-$$ where we minimize an action over the curves with endpoints $\mu,$ $\nu$ that solve continuity equation with source $$
+$$ where we minimize an action over the curves with endpoints $\mu,$  $\nu$ that solve continuity equation with source
+$$
     \partial_{t}\rho = \alpha \hspace{1mm} div(\rho\nabla u) - \beta \rho u
 $$ in the sense of distributions.
 
@@ -23,14 +24,21 @@ $$ in the sense of distributions.
 On the other hand, to generalize the optimal transport [Kantorovich problem](https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html) to the setting of the positive measures, we define the entropy-transport functional:
 
 $$ \mathbf{ET}_{c,\Psi}(\Pi|\mu,\nu) := \int c(x_0,x_1) d\Pi(x_0, x_1) + \Psi(\pi_{0}|\mu) + \Psi(\pi_{1}|\nu),
-$$ where $\pi_0(dx_0):= \Pi(dx_0,\Omega), \pi_1(dx_1):= \Pi(\Omega,dx_1).$ In this approach, we compute the standard optimal transport distance between $\pi_0$ and $\pi_1,$ and penalize difference between $\pi_0$ and $\mu,$ $\pi_1$ and $\nu,$ using the divergence functional $\Psi.$
+$$
+where $\pi_0(dx_0):= \Pi(dx_0,\Omega), \pi_1(dx_1):= \Pi(\Omega,dx_1).$
+In this approach, we compute the standard optimal transport distance between $\pi_0$ and $\pi_1,$ and penalize difference between $\pi_0$ and $\mu,$ $\pi_1$ and $\nu,$ using the divergence functional $\Psi.$ Finally, like in Kantorovich problem, we observe: 
+
+$$ \inf \hspace{1mm} \mathbf{ET}_{c,\Psi}(\Pi|\mu,\nu),
+$$
+over probability measures $\Pi.$
 
 ## Connection between the two descriptions
 
-For suitable choice of $\Psi = \frac{1}{\beta}D_{KL},$ for $KL$ divergence ([Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)), and a cost function:
+For suitable choice of $\Psi = \frac{1}{\beta}D_{KL},$ for $KL$ divergence ([Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)), and a cost function:  
 
 $$  c(x_0,x_1) := \begin{cases} \frac{-2}{\beta} \log(\cos \left( \sqrt{\frac{\beta}{4\alpha}}|x_0-x_1| \right))   &\text{ if } |x_0-x_1|<\pi \sqrt{\frac{\alpha}{\beta}} , \\ +\infty &\text{ otherwise.} \end{cases} 
-$$ we obtain connection between the two definitions
+$$ 
+we obtain a connection between the two definitions 
 
 $$
 \mathbf{HK}^{2}(\mu,\nu) := \inf_{\Pi \in \mathcal{M}^{+}(\Omega \times \Omega)} \mathbf{ET}_{c,\Psi} (\Pi|\mu,\nu). 
@@ -38,28 +46,50 @@ $$See [@liero2016optimal] for the proof.
 
 # Gradient Flows
 
-In works by Jordan-Kinderlehrer-Otto (JKO) [@jordan1998variational] and Otto [@otto2001geometry], motivated by the optimization problem $min_{\rho \in \mathcal{P}_{2}(\mathbb{R}^{d})} \hspace{0.1cm} F(\rho),$ for the energy functional $F$ in the Wasserstein space, authors studied partial differential equations of type $$
-\partial_{t}\rho + div\left(\rho \nabla \frac{\delta F}{\delta \rho} [\rho]\right) = 0,
-$$ as gradient flows of $F,$ where $\frac{\delta F}{\delta \rho} [\rho]$ is its first variation.
-
-For the energy functional $$
-F(\rho) = \int_{\Omega} \left( U(\rho) + V(x)\rho + \frac{1}{2}\rho K\star \rho \right)dx, 
-$$ where $U$ is internal energy, $V$ potential function, and $K$ interaction kernel, we have associated weak solutions of the partial differential equation $$
-    \partial_{t}\rho = div(\rho \nabla(U'(\rho)+V+K*\rho))
-$$ to the gradient flow $$
-    \partial_{t} \rho = - grad_{W_{2}} F(\rho). 
+In works by Jordan-Kinderlehrer-Otto (JKO) [@jordan1998variational] and Otto [@otto2001geometry], motivated by the optimization problem $min_{\rho \in \mathcal{P}_{2}(\mathbb{R}^{d})} \hspace{0.1cm} F(\rho),$ for the energy functional $F$ in the Wasserstein space, authors studied partial differential equations of type 
 $$
+\partial_{t}\rho + div\left(\rho \nabla \frac{\delta F}{\delta \rho} [\rho]\right) = 0,
+$$ 
+as gradient flows of $F,$ where $\frac{\delta F}{\delta \rho} [\rho]$ is its first variation. 
 
-Following the paper on the JKO scheme for Hellinger-Kantorovich distance [@gallouet2017jko], in a local sense, infinitesimally, we have\
+For the energy functional 
+$$
+F(\rho) = \int_{\Omega} \left( U(\rho) + V(x)\rho + \frac{1}{2}\rho K\star \rho \right)dx, 
+$$ where $U$ is internal energy, $V$ potential function, and $K$ interaction kernel, we have associated weak solutions of the partial differential equation 
+$$
+    \partial_{t}\rho = div(\rho \nabla(U'(\rho)+V+K*\rho))
+$$ to the gradient flow 
+$$
+    \partial_{t} \rho = - grad_{W_{2}} F(\rho). 
+$$ 
+
+
+Following the paper on the JKO scheme for Hellinger-Kantorovich distance [@gallouet2017jko], in a local sense, infinitesimally, we have   
 $$
     \mathbf{HK}^{2} \approx \mathbf{W}_{2}^{2} + \mathbf{FR}^{2}, 
-$$ using [Formal Riemannian Structure of Wasserstein Metric](https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric) and Riemannian structure of Fischer-Rao metric. Hence, we obtain $$
-    \| grad_{HK} F(\rho) \|^{2} = \| grad_{W_{2}} F(\rho) \|^{2} + \| grad_{FR} F(\rho) \|^{2}
+$$ 
+using [Formal Riemannian Structure of Wasserstein Metric](https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric) and Riemannian structure of Fischer-Rao metric [@de2025infimal]. Hence, we obtain 
+$$
+    \| grad_{HK} F(\rho) \|^{2} = \| grad_{W_{2}} F(\rho) \|^{2} + \| grad_{FR} F(\rho) \|^{2}.
 $$
 
-Now, we can observe existence of weak solutions of the partial differential equation $$
+
+
+Now, we can observe existence of weak solutions of the partial differential equation 
+$$
     \partial_{t}\rho = div(\rho \nabla(U'(\rho)+V+K*\rho)) - \rho(U'(\rho)+V+K*\rho),
-$$ associated with $HK$ gradient flows, $$
-    \partial_{t} \rho = - grad_{HK} F(\rho)..
-$$\
-Under reasonable conditions, metric gradient flows can be characterized in this case [@gallouet2017jko]. For complete characterization of gradient flows of positive, and probability measures, with respect to Hellinger-Kantorovich geometry, and applications in computational algorithms machine learning, see [@mielke2025hellinger].
+$$ associated with $HK$ gradient flows, 
+$$
+    \partial_{t} \rho = - grad_{HK} F(\rho).
+$$  
+Under reasonable conditions, [metric gradient flows](https://otwiki.github.io/otwiki-main/GFMetricSpace.html) can be characterized in this case [@gallouet2017jko]. For a complete characterization of gradient flows of positive, and probability measures, with respect to Hellinger-Kantorovich geometry, and applications in computational algorithms  machine learning, see [@mielke2025hellinger].  
+
+
+
+
+
+
+
+
+
+
