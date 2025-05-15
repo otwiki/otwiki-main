@@ -182,7 +182,7 @@ window.Quarto = {
 </header>
 
 
-<p>Major disadvantage of <a href="https://en.wikipedia.org/wiki/Wasserstein_metric">Wasserstein distance</a> is that it is meaningful only for measures of equal total mass. For purpose of applications, in signal processing, image classification, machine learning, medical imaging etc, it is essential to describe an distance optimal transport distance on the space of positive measures. In 2015, three different research groups introduced new optimal transport distance on the space of positive Radon measures with various applications in mind; imaging applications, primal/dual and static formulations, population dynamics and gradient flows <span class="citation" data-cites="chizat2015unbalanced">(<a href="#ref-chizat2015unbalanced" role="doc-biblioref">Chizat et al. 2015</a>)</span>,<span class="citation" data-cites="chizat2018interpolating">(<a href="#ref-chizat2018interpolating" role="doc-biblioref">Chizat et al. 2018</a>)</span>,<span class="citation" data-cites="kondratyev2016new">(<a href="#ref-kondratyev2016new" role="doc-biblioref">Kondratyev, Monsaingeon, and Vorotnikov 2016</a>)</span>,<span class="citation" data-cites="liero2016optimal">(<a href="#ref-liero2016optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2016</a>)</span>,<span class="citation" data-cites="liero2018optimal">(<a href="#ref-liero2018optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2018</a>)</span>. Some authors call it Hellinger-Kantorovich (<span class="math inline">\(HK\)</span>) distance, since it is an interpolation between Kantorovich/Wasserstein and Hellinger distances; others call it Kantorovich-Fischer-Rao (<span class="math inline">\(FR\)</span>) distance, since it is an interpolation between Kantorovich/Wasserstein and Fischer-Rao distance. For detailed explanation of terminology issues, see Remark 2.2 <span class="citation" data-cites="mielke2025hellinger">(<a href="#ref-mielke2025hellinger" role="doc-biblioref">Mielke and Zhu 2025</a>)</span>.</p>
+<p>A major disadvantage of the <a href="https://en.wikipedia.org/wiki/Wasserstein_metric">Wasserstein distance</a> is that it is meaningful only for measures of equal total mass. For purpose of applications, in signal processing, image classification, machine learning, medical imaging etc, it is essential to describe an distance optimal transport distance on the space of positive measures. In 2015, three different research groups introduced a new optimal transport distance on the space of positive Radon measures with various applications in mind; imaging applications, primal/dual and static formulations, population dynamics and gradient flows <span class="citation" data-cites="chizat2015unbalanced">(<a href="#ref-chizat2015unbalanced" role="doc-biblioref">Chizat et al. 2015</a>)</span>,<span class="citation" data-cites="chizat2018interpolating">(<a href="#ref-chizat2018interpolating" role="doc-biblioref">Chizat et al. 2018</a>)</span>,<span class="citation" data-cites="kondratyev2016new">(<a href="#ref-kondratyev2016new" role="doc-biblioref">Kondratyev, Monsaingeon, and Vorotnikov 2016</a>)</span>,<span class="citation" data-cites="liero2016optimal">(<a href="#ref-liero2016optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2016</a>)</span>,<span class="citation" data-cites="liero2018optimal">(<a href="#ref-liero2018optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2018</a>)</span>. Some authors call it the Hellinger-Kantorovich (<span class="math inline">\(HK\)</span>) distance, since it is an interpolation between Kantorovich/Wasserstein and Hellinger distances; others call it Kantorovich-Fischer-Rao (<span class="math inline">\(FR\)</span>) distance, since it is an interpolation between Kantorovich/Wasserstein and Fischer-Rao distance. For a detailed explanation of terminology issues, see Remark 2.2 <span class="citation" data-cites="mielke2025hellinger">(<a href="#ref-mielke2025hellinger" role="doc-biblioref">Mielke and Zhu 2025</a>)</span>.</p>
 <section id="dynamic-and-static-formulation-of-the-hellinger-kantorovich-distance" class="level1">
 <h1>Dynamic and Static Formulation of the Hellinger-Kantorovich Distance</h1>
 <section id="dynamic-formulation" class="level2">
@@ -198,13 +198,15 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="static-formulation">Static Formulation</h2>
 <p>On the other hand, to generalize the optimal transport <a href="https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html">Kantorovich problem</a> to the setting of the positive measures, we define the entropy-transport functional:</p>
 <p><span class="math display">\[ \mathbf{ET}_{c,\Psi}(\Pi|\mu,\nu) := \int c(x_0,x_1) d\Pi(x_0, x_1) + \Psi(\pi_{0}|\mu) + \Psi(\pi_{1}|\nu),
-\]</span> where <span class="math inline">\(\pi_0(dx_0):= \Pi(dx_0,\Omega), \pi_1(dx_1):= \Pi(\Omega,dx_1).\)</span> In this approach, we compute the standard optimal transport distance between <span class="math inline">\(\pi_0\)</span> and <span class="math inline">\(\pi_1,\)</span> and penalize difference between <span class="math inline">\(\pi_0\)</span> and <span class="math inline">\(\mu,\)</span> <span class="math inline">\(\pi_1\)</span> and <span class="math inline">\(\nu,\)</span> using the divergence functional <span class="math inline">\(\Psi.\)</span></p>
+\]</span> where <span class="math inline">\(\pi_0(dx_0):= \Pi(dx_0,\Omega), \pi_1(dx_1):= \Pi(\Omega,dx_1).\)</span> In this approach, we compute the standard optimal transport distance between <span class="math inline">\(\pi_0\)</span> and <span class="math inline">\(\pi_1,\)</span> and penalize difference between <span class="math inline">\(\pi_0\)</span> and <span class="math inline">\(\mu,\)</span> <span class="math inline">\(\pi_1\)</span> and <span class="math inline">\(\nu,\)</span> using the divergence functional <span class="math inline">\(\Psi.\)</span> Finally, like in Kantorovich problem, we observe:</p>
+<p><span class="math display">\[ \inf \hspace{1mm} \mathbf{ET}_{c,\Psi}(\Pi|\mu,\nu),
+\]</span> over probability measures <span class="math inline">\(\Pi.\)</span></p>
 </section>
 <section id="connection-between-the-two-descriptions" class="level2">
 <h2 class="anchored" data-anchor-id="connection-between-the-two-descriptions">Connection between the two descriptions</h2>
 <p>For suitable choice of <span class="math inline">\(\Psi = \frac{1}{\beta}D_{KL},\)</span> for <span class="math inline">\(KL\)</span> divergence (<a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback-Leibler divergence</a>), and a cost function:</p>
 <p><span class="math display">\[  c(x_0,x_1) := \begin{cases} \frac{-2}{\beta} \log(\cos \left( \sqrt{\frac{\beta}{4\alpha}}|x_0-x_1| \right))   &amp;\text{ if } |x_0-x_1|&lt;\pi \sqrt{\frac{\alpha}{\beta}} , \\ +\infty &amp;\text{ otherwise.} \end{cases}
-\]</span> we obtain connection between the two definitions</p>
+\]</span> we obtain a connection between the two definitions</p>
 <p><span class="math display">\[
 \mathbf{HK}^{2}(\mu,\nu) := \inf_{\Pi \in \mathcal{M}^{+}(\Omega \times \Omega)} \mathbf{ET}_{c,\Psi} (\Pi|\mu,\nu).
 \]</span>See <span class="citation" data-cites="liero2016optimal">(<a href="#ref-liero2016optimal" role="doc-biblioref">Liero, Mielke, and Savaré 2016</a>)</span> for the proof.</p>
@@ -225,15 +227,15 @@ F(\rho) = \int_{\Omega} \left( U(\rho) + V(x)\rho + \frac{1}{2}\rho K\star \rho 
 <p>Following the paper on the JKO scheme for Hellinger-Kantorovich distance <span class="citation" data-cites="gallouet2017jko">(<a href="#ref-gallouet2017jko" role="doc-biblioref">Gallouët and Monsaingeon 2017</a>)</span>, in a local sense, infinitesimally, we have<br>
 <span class="math display">\[
     \mathbf{HK}^{2} \approx \mathbf{W}_{2}^{2} + \mathbf{FR}^{2},
-\]</span> using <a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of Wasserstein Metric</a> and Riemannian structure of Fischer-Rao metric. Hence, we obtain <span class="math display">\[
-    \| grad_{HK} F(\rho) \|^{2} = \| grad_{W_{2}} F(\rho) \|^{2} + \| grad_{FR} F(\rho) \|^{2}
+\]</span> using <a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of Wasserstein Metric</a> and Riemannian structure of Fischer-Rao metric <span class="citation" data-cites="de2025infimal">(<a href="#ref-de2025infimal" role="doc-biblioref">De Ponti, Sodini, and Tamanini 2025</a>)</span>. Hence, we obtain <span class="math display">\[
+    \| grad_{HK} F(\rho) \|^{2} = \| grad_{W_{2}} F(\rho) \|^{2} + \| grad_{FR} F(\rho) \|^{2}.
 \]</span></p>
 <p>Now, we can observe existence of weak solutions of the partial differential equation <span class="math display">\[
     \partial_{t}\rho = div(\rho \nabla(U'(\rho)+V+K*\rho)) - \rho(U'(\rho)+V+K*\rho),
 \]</span> associated with <span class="math inline">\(HK\)</span> gradient flows, <span class="math display">\[
-    \partial_{t} \rho = - grad_{HK} F(\rho)..
+    \partial_{t} \rho = - grad_{HK} F(\rho).
 \]</span><br>
-Under reasonable conditions, metric gradient flows can be characterized in this case <span class="citation" data-cites="gallouet2017jko">(<a href="#ref-gallouet2017jko" role="doc-biblioref">Gallouët and Monsaingeon 2017</a>)</span>. For complete characterization of gradient flows of positive, and probability measures, with respect to Hellinger-Kantorovich geometry, and applications in computational algorithms machine learning, see <span class="citation" data-cites="mielke2025hellinger">(<a href="#ref-mielke2025hellinger" role="doc-biblioref">Mielke and Zhu 2025</a>)</span>.</p>
+Under reasonable conditions, <a href="https://otwiki.github.io/otwiki-main/GFMetricSpace.html">metric gradient flows</a> can be characterized in this case <span class="citation" data-cites="gallouet2017jko">(<a href="#ref-gallouet2017jko" role="doc-biblioref">Gallouët and Monsaingeon 2017</a>)</span>. For a complete characterization of gradient flows of positive, and probability measures, with respect to Hellinger-Kantorovich geometry, and applications in computational algorithms machine learning, see <span class="citation" data-cites="mielke2025hellinger">(<a href="#ref-mielke2025hellinger" role="doc-biblioref">Mielke and Zhu 2025</a>)</span>.</p>
 
 
 
@@ -245,6 +247,9 @@ Chizat, Lenaic, Gabriel Peyré, Bernhard Schmitzer, and François-Xavier Vialard
 </div>
 <div id="ref-chizat2018interpolating" class="csl-entry" role="listitem">
 ———. 2018. <span>“An Interpolating Distance Between Optimal Transport and Fisher–Rao Metrics.”</span> <em>Foundations of Computational Mathematics</em> 18: 1–44.
+</div>
+<div id="ref-de2025infimal" class="csl-entry" role="listitem">
+De Ponti, Nicolò, Giacomo Enrico Sodini, and Luca Tamanini. 2025. <span>“The Infimal Convolution Structure of the Hellinger-Kantorovich Distance.”</span> <em>arXiv Preprint arXiv:2503.12939</em>.
 </div>
 <div id="ref-gallouet2017jko" class="csl-entry" role="listitem">
 Gallouët, Thomas O, and Leonard Monsaingeon. 2017. <span>“A JKO Splitting Scheme for Kantorovich–Fisher–Rao Gradient Flows.”</span> <em>SIAM Journal on Mathematical Analysis</em> 49 (2): 1100–1130.
