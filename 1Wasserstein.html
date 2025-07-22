@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>1-Wasserstein Metric and Generalizations – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">1-Wasserstein Metric and Generalizations</h1>
 </div>
 
 
@@ -126,100 +155,34 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>Let <span class="math inline">\(\mathcal{M}\)</span> denote the space of all Radon measures on <span class="math inline">\(\mathbb{R}^d\)</span> with finite mass. Moreover, let <span class="math inline">\(\mathcal{M}^p\)</span> denote the space of Radon measures with finite <span class="math inline">\(p^{th}\)</span> moment, that is, <span class="math inline">\(\int_{\mathbb{R}^d} |x|^p d\mu(x) &lt; \infty\)</span>. Then, for <span class="math inline">\(\mu,\nu \in \mathcal{M}^p\)</span> with <span class="math inline">\(|\mu|=|\nu|\)</span> the <span class="math inline">\(p\)</span>-Wasserstein distance is defined as<ref name="Picolli"> :<span class="math inline">\(W_p(\mu,\nu) = ( |\mu| \underset{ \pi \in \Gamma(\mu,\nu) }{ \inf } \int_{\mathbb{R}^d \times \mathbb{R}^d } |x-y|^p d\pi(x,y))^{1/p}\)</span> where <span class="math inline">\(\Gamma(\mu,\nu)\)</span> denotes the set of all transport plans from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>. Note that, if we restrict <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> to be probability measures, then the <span class="math inline">\(p\)</span>-Wasserstein distance can be seen as a special case of the <a href="http://34.106.105.83/wiki/Kantorovich_Problem">Kantorovich Problem</a>, where <span class="math inline">\(c(x_1,x_2) = |x_1-x_2|^p\)</span>. Furthermore, if we let <span class="math inline">\(\mathcal{P}^p\)</span> denote the space of probability measures on <span class="math inline">\(\mathbb{R}^d\)</span> with finite <span class="math inline">\(p^{th}\)</span> moment, then <span class="math inline">\(W_p\)</span> defines a metric on <span class="math inline">\(\mathcal{P}^p\)</span>.</ref></p>
+<section id="measures-with-unequal-mass-and-signed-measures" class="level1">
+<h1>Measures with unequal mass and signed measures</h1>
+<p>The classical Wasserstein distance can be generalized for measures with unequal mass by allowing the addition and removal of mass to <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>.<ref name="Picolli"> In this case, there is unit cost <span class="math inline">\(a &gt;0\)</span> for the addition or removal of mass from both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span>, whereas the transport cost of mass between <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> stays the same with the classical <a href="http://34.106.105.83/wiki/Kantorovich_Problem">Kantorovich Problem</a>; multiplied with some rate <span class="math inline">\(b &gt;0\)</span> .</ref></p>
+<p><strong>Definition.</strong><ref name="Picolli"> For some <span class="math inline">\(a,b \in \mathbb{R}_{++}\)</span> and <span class="math inline">\(p \geq 1\)</span>, <strong>the generalized Wasserstein distance</strong> <span class="math inline">\({W}_p^{a,b}\)</span> is given by :<span class="math inline">\({W}_p^{a,b}(\mu,\nu) = \underset{\underset{ |\bar{\mu}| = |\bar{\nu}|  }{\bar{\mu},\bar{\nu} \in \mathcal{M}^p}}{\inf} (a(|\mu-\bar{\mu}|) + a(|\nu-\bar{\nu}|) + b {W}_p(\bar{\mu},\bar{\nu}) )\)</span> where <span class="math inline">\({W}_p(\bar{\mu},\bar{\nu})\)</span> is the classical <span class="math inline">\(p\)</span>-Wasserstein distance for measures with equal mass.</ref></p>
+<p>Note that, under this definition <span class="math inline">\({W}_p^{a,b}\)</span> defines a metric on <span class="math inline">\(\mathcal{M}\)</span>, and <span class="math inline">\((\mathcal{M},{W}_p^{a,b})\)</span> is a complete metric space.<ref name="Picolli">. Furthermore, this generalization allows one to extend the <span class="math inline">\(1\)</span>-Wasserstein distance to the signed Radon measures as well. Let us denote the space of all signed Radon measures on <span class="math inline">\(\mathbb{R}^d\)</span> with finite mass with <span class="math inline">\(\mathcal{M}^s(\mathbb{R}^d)\)</span>.</ref></p>
+<p><strong>Definition.</strong><ref name="Picolli2"> For some <span class="math inline">\(a,b \in \mathbb{R}_{++}\)</span>, <strong>the generalized Wasserstein distance for signed measures</strong> <span class="math inline">\(\mathbb{W}_1^{a,b}\)</span> is given by :<span class="math inline">\(\mathbb{W}_1^{a,b}(\mu,\nu) = W_1^{a,b}(\mu_+ + \nu_- , \mu_- + \nu_+)\)</span> where <span class="math inline">\(\mu_+,\nu_-,\mu_-,\nu_+\)</span> are any measures in <span class="math inline">\(\mathcal{M}(\mathbb{R}^d)\)</span> such that <span class="math inline">\(\mu = \mu_+ - \mu_-\)</span> and <span class="math inline">\(\nu = \nu_+ - \nu_-\)</span>.</ref></p>
+<p>Moreover, if we let <span class="math inline">\(||\mu||^{a,b} = \mathbb{W}_1^{a,b}(\mu,0) =  W_1^{a,b}(\mu_+ , \mu_- )\)</span>, then <span class="math inline">\((\mathcal{M}^s,||\mu||^{a,b})\)</span> is a normed vector space. However, as opposed to the completeness of <span class="math inline">\((\mathcal{M},{W}_p^{a,b})\)</span> , <span class="math inline">\((\mathcal{M}^s,||\mu||^{a,b})\)</span> fails to be a Banach space.<ref name="Picolli2"></ref></p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Asymptotic_equivalence_of_W_2_and_H%5E-1">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="duality" class="level1">
+<h1>Duality</h1>
+<p>As a special case of the <a href="http://34.106.105.83/wiki/Kantorovich_Dual_Problem_(for_general_costs)">Kantorovich Dual Problem</a> when <span class="math inline">\(c(x_1,x_2) = |x_1-x_2|\)</span>, <span class="math inline">\(1\)</span>-Wasserstein metric has the following dual characterization.</p>
+<dl>
+<dt><strong>Theorem.</strong><ref name="Villani"> Let Lip<span class="math inline">\((\mathbb{R}^d)\)</span> denote the space of all Lipschitz functions on <span class="math inline">\(\mathbb{R}^d\)</span>, and let <span class="math inline">\(||\varphi||_{\text{Lip}} = \underset{x\neq y}{\sup} \frac{\varphi(x)-\varphi(y)}{|x-y|}\)</span>. Then,</ref></dt>
+<dd>
+<p><span class="math inline">\(W_1(\mu,\nu) = \sup \{ \int_{\mathbb{R}^d} \varphi d(\mu-\nu) : \varphi \in \mathcal{C}^0_c, \text{ } ||\varphi||_{\text{Lip}} \leq 1 \}\)</span>. In a similar spirit, this duality result can be extended for generalized <span class="math inline">\(1\)</span>-Wasserstein distances <span class="math inline">\(W^{1,1}_1\)</span> and <span class="math inline">\(\mathbb{W}^{1,1}_1\)</span> as well, where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are taken as 1. For measures with unequal mass, when the additional constraint <span class="math inline">\(||\varphi||_\infty \leq 1\)</span> is imposed on the test functions, it holds that<ref name="Picolli3"></ref></p>
+</dd>
+</dl>
+<p>:<span class="math inline">\(W^{1,1}_1(\mu,\nu) = \sup \{ \int_{\mathbb{R}^d} \varphi d(\mu-\nu) : \varphi \in \mathcal{C}^0_c, \text{ } ||\varphi||_\infty \leq 1, \text{ } ||\varphi||_{\text{Lip}} \leq 1 \}\)</span>.</p>
+<p>In terms of the generalized 1-Wasserstein metric for signed measures, when we relax the compact support condition on the test functions we obtain the equivalent duality characterization as follows.<ref name="Picolli2"></ref></p>
+<p>:<span class="math inline">\(\mathbb{W}^{1,1}_1(\mu,\nu) = \sup \{ \int_{\mathbb{R}^d} \varphi d(\mu-\nu) : \varphi \in \mathcal{C}^0_b, \text{ } ||\varphi||_\infty \leq 1, \text{ } ||\varphi||_{\text{Lip}} \leq 1 \}\)</span>.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
-</section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
-</section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><references> <ref name="Picolli"> <a href="https://rdcu.be/cGRJz">Piccoli, B., Rossi, F. Generalized Wasserstein Distance and its Application to Transport Equations with Source. Arch Rational Mech Anal 211, 335–358 (2014). https://doi.org/10.1007/s00205-013-0669-x</a> </ref></references></p>
+<p><ref name="Picolli2"> <a href="https://arxiv.org/pdf/1910.05105.pdf">Piccoli, B., Rossi, F., Tournus M. A Wasserstein norm for signed measures, with application to nonlocal transport equation with source term. arXiv:1910.05105 (2019).</a> </ref></p>
+<p><ref name="Picolli3"> <a href="https://rdcu.be/cGR1n">Piccoli, B., Rossi, F. Piccoli, B., Rossi, F. On Properties of the Generalized Wasserstein Distance. Arch Rational Mech Anal 222, 1339–1365 (2016). https://doi.org/10.1007/s00205-016-1026-7</a> </ref></p>
+<p><ref name="Villani"><a href="https://people.math.gatech.edu/~gangbo/Cedric-Villani.pdf">C. Villani, <em>Topics in Optimal Transportation</em>, Chapter 1.</a></ref> </p>
 
 
 </section>

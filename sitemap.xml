@@ -45,36 +45,40 @@
     <lastmod>2025-03-07T22:26:27.780Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/NewArticleIdeas.html</loc>
-    <lastmod>2025-02-25T19:36:05.739Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/Analysis_in_Metric_Spaces.html</loc>
-    <lastmod>2025-03-18T22:41:49.502Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/sliced_wasserstein_metric.html</loc>
-    <lastmod>2025-03-18T22:58:49.546Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/Knothe_Maps_Conditional_Sampling.html</loc>
-    <lastmod>2025-02-18T23:56:02.283Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/entropic_regularization_and_sinkhorn.html</loc>
-    <lastmod>2025-03-18T22:44:41.101Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/ArticlesToRevise.html</loc>
-    <lastmod>2025-02-26T04:42:49.520Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/HKdistance.html</loc>
+    <lastmod>2025-05-14T05:34:37.036Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/Est_Tr_Maps.html</loc>
     <lastmod>2025-04-10T19:04:32.604Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/HKdistance.html</loc>
-    <lastmod>2025-05-14T05:34:37.036Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/ArticlesToRevise.html</loc>
+    <lastmod>2025-02-26T04:42:49.520Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/entropic_regularization_and_sinkhorn.html</loc>
+    <lastmod>2025-03-18T22:44:41.101Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/Knothe_Maps_Conditional_Sampling.html</loc>
+    <lastmod>2025-02-18T23:56:02.283Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/sliced_wasserstein_metric.html</loc>
+    <lastmod>2025-03-18T22:58:49.546Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/Analysis_in_Metric_Spaces.html</loc>
+    <lastmod>2025-03-18T22:41:49.502Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/NewArticleIdeas.html</loc>
+    <lastmod>2025-02-25T19:36:05.739Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/1Wasserstein.html</loc>
+    <lastmod>2025-07-22T21:10:15.284Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/DynamicMOT.html</loc>
@@ -86,7 +90,7 @@
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/index.html</loc>
-    <lastmod>2025-07-22T21:06:42.480Z</lastmod>
+    <lastmod>2025-07-22T21:10:35.664Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/Bures-Wasserstein Gradient Flows.html</loc>
