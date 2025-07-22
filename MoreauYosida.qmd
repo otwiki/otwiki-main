@@ -110,4 +110,16 @@ is uniquely attained.
 
 ## References
 
-` <ref name="AGS">`{=html}Ambrosio, Luigi, Nicola Gigli, and Giuseppe Savaré. *Gradient Flows in Metric Spaces and in the Space of Probability Measures.* Ch. 3.1. Birkhäuser, 2005.</ref> <ref name="Billingsley">Billingsley, Patrick. *Convergence of Probability Measures, 2nd Ed.* John Wiley & Sons, Inc. 1999. </ref> <ref name="BC">Bauschke, Heinz H. and Patrick L. Combettes. *Convex Analysis and Monotone Operator Theory in Hilbert Spaces, 2nd Ed.* Ch. 12. Springer, 2017.</ref> <ref name="Kolmogorov">Kolmogorov, Andrey (1950) \[1933\]. Foundations of the theory of probability. New York, USA: Chelsea Publishing Company.</ref> <ref name="Pages">Pagès, Gilles. *Numerical Probability: An Introduction with Applications to Finance.* Ch. 4.1. Springer, 2018.</ref> <ref name="OT">Craig, Katy C. Lower Semicontinuity in the Narrow Topology. Math 260J. Univ. of Ca. at Santa Barbara. Winter 2022.</ref> <ref name="S">Santambrogio, Filippo. *Optimal Transport for Applied Mathematicians: Calculus of Variations, PDEs, and Modeling* Ch. 1.1. Birkhäuser, 2015.</ref>
+  Ambrosio, Luigi, Nicola Gigli, and Giuseppe Savaré. *Gradient Flows in Metric Spaces and in the Space of Probability Measures.* Ch. 3.1. Birkhäuser, 2005.
+  
+   Billingsley, Patrick. *Convergence of Probability Measures, 2nd Ed.* John Wiley & Sons, Inc. 1999. 
+   
+   Bauschke, Heinz H. and Patrick L. Combettes. *Convex Analysis and Monotone Operator Theory in Hilbert Spaces, 2nd Ed.* Ch. 12. Springer, 2017.
+   
+   Kolmogorov, Andrey (1950) 1933. Foundations of the theory of probability. New York, USA: Chelsea Publishing Company.
+   
+   Pagès, Gilles. *Numerical Probability: An Introduction with Applications to Finance.* Ch. 4.1. Springer, 2018.
+   
+   Craig, Katy C. Lower Semicontinuity in the Narrow Topology. Math 260J. Univ. of Ca. at Santa Barbara. Winter 2022.
+   
+   Santambrogio, Filippo. *Optimal Transport for Applied Mathematicians: Calculus of Variations, PDEs, and Modeling* Ch. 1.1. Birkhäuser, 2015.</ref>
