@@ -17,7 +17,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Optimal Transport in One Dimension](1DimensionOT_Revised.qmd)
 -   [Kantorovich Dual Problem (for general costs)](KDualProblem.qmd)
 -   [Kantorivich Dual Problem with Quadratic Cost](Kantorovich_Dual_Problem_Quad_Cost.qmd)
--   [Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds](https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds)
+-   [Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds](RegularityOTMap.qmd)
 -   [1-Wasserstein metric and generalizations](1Wasserstein.qmd)
 -   [Dynamic Optimal Transport](Dynamic_OT.qmd)
 -   [Optimal Transport and Ricci curvature](RicciCurvature.qmd)
@@ -25,7 +25,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 ### The 2-Wasserstein Metric
 
 -   [Geodesics and generalized geodesics](GeoGenGeo.qmd)
--   [Formal Riemannian Structure of the Wasserstein metric](https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric)
+-   [Formal Riemannian Structure of the Wasserstein metric](RiemannianStructureOriginal.qmd)
 -   [Formal Riemannian Structure and Gradient in the Wasserstein metric](Riemannian_Structure_Wasserstein_Space)
 -   [Asymptotic equivalence of W_2 and H\^-1](W2Hm1.qmd)
 

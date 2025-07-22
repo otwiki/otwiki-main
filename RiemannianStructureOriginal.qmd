@@ -1,0 +1,32 @@
+---
+title: "Formal Riemannian Structure of the Wasserstein metric"
+author: Christian Hong
+---
+
+Given a closed and convex space $X \subseteq R^d$, two probability measures on the same space, $\mu, \nu \in \mathcal{P}_2(X)$, the 2-Wasserstein metric is defined as
+
+:$W_2(\mu, \nu) := \min_{\gamma \in \Gamma(\mu, \nu)} \left( \int |x_1 - x_2|^2 \, d\gamma(x_1, x_2) \right)^{1/2}$
+
+where $\Gamma(\mu, \nu)$ is the set of \[\[Kantorovich Problem\|transport plans\]\] from $\mu$ to $\nu$. The Wasserstein metric is indeed a metric in the sense that it satisfies the desired properties of a distance function between probability measures on $\mathcal{P}_2(X)$. Moreover, the Wasserstein metric can be used to define a formal Riemannian metric on $\mathcal{P}_2(X)$. Such a formal metric structure allows one to define angles and lengths of vectors at each point in our ambient space.
+
+## Tangent Space Induced by the Wasserstein Metric
+
+A convenient way to formalize tangent vectors in this setting is to consider time derivatives of curves on the manifold. A tangent vector at a point $\rho$ would be the time derivative at 0 of a curve, $\rho(t)$, where $\rho(0) = \rho$<ref name="Villani1"/>. Since we are dealing with a space of probability measures, additional restrictions need to be added in order to make our tangent space well-defined. For example, we would like our trajectory to satisfy the continuity equation $\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = 0$. There are many such vector fields that solve the continuity equation, so we can restrict to a vector field that minimizes kinetic energy, which is defined as $\int \rho|v|^2$. This choice of tangent vectors is justified by the following lemma
+
+:**Lemma**<ref name="Ambrosio, Gigli, Savaré"/> A vector $v \in L^2(\rho; X)$ belongs to the tangent cone at $\rho$ iff :$\lVert v + w \rVert \ge \lVert v \rVert \; \forall w \in L^2(\rho; X) \; \mbox{such that} \; \nabla \cdot (w\rho) = 0$
+
+where we are taking the $L^2(\rho, X)$ norm. Divergence condition implies that our tangent vectors are equivalent up to a vector field with zero divergence. This implies that $v$ is in fact a gradient of some function $u$, in which case our continuity equation becomes
+
+:$\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \nabla u) = 0$<ref name="Villani1"/>
+
+This is an elliptic partial differential equation, so one can apply tools used for that class of PDEs in order to determine existence and uniqueness of the tangent vectors.
+
+## Riemannian Metric Induced by the Wasserstein Metric
+
+Given two tangent vectors at a point $\rho$ in our space, $\mathcal{P}_2(X)$, we can define the Riemannian metric as follows
+
+:$\left\langle \frac{\partial \rho}{\partial t_1}, \frac{\partial \rho}{\partial t_2} \right\rangle_\rho = \int \rho \langle \nabla u_1, \nabla u_2 \rangle$<ref name="Villani2" /> Here, $\frac{\partial \rho}{\partial t_1}, \frac{\partial \rho}{\partial t_2}$ are tangent vectors at $\rho$, and $u_1, u_2$ are solutions to the modified continuity equation from the previous section. This metric defines an inner product at every point in our space, $\mathcal{P}_2(X)$. This not only allows one to define \[\[Geodesics and generalized geodesics\|geodesics\]\] in this space, but the metric can be used to define calculus operators such as gradients and Hessians. These operators can be applied to in a similar manner to the same operators in finite dimensional Riemannian manifolds.
+
+## References
+
+<references> <ref name="Ambrosio, Gigli, Savaré ">[L. Ambrosio, N. Gigli,G. Savaré, *Gradient Flows in Metric Spaces and in the Space of Probability Measures*, p. 189-191](https://link.springer.com/content/pdf/10.1007%2Fb137080.pdf)</ref> <ref name="Villani1">[C. Villani, *Topics in Optimal Transportation*, p. 245-247](https://people.math.gatech.edu/~gangbo/Cedric-Villani.pdf)</ref> <ref name="Villani2">[C. Villani, *Topics in Optimal Transportation*, p. 250-251](https://people.math.gatech.edu/~gangbo/Cedric-Villani.pdf)</ref> </references>

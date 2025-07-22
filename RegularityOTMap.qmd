@@ -1,0 +1,76 @@
+---
+title: "Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds"
+authors: Christian Hong and Zach Wagner
+---
+
+When considering the \[\[Monge Problem\]\], it is natural to ask about the regularity of optimal transport maps (when they exist). In particular, we can consider the Monge Problem variant
+
+$\inf_{T} \left \{ F(T) := \int_{X} |x - T(x)|^2 d \mu \right \}$
+
+where we are taking the infimum over all transport plans for our associated measures. The transport maps, $T$, have the condition $\nu = T \# \mu$ where $\nu$ and $\mu$ are probability measures. One can reformulate the Monge problem into a boundary value problem for a specific partial differential equation. From there, one can ask about the regularity of solutions to the PDE, which are associated with optimal transport plans. In this exposition, we follow the references from Santambrogio<ref name="Santambrogio"/> and Figalli<ref name="Regularity"/>.
+
+## The Monge Ampère Equation
+
+The Monge Ampère Equation<ref name="Santambrogio" /> is a nonlinear second-order elliptic partial differential equation. Let us consider the \[\[Monge Problem\]\] from earlier, with starting measure $\mu$, a target measure $\nu$. If we require $\mu$ and $\nu$ be absolutely continuous with respect to the Lebesgue measure, we can show that a transport plan, $T$ must satisfy the equation
+
+:$g(y) = \frac{f(T^{-1}(y))}{\det (DT(T^{-1}(y)))}$
+
+where $f(y)$ and $g(y)$ are the densities for $\mu$ and $\nu$ respectively. Recall that we are considering the Monge problem variant :$\inf_{T} \left \{ F(T) := \int_{X} |x - T(x)|^2 d \mu \right \}$. By Brenier's Theorem<ref name="Santambrogio"/>, we know that $T = \nabla u$, where $u$ is a convex function. If we require $u$ to be strictly convex, substituting $\nabla u$ for $T$ gives us the Monge Ampère equation
+
+:$\det (D^2 u(x)) = \frac{f(x)}{g(\nabla u(x))}$
+
+From here, we can ask about regularity of solutions of to the PDE, which in turns gives us regularity on $T = \nabla u$. For example, we have the following theorem.
+
+:   **Theorem.**<ref name=Santambrogio /> If $f$ and $g$ are $C^{0, \alpha}(\Omega)$ and are both bounded from above and from below on the whole $\Omega$ by positive constants and $\Omega$ is a convex open set, then the unique Brenier solution of $u$ of the Monge Ampère equation belongs to $C^{2, \alpha} (\Omega) \cap C^{1, \alpha} {\overline{\Omega}}$, and $u$ satisfies the equation in the classical sense. Here, a Brenier solution simply implies that $T$ is a transport plan from $f$ to $g$.
+
+Note that the support of $g$ is very relevant when trying to show regularity of our transport plan. Without any conditions on the support of $g$, $T$ may have singularities. To see this, consider the following simple example: let $f(x):=2$ and $g(x):=2$ be real functions supported on $(-1,1)$ and $(-2,-1)\cup(1,2)$, respectively. The optimal transport map will be the gradient of the function $u(x):=|x|+\frac{1}{2}x^2$, which is convex but lacks the desired regularity. The issue here arises from the disconnectedness of the support of $g$.<ref name="Regularity"/>
+
+On the other hand, conditions on the support of $g$ can eliminate such singularities. For example, Caffarelli has shown that if $f,g$ are smooth and strictly positive on their support, and the support of $g$ is convex, the optimal transport plan will be smooth in the support of $f$. Moreover, if both supports are smooth and uniformly convex, one can show that the optimal transport plan is a smooth diffeomorphism between the support of $f$ and the support of $g$. In addition to the previous theorem, we get the following restated from Figalli:
+
+:   **Theorem.**<ref name="Regularity"/> Let $\mu$ and $\nu$ be two compactly supported probability measures on $R^n$. If $\mu$ is absolutely continuous with respect to the Lebesgue measure, then: :\* There exists a unique solution $T$ to the Monge problem. :\* The optimal map $T$ is characterized by the structure $T(x) = \nabla u(x)$, for some convex function $u: R^n \to R$. :Furthermore, if $\mu(dx) = f(x)dx$, and $\nu(dy) = g(y) dy$, :$| \mathrm{det} (\nabla T(x)) | = \frac{f(x)}{g(T(x))}$ for $\mu$-a.e. $x \in R^n$
+
+Note that many of these notions, such as Lebesgue measure, gradients, and the Monge Ampère Equation, all have well-defined generalizations on all Riemannian manifolds. In particular, the above theorem was able to be extended to compact Riemannian manifolds<ref name="Regularity"/>.
+
+## Existence and Uniqueness on Riemannian Manifolds
+
+In order to extend the theory from the previous section to Riemannian manifolds, we need the following definitions.
+
+:**Definition.**<ref name="Regularity"/> Let $c: X \to Y$ be an arbitrary function. A function is $\psi: X \to R \cup \{+\infty\}$ is **c-convex** if :$\psi(x) = \sup_{y \in Y} \left[\psi^c(y) - c(x,y)\right]$ for all $x \in X$, where :$\psi^c(y) = \inf_{x \in X} \left[\psi(x) + c(x, y) \right]$ for all $y \in Y$.
+
+:Moreover, for a $c$-convex function $\psi(x)$, we can definite its $c$-subdifferential at $x$ as
+
+:$\partial^c \psi(x) := \{ y \in Y \, | \, \psi(x) = \psi^c(y) - c(x, y) \}$
+
+*Remark:* Let $X$ and $Y$ be $R^n$. Observe that if $-c(x,y)$ is the Euclidean inner product, then if $\psi$ is $c$-convex we have,
+
+:$\psi^c(y) = \inf_{x \in X} \left[\psi(x) -x\cdot y \right]=-\sup_{x \in X} \left[x\cdot y - \psi(x)\right]=\psi^*(y)$
+
+which corresponds with the convex conjugate of $\psi$. Consequently,
+
+:$\psi(x)=\sup_{y \in Y} \left[\psi^c(y) - c(x,y)\right]=\sup_{y \in Y} \left[x\cdot y-\psi^*(x)\right]=\psi^{**}(x)$
+
+Thus, if $\psi$ is proper, $\psi$ is convex since it is equivalent to $\psi^{**}$.
+
+With this, we can write down the desired theorem, restated from Figalli. :**Theorem.**<ref name="Regularity"/> Let $(M, g)$ be a Riemannian manifold, take $\mu$ and $\nu$ two compactly supported measures on $M$, and consider the optimal transport problem from $\mu$ to $\nu$ with cost $c(x,y) = d(x,y)^2/2$, where $d(x,y)$ denotes the Riemannian distance on $M$ If $\mu$ is absolutely continuous with respect to the volume measure, then: :\* There exists a unique solution $T$ to the Monge problem. :\* $T$ is characterized by the structure $T(x) = \exp_x (\nabla \psi(x)) \in \partial^c \psi(x)$ for some $c$-convex function $\psi: M \to R$ :\* For $\mu_0$-a.e. $x \in M$, there exists a unique minimizing geodesic from $x$ to $T(x)$, which is given by $t \to \exp_x(t\nabla \psi(x)) \in [0,1]$ :Furthermore, if $\mu(dx) = f(x) \mathrm{vol}(dx)$, and $\nu(dy) = g(y) \mathrm{vol}(dy)$, :$|\det(\nabla T(x))| = \frac{f(x)}{g(T(x))}$ for $\mu$-a.e. $x \in M$.
+
+*Remark:* Some care should be taken with the above formula. The determinant of $\nabla T(x)$ depends on the the tangent space at $x$. Fortunately, $|\det(\nabla T(x))|$ may be computed independently of $T_xM$.
+
+## Regularity on Compact Riemannian Manifolds
+
+We discuss the results of Ma, Trudinger, Wang, and Loeper to extend regularity of optimal transport maps to Riemannian manifolds<ref name="Regularity"/>. Once again, we will make use of the Monge Ampère Equation, :$|\det(\nabla T(x))| = \frac{f(x)}{g(T(x)}$ to make claims about regularity. Recall that we want the condition $T(x) = \exp_x (\nabla \psi(x)) \in \partial^c \psi(x)$. It can be shown that this is equivalent to :$\nabla \psi(x) + \nabla_x c(x, T(x)) = 0$ By differentiating the above identity with respect to $x$ and writing everything in charts, we get the equation :$\det (D^2\psi(x)) + D_x^2 c(x, \exp_x (\nabla \psi(x))) = \frac{f(x) \mathrm{vol}_x}{g((T(x))\mathrm{vol}_{T(x)}|\det (d_{\nabla \psi(x)}\exp_x |}$ which is very similar to the Monge Ampère Equation we derived for transport maps in $R^n$. We simply have a perturbation of $D_x^2 c(x, \exp_x (\nabla \psi(x)))$. This perturbation can obstruct smoothness. One can try to take the second derivative of the previous equation in order to make an a priori estimate on the second derivatives of $\psi$. Doing so requires a condition on the sign of the **Ma-Trundinger-Wang tensor:** :$\vartheta_{(x,y)} (\xi, \eta) := \frac{3}{2} \sum_{ijklrs} (c_{ij,r}c^{r,s}c_{s,kl} - c_{ij,kl})\xi^i \xi^j \eta^k \eta^l, \, \xi \in T_xM, \eta \in T_yM$.
+
+We often write "MTW tensor" intead of Ma-Trundinger-Wang tensor. Moreover, the **MTW Condition** is: :$\vartheta_{(x,y)}(\xi, \eta) \ge 0$ whenever $\sum_{ij} c_{i,j}\xi^i\eta^j = 0$.
+
+From here, one can prove the Riemannian analogue to one of the regularity theorems we mentioned for the Monge problem in $R^n$. The theorem is as follows:
+
+:**Theorem.**<ref name="Regularity"/> Let $(M, g)$ be a Riemannian manifold. Assume the MTW condition holds, that $f$ and $g$ are smooth and bounded away from zero and infinity on their respective supports $\Omega$ and $\Omega'$, and that the cost function $c=d^2/2$ is smooth on the set $\overline{\Omega} \times \overline{\Omega'}$. Finally, suppose that: :\* $\Omega$ and $\Omega'$ are smooth; :\* $(\exp_x)^{-1}(\Omega') \subset T_xM$ is uniformly convex for all $x \in \Omega$; :\* $(\exp_y)^{-1}(\Omega) \subset T_yM$ is uniformly convex for all $y \in \Omega'$. :Then $\psi \in C^{\infty} (\overline{\Omega})$, and $T: \overline{\Omega} \to \overline{\Omega'}$ is a smooth diffeomorphism.
+
+### The MTW Condition and its Consequences
+
+At a first glance, the MTW condition seems highly technical and it is not clear why it plays a role in the regularity theorem above. Indeed, working through the proof, one sees where the MTW condition is crucial, but it is not intuitively clear why one should think of employing the condition. Loeper realized that connectedness of the $c$-subdifferential was required for the desired regularity conditions discussed above. This connection arises naturally as an extension of the fact that regularity classical convex solutions to the Monge Ampère Equation requires connectivity of the sub-differential. In fact, Loeper showed that connectedness of the $c$-subdifferential is equivalent to the MTW condition, hence its need for regularity.<ref name="Regularity"/>
+
+Fortunately, the MTW condition is satisfied by the most canonical manifolds, including $R^n$, $T^n$, and $S^n$ (in fact, quotients of $S^n$ also satisfy the MTW condition).
+
+## References
+
+<references> <ref name="Santambrogio">[F. Santambrogio, *Optimal Transport for Applied Mathematicians*, p. 18, 54-57](https://link.springer.com/book/10.1007/978-3-319-20828-2)</ref> <ref name="Regularity">[A. Figalli, *Regularity of optimal transport maps* ](http://www.numdam.org/item/AST_2010__332__341_0.pdf)</ref> </references>
