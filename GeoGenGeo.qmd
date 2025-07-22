@@ -1,0 +1,72 @@
+---
+title: "Geodesics and Generalized Geodesics"
+author: Djordje Nikolic
+---
+
+## Introduction
+
+There are many ways that we can describe [Wasserstein metric](https://en.wikipedia.org/wiki/Wasserstein_metric). One of them is to characterize absolutely continuos curves (AC)(p.188<ref name=Santambrogio />) and provide a dynamic formulation of the special case $W_{2}^{2}$ Namely, it is possible to see $W_{2}^{2}(\mu, \nu)$ as an infimum of the lengts of curves that satisfy [Continuity equation](https://en.wikipedia.org/wiki/Continuity_equation).
+
+## Geodesics in general metric spaces
+
+First, we will introduce definition of the geodesic in general metric space $(X,d)$. In the following sections. we are going to follow a presentation from the book by Santambrogio<ref name="Santambrogio" /> with some digression, here and there.
+
+For the starting point, we need to introduce length of the curve in our metric space $(X,d)$.
+
+:   **Definition.** A length of the curve $\omega:[0,1] \rightarrow X$ is defined by $L(\omega)=\sup\{ \sum_{j=0}^{n-1} d(\omega(t_{j}),\omega(t_{j+1})) | \quad n \geq 2,\quad 0=t_{0}<t_{1}<...<t_{n-1}=1 \}$
+
+Secondly, we use the definition of length of a curve to introduce a geodesic curve.
+
+:   **Definition.** A curve $c:[0,1] \rightarrow X$ is said to be geodesic between $x$ and $y$ in $X$ if it minimizes the length $L(\omega)$ among all the curves $\omega:[0,1] \rightarrow X$ <br> such that $x=\omega(0)$ and $y=\omega(1)$.
+
+Since we have a definition of a geodesic in the general metric space, it is natural to think of Riemannian structure. It can be formally defined. More about this topic can be seen in the following article [Formal Riemannian Structure of the Wasserstein_metric](http://34.106.105.83/wiki/).
+
+Now, we proceed with necessary definitions in order to be able to understand Wasserstein metric in a different way.
+
+:   **Definition.** A metric space $(X,d)$ is called a length space if it holds $d(x,y)=\inf \{ L(\omega) | \quad  \omega \in AC(X), \quad \omega(0)=x \quad \omega(1)=y \}.$
+
+A space $(X,d)$ is called geodesic space if the distance $d(x,y)$ is attained for some curve $\omega$.
+
+:   **Definition.** In a length space, a curve $\omega:[0,1]\rightarrow X$ is said to be constant speed geodesic between $\omega(0)$ and $\omega(1)$ in $X$ if it satisfies
+
+$d(\omega(s),\omega(t))=|t-s|d(\omega(0),\omega(1))$ for all $t,s \in [0,1]$
+
+It is clear that constant-speed geodesic curve $\omega$ connecting $x$ and $y$ is a geodesic curve. This is very important definition since we have that every constant-speed geodesic $\omega$ is also in $AC(X)$ where $|\omega'(t)|=d(\omega(0),\omega(1))$ almost everywhere in $[0,1]$. <br> In addition, minimum of the set $\{ \int_{0}^{1}|c'(t)|^{p}dt |  c:[0,1]\rightarrow X, c(0)=x, c(1)=y \}$ is attained by our constant-speed geodesic curve $\omega.$ Last fact is important since it is connected to Wasserstein $p$ metric. For more information, please take a look at [Wasserstein metric](https://en.wikipedia.org/wiki/Wasserstein_metric).
+
+For more information on constant-speed geodesics, especially how they depend on uniqueness of the plan that is induced by transport and characterization of a constant-speed geodesic look at the book by L.Ambrosio, N.Gilgi, G.Savaré <ref name="Ambrosio" /> or the book by Santambrogio<ref name="Santambrogio" />.
+
+## Dynamic formulation of Wasserstein distance
+
+Finally, we can rephrase Wasserstein metrics in dynamic language as mentioned in the Introduction.
+
+Whenever $\Omega \subseteq \mathcal{R}^{d}$ is convex set, $W_{p}(\Omega)$ is a geodesic space. Proof can be found in the book by Santambrogio<ref name="Santambrogio" />.
+
+:   **Theorem.**<ref name=Santambrogio /> Let $\mu, \nu \in \mathcal{P}_{2}(R^{d})$. Then $W_{p}^{p}(\mu, \nu)=\inf_{(\mu(t).\nu(t))} \{\int_{0}^{1} |v(,t)|_{L^{p}(\mu(t))}^{p}dt \quad | \quad \partial_{t}\mu+\nabla\cdot(v\mu)=0,\quad \mu(0)=\mu,\quad \mu(1)=\nu \}.$
+
+In special case, when $\Omega$ is compact, infimum is attained by some constant-speed geodesic.
+
+## Generalized geodesics
+
+There are many ways to generalize this fact. We will talk about a special case $p=2$ and a displacement convexity. Here we follow again book by Santambrogio<ref name="Santambrogio1" />.
+
+In general, the functional $\mu \rightarrow W_{2}^{2}(\mu,\nu)$ is not a displacement convex. We can fix this by introducing a generalized geodesic.
+
+:   **Definition.** Let $\rho \in \mathcal{P}(\Omega)$ be an absolutely continuous measure and $\mu_{0}$ and $\mu_{1}$ probability measures in $\mathcal{P}(\Omega)$. We say that $\mu_{t} = ((1-t)T_{0}+tT_{1})\#\rho$ <br> is a generalized geodesic in $\mathcal{W}_{2}(\Omega)$ with base $\rho$, where $T_{0}$ is the optimal transport plan from $\rho$ to $\mu_{0}$ and $T_{1}$ is the optimal transport plan from $\rho$ to $\mu_{1}$.
+
+By calculation, we have the following $W_{2}^{2}(\mu_{t},\rho) \leq (1-t)W_{2}^{2}(\mu_{0},\rho) + tW_{2}^{2}(\mu_{1},\rho).$
+
+Therefore, along the generalized geodesic, the functional $t \rightarrow W_{2}^{2}(\mu_{t},\rho)$ is convex.
+
+This fact is very important in establishing uniqueness and existence theorems in the geodesic flows.
+
+# References
+
+<references>
+
+<ref name="Santambrogio"> [F. Santambrogio, *Optimal Transport for Applied Mathematicians*, Chapter 1, pages 202-207](https://link-springer-com.proxy.library.ucsb.edu:9443/book/10.1007/978-3-319-20828-2) </ref>
+
+<ref name="Santambrogio1"> [F. Santambrogio, *Optimal Transport for Applied Mathematicians*, Chapter 1, pages 269-276](https://link-springer-com.proxy.library.ucsb.edu:9443/book/10.1007/978-3-319-20828-2) </ref>
+
+<ref name="Ambrosio"> \[https://link.springer.com/book/10.1007/b137080 L.Ambrosio, N.Gilgi, G.Savaré, '' Gradient Flows in Metric Spaces and in the Space of Probability Measures'', Chapter 7.2., pages 158-160\] </ref>
+
+</references>
