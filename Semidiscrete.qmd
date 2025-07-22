@@ -1,0 +1,48 @@
+---
+title: "Semidiscrete Optimal Transport"
+author: Andrew Gracyk
+---
+
+Semidiscrete optimal transport refers to situations in optimal transport where two input measures are considered, and one measure is a discrete measure and the other one is absolutely continuous with respect to Lebesgue measure.<ref name="Peyré and Cuturi"/> Hence, because only one of the two measures is discrete, we arrive at the appropriate name "semidiscrete."
+
+## Formulation of the semidiscrete dual problem
+
+In particular, we will examine semidiscrete optimal transport in the case of the dual problem. The general dual problem for continuous measures can be stated as
+
+<math display="block"> \max\_{(\psi, \varphi) \in R(c)} \Big{ \int\_X \psi d\mu + \int\_Y \varphi d\nu \Big} </math><ref name="Santambrogio"/>
+
+where $\mu, \nu$ denote probability measures on domains $X, Y$ respectively, and $c(x,y)$ is a cost function defined over $X \times Y$. $R(c)$ denotes the set of possible dual potentials, and the condition $\varphi(x) + \psi(y) \leq c(x,y)$ is satisfied. It should also be noted that $\mu$ has a density such that $\mu = f(x)dx$. Now, we would like to extend this notion of the dual problem to the semidiscrete case. Such a case can be reformulated as
+
+<math display="block"> \max\_{\varphi \in \R\^m} \Big{ \mathcal{E}(\varphi) = \int\_X \varphi\^c d\mu + \sum\_j \varphi\_j b_j \Big}. </math>
+
+Aside from using a discrete measure in place of what was originally a continuous one, there are a few other notable distinctions within this reformulation. The first is that $\varphi^c$ denotes the c-transform of $\varphi$. The c-transform can be defined as $\varphi^c(x) := \inf_j \{ c(x,y_j) - \varphi_j \}$. $\varphi_j$ is used to denote $\varphi(y_j)$. Furthermore, we note that our original measure $\nu$ is a sum of Dirac masses evaluated at locations $y_j$ with weights $b_j$, i.e., $\nu = \sum_{j=1}^{N} b_j \delta_{y_j}$.
+
+## Voronoi cells decomposition
+
+Now, we will establish the notion of Voronoi cells. The Voronoi cells refer to a special subset of $X$, and the reason we are interested in such a subset is because we can use the Voronoi cells to find the regions that are sent to each $y_j$. In particular, if we denote the set of Voronoi cells as $V_{\varphi}(j)$, we can find our values of $\varphi_j$ using the fact $b_j = \int_{V_{\varphi}(j)} f(x)dx$. Recall that $f(x)$ refers to a density of the measure $\mu$, i.e., $\mu = f(x)dx$. We define the Voronoi cells with
+
+<math display="block"> V\_{\varphi}(j) = \Big{ x \in X : \forall j' \neq j, \frac{1}{2}\|x-y_j\|\^2 - \varphi*j* \leq \frac{1}{2}\|x-y{j'}\|\^2 - \varphi\_{j'} \Big}. </math>
+
+We use the specific cost function $c(x,y) = \frac{1}{2}|x-y|^2$ here. This is a special case and we may generalize to other cost functions if we desire. When we have this special case, the decomposition of our space $X$ is known as a "power diagram."<ref name="Merigot"/>
+
+## The gradient in finding optimal <math> \varphi </math>
+
+Finding the weights via the above method is equivalent to maximizing $\mathcal{E}(\varphi)$, and we may do this by taking the partial derivatives of this function with respect to $\varphi_j$. This is the same as taking the gradient of $\mathcal{E}(\varphi)$. In partial derivative form, we have
+
+<math display="block"> \frac{\partial \mathcal{E} }{\partial \varphi_j} = - \int*{V*{\varphi}(j)} f(x)dx + b_j </math><ref name="Merigot"/>
+
+and in gradient form, we have
+
+<math display="block"> \nabla \mathcal{E}(\varphi)*j = -* \int{V\_{\varphi}(j)} f(x)dx + b_j .</math>
+
+Since $\nabla \mathcal{E}(\varphi)_j = 0$ when it attains a maximum, we have the relation between the weights and the measure density that we established in the previous section. Note that the maximum is taken and not the minimum because our function $\mathcal{E}(\varphi)$ is a concave function. The mapping $\varphi \rightarrow \sum_j \varphi_j b_j$ is linear, but because we consider an infimum for $\varphi^c$, the overall function $\mathcal{E}(\varphi)$ is concave.<ref name="Merigot"/>
+
+Once we have discovered our optimal $\varphi_j$, the optimal transport map is is one in which any $x \in V_{\varphi_j}$ is mapped to $y_j$. We have the mapping to a constant over each particular region, making the optimal transport map piecewise constant.<ref name="Peyré and Cuturi"/>
+
+## Algorithm discussion
+
+We may search for a maximum of value of $\mathcal{E}(\varphi)$ by means of certain algorithms, the first being gradient ascent. Whether or not such an algorithm is capable of being implemented effectively is contingent on the ability to find our power diagram in a practical way. Certain computational geometry<ref name="Santambrogio"/> algorithms allow the cells to be found efficiently. A second suitable algorithm is Newton's method. Using Newton's method to find the zeros of $\frac{\partial \mathcal{E} }{\partial \varphi_j}$, one must compute the second derivative of $\mathcal{E}$, as well as justify certain constraints are met, such as bounded eigenvalues of the Hessian.<ref name="Santambrogio"/>
+
+## References
+
+<references> <ref name="Merigot">[Mérigot Q., *A Multiscale Approach to Optimal Transport*, Laboratoire Jean Kuntzmann, Université de Grenoble and CNRS.](https://arxiv.org/pdf/1803.00567.pdf)</ref> <ref name="Santambrogio">[F. Santambrogio, *Optimal Transport in Applied Mathematics*, Chapter 6.](https://link-springer-com.proxy.library.ucsb.edu:9443/content/pdf/10.1007%2F978-3-319-20828-2.pdf)</ref> <ref name="Peyré and Cuturi">[G. Peyré and M. Cuturi, *Computational Optimal Transport*, Chapter 5.](https://arxiv.org/pdf/1803.00567.pdf)</ref> </references>
