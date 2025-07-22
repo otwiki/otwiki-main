@@ -1,0 +1,86 @@
+---
+title: "Fenchel-Rockafellar and Linear Programming"
+authors: Micah Pedrick and Seyit Emre Duzoylum
+---
+
+The Fenchel-Rockafellar Theorem is a well-known result from convex analysis that establishes a minimax principle between convex functions and their convex conjugates under some regularity conditions. One fundamental application of this theorem is the characterization of the dual problem of a finite dimensional linear program.
+
+## The Fenchel-Rockafellar Theorem
+
+Let $\phi : X \to \mathbb{R} \cup \left\{+\infty\right\}$ and $\psi : X \to \mathbb{R} \cup \left\{+\infty\right\}$ be convex, lower semicontinuous and proper functions. Suppose that there exists $x_0 \in X$ such that $\phi(x_0),\varphi(x_0) < \infty$, where $\phi$ is continuous at $x_0$. Then, it holds that
+
+<math display="block"> \underset{x \in X}{\inf}\left{ \phi(x) + \psi(x) \right} = \underset{u \in X^*} {\max}\left{-\phi\^*(-u) -* \psi\^(u) \right}.</math>
+
+### Proof
+
+We provide a sketch of the proof, the reader is referred to Brezis<ref name="Brezis" /> for further reading. Note that, by Young's Inequality, for any <math >x \in X</math> and $u \in X^*$ we have <math display="block" >\phi(x) + \phi\^*(-u) +* \psi(x) + \psi\^(u) \geq \langle x, -u \rangle + \langle x, u \rangle = 0.</math> Hence, the infimum of the left hand side is greater than or equal to the supremum of the right hand side. If the infimum is $-\infty$, equality must be obtained, and for every $u \in X^*$ the supremum is realized; otherwise assume $\phi(x) + \psi(x) > -\infty$ for all $x \in X$, and let $m$ be the value of the infimum.
+
+Let $A := \left\{(x, t) : \phi(x) \leq t\right\},$ and observe that since $\phi$ is continuous at $x_0$, the interior of $C$ is nonempty. Likewise, let $B := \left\{(x, t) : t \leq m - \psi(x)\right\}$. Both sets are convex, and by construction we have $B \cap \text{int}A = \emptyset$. So a [geometric Hahn-Banach Theorem](https://en.wikipedia.org/wiki/Hahn%E2%80%93Banach_theorem#Separation_of_sets) implies that there is some nonzero $(f, k) \in X^* \times \mathbb{R}$ and $\alpha \in \mathbb{R}$ such that <math display="block">
+
+\begin{cases} \langle x, f \rangle + kt \geq \alpha, & (x, t) \in A, \\ \langle x, f \rangle + kt \leq \alpha, & (x, t) \in B.\end{cases}
+
+</math> Since $\phi$ is finite at $x_0$, letting $t \to +\infty$ shows that $k$ is nonnegative, and if $k = 0$, continuity and joint finiteness imply $\lVert f \rVert = 0$, a contradiction, so $k > 0$. Thus, we can use the inequalities above with the definitions of $\phi^*$ and $\psi^*$ to conclude that <math display="block"> \phi\^\left(-\frac f k\right) \leq -\frac \alpha k, \quad \text{and} \quad \psi\^\left(\frac f k\right) \leq \frac \alpha k - m.</math> Which implies that <math display="block">-\phi\^\left(-\frac f k\right) - \psi\^\left(\frac f k\right) \geq m.</math> Finally, since the supremum includes this term, it must also be greater than or equal to the infimum, which yields their equality.
+
+## Application to Linear Programs
+
+Let $A_1 \in \mathbb{R}^{p \times m}$,$A_2 \in \mathbb{R}^{q\times n}$,$b_1 \in \mathbb{R}^{p}$, $b_2 \in \mathbb{R}^{q}$,$c_1 \in \mathbb{R}^{m}$ and $c_2 \in \mathbb{R}^{m}$ and consider the following finite dimensional linear program<ref name="Rockafellar" />
+
+<math display="block"> \mathcal{P} = \quad 
+
+\begin{aligned}
+& {\text{         }\inf}
+& & \langle c_1, x \rangle + \langle c_2, y \rangle \\
+& \text{subject to} & &  A_1 x \geq b_1 \\
+&  & &  A_2 y = b_2 \\
+&  & &  x \geq 0 \\
+\end{aligned}
+
+</math>
+
+where $x \in \mathbb{R}^{m}$ and $y \in \mathbb{R}^{n}$. Moreover, let us suppose that there exist at least one feasible solution $\tilde{x} \in \mathbb{R}^{m},\tilde{y} \in \mathbb{R}^{n}$ such that $A_1 \tilde{x} > b_1$ $A_2 \tilde{y} = b_2$ and $\tilde{x} > 0$. Then, dual problem of $\mathcal{P}$ is given by
+
+<math display="block"> \mathcal{D}= \quad  
+
+\begin{aligned}
+& {\text{         }\max}
+& & \langle  b_1 , \alpha  \rangle + \langle b_2 , \beta \rangle \\
+& \text{subject to} & &  A_1^T \alpha \leq c_1 \\
+&  & &  A_2^T \beta = c_2 \\
+&  & &  \alpha \geq 0 \\
+\end{aligned}
+
+</math>
+
+where $\alpha \in \mathbb{R}^{p}$ and $\beta \in \mathbb{R}^{q}$. Furthermore, $\mathcal{D}$ attains its optimal value and we have $\mathcal{P}  =  \mathcal{D}$.
+
+### Proof
+
+Note that, the linear program may be equivalently written as
+
+<math display="block"> \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\inf} \left{ \langle c_1, x \rangle + \langle c_2, y \rangle + \Chi*{* \mathbb{R}+ }(x) + \Chi*{* \mathbb{R}+ }(b_1 - A_1 x) + \Chi\_{{0}} (b_2 - A_2 y) \right} </math>
+
+where $\Chi_A$ denotes the characteristic function of $A \subseteq \mathbb{R}^n$. Further, let us define $\phi(x,y) = \langle c_1, x \rangle + \langle c_2, y \rangle + \Chi_{ \mathbb{R}_+ }(x)$, and $\varphi(x,y) = \Chi_{ \mathbb{R}_+ }(b_1 - A_1 x) +  \Chi_{\{0\}} (b_2 - A_2 y)$. Note that, both $\phi$ and $\varphi$ are convex, lower semicontinuous and proper functions, where we have $\phi ( \tilde{x},\tilde{y}),\varphi(\tilde{x},\tilde{y}) < \infty$. Moreover, since we have $\tilde{x} > 0$, we observe that $\phi$ is continuous at $(\tilde{x},\tilde{y})$. Therefore, by the Fenchel-Rockafellar Theorem we obtain
+
+<math display="block"> \underset{w \in \mathbb{R}^{m},t \in \mathbb{R}^{n}}{\max} \left{ -\phi\^\star(-w,-t) - \varphi\^\star(w,t) \right} = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\inf} \left{ \langle c_1, x \rangle + \langle c_2, y \rangle + \Chi*{* \mathbb{R}+ }(x) + \Chi*{* \mathbb{R}+ }(b_1 - A_1 x) + \Chi\_{{0}} (b_2 - A_2 y) \right}. </math>
+
+In terms of convex conjugate of $\phi$ we have
+
+<math display="block"> \begin{align} \phi^\star(-w,-t) & = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ -\langle x, w+c_1 \rangle - \langle y, t+c_2 \rangle - \Chi_{ \mathbb{R}_+ }(x)  \right\} \\ & = \underset{ x \in \mathbb{R}^{m}_{-},y \in \mathbb{R}^{n} }{\sup} \left\{ -\langle x, w+c_1 \rangle - \langle y, t+c_2 \rangle  \right\} \\ & = \Chi_{ \mathbb{R}_+ }(w+c_1) + \Chi_{\{0\}}(t+c_2).
+
+\end{align} </math>
+
+Furthermore, for the convex conjugate of $\varphi$ we observe
+
+<math display="block"> \begin{align} \varphi^\star(w,t) & = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \langle x, w \rangle + \langle y, t \rangle - \Chi_{ \mathbb{R}_+ }(b_1 - A_1 x) -  \Chi_{\{0\}} (b_2 - A_2 y)  \right\}
+\\ & =  \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \langle x, w \rangle + \langle y, t \rangle - \underset{ \alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q} }{\sup} \left\{ \langle  b_1 - A_1 x ,\alpha \rangle + \langle  b_2 - A_2 y , \beta \rangle \right\}  \right\}
+\\ & = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \underset{ \alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q} }{\inf} \left\{ \langle x, w \rangle + \langle y, t \rangle + \langle   A_1 x - b_1 , \alpha  \rangle + \langle A_2 y - b2 , \beta \rangle \right\}  \right\}
+\\ & = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \underset{ \alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q} }{\inf} \left\{ \langle x, w+ A_1^T \alpha \rangle + \langle y, t+A_2^T\beta \rangle - \langle  b_1 , \alpha  \rangle - \langle b_2 , \beta \rangle \right\}  \right\}
+\end{align} </math>
+
+Notice that, $\varphi^\star$ is finite if and only if we have $w = A_1^T \alpha$ and $t = A_2^T\beta$ for some $\alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q}$. Therefore, as $\phi^\star = \Chi_{ \mathbb{R}_+ }(w+c_1) + \Chi_{\{0\}}(t+c_2)$, by combining these two results with the Fenchel-Rockafellar Theorem we obtain the dual linear program as follows.
+
+<math display="block"> \underset{\alpha \in \mathbb{R}^{p}_+,\beta \in \mathbb{R}^{q}}{\max} \left{ \langle  b_1 , \alpha  \rangle + \langle b_2 , \beta \rangle - \Chi*{*\mathbb{R}+} (c_1-A_1\^T \alpha) - \Chi\_{{0}} (A_2\^T \beta -c_2) \right} </math>
+
+# References
+
+<references> <ref name="Brezis">[H. Brezis, *Functional Analysis, Sobolev Spaces, and Partial Differential Equations*, Section 1.4](https://link.springer.com/book/10.1007/978-0-387-70914-7)</ref> <ref name="Rockafellar">[T. Rockafellar, *Variational Analysis*, Section 11.H](https://link.springer.com/book/10.1007/978-3-642-02431-3)</ref> </references>
