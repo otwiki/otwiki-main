@@ -3,7 +3,7 @@ title: "The Moreau-Yosida Regularization"
 author:Alexander Sabater
 ---
 
-The **Moreau-Yosida regularization** is a technique used to approximate \[\[lower semicontinuous functions\]\] by [Lipschitz functions](https://en.wikipedia.org/wiki/Lipschitz_continuity). An important application of this result is to prove Portmanteau's Theorem, which states that integration against a lower semicontinuous and bounded below function is lower semicontinuous with respect to the \[\[Convergence of Measures and Metrizability#Narrow Convergence\|narrow convergence\]\] in the space of [probability measures](https://en.wikipedia.org/wiki/Probability_measure).
+The **Moreau-Yosida regularization** is a technique used to approximate lower semicontinuous functions by [Lipschitz functions](https://en.wikipedia.org/wiki/Lipschitz_continuity). An important application of this result is to prove Portmanteau's Theorem, which states that integration against a lower semicontinuous and bounded below function is lower semicontinuous with respect to the (ConvergenceMetrizability.qmd) in the space of [probability measures](https://en.wikipedia.org/wiki/Probability_measure).
 
 ## Definitions
 
@@ -42,13 +42,12 @@ Take $(X,d) := (\mathbb{R},|\cdot|)$. If $g$ is finite-valued and differentiable
 
 :$g_k(x) = \min \left\{ x^2 , \frac{k^2}{2} + k \left| x \pm \frac{k}{2} \right| \right\}.$
 
-![Plot of $g(x) = x^2$ and $g_k(x)$ for $k = 0, 1, 2, 3$.](Ex%201.png)
+
 
 ## Approximating Lower Semicontinuous Functions by Lipschitz Functions
 
 **Proposition.** <ref name="OT"/><ref name="S"/> Let $(X,d)$ be a Polish space and let $g : X \to (-\infty,+\infty]$. \* If $g$ is proper and bounded below, so is $g_k$. Furthermore, $g_k$ is Lipschitz continuous for all $k \geq 0$. \* If, in addition, $g$ is lower semicontinuous, then $g_k(x) \nearrow g(x)$ for all $x \in X$. \* In this case, $g_k \wedge k := \min(g_k,k)$ is continuous and bounded and $g_k(x) \wedge k \nearrow g(x)$ for all $x \in X$.
 
-![Plot of $g(x) = x^2$ and $g_k(x) \wedge k$ for $k = 0, 3, 6, 9$.](Ex%202.png)
 
 **Proof.** \* Since $g$ is proper, there exists $y_0 \in X$ such that $g(y_0) < +\infty$. Then for any $x \in X$ :$-\infty < \inf\limits_{y \in Y} g(y) \leq g_k(x) \leq g(y_0) + k d(x,y_0) < +\infty .$ Thus $g_k$ is proper and bounded below. Next, for a fixed $y \in X$, let $h_{k,y}(x) := g(y) + d(x,y)$. Then as :$h_{k,y}(x_1) - h_{k,y}(x_2) = k d(x_1,y) - k d(x_2,y) \leq k d(x_1,x_2)$ , the family $\{ h_{k,y} \}_{y \in X}$ is uniformly Lipschitz and hence equicontinuous. Thus $g_k = \inf\limits_{y \in Y} h_{k,y}$ is Lipschitz continuous. \* Suppose that $g$ is also lower semicontinuous. Note that for all $k_1 \leq k_2$, $g_{k_1}(x) \leq g_{k_2}(x) \leq g(x)$. Thus it suffices to show that $\liminf\limits_{k \to \infty} g_k(x) \geq g(x)$. This inequality is automatically satisfied when the left hand side is infinite, so without loss of generality assume that $\liminf\limits_{k \to \infty} g_k(x) < +\infty$. By definition of infimum, for each $k \in \mathbb{N}$ there exists $y_k \in X$ such that
 
@@ -64,7 +63,7 @@ $g(y_k)$ is bounded below by assumption, while the only way $kd(x,y_k)$ to be fi
 
 ## Portmanteau Theorem
 
-**Theorem (Portmanteau).** <ref name="OT"/> <ref name="S"/> Let $(X,d)$ be a Polish space, and let $g : X \to (-\infty,+\infty]$ be lower semicontinuous and bounded below. Then the functional $\mu \mapsto \int_X g \, \mathrm{d}\mu$ is lower semicontinuous with respect to \[\[Convergence of Measures and Metrizability#Narrow Convergence\|narrow convergence\]\] in $\mathcal{P}(X)$, that is
+**Theorem (Portmanteau).** <ref name="OT"/> <ref name="S"/> Let $(X,d)$ be a Polish space, and let $g : X \to (-\infty,+\infty]$ be lower semicontinuous and bounded below. Then the functional $\mu \mapsto \int_X g \, \mathrm{d}\mu$ is lower semicontinuous with respect to (Convergence of Measures and Metrizability.qmd) in $\mathcal{P}(X)$, that is
 
 $\mu_n \to \mu \text{ narrowly} \Longrightarrow \liminf\limits_{n \to \infty} \int_X g_n \, \mathrm{d}\mu \geq \int_X g \, \mathrm{d}\mu$.
 
@@ -104,7 +103,7 @@ Then the following hold for all $k \in (0,+\infty)$ and $x \in \mathcal{H}$: \* 
 
 **Proposition.** Let $g : \mathcal{H} \to (-\infty,+\infty]$ be lower semicontinuous and convex, let $k \in (0,+\infty)$, and let $p \in (1,+\infty)$. Then the infimal convolution $g_k$ is convex, proper, continuous, and exact. Moreover, for every $x \in \mathcal{H}$, the infimum
 
-:$g_k(x) = \inf\limits_{y \in \mathcal{H}} \left[ g(y) + \frac{k}{p} \| x - y \|^p \right]$
+$g_k(x) = \inf\limits_{y \in \mathcal{H}} \left[ g(y) + \frac{k}{p} \| x - y \|^p \right]$
 
 is uniquely attained.
 
