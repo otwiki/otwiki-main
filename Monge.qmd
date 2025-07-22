@@ -1,5 +1,5 @@
 ---
-title: "Monge Problem""
+title: "Monge Problem"
 ---
 
 The optimal transport problem first came up in the 18th century, brought by [Gaspard Monge](https://en.wikipedia.org/wiki/Gaspard_Monge). The original problem is called the **Monge Problem**, which wants to find an optimal way to rearrange the dirt dig out from the land into castle walls or other desired shapes. The "optimal way" means the way with the minimal "cost", or workload. In the following, we will first formulate the Monge problem, then explain why it is a challenging problem. On top of that, we introduce the Kantorovich's problem which is a generalized version of Monge problem but it perfectly tackles the challenges. Finally, we introduce Brenier's theorem and discuss the solvability of these two problems.
