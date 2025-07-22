@@ -1,0 +1,132 @@
+---
+title: "Asymptotic equivalence of W2 and H^-1"
+author: Alexander Sabater
+---
+
+## Motivation
+
+The quadratic Wasserstein distance and $\dot{H}^{-1}$ distance become asymptotically equivalent when the when the measures are absolutely continuous with respect to Lebesgue measure with density close to the value $\varrho = 1$. This is particularly of interest since the space $H^{-1}$ is a [Hilbert space](https://en.wikipedia.org/wiki/Hilbert_space) as opposed to $W_2$ being only a [metric space](https://en.wikipedia.org/wiki/Metric_space). This allows one to extend several well-known results about continuity of various operators in $H^{-1}$ to $W_2$ by asymptotic equivalence. This equivalence is also important numerically, where computing $H^{-1}$ is much easier than computing $W_2$.
+
+Furthermore, this asymptotic equivalence is relevant for evolution problems with the constraint $\varrho \leq 1$, such as crowd motion. <ref name=Santambrogio />
+
+## Formalization
+
+### Definition of <math> \dot{H}\^{-1} </math>
+
+The negative Sobolev norm $\| \cdot \|_\dot{H}^{-1}$ is defined <ref name=Santambrogio/> <ref name="Loeper"/> to be
+
+$\| \mu - \nu \|_{\dot{H}^{-1} (\Omega)} := \sup \left \{ \int_{\Omega} \phi \, \mathrm{d}( \mu - \nu ) : \phi \in C^{\infty}_c(\Omega), \,  \| \nabla \phi \|_{L^2(\Omega)} \leq 1  \right \} .$
+
+### Lemma
+
+Let $\mu, \nu$ be measures that are absolutely continuous with respect to Lebesgue measure on a convex domain $\Omega$, with densities bounded above by the same constant $C > 0$. Then, for all functions $\phi \in H^1(\Omega)$:
+
+$\int_\Omega \phi \, \mathrm{d}( \mu - \nu ) \leq \sqrt{C} \| \nabla \phi \|_{L^2(\Omega)} W_2(\mu, \nu)$
+
+Proof of the lemma can be found Chapter 5, page 210 of <ref name=Santambrogio />.
+
+### <math> \dot{H}\^{-1} </math> as a Dual
+
+This material is adapted from <ref name="Peyre"/>.
+
+An important property of $\dot{H}^{-1}$ is its characterization as a dual, which justifies the notation. Let $\Omega \subseteq \mathbb{R}^d$ be an open and connected subset. For $\phi \in C^1(\Omega)$,
+
+$\| \phi \|_{\dot{H}^1} := \| \nabla \phi \|_{L^2(\Omega)} := \left[ \int_{\Omega} | \nabla \phi(x) |^2 \, \mathrm{d}x \right]^{\frac{1}{2}}$
+
+defines a semi-norm. Then for an absolutely continuous signed measure on $\Omega$ with zero total mass,
+
+$\| \nu \|_{ \dot{H}^{-1} } := \sup \left \{ | \langle \phi , \nu \rangle | : \phi \in C^1(\Omega) , \, \| \phi \|_{\dot{H}^1} \leq 1 \right \} = \sup \left \{  \left| \int_{\Omega} \phi(x) \, \mathrm{d}\nu(x) \right| : \phi \in C^1(\Omega) , \, \| \phi \|_{\dot{H}^1} \leq 1 \right \} .$
+
+The space $\dot{H}^{-1}$ is the dual space of zero-mean $H^1(\Omega)$ functions endowed with the norm $L^2$ norm on the gradient.
+
+### Theorem
+
+Let $\mu, \nu$ be absolutely continuous measures on a convex domain $\Omega$, with densities bounded from below and from above by the same constants $a, b$ with $0 < a < b < +\infty$. Then
+
+$b^{-\frac{1}{2}} || \mu - \nu ||_{\dot{H}^{-1} (\Omega)} \leq W_2( \mu, \nu) \leq a^{-\frac{1}{2}}|| \mu - \nu ||_{\dot{H}^{-1}(\Omega)}$
+
+The proof of the theorem uses the above lemma and can be found Chapter 5, page 211 of <ref name=Santambrogio />.
+
+## Localization
+
+The following material is adapted from <ref name="Peyre"/>.
+
+This section deals with the problem of localization of the quadratic Wasserstein distance: if $\mu , \nu$ are (signed) measures on $\mathbb{R}^d$ that are close in the sense of $W_2$, do they remain close to each other when restricted to subsets of $\mathbb{R}^d$?
+
+### Notation
+
+Here we are working in Euclidean space $\mathbb{R}^d$ with the Lebesgue measure $\lambda$. \* Recall that for a subset $A \subseteq\mathbb{R}^d$,
+
+:$\mathrm{dist}(x,A) := \inf \{ |x - y| : y \in A \}$
+
+denotes the distance between a point $x$ and the subset $A$. \* For a (signed) measure $\mu$ on $\mathbb{R}^d$ and $\varphi : \mathbb{R}^d \to \mathbb{R}$ a nonnegative and measurable function, $\varphi \cdot \mu$ denotes the measure such that $\mathrm{d}(\varphi \cdot \mu) = \varphi(x) \, \mathrm{d}\mu(x)$. \* The norm
+
+:$\| \mu \|_1 := \int_{\mathbb{R}^d} \, |\mathrm{d}\mu(x)|$
+
+denotes the total variation norm of the signed measure $\mu$. If $\mu$ is in fact a measure, then $\| \mu \|_1 = \mu ( \mathbb{R}^d )$.
+
+```{=html}
+<!--
+* For $\mu$ a measure supported on $A \subseteq \mathbb{R}^d$, define the norm
+
+$\| \mu \|_{L^2(A)} := \left[ \int_{A} \left( \frac{ \mathrm{d} \mu }{ \mathrm{d} \lambda }(x) \right)^2 \, \mathrm{d} \lambda(x) \right]^{\frac{1}{2}} .$
+--->
+```
+
+Now we can ask the original question more precisely. If $\varphi : \mathbb{R}^d \to \mathbb{R}$ is non-negative and compactly supported satisfying further technical assumptions to be specified later, we wish to bound $W_2 ( a \varphi \cdot \mu , \varphi \cdot \nu)$ by $W_2(\mu,\nu)$, where $a$ is a constant factor ensuring that $a\varphi \cdot \mu$ and $\varphi \cdot \nu$ have the same mass. The factor of $a$ is necessary, otherwise the $W_2$ distance between $\varphi \cdot \mu$ and $\varphi \cdot \nu$ is in general not well-defined.
+
+### Theorem
+
+Let $\mu , \nu$ be measures on $\mathbb{R}^d$ having the same total mass, and let $B$ be a ball in $\mathbb{R}^d$. Assume that on $B$, the density of $\mu$ with respect to the Lebesgue measure is bounded above and below, that is
+
+:$\exists 0 < m_1 \leq m_2 < \infty \quad \forall x \in B \quad m_1 \mathrm{d}\lambda(x) \leq \mathrm{d}\mu(x) \leq m_2 \mathrm{d}\lambda(x).$
+
+Let $\varphi : \mathbb{R}^d \to (0,+\infty)$ be a $k$-[Lipschitz](https://en.wikipedia.org/wiki/Lipschitz_continuity) function for some $0 \leq k < \infty$ supported in $B$, and suppose that $\varphi$ is bounded above and below by the map
+
+:$x \mapsto \mathrm{dist}(x,B^c)^2$
+
+on $B$, that is, there exists constants $0 < c_1 \leq c_2 < \infty$ such that for all $x \in B$,
+
+:$c_1 \mathrm{dist}(x,B^c)^2 \leq \varphi(x) \leq c_2 \mathrm{dist}(x,B^c)^2 .$
+
+Then, denoting
+
+:$a := \| \varphi \cdot \nu \|_1 / \| \varphi \cdot \mu \|_1 = \frac{ \int_{\mathbb{R}^d} |\varphi(x) \, \mathrm{d}\mu(x)| }{ \int_{\mathbb{R}^d} |\varphi(x) \, \mathrm{d}\nu(x)| } ,$
+
+we have
+
+$W_2 (a\varphi \cdot \mu , \varphi \cdot \nu) \leq C(n)^{\frac{1}{2}} \left( \frac{ c_2 m_2 }{ c_1 m_1 } \right)^{\frac{3}{2}} k c_1^{-\frac{1}{2}} W_2(\mu,\nu) ,$
+
+for $C(n) < \infty$ some absolute constant depending only on $n$. Moreover, taking $C(n) := 2^{11} n$ fits. Furthermore, that $\varphi$ is supported in a ball is not necessary, as it can be supported in a cube or a simplex.
+
+The proof can be found in <ref name="Peyre"/>.
+
+## Connection with the Vlasov-Poisson Equation
+
+Loeper <ref name="Loeper"/> contributed an earlier result on a bound between $W_2$ and $\dot{H}^{-1}$ for bounded densities in studying the existence of solutions to the [Vlasov-Poisson equation](https://en.wikipedia.org/wiki/Vlasov_equation). Namely, Loeper proved that that if $\rho_1 , \rho_2$ be probability measures on $\mathbb{R}^d$ with $L^{\infty}$ densities with respect to the Lebesgue measure. Let $\Psi_i$, $i = 1, 2$ solve
+
+:$-\Delta \Psi_i = \rho_i \qquad \text{in } \mathbb{R}^d ,$
+
+:$\Psi_i(x) \to 0 \qquad \text{as } |x| \to \infty ,$
+
+in the integral sense, that is,
+
+:$\Psi_i(x) = \frac{1}{4\pi} \int_{\mathbb{R}^d} \frac{\rho_i(y)}{|x - y|} \, \mathrm{d}y .$
+
+Then
+
+$\| \nabla \Psi_1 - \nabla \Psi_2 \|_{L^2(\mathbb{R}^d)} \leq \left[ \max \left \{ \| \rho_1 \|_{L^{\infty}} , \| \rho_2 \|_{L^{\infty}} \right \} \right]^{\frac{1}{2}} W_2(\rho_1,\rho_2) .$
+
+Loeper also extended the result to finite measures with the same total mass.
+
+## References
+
+<references>
+
+<ref name="Loeper"> \[https://www.sciencedirect.com/science/article/pii/S0021782406000067\] Loeper, Grégoire. *Uniqueness of the solution to the Vlasov–Poisson system with bounded density.* Journal de Mathématiques Pures et Appliquées, Volume 86, Issue 1, 2006, Pages 68-79, ISSN 0021-7824. </ref>
+
+<ref name="Peyre"> \[https://arxiv.org/abs/1104.4631v2\] Peyre, Rémi. *Comparison between* $W_2$ distance and $\dot{H}^{-1}$ norm, and localisation of Wasserstein distance. </ref>
+
+<ref name="Santambrogio"> [F. Santambrogio, *Optimal Transport for Applied Mathematicians*, Chapter 5, pages 209-211](https://link-springer-com.proxy.library.ucsb.edu:9443/book/10.1007/978-3-319-20828-2) </ref>
+
+</references>
