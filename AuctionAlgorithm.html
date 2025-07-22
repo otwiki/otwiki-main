@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Auction Algorithm – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +138,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Auction Algorithm</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Andrew Gracyk and Micah Pedrick </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +161,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>The auction algorithm<ref name="Peyré and Cuturi"> is an algorithm in optimal transport in which a set of buyers exchange goods for varied prices until an eventual equilibrium is reached. It is an iterative approach. The algorithm pertains to the discrete formulation of optimal transport, as well as provides a connection to the dual problem. The algorithm is useful in the field of economics<ref name="Santambrogio"> because of its ability to find an equilibrium. The algorithm was invented by Bertsekas<ref name="Bertsekas">, but it was eventually updated.</ref></ref></ref></p>
+<section id="the-assignment-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-assignment-problem">The Assignment Problem</h2>
+<p>It is necessary to introduce the assignment problem<ref name="Santambrogio"> because it applies a context in which we may apply our algorithm to find such an optimal equilibrium. Suppose we have both <span class="math inline">\(N\)</span> buyers as well as <span class="math inline">\(N\)</span> goods. We introduce <span class="math inline">\(a_{ij}\)</span> to quantify the notion of some sort of utility, benefit, or happiness the buyer receives from their corresponding good. The assignment problem therefore seeks a way to maximize <span class="math inline">\(\sum_i a_{i \sigma(i)}\)</span>, i.e., we hope to maximize the total utility. Note this is different from maximizing the utility of a particular buyer, because we seek to benefit the whole group the most. We use the index <span class="math inline">\(i\)</span> to denote a particular buyer we use the second index <span class="math inline">\(j = \sigma(i)\)</span> to denote the good, where <span class="math inline">\(\sigma\)</span> is some permutation of the goods among all of the buyers. A final thing to note is that the assignment of people to goods is one-to-one, i.e.&nbsp;there is one distinct good for every distinct buyer.</ref></p>
+<p>We’ve established what the aim of the assignment problem is, but we have yet to establish a sense of equilibrium that the auction algorithm hopes to achieve. First, we must define a price system. We say that a good <span class="math inline">\(j\)</span> has price <span class="math inline">\(p_j\)</span>, which can be rewritten <span class="math inline">\(p = (p_j)_j\)</span>. Next, we define the equilibrium condition. The equilibrium is that all buyers are content with their purchases if</p>
+<p><math display="block"> a_{i(i)} - p_{(i)} = { a*{ij} - p_j } &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*) </math></p>
+<p>is satisfied. It is important to note that the absolute value is not taken. If the absolute value is taken, then it is possible for the system to be in equilibrium when each buyer has the worst possible good, and <span class="math inline">\(\sum_i a_{i \sigma(i)}\)</span> fails to be maximized. Now, another common way to say that the system is in equilibrium is that all of the buyers are “happy.” Notationally, we say <span class="math inline">\((p, \sigma)\)</span> is an equilibrium. If this is an equilibrium, then <span class="math inline">\(\sigma\)</span> is an optimal assignment, and <span class="math inline">\(p\)</span> is optimal in the dual problem.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="the-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="the-algorithm">The Algorithm</h2>
+<p>The algorithm<ref name="Santambrogio"> starts from an arbitrary arrangement of buyers and goods. It does not matter to the algorithm who begins with what good. Denote this arbitrary arrangement with the prices and good permutation as <span class="math inline">\((p_0, \sigma_0)\)</span>. The algorithm acts with iterations, and once all buyers satisfy the “happy” condition, our algorithm is done. The algorithm is as follows:</ref></p>
+<p>*First, find a particular buyer. We will call this buyer <span class="math inline">\(i^*\)</span>. We will only choose a buyer such that <span class="math inline">\((*)\)</span> does not hold. The buyer then finds the good maximizing the difference between their personal utility and the price, i.e.&nbsp;<span class="math inline">\(\max_{j = 1,...,N} \{ a_{i^* j} - p_j \}\)</span>. This buyer exchanges their good with this other buyer that originally held this other good. Denote this new good <span class="math inline">\(j^*\)</span>.</p>
+<p>*This buyer that just purchased the good maximizing their utility is going to increase the price of this new good by some amount <span class="math inline">\(\gamma_i\)</span> until this buyer is indifferent between object <span class="math inline">\(j^*\)</span> and the second best option. Mathematically, we say <span class="math inline">\(a_{i^* j^*} - p_{j^*} = \max_{j \neq j^*} \{a_{i^* j} - p_j \}\)</span>.</p>
+<p>Our iterative procedure continues until each buyer satisfies the “happy” condition.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="complementary-slackness" class="level2">
+<h2 class="anchored" data-anchor-id="complementary-slackness"><math> -</math>Complementary Slackness</h2>
+<p>One problem with the algorithm is the possibility that it never ends, i.e.&nbsp;it iterates indefinitely. To fix such a problem, we introduce a scalar <span class="math inline">\(\epsilon &gt; 0\)</span> and we alter our condition <span class="math inline">\((*)\)</span> so that the buyer is within a tolerance of being content with their purchase. Such names for this are <span class="math inline">\(\epsilon-\)</span>happy or “almost happy.” Specifically, we alter <span class="math inline">\((*)\)</span> by saying</p>
+<p><math display="block"> a_{i(i)} - p_{(i)} { a*{ij} - p_j } - . </math> Another name for the above condition is <span class="math inline">\(\epsilon-\)</span>complementary slackness<ref name="Bertsekas">. It may be necessary to modify the value for <span class="math inline">\(\epsilon\)</span> so that convergence of the algorithm is reached at a desirable rate. The algorithm maintains <span class="math inline">\(\epsilon-\)</span>complementary slackness at each iteration<ref name="Peyré and Cuturi">.</ref></ref></p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="relations-with-optimal-transport" class="level2">
+<h2 class="anchored" data-anchor-id="relations-with-optimal-transport">Relations with Optimal Transport</h2>
+<p>The auction algorithm has applications in optimal transport<ref name="Bertsekas">, mostly by extending situations in optimal transport to where the assignment problem applies. Converting optimal transport scenarios to the assignment problem gives us the opportunity to apply the auction algorithm to find a solution. Something to note is that this idea mostly applies to linear optimal transport problems. One area in which this idea can be done is network optimization problems<ref name="Bertsekas">. Shortest path and max-flow problems can be converted into assignment problems, giving the auction algorithm a chance to offer a solution. A second area is transportation problems, and another is minimum cost flow problems. A final area is convex separable network optimization problems.</ref></ref></p>
+<p>Allow us to provide an example of how the assignment problem and the auction algorithm have applications in optimal transport<ref name="Peyré and Cuturi"> . Define two discrete measures by</ref></p>
+<p><math display="block"> = ^n (a_i)(</math><em>), &nbsp;&nbsp;&nbsp;&nbsp;= ^n (b_i)(</em>) </p>
+<p>where <span class="math inline">\(a_i\)</span> and <span class="math inline">\(b_j\)</span> denote two sets of weights and <span class="math inline">\(\delta_{x_i}\)</span> and <span class="math inline">\(\delta_{y_j}\)</span> denote the Dirac function evaluated at certain locations (i.e., infinitely large at such position and trivial elsewhere). We seek a map that translocates the mass <span class="math inline">\(\alpha\)</span> to the mass <span class="math inline">\(\beta\)</span>, where each point associated with the mass <span class="math inline">\(\alpha\)</span> is tied to a point for <span class="math inline">\(\beta\)</span>. From this, we may apply the assignment problem. There exists a permutation <span class="math inline">\(\sigma\)</span> that associates each location for one mass with the other. We must find a permutation such that a cost function is minimized, i.e.,</p>
+<p><math display="block"> _{T} </math></p>
+<p>where <span class="math inline">\(c(x,y)\)</span> is a cost function and <span class="math inline">\(T\# \alpha = \beta\)</span> denotes the map transferring the masses spread across locations in <span class="math inline">\(\alpha\)</span> to those in <span class="math inline">\(\beta\)</span>. The reason this map can be interpreted as a permutation is because the masses are constructed from a discrete number of points. Note that this minimization problem is analogous to our utility maximization problem previously discussed.</p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><references> <ref name="Bertsekas"><a href="https://www.mit.edu/~dimitrib/Auction_Encycl.pdf">D.P. Bertsekas, <em>Auction Algorithms</em>, Laboratory for Information and Decision Systems.</a></ref> <ref name="Santambrogio"><a href="https://link-springer-com.proxy.library.ucsb.edu:9443/content/pdf/10.1007%2F978-3-319-20828-2.pdf">F. Santambrogio, <em>Optimal Transport in Applied Mathematics</em>, Chapter 1, 6.</a></ref> <ref name="Peyré and Cuturi"><a href="https://arxiv.org/pdf/1803.00567.pdf">G. Peyré and M. Cuturi, <em>Computational Optimal Transport</em>, Chapter 2, 3.</a></ref> </references></p>
 
 
 </section>
