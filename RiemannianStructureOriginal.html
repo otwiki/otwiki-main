@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Christian Hong">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Formal Riemannian Structure of the Wasserstein metric – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +139,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Formal Riemannian Structure of the Wasserstein metric</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Christian Hong </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +162,25 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>Given a closed and convex space <span class="math inline">\(X \subseteq R^d\)</span>, two probability measures on the same space, <span class="math inline">\(\mu, \nu \in \mathcal{P}_2(X)\)</span>, the 2-Wasserstein metric is defined as</p>
+<p>:<span class="math inline">\(W_2(\mu, \nu) := \min_{\gamma \in \Gamma(\mu, \nu)} \left( \int |x_1 - x_2|^2 \, d\gamma(x_1, x_2) \right)^{1/2}\)</span></p>
+<p>where <span class="math inline">\(\Gamma(\mu, \nu)\)</span> is the set of [[Kantorovich Problem|transport plans]] from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>. The Wasserstein metric is indeed a metric in the sense that it satisfies the desired properties of a distance function between probability measures on <span class="math inline">\(\mathcal{P}_2(X)\)</span>. Moreover, the Wasserstein metric can be used to define a formal Riemannian metric on <span class="math inline">\(\mathcal{P}_2(X)\)</span>. Such a formal metric structure allows one to define angles and lengths of vectors at each point in our ambient space.</p>
+<section id="tangent-space-induced-by-the-wasserstein-metric" class="level2">
+<h2 class="anchored" data-anchor-id="tangent-space-induced-by-the-wasserstein-metric">Tangent Space Induced by the Wasserstein Metric</h2>
+<p>A convenient way to formalize tangent vectors in this setting is to consider time derivatives of curves on the manifold. A tangent vector at a point <span class="math inline">\(\rho\)</span> would be the time derivative at 0 of a curve, <span class="math inline">\(\rho(t)\)</span>, where <span class="math inline">\(\rho(0) = \rho\)</span><ref name="Villani1">. Since we are dealing with a space of probability measures, additional restrictions need to be added in order to make our tangent space well-defined. For example, we would like our trajectory to satisfy the continuity equation <span class="math inline">\(\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = 0\)</span>. There are many such vector fields that solve the continuity equation, so we can restrict to a vector field that minimizes kinetic energy, which is defined as <span class="math inline">\(\int \rho|v|^2\)</span>. This choice of tangent vectors is justified by the following lemma</ref></p>
+<p>:<strong>Lemma</strong><ref name="Ambrosio, Gigli, Savaré"> A vector <span class="math inline">\(v \in L^2(\rho; X)\)</span> belongs to the tangent cone at <span class="math inline">\(\rho\)</span> iff :<span class="math inline">\(\lVert v + w \rVert \ge \lVert v \rVert \; \forall w \in L^2(\rho; X) \; \mbox{such that} \; \nabla \cdot (w\rho) = 0\)</span></ref></p>
+<p>where we are taking the <span class="math inline">\(L^2(\rho, X)\)</span> norm. Divergence condition implies that our tangent vectors are equivalent up to a vector field with zero divergence. This implies that <span class="math inline">\(v\)</span> is in fact a gradient of some function <span class="math inline">\(u\)</span>, in which case our continuity equation becomes</p>
+<p>:<span class="math inline">\(\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \nabla u) = 0\)</span><ref name="Villani1"></ref></p>
+<p>This is an elliptic partial differential equation, so one can apply tools used for that class of PDEs in order to determine existence and uniqueness of the tangent vectors.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="riemannian-metric-induced-by-the-wasserstein-metric" class="level2">
+<h2 class="anchored" data-anchor-id="riemannian-metric-induced-by-the-wasserstein-metric">Riemannian Metric Induced by the Wasserstein Metric</h2>
+<p>Given two tangent vectors at a point <span class="math inline">\(\rho\)</span> in our space, <span class="math inline">\(\mathcal{P}_2(X)\)</span>, we can define the Riemannian metric as follows</p>
+<p>:<span class="math inline">\(\left\langle \frac{\partial \rho}{\partial t_1}, \frac{\partial \rho}{\partial t_2} \right\rangle_\rho = \int \rho \langle \nabla u_1, \nabla u_2 \rangle\)</span><ref name="Villani2"> Here, <span class="math inline">\(\frac{\partial \rho}{\partial t_1}, \frac{\partial \rho}{\partial t_2}\)</span> are tangent vectors at <span class="math inline">\(\rho\)</span>, and <span class="math inline">\(u_1, u_2\)</span> are solutions to the modified continuity equation from the previous section. This metric defines an inner product at every point in our space, <span class="math inline">\(\mathcal{P}_2(X)\)</span>. This not only allows one to define [[Geodesics and generalized geodesics|geodesics]] in this space, but the metric can be used to define calculus operators such as gradients and Hessians. These operators can be applied to in a similar manner to the same operators in finite dimensional Riemannian manifolds.</ref></p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
-</section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="DiscreteOT">Discrete Optimal Transport</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Auction_Algorithm">Auction Algorithm</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
-</section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x)">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><references> <ref name="Ambrosio, Gigli, Savaré "><a href="https://link.springer.com/content/pdf/10.1007%2Fb137080.pdf">L. Ambrosio, N. Gigli,G. Savaré, <em>Gradient Flows in Metric Spaces and in the Space of Probability Measures</em>, p.&nbsp;189-191</a></ref> <ref name="Villani1"><a href="https://people.math.gatech.edu/~gangbo/Cedric-Villani.pdf">C. Villani, <em>Topics in Optimal Transportation</em>, p.&nbsp;245-247</a></ref> <ref name="Villani2"><a href="https://people.math.gatech.edu/~gangbo/Cedric-Villani.pdf">C. Villani, <em>Topics in Optimal Transportation</em>, p.&nbsp;250-251</a></ref> </references></p>
 
 
 </section>
