@@ -41,8 +41,8 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 ### Numerical methods for optimal transport
 
--   [Discrete Optimal Transport](DiscreteOT)
--   [Auction Algorithm](https://www.otwiki.xyz/wiki/Auction_Algorithm)
+-   [Discrete Optimal Transport](DiscreteOT.qmd)
+-   [Auction Algorithm](AuctionAlgorithm.qmd)
 -   [Semidiscrete Optimal Transport](https://www.otwiki.xyz/wiki/Semidiscrete_Optimal_Transport)
 -   [Entropic Regularization and Sinkhorn's Algorithm](entropic_regularization_and_sinkhorn.qmd)
 -   [Sliced Wasserstein Distance](sliced_wasserstein_metric.qmd)

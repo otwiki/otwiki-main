@@ -1,0 +1,50 @@
+---
+title: "Auction Algorithm"
+authors: Andrew Gracyk and Micah Pedrick
+---
+
+The auction algorithm<ref name="Peyré and Cuturi"/> is an algorithm in optimal transport in which a set of buyers exchange goods for varied prices until an eventual equilibrium is reached. It is an iterative approach. The algorithm pertains to the discrete formulation of optimal transport, as well as provides a connection to the dual problem. The algorithm is useful in the field of economics<ref name="Santambrogio"/> because of its ability to find an equilibrium. The algorithm was invented by Bertsekas<ref name="Bertsekas"/>, but it was eventually updated.
+
+## The Assignment Problem
+
+It is necessary to introduce the assignment problem<ref name="Santambrogio"/> because it applies a context in which we may apply our algorithm to find such an optimal equilibrium. Suppose we have both $N$ buyers as well as $N$ goods. We introduce $a_{ij}$ to quantify the notion of some sort of utility, benefit, or happiness the buyer receives from their corresponding good. The assignment problem therefore seeks a way to maximize $\sum_i a_{i \sigma(i)}$, i.e., we hope to maximize the total utility. Note this is different from maximizing the utility of a particular buyer, because we seek to benefit the whole group the most. We use the index $i$ to denote a particular buyer we use the second index $j = \sigma(i)$ to denote the good, where $\sigma$ is some permutation of the goods among all of the buyers. A final thing to note is that the assignment of people to goods is one-to-one, i.e. there is one distinct good for every distinct buyer.
+
+We've established what the aim of the assignment problem is, but we have yet to establish a sense of equilibrium that the auction algorithm hopes to achieve. First, we must define a price system. We say that a good $j$ has price $p_j$, which can be rewritten $p = (p_j)_j$. Next, we define the equilibrium condition. The equilibrium is that all buyers are content with their purchases if
+
+<math display="block"> a\_{i\sigma(i)} - p\_{\sigma(i)} = \max*{j = 1,...,N} { a*{ij} - p_j }           (\*) </math>
+
+is satisfied. It is important to note that the absolute value is not taken. If the absolute value is taken, then it is possible for the system to be in equilibrium when each buyer has the worst possible good, and $\sum_i a_{i \sigma(i)}$ fails to be maximized. Now, another common way to say that the system is in equilibrium is that all of the buyers are "happy." Notationally, we say $(p, \sigma)$ is an equilibrium. If this is an equilibrium, then $\sigma$ is an optimal assignment, and $p$ is optimal in the dual problem.
+
+## The Algorithm
+
+The algorithm<ref name="Santambrogio"/> starts from an arbitrary arrangement of buyers and goods. It does not matter to the algorithm who begins with what good. Denote this arbitrary arrangement with the prices and good permutation as $(p_0, \sigma_0)$. The algorithm acts with iterations, and once all buyers satisfy the "happy" condition, our algorithm is done. The algorithm is as follows:
+
+\*First, find a particular buyer. We will call this buyer $i^*$. We will only choose a buyer such that $(*)$ does not hold. The buyer then finds the good maximizing the difference between their personal utility and the price, i.e. $\max_{j = 1,...,N} \{ a_{i^* j} - p_j \}$. This buyer exchanges their good with this other buyer that originally held this other good. Denote this new good $j^*$.
+
+\*This buyer that just purchased the good maximizing their utility is going to increase the price of this new good by some amount $\gamma_i$ until this buyer is indifferent between object $j^*$ and the second best option. Mathematically, we say $a_{i^* j^*} - p_{j^*} = \max_{j \neq j^*} \{a_{i^* j} - p_j \}$.
+
+Our iterative procedure continues until each buyer satisfies the "happy" condition.
+
+## <math> \epsilon-</math>Complementary Slackness
+
+One problem with the algorithm is the possibility that it never ends, i.e. it iterates indefinitely. To fix such a problem, we introduce a scalar $\epsilon > 0$ and we alter our condition $(*)$ so that the buyer is within a tolerance of being content with their purchase. Such names for this are $\epsilon-$happy or "almost happy." Specifically, we alter $(*)$ by saying
+
+<math display="block"> a\_{i\sigma(i)} - p\_{\sigma(i)} \geq \max*{j = 1,...,N} { a*{ij} - p_j } - \epsilon. </math> Another name for the above condition is $\epsilon-$complementary slackness<ref name="Bertsekas"/>. It may be necessary to modify the value for $\epsilon$ so that convergence of the algorithm is reached at a desirable rate. The algorithm maintains $\epsilon-$complementary slackness at each iteration<ref name="Peyré and Cuturi"/>.
+
+## Relations with Optimal Transport
+
+The auction algorithm has applications in optimal transport<ref name="Bertsekas"/>, mostly by extending situations in optimal transport to where the assignment problem applies. Converting optimal transport scenarios to the assignment problem gives us the opportunity to apply the auction algorithm to find a solution. Something to note is that this idea mostly applies to linear optimal transport problems. One area in which this idea can be done is network optimization problems<ref name="Bertsekas"/>. Shortest path and max-flow problems can be converted into assignment problems, giving the auction algorithm a chance to offer a solution. A second area is transportation problems, and another is minimum cost flow problems. A final area is convex separable network optimization problems.
+
+Allow us to provide an example of how the assignment problem and the auction algorithm have applications in optimal transport<ref name="Peyré and Cuturi"/> . Define two discrete measures by
+
+<math display="block"> \alpha = \sum*{i=1}\^n (a_i)(*\delta{x_i}),     \beta = \sum*{i=j}\^n (b_i)(*\delta{y_j}) </math>
+
+where $a_i$ and $b_j$ denote two sets of weights and $\delta_{x_i}$ and $\delta_{y_j}$ denote the Dirac function evaluated at certain locations (i.e., infinitely large at such position and trivial elsewhere). We seek a map that translocates the mass $\alpha$ to the mass $\beta$, where each point associated with the mass $\alpha$ is tied to a point for $\beta$. From this, we may apply the assignment problem. There exists a permutation $\sigma$ that associates each location for one mass with the other. We must find a permutation such that a cost function is minimized, i.e.,
+
+<math display="block"> \min\_{T} \bigg{ \sum\_i c(x_i, T(x_i)) : T# \alpha = \beta    \bigg} </math>
+
+where $c(x,y)$ is a cost function and $T\# \alpha = \beta$ denotes the map transferring the masses spread across locations in $\alpha$ to those in $\beta$. The reason this map can be interpreted as a permutation is because the masses are constructed from a discrete number of points. Note that this minimization problem is analogous to our utility maximization problem previously discussed.
+
+## References
+
+<references> <ref name="Bertsekas">[D.P. Bertsekas, *Auction Algorithms*, Laboratory for Information and Decision Systems.](https://www.mit.edu/~dimitrib/Auction_Encycl.pdf)</ref> <ref name="Santambrogio">[F. Santambrogio, *Optimal Transport in Applied Mathematics*, Chapter 1, 6.](https://link-springer-com.proxy.library.ucsb.edu:9443/content/pdf/10.1007%2F978-3-319-20828-2.pdf)</ref> <ref name="Peyré and Cuturi">[G. Peyré and M. Cuturi, *Computational Optimal Transport*, Chapter 2, 3.](https://arxiv.org/pdf/1803.00567.pdf)</ref> </references>
