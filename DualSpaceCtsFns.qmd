@@ -17,7 +17,7 @@ Let $X$ be a locally compact Hausdorff space For any bounded linear function $\p
 
 :$<\phi, f > = \int_{X} f d \mu, \text{ for every }  f \in C_{0}(X)$. This allows us to identify $C_{0}(X)'$ with $\mathcal{M}(X)$, the space of complex Borel measures. Moreover we can endow $C_{0}(X)'$ with the total variation norm: $\| \phi \| = |\mu|(X)$.
 
-## The case of <math> C\_{b}(X)' </math>
+## The case of $C\_{b}(X)'$
 
 To describe the dual space of $C_{b}(X)$, we will focus on the behavior of functions at infinity, as in Exercise 1.23 of <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->. We first need a preliminary result: $C_{0}(X)$ is a closed (vector) subspace of $C_{b}(X)$. In other words, $C_{0}(X)$ contains all its limit points. Let $f_n(x)$ be a convergent sequence in $C_{0}(X)'$, where $f_n(x)$ are continuous functions vanishing at infinity and let $f(x) ne$ their limit then f is continuous since the uniform norm we are using provides uniform convergence. It remains to show that the limit $f(x)$ vanishes at infinity: let $n \in \N$ be such that $\|f - f_n\|_\infty <\epsilon/2$.Now since each $f_n(x)$ vanishes at infinity, we can find $K_n \subset X$ such that $|f_n(x)|< \epsilon/2$ for any $x\in X \setminus K_n$. Then we can conclude by the triangle inequality that
 
@@ -27,7 +27,7 @@ We say that a function $u \in C_{b}(X)$ admits a limit at infinity, $u(\infty)$,
 
 :$u \rightarrow u(\infty)$, Since the functions vanish at infinity this operation of assigning the limit at infinity is clearly a linear map. It's not hard to see that $l\in C_{0}(X)'$, i.e. a bounded linear operator on $C_{0}(X)$. We showed before that $C_{0}(X)$ is a closed (vector) subspace of $C_{b}(X)$ therefore we can extend $l$ to all of $C_{b}(X)$ using the formulation of the Hahn Banach Theorem for normed spaces. Let $L$ be such extension, $L \in C_{b}(X)'$ and $L=l$ on $C_{0}(X)$. Note that this functional is supported at infinity, in the sense that for any $u \in C_{0}(X)$, we have $<L,u>=0$.
 
-## Kantorovich Duality for <math> C\_{b}(X \times Y) </math>
+## Kantorovich Duality for $ C\_{b}(X \times Y) $
 
 As it can be found in Villani, Proposition 1.22 <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. --> also (\[http://34.106.105.83/wiki/Kantorovich_Problem\]), the following version of Kantorovich duality holds: let $X$ and $Y$ be locally compact Polish spaces, let $c$ be a lower semi-continuous non negative function on $X \times Y$ and let $\mu$ and $\nu$ be two Borel probability measures on $X \times Y$ respectively, then,
 
