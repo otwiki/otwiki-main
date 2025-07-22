@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Gradient flows in Hilbert spaces – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +138,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Gradient flows in Hilbert spaces</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Djordje Nikolic and Zach Wagner </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +161,63 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p><strong>Gradient Flows in Hilbert Spaces</strong> are generalizations of time-derivatives with a gradient constraint. Specifically, a gradient flow is a Hilbert Space valued function who’s time derivative lies in some generalized collection of gradient vectors. Gradient flows are a key topic in the study of non-linear time evolution partial differential equations. In this exposition, we will draw from Ambrosio et al.’s resource <em>Lectures on Optimal Transport</em> and Evans’ <em>Partial Differential Equations</em>.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The heat equation is a classic example of a time evolution partial differential equation. In particular, the heat equation is a linear parabolic partial differential equation. Such PDEs are well understood and are solvable using several different approaches. One particularly interesting technique is to view the PDE as a Banach-space valued ODE in the time variable. In this case, we can try to understand how to write the solution of the PDE as a flow in time which is a generalization of the exponential function. The techniques which one implements to find such a solution ultimately results in the Hille-Yosida theorem, which gives necessary and sufficient conditions for an operator <span class="math inline">\(T\)</span> to be infinitesimal generator of a contraction semigroup of the given PDE<ref name="Evans">. In some sense, these ideas can be extended to non-linear time evolution PDEs, leading to the general notion of flows on Hilbert spaces. We will discuss in this article how the theory of flows can be used to yield existence of a solution of a “non-linear heat equation.”</ref></p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="definitions" class="level2">
+<h2 class="anchored" data-anchor-id="definitions">Definitions</h2>
+<p>Let <span class="math inline">\(H\)</span> be a Hilbert space with inner product <span class="math inline">\(\langle\cdot,\cdot\rangle\)</span> with induced metric <span class="math inline">\(||\cdot||\)</span>. Throughout this exposition, we assume that <span class="math inline">\(f:H\rightarrow(-\infty,\infty]\)</span> is proper, so that the domain on which it takes finite values, <span class="math inline">\(\text{dom}(f)\)</span>, is not empty.</p>
+<p>First, we recall the notion of the subdifferential, rewritten from Ambrosio et al.’s definition<ref name="Ambrosio, Brué, Semola">.</ref></p>
+<p>The <strong>subdifferential</strong> of <span class="math inline">\(f\)</span> at <span class="math inline">\(x\in\text{dom}(f)\)</span> is the collection,</p>
+<p>:<span class="math inline">\(\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle+o(||u-v||) \right\rbrace\)</span></p>
+<p><em>Remark:</em> observe that we are not assuming <span class="math inline">\(f\)</span> is convex, only that it is proper. In fact, Ambrosio et al.&nbsp;discusses the case when <span class="math inline">\(f\)</span> is <span class="math inline">\(\lambda\)</span>-convex, which generalizes the notion of convexity. We have omitted that discussion for the sake of clarity and brevity. If <span class="math inline">\(f\)</span> is indeed convex, then the subdifferential becomes,</p>
+<p>:<span class="math inline">\(\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle \quad\text{for each } u\in H\right\rbrace\)</span></p>
+<p>A <strong>gradient flow</strong> <span class="math inline">\(x(t):(0,\infty)\rightarrow\text{dom}(f)\)</span> is a locally absolutely continuous function with the property that <span class="math inline">\(x'(t)\in\partial(f(x(t))\)</span> for almost every <span class="math inline">\(t\)</span> (with respect to Lebesgue measure)<ref name="Ambrosio, Brué, Semola">. Note that the <span class="math inline">\(x(t)\)</span> being locally absolutely continuous is necessary for the existence (almost everywhere) of <span class="math inline">\(x'(t)\)</span><ref name="Ambrosio, Brué, Semola">. It will be particularly useful to identify the starting point of a gradient flow <span class="math inline">\(x(t)\)</span>, which is given by <span class="math inline">\(x_0:=\lim_{t\rightarrow 0}x(t)\)</span>.</ref></ref></p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="main-existence-theorem" class="level2">
+<h2 class="anchored" data-anchor-id="main-existence-theorem">Main Existence Theorem</h2>
+<section id="from-linear-to-nonlinear-operators" class="level3">
+<h3 class="anchored" data-anchor-id="from-linear-to-nonlinear-operators">From Linear to Nonlinear Operators</h3>
+<p>Recall that the Hille-Yosida theorem states the following:</p>
+<p>:<strong>Theorem</strong><ref name="Evans"> Let <span class="math inline">\(T\)</span> be a densely defined linear operator on a Banach space (note that <span class="math inline">\(T\)</span> need not be bounded, but we assume <span class="math inline">\(T\)</span> is closed). Denote <span class="math inline">\(\rho(T):=\left\lbrace z\in\mathbb{C}:(z-T) \text{ is invertible and bounded}\right\rbrace\)</span> as the resolvent set of <span class="math inline">\(T\)</span>. Then <span class="math inline">\(T\)</span> is the infinitesimal generator of a semigroup <span class="math inline">\(S_t\)</span> if and only if, for each <span class="math inline">\(\lambda&gt;0\)</span>, we have <span class="math inline">\(\lambda\in\rho(T)\)</span> and <span class="math inline">\(||(\lambda-T)^{-1}||\leq\frac{1}{\lambda}\)</span></ref></p>
+<p>Using this result, we may view a linear time evolution PDE as a Banach space valued problem of the following form:</p>
+<p>:<span class="math inline">\(\phi'(t)=T\phi\)</span> :<span class="math inline">\(\phi(0)=\phi_0\)</span></p>
+<p>which has solution <span class="math inline">\(\phi(t):=S_t\phi_0\)</span><ref name="Evans"> . In the ODE above, <span class="math inline">\(T\)</span> denotes the linear differential operator in the original linear time evolution PDE.</ref></p>
+<p>This approach works well when <span class="math inline">\(T\)</span> is linear, but requires some significant modification in the case that <span class="math inline">\(T\)</span> is nonlinear. In particular, observe that the Hille-Yosida theorem makes use of the resolvent of the relevant linear operator. In some sense, the resolvent bypasses the problems that arise from the unboundedness of the linear operator; in particular, it makes sense to discuss power series expansions involving the resolvent. In the unbounded case, one must introduce a generalization of the resolvent.</p>
+<p>In the notation of Ambrosio et al., the analogue of the resolvent used in the proof of the Brézis-Komura Theorem is <span class="math inline">\((I+\epsilon T)^{-1}\)</span> where <span class="math inline">\(T\)</span> is a non-linear operator on a Hilbert Space <span class="math inline">\(H\)</span><ref name="Ambrosio, Brué, Semola">. Moreover, the existence argument in classical proof the Brézis-Komura Theorem requires a modification to the generalized resolvent of <span class="math inline">\(T\)</span>. This modification is the <strong>Yosida Regularization,</strong><ref name="Ambrosio, Brué, Semola"></ref></ref></p>
+<p>:<span class="math inline">\(Y(T,\epsilon):=\frac{I-(I+\epsilon T)^{-1}}{\epsilon}\)</span></p>
+<p>where <span class="math inline">\(\epsilon\)</span> is some non-negative parameter. The Yosida Regularization, being Lipschitz as an operator on <span class="math inline">\(H\)</span> with Lipschitz constant <span class="math inline">\(\frac{2}{\epsilon}\)</span> <ref name="Brezis">, allows one to construct the starting point for a solution in the Brézis-Komura Theorem.<ref name="Evans"> This is analogous to the [[The_Moreau-Yosida_Regularization|Moreau-Yosida Regularization]], where lower semicontinuous function is approximated by a Lipschitz function.</ref></ref></p>
+<p>Another way to see the Yosida Regularization is via a time-discretization, the approach first used by Jordan, Kinderlehrer and Otto<ref name="JKO">. There are two ways of discretizing a gradient flow, namely Euler schemes, explicit one:</ref></p>
+<p>:<span class="math inline">\(\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n})\)</span>, where <span class="math inline">\(X_{\epsilon}^{0} = X^{0}\)</span>, and implicit one:</p>
+<p>:<span class="math inline">\(\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n+1})\)</span>, where <span class="math inline">\(X_{\epsilon}^{0} = X^{0}.\)</span></p>
+<p>Note that for implicit scheme <span class="math inline">\(X_{\epsilon}^{n} = (I + \nabla f)^{-n}X_{\epsilon}^{0}.\)</span></p>
+<p>Explicit one is easier for implementation, but the implicit one is more natural here since it decreases, same as <span class="math inline">\(f(x(t)).\)</span> However, using our definition of gradient flow <span class="math inline">\(\partial f\)</span>, we can define Yosida Regularization of <span class="math inline">\(\partial f\)</span> with step <span class="math inline">\(\epsilon\)</span>,</p>
+<p>:<span class="math inline">\((\partial f)_{\epsilon} = :=\frac{I-(I+\epsilon (\partial f))^{-1}}{\epsilon}.\)</span></p>
+<p>Now, implicit scheme can be interpreted as explicit scheme applied to above Yosida Regularizaton. Namely,</p>
+<p>:<span class="math inline">\(X_{\epsilon}^{n+1}-X_{\epsilon}^{n} = (I + \partial f)^{-1}X_{\epsilon}^{n} - X_{\epsilon}^{n} = -\epsilon (\partial f)_{\epsilon} X_{\epsilon}^{n},\)</span></p>
+<p>as we claimed (more details could be found here <ref name="Santambrogio">, <ref name="Villani">, <ref name="Ambrosio, Brué, Semola"> ).</ref></ref></ref></p>
+<p>In order to formulate the Brézis-Komura Theorem, we introduce <span class="math inline">\(\lambda\)</span>- convexity:</p>
+<p>:<strong>Definition</strong><ref name="Ambrosio, Brué, Semola"> Given <span class="math inline">\(\lambda \in \mathbb{R},\)</span> we say that <span class="math inline">\(f:H \rightarrow (-\infty,\infty]\)</span> is <span class="math inline">\(\lambda\)</span>- convex if <span class="math inline">\(f - \frac{\lambda}{2}|\cdot|^{2}\)</span> is convex.</ref></p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="the-brézis-komura-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="the-brézis-komura-theorem">The Brézis-Komura Theorem</h3>
+<p>We restate the Brézis-Komura Theorem as is stated in Ambrosio et al.</p>
+<p>:<strong>Theorem</strong><ref name="Ambrosio, Brué, Semola"> Assume that <span class="math inline">\(f\)</span> is <span class="math inline">\(\lambda\)</span>-convex for some <span class="math inline">\(\lambda \in \mathbb{R}\)</span> and lower semicontinuous. For every <span class="math inline">\(x_{0}\in\overline{\text{dom}(f)}\)</span>, there exists a unique gradient flow <span class="math inline">\(x(t):=S_tx_0\)</span> starting at <span class="math inline">\(x_{0}.\)</span> The family of operators <span class="math inline">\(\left\lbrace S_t\right\rbrace_{t&gt; 0},\)</span> satisfies the semigroup property <span class="math inline">\(S_{t+s} = S_{t} \circ S_{s},\)</span> and the contractivity property :<span class="math inline">\(|S_{t}x_{0} - S_{t}y_{0}| \leq e^{-\lambda t}|x_{0}-y_{0}| \quad \forall x_{0},y_{0} \in \overline{\text{dom}(f)}.\)</span></ref></p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
 </section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
+<section id="example-and-applications" class="level2">
+<h2 class="anchored" data-anchor-id="example-and-applications">Example and Applications</h2>
+<p>As suggested by our previous discussion, the Brézis-Komura Theorem may be used to assert the existence of flows solving certain nonlinear time-evolution PDEs. Several nonlinear time-evolution PDEs and their solutions are discussed by both Ambrosio et al.&nbsp;and Evans. A simple example consists of a particular case of the so-called <span class="math inline">\(p\)</span>-Laplace equation<ref name="Ambrosio, Brué, Semola"> on <span class="math inline">\(L^2(\mathbb{R}^n)\)</span>, which seeks to find a solution to the heat-like equation <span class="math inline">\(u_t-\nabla\cdot(|\nabla u|^2\nabla u)=0\)</span>. Motivated by the applicable variational formulation of this problem, one may consider the function <span class="math inline">\(T(u):=\int_{\mathbb{R}^n}\frac{|\nabla u|^4}{4}\)</span> whenever <span class="math inline">\(u\in L^2(\mathbb{R}^n)\cap W^{1,4}(\mathbb{R}^n)\)</span>, with <span class="math inline">\(T(u):=\infty\)</span> otherwise. Applying the Brézis-Komura Theorem yields a flow <span class="math inline">\(x(t)\)</span> such that <span class="math inline">\(x'(t)=\nabla\cdot(|\nabla x|^2\nabla x)\)</span>. Some care must be taken to show that the subdifferential of <span class="math inline">\(T\)</span> coincides with the right hand side of the expression for <span class="math inline">\(x'(t)\)</span>.</ref></p>
+<p>In general, the <span class="math inline">\(p\)</span>-Laplace equation is given by <span class="math inline">\(u_t-\nabla\cdot(|\nabla u|^{p-2}\nabla u)=0\)</span> and is solved on <span class="math inline">\(L^2(\mathbb{R}^n)\)</span>. Note that the <span class="math inline">\(p\)</span>-Laplace equation is a generalization of the heat equation and we may recover the heat equation on <span class="math inline">\(L^2(\mathbb{R}^n)\)</span> when <span class="math inline">\(p=2\)</span>. In that case, the Brézis-Komura Theorem may be applied to the function <span class="math inline">\(T(u):=\int_{\mathbb{R}^n}\frac{|\nabla u|^2}{2}\)</span> whenever <span class="math inline">\(u\in H^1(\mathbb{R}^n)\)</span>, with <span class="math inline">\(T(u):=\infty\)</span> otherwise. Thus, we acquire the existence of a gradient flow which satisfies the heat equation. Heat equation can also be seen as a gradient flow for the energy functional <span class="math inline">\(T(u) = \int |u|^{2},\)</span> where metric tensor is defined by <span class="math inline">\(H^{-1}\)</span> metric. Hence, there are many ways to interpret PDE as a gradient flow.</p>
+<p>If we look at the similar energy functional <span class="math inline">\(T(\rho) = |\rho|_{H^{-1}(\Omega)}^{2}\)</span> for probability density function <span class="math inline">\(\rho,\)</span> we get gradient flow <span class="math inline">\(\frac{\partial \rho}{\partial t} = - \nabla \cdot (\rho \nabla \Delta^{-1}\rho),\)</span> that is studied in Ginzburg-Landau dynamics (see <ref name="Villani">).</ref></p>
+<p>The Brézis-Komura Theorem is also used to assert the existence of the Riemannian Heat Semigroup<ref name="Ambrosio, Brué, Semola">. This forms the starting point for [[Optimal Transport and Ricci curvature|connecting optimal transport and ricci curvature]].</ref></p>
+<p>Denote the Boltzmann’s <span class="math inline">\(H\)</span> functional <span class="math inline">\(T(\rho) = \int \rho \log(\rho)\)</span> for probability density function <span class="math inline">\(\rho\)</span>. If we use the Wasserstein distance <span class="math inline">\(W_{2}\)</span>, then the gradient flow satisfies the <a href="http://34.106.105.83/wiki/The_continuity_equation_and_Benamour_Brenier_formula">Continuity Equation</a> <span class="math inline">\(\frac{\partial \rho}{\partial t} + \nabla \cdot (v\rho) = 0,\)</span> where <span class="math inline">\(v=\frac{-\nabla \rho}{\rho}.\)</span> Hence, this is also the heat equation, <span class="math inline">\(\frac{\partial \rho}{\partial t} = \Delta \rho.\)</span></p>
 </section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="./ConvergenceMetrizability.html">Convergence of Measures and Metrizability</a></li>
-<li><a href="./FenchelMoreau.html">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="./FenchelRockafellar.html">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="./MoreauYosida.html">The Moreau-Yosida Regularization</a></li>
-<li><a href="./GFHilbert.html">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><references> <ref name="Ambrosio, Brué, Semola"><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a></ref> <ref name="Evans"> L Evans, <em>Partial Differential Equations</em>, p.&nbsp;435-443, p.&nbsp;562-579</ref> <ref name="Brezis"> H.Brezis, <em>Functional Analysis, Sobolev Spaces and Partial Differential Equations</em>, p.&nbsp;181-182</ref> <ref name="JKO"> Jordan, R., Kinderlehrer, D., and Otto, F., <em>The variational formulation of the Fokker-Planck equation</em>, SIAM J.Math Anal. 29, 1 (1998) </ref> <ref name="Santambrogio"> F.Santambrogio, <em>Optimal Transport for Applied Mathematicians</em>, p.287 </ref> <ref name="Villani"> C.Villani, <em>Topics in Optimal Transportation</em>, p.&nbsp;260-261 </ref> </references></p>
 
 
 </section>
