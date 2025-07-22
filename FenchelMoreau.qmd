@@ -1,0 +1,54 @@
+---
+title: "Fenchel-Moreau and Primal/Dual Optimization Problems"
+author: Katy Craig
+---
+
+The Fenchel-Moreau Theorem<ref name="Brezis" /> is a fundamental result in convex analysis, characterizing the class of functions for which a function equals its biconjugate. A key consequence of this theorem is that is provides sufficient conditions for the equivalence of *primal* and *dual* optimization problems.<ref name="Rockafellar" />
+
+## Fenchel-Moreau Theorem
+
+Given a normed vector space *X* and $f: X \to \mathbb{R} \cup \{+\infty\}$, then
+
+:$f \text{ is convex and lower semicontinuous} \iff f^{**} = f.$
+
+## Background on Convex Conjugate Functions
+
+Let *X* be a normed vector space, and let \_X\*\_ denote its topological dual. Given an extended real-valued function $f: X \to \mathbb{R} \cup \{+\infty\}$, its *convex conjugate* $f^*:X^* \to \mathbb{R} \cup \{+\infty\}$ is defined by
+
+:$f^*(y):=\sup_{x \in X} \{ \langle y,x \rangle - f(x) \} \quad \forall y \in X^*.$
+
+An immediate consequence of this definition is *Young's Inequality*,
+
+:$f^*(y) +f(x) \geq \langle y,x \rangle \quad \forall x \in X, y \in X^* .$
+
+Furthermore, it follows directly from the definition that, for *any* function *f*, its conjugate function \_f\*\_ is convex and lower semicontinuous.
+
+In a similar way, for any function *f*, its the *biconjugate* function $f^{**}:X \to \mathbb{R} \cup \{+\infty\}$ is defined by
+
+:$f^{**}(x):=\sup_{y \in X^*} \{ \langle y,x \rangle - f^*(y) \} \quad \forall y \in X^*.$
+
+As above, the biconjugate function \_f\*\*\_ is always convex and lower semicontinuous. Furthermore, by a second application of Young's inequality, we have
+
+:$f^{**}(x) \leq f(x) \quad \forall x \in X.$
+
+Since \_f\*\*\_ is always convex and lower semicontinuous, in order for equality to hold for all *x*, it is necessary that *f* also be convex and lower semicontinuous. The heart of Fenchel-Moreau Theorem is that this condition is not just necessary, but sufficient.
+
+## Application to Primal/Dual Optimization Problems
+
+An important consequence of the Fenchel-Moreau Theorem is that it provides sufficient conditions for the equivalence of primal and dual optimization problems. Given a normed vector space *X* and a lower semicontinuous, convex function $f: X \to \mathbb{R}\cup \{+\infty\}$, the *primal* optimization problem is given by
+
+:$\inf_{x \in X} f(x).$
+
+The corresponding dual problem arises from a suitable \`\`perturbation" of the primal problem, subject to a parameter *u* ∈ *U*, where *U* is also a normed vector space. In particular, let $F:X \times U \to \mathbb{R} \cup \{+\infty\}$ be a proper convex function so that $f(x) = F(x,0)$. Then the corresponding *primal* and *dual* problems may be written as
+
+:$P_0 := \inf_{x \in X} F(x,0)$ :$D_0 := \sup_{v \in U^*} -F^*(0,v)$
+
+The formulation of these problems becomes even simpler from the perspective of the *inf-projection* $P(u) := \inf_{x} F(x,u)$. With this notation, the primal and dual problems are given by
+
+:$P_0 = P(0)$ :$D_0 =P^{**}(0)$
+
+Therefore, by the Fenchel-Moreau theorem, a sufficient condition for equivalence of the primal and dual problems is that the inf-projetion function *P(u)* is convex and lower semicontinuous.
+
+## References
+
+<references> <ref name="Brezis">[H. Brezis, *Functional Analysis, Sobolev Spaces, and Partial Differential Equations*, Chapter 1.](https://link.springer.com/book/10.1007/978-0-387-70914-7)</ref> <ref name="Rockafellar">[R. T. Rockafellar and R. J-B. Wets, *Variational Analysis*, Chapter 11.](https://link.springer.com/book/10.1007/978-3-642-02431-3)</ref> </references>
