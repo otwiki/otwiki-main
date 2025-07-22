@@ -1,0 +1,54 @@
+---
+title: "Dual space of C 0(x) vs C b(x)"
+author: Fabio Ricci
+---
+
+## Introduction
+
+In the case that the space $X$ is compact then all continuous functions belong to $C_{0}(X)$ as we will show in the next section. On the other hand if the space $X$ is not compact, we always have the inclusion $C(X) \supseteq C_{0}(X)$, but there may be some continuous functions that do not belong to $C_{0}(X)$. Some of them may even even be bounded and still not belong to $C_{0}(X)$, which motivates us to consider the dual space of $C_{0}(X)$ and the dual space of $C_{b}(X)$.
+
+## Background and Statement
+
+Let $C_{0}(X) = \{f \in C(X) \text{ and } \forall \epsilon >0 \text{ } \exists \text{ a compact set} K\subset X \text{ s.t. } \mid f (x) \mid < \epsilon \text{ } \forall x\in X\setminus K  \}$ equipped with the sup norm. In other words this is the space of continuous functions vanishing at infinity. When $X$ is compact we can choose $K=X$ in the previous definition, and since properties on the empty set are trivially true, we can conclude that $C(X) = C_{0}(X)$. Let $C_{b}(X)$ be the space of bounded continuous functions on $X$ together with the sup norm. Again when $X$ is compact we have not introduced a new space since every continuous function on a compact metric space is bounded, to see this assume on the contrary that there is a sequence $\{x_n\}_{n \in \N}$ such that $|f(x_n)| \rightarrow \infty$ as $n \rightarrow \infty$. By compactness there is a sub-sequence $\{x_{n_k}\}_{i \in \N}$ converging to a point $\hat{x} \in X$. Therefore by continuity of $f$ we have $|f(x_{n_k})| \rightarrow |f(\hat{x})| < \infty$, and this is our desired contradiction. We conclude that $C(X) = C_{b}(X) = C_{0}(X)$.
+
+The rest of this discussion will consider the case where $X$ is not compact. Rather than equality of the three spaces, we have the inclusions: $C(X) \supset C_{b}(X) \supset C_{0}(X)$ \## The case of <math> C\_{0}(X)' </math> The representation of the dual space of $C_{0}(X)$ is a described by the following well known result in Functional Analysis (Riesz Representation Theorem 6.19 in Rudin <!-- [@citation] Rudin, Walter. Real and Complex Analysis, 1966. -->):
+
+Let $X$ be a locally compact Hausdorff space For any bounded linear function $\phi$, i.e. an element of the dual space $C_{0}(X)'$, there is a unique complex Borel measure $\mu$ such that the following holds:
+
+:$<\phi, f > = \int_{X} f d \mu, \text{ for every }  f \in C_{0}(X)$. This allows us to identify $C_{0}(X)'$ with $\mathcal{M}(X)$, the space of complex Borel measures. Moreover we can endow $C_{0}(X)'$ with the total variation norm: $\| \phi \| = |\mu|(X)$.
+
+## The case of <math> C\_{b}(X)' </math>
+
+To describe the dual space of $C_{b}(X)$, we will focus on the behavior of functions at infinity, as in Exercise 1.23 of <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->. We first need a preliminary result: $C_{0}(X)$ is a closed (vector) subspace of $C_{b}(X)$. In other words, $C_{0}(X)$ contains all its limit points. Let $f_n(x)$ be a convergent sequence in $C_{0}(X)'$, where $f_n(x)$ are continuous functions vanishing at infinity and let $f(x) ne$ their limit then f is continuous since the uniform norm we are using provides uniform convergence. It remains to show that the limit $f(x)$ vanishes at infinity: let $n \in \N$ be such that $\|f - f_n\|_\infty <\epsilon/2$.Now since each $f_n(x)$ vanishes at infinity, we can find $K_n \subset X$ such that $|f_n(x)|< \epsilon/2$ for any $x\in X \setminus K_n$. Then we can conclude by the triangle inequality that
+
+:$|f(x)|  \leq |f(x) - f_n(x)| + |f_n(x)| < \epsilon$. That is, $f(x) \in C_{0}(X)$. This proves $C_{0}(X)$ is a closed subspace of $C_{b}(X)$. We may now carefully specify the local property at infinity for $C_{b}(X)$.
+
+We say that a function $u \in C_{b}(X)$ admits a limit at infinity, $u(\infty)$, if for any $\epsilon >0$ there exists a compact set $K_{\epsilon} \sub X$ such that $x \notin K_{\epsilon}$ implies $|u(x) - u(\infty)|\leq \epsilon$. We can see this operation as a linear function 'limit at infinity'. Thanks to Hahn-Banach we can build a continuous extension of it for all of $C_{b}(X)$. This is another spectacular consequence of Axiom of Choice (Hahn-Banach theorem \[https://en.wikipedia.org/wiki/Hahn%E2%80%93Banach_theorem\] in this case). Intuitively we can partition the space $C_{b}(X)$ into equivalence classes of the equivalence relation of having the same limit at infinity. Then by to the axiom of choice we choose a representative for each class. The problem with this argument, however, is that we don't know yet that every function in $C_{b}(X)$ admits such a limit. But this will not stop us from falling down the rabbit hole: note that every function in $C_{0}(X)$ admits such a limit, let $l : C_{0}(X) \rightarrow \R$
+
+:$u \rightarrow u(\infty)$, Since the functions vanish at infinity this operation of assigning the limit at infinity is clearly a linear map. It's not hard to see that $l\in C_{0}(X)'$, i.e. a bounded linear operator on $C_{0}(X)$. We showed before that $C_{0}(X)$ is a closed (vector) subspace of $C_{b}(X)$ therefore we can extend $l$ to all of $C_{b}(X)$ using the formulation of the Hahn Banach Theorem for normed spaces. Let $L$ be such extension, $L \in C_{b}(X)'$ and $L=l$ on $C_{0}(X)$. Note that this functional is supported at infinity, in the sense that for any $u \in C_{0}(X)$, we have $<L,u>=0$.
+
+## Kantorovich Duality for <math> C\_{b}(X \times Y) </math>
+
+As it can be found in Villani, Proposition 1.22 <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. --> also (\[http://34.106.105.83/wiki/Kantorovich_Problem\]), the following version of Kantorovich duality holds: let $X$ and $Y$ be locally compact Polish spaces, let $c$ be a lower semi-continuous non negative function on $X \times Y$ and let $\mu$ and $\nu$ be two Borel probability measures on $X \times Y$ respectively, then,
+
+:$\inf_{\pi \in \Pi(\mu,\nu)} \int_{X \times Y} c(x,y) d\pi(x,y)= \sup_{(\phi,\psi) \in \Phi_{c}} \int_{X}\phi d\mu + \int_{X}\psi d\nu$,
+
+Here $\Pi(\mu,\nu)$ is the set of all probability measures $\pi$ that satisfy $\pi(A \times Y)= \mu(A)$ and $\pi(X \times B)= \nu(B)$ for any measurable set $A \subset X$ and any measurable set $B \subset Y$; $\Phi_{c}$ is the set of all measurable functions $(\phi,\psi) \in L^1(d\mu)\times L^1(d\nu)$ that satisfy $\phi(x)+\psi(x) \leq c(x,y)$ for $d\mu$ for almost all $x \in X$ and for $d\nu$ almost all $y \in Y$.
+
+As mentioned in Villani Section 1.3 pg. 39<!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->, if we try to extend the proof of the compact case we run into a problem since the dual of $C_{b}(X\times Y)$ strictly contains $\mathcal{M}(X\times Y)$. If we restrict to the closed subspace $C_{0}(X\times Y) \subset C_{b}(X\times Y)$ then any element in $C_{b}(X\times Y)'$ which acts continuously, as mentioned before, can be represented by a unique $\pi \in \mathcal{M}(X\times Y)$ such that
+
+:$<l,f> = \int_{X\times Y} f(x,y) d \pi, \text{ for every }  f \in C_{0}(X \times Y)$.
+
+We can then write $l = \pi +R$ where $R$ is a continuous linear functional supported at infinity, i.e. $\forall f \in C_{0}(X\times Y)$ implies $<R,f>=0$.
+
+From what is discussed in the previous section, the behavior of some $R$ may not be clear at first glance as the following result shows in exercise 1.23 of <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->.
+
+Let $\mu$ and $\nu$ be two Borel probability measures on $X \times Y$ respectively There is a continuous linear functional $L$ on $C_{b}(X\times Y)$, supported at infinity, such that the following holds:
+
+:$\forall (\phi,\psi) \in C_{0}(X) \times C_{0}(Y), <L,\phi +\psi>= \int_{X}\phi d\mu + \int_{Y}\psi d\nu.  \text{        } \bigstar$. To prove this we want to apply what we have seen in the previous section. Lets consider the function $u(x,y) \in C_0(X \times Y)$: for fixed $x$ we can see this function as a function of $y$ i,e, let $\hat{u}(y)=u(x,y)$. Noticing that $\hat{u} \in  C_0(Y)$, so we can assign a limit at infinity, $l$, to $\hat{u}$ and then extend it to all $\phi \in  C_b(Y)$ following the construction of $L$ in the precious section. Similarly we will consider for any fixed $y$ the function $u(x,y) \in C_0(X \times Y)$ as a function of $x$. Note that such an extension is supported at infinity! This will allow us to first write the two functions:
+
+:$u_1(x,\infty)= l(\hat{u}(y)), u_2(\infty,y)=l(\hat{u}(x))$. Since we are only considering functions that vanish at infinity we can conclude that our $u_1 \in C_b(X)$ and $u_2 \in C_b(Y)$ satisfy the following: :$<l, u_1+u_2 >= \int_{X}u_1(x,\infty) d\mu (x) + \int_{Y}u_2(\infty,y) d\nu(y)$.
+
+Here $l$, with a slightly abuse of notation, is the simultaneous assignment of the limit at infinity in $C_b(X)$ and $C_b(Y)$. The simultaneous extension $L$, again with a little abuse of notation, will be a bounded linear functional on $C_{b}(X\times Y)$and it will satisfy $\bigstar$ when restricted to $C_{0}(X)\times C_{0}(Y)$. By construction, shown in the previous section, $L$ is supported at infinity which means that when restricted to $C_{0}(X \times Y)$, it acts like the $0$ map. This means that we can't conclude easily that $L$ can be represented as an element of $\Pi(\mu,\nu)$.
+
+It turns out that in our hypothesis we can have the decomposition $L = \pi +R$ where $R$ is a continuous linear functional supported at infinity and then $L$ can be indeed represented as an element of $\Pi(\mu,\nu)$; we will write: $L \in \Pi(\mu,\nu)$. The key idea to prove this is to use the identity $<L,1>=1$. The detailed proof can be found again in Villani lemma 1.25 <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->.

@@ -58,7 +58,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 ### Mathematical foundations
 
--   [Dual space of C_0(x) vs C_b(x)](https://www.otwiki.xyz/wiki/Dual_space_of_C_0(x)_vs_C_b(x))
+-   [Dual space of C_0(x) vs C_b(x)](DualSpaceCtsFns.qmd)
 -   [Convergence of Measures and Metrizability](https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability)
 -   [Fenchel-Moreau and Primal/Dual Optimization Problems](https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems)
 -   [Fenchel-Rockafellar and Linear Programming](https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming)
