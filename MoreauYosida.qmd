@@ -1,6 +1,6 @@
 ---
 title: "The Moreau-Yosida Regularization"
-author:Alexander Sabater
+author: Alexander Sabater
 ---
 
 The **Moreau-Yosida regularization** is a technique used to approximate lower semicontinuous functions by [Lipschitz functions](https://en.wikipedia.org/wiki/Lipschitz_continuity). An important application of this result is to prove Portmanteau's Theorem, which states that integration against a lower semicontinuous and bounded below function is lower semicontinuous with respect to the (ConvergenceMetrizability.qmd) in the space of [probability measures](https://en.wikipedia.org/wiki/Probability_measure).
