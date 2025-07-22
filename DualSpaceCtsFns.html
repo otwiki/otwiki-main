@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Fabio Ricci">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Dual space of C 0(x) vs C b(x) – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +139,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Dual space of C 0(x) vs C b(x)</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Fabio Ricci </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +162,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In the case that the space <span class="math inline">\(X\)</span> is compact then all continuous functions belong to <span class="math inline">\(C_{0}(X)\)</span> as we will show in the next section. On the other hand if the space <span class="math inline">\(X\)</span> is not compact, we always have the inclusion <span class="math inline">\(C(X) \supseteq C_{0}(X)\)</span>, but there may be some continuous functions that do not belong to <span class="math inline">\(C_{0}(X)\)</span>. Some of them may even even be bounded and still not belong to <span class="math inline">\(C_{0}(X)\)</span>, which motivates us to consider the dual space of <span class="math inline">\(C_{0}(X)\)</span> and the dual space of <span class="math inline">\(C_{b}(X)\)</span>.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="background-and-statement" class="level2">
+<h2 class="anchored" data-anchor-id="background-and-statement">Background and Statement</h2>
+<p>Let <span class="math inline">\(C_{0}(X) = \{f \in C(X) \text{ and } \forall \epsilon &gt;0 \text{ } \exists \text{ a compact set} K\subset X \text{ s.t. } \mid f (x) \mid &lt; \epsilon \text{ } \forall x\in X\setminus K  \}\)</span> equipped with the sup norm. In other words this is the space of continuous functions vanishing at infinity. When <span class="math inline">\(X\)</span> is compact we can choose <span class="math inline">\(K=X\)</span> in the previous definition, and since properties on the empty set are trivially true, we can conclude that <span class="math inline">\(C(X) = C_{0}(X)\)</span>. Let <span class="math inline">\(C_{b}(X)\)</span> be the space of bounded continuous functions on <span class="math inline">\(X\)</span> together with the sup norm. Again when <span class="math inline">\(X\)</span> is compact we have not introduced a new space since every continuous function on a compact metric space is bounded, to see this assume on the contrary that there is a sequence <span class="math inline">\(\{x_n\}_{n \in \N}\)</span> such that <span class="math inline">\(|f(x_n)| \rightarrow \infty\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>. By compactness there is a sub-sequence <span class="math inline">\(\{x_{n_k}\}_{i \in \N}\)</span> converging to a point <span class="math inline">\(\hat{x} \in X\)</span>. Therefore by continuity of <span class="math inline">\(f\)</span> we have <span class="math inline">\(|f(x_{n_k})| \rightarrow |f(\hat{x})| &lt; \infty\)</span>, and this is our desired contradiction. We conclude that <span class="math inline">\(C(X) = C_{b}(X) = C_{0}(X)\)</span>.</p>
+<p>The rest of this discussion will consider the case where <span class="math inline">\(X\)</span> is not compact. Rather than equality of the three spaces, we have the inclusions: <span class="math inline">\(C(X) \supset C_{b}(X) \supset C_{0}(X)\)</span> ## The case of <math> C_{0}(X)’ </math> The representation of the dual space of <span class="math inline">\(C_{0}(X)\)</span> is a described by the following well known result in Functional Analysis (Riesz Representation Theorem 6.19 in Rudin <!-- [@citation] Rudin, Walter. Real and Complex Analysis, 1966. -->):</p>
+<p>Let <span class="math inline">\(X\)</span> be a locally compact Hausdorff space For any bounded linear function <span class="math inline">\(\phi\)</span>, i.e.&nbsp;an element of the dual space <span class="math inline">\(C_{0}(X)'\)</span>, there is a unique complex Borel measure <span class="math inline">\(\mu\)</span> such that the following holds:</p>
+<p>:<span class="math inline">\(&lt;\phi, f &gt; = \int_{X} f d \mu, \text{ for every }  f \in C_{0}(X)\)</span>. This allows us to identify <span class="math inline">\(C_{0}(X)'\)</span> with <span class="math inline">\(\mathcal{M}(X)\)</span>, the space of complex Borel measures. Moreover we can endow <span class="math inline">\(C_{0}(X)'\)</span> with the total variation norm: <span class="math inline">\(\| \phi \| = |\mu|(X)\)</span>.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="the-case-of-c_bx" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-c_bx">The case of <math> C_{b}(X)’ </math></h2>
+<p>To describe the dual space of <span class="math inline">\(C_{b}(X)\)</span>, we will focus on the behavior of functions at infinity, as in Exercise 1.23 of <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->. We first need a preliminary result: <span class="math inline">\(C_{0}(X)\)</span> is a closed (vector) subspace of <span class="math inline">\(C_{b}(X)\)</span>. In other words, <span class="math inline">\(C_{0}(X)\)</span> contains all its limit points. Let <span class="math inline">\(f_n(x)\)</span> be a convergent sequence in <span class="math inline">\(C_{0}(X)'\)</span>, where <span class="math inline">\(f_n(x)\)</span> are continuous functions vanishing at infinity and let <span class="math inline">\(f(x) ne\)</span> their limit then f is continuous since the uniform norm we are using provides uniform convergence. It remains to show that the limit <span class="math inline">\(f(x)\)</span> vanishes at infinity: let <span class="math inline">\(n \in \N\)</span> be such that <span class="math inline">\(\|f - f_n\|_\infty &lt;\epsilon/2\)</span>.Now since each <span class="math inline">\(f_n(x)\)</span> vanishes at infinity, we can find <span class="math inline">\(K_n \subset X\)</span> such that <span class="math inline">\(|f_n(x)|&lt; \epsilon/2\)</span> for any <span class="math inline">\(x\in X \setminus K_n\)</span>. Then we can conclude by the triangle inequality that</p>
+<p>:<span class="math inline">\(|f(x)|  \leq |f(x) - f_n(x)| + |f_n(x)| &lt; \epsilon\)</span>. That is, <span class="math inline">\(f(x) \in C_{0}(X)\)</span>. This proves <span class="math inline">\(C_{0}(X)\)</span> is a closed subspace of <span class="math inline">\(C_{b}(X)\)</span>. We may now carefully specify the local property at infinity for <span class="math inline">\(C_{b}(X)\)</span>.</p>
+<p>We say that a function <span class="math inline">\(u \in C_{b}(X)\)</span> admits a limit at infinity, <span class="math inline">\(u(\infty)\)</span>, if for any <span class="math inline">\(\epsilon &gt;0\)</span> there exists a compact set <span class="math inline">\(K_{\epsilon} \sub X\)</span> such that <span class="math inline">\(x \notin K_{\epsilon}\)</span> implies <span class="math inline">\(|u(x) - u(\infty)|\leq \epsilon\)</span>. We can see this operation as a linear function ‘limit at infinity’. Thanks to Hahn-Banach we can build a continuous extension of it for all of <span class="math inline">\(C_{b}(X)\)</span>. This is another spectacular consequence of Axiom of Choice (Hahn-Banach theorem [https://en.wikipedia.org/wiki/Hahn%E2%80%93Banach_theorem] in this case). Intuitively we can partition the space <span class="math inline">\(C_{b}(X)\)</span> into equivalence classes of the equivalence relation of having the same limit at infinity. Then by to the axiom of choice we choose a representative for each class. The problem with this argument, however, is that we don’t know yet that every function in <span class="math inline">\(C_{b}(X)\)</span> admits such a limit. But this will not stop us from falling down the rabbit hole: note that every function in <span class="math inline">\(C_{0}(X)\)</span> admits such a limit, let <span class="math inline">\(l : C_{0}(X) \rightarrow \R\)</span></p>
+<p>:<span class="math inline">\(u \rightarrow u(\infty)\)</span>, Since the functions vanish at infinity this operation of assigning the limit at infinity is clearly a linear map. It’s not hard to see that <span class="math inline">\(l\in C_{0}(X)'\)</span>, i.e.&nbsp;a bounded linear operator on <span class="math inline">\(C_{0}(X)\)</span>. We showed before that <span class="math inline">\(C_{0}(X)\)</span> is a closed (vector) subspace of <span class="math inline">\(C_{b}(X)\)</span> therefore we can extend <span class="math inline">\(l\)</span> to all of <span class="math inline">\(C_{b}(X)\)</span> using the formulation of the Hahn Banach Theorem for normed spaces. Let <span class="math inline">\(L\)</span> be such extension, <span class="math inline">\(L \in C_{b}(X)'\)</span> and <span class="math inline">\(L=l\)</span> on <span class="math inline">\(C_{0}(X)\)</span>. Note that this functional is supported at infinity, in the sense that for any <span class="math inline">\(u \in C_{0}(X)\)</span>, we have <span class="math inline">\(&lt;L,u&gt;=0\)</span>.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
-</section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Convergence_of_Measures_and_Metrizability">Convergence of Measures and Metrizability</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="kantorovich-duality-for-c_bx-y" class="level2">
+<h2 class="anchored" data-anchor-id="kantorovich-duality-for-c_bx-y">Kantorovich Duality for <math> C_{b}(X Y) </math></h2>
+<p>As it can be found in Villani, Proposition 1.22 <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. --> also ([http://34.106.105.83/wiki/Kantorovich_Problem]), the following version of Kantorovich duality holds: let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be locally compact Polish spaces, let <span class="math inline">\(c\)</span> be a lower semi-continuous non negative function on <span class="math inline">\(X \times Y\)</span> and let <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> be two Borel probability measures on <span class="math inline">\(X \times Y\)</span> respectively, then,</p>
+<p>:<span class="math inline">\(\inf_{\pi \in \Pi(\mu,\nu)} \int_{X \times Y} c(x,y) d\pi(x,y)= \sup_{(\phi,\psi) \in \Phi_{c}} \int_{X}\phi d\mu + \int_{X}\psi d\nu\)</span>,</p>
+<p>Here <span class="math inline">\(\Pi(\mu,\nu)\)</span> is the set of all probability measures <span class="math inline">\(\pi\)</span> that satisfy <span class="math inline">\(\pi(A \times Y)= \mu(A)\)</span> and <span class="math inline">\(\pi(X \times B)= \nu(B)\)</span> for any measurable set <span class="math inline">\(A \subset X\)</span> and any measurable set <span class="math inline">\(B \subset Y\)</span>; <span class="math inline">\(\Phi_{c}\)</span> is the set of all measurable functions <span class="math inline">\((\phi,\psi) \in L^1(d\mu)\times L^1(d\nu)\)</span> that satisfy <span class="math inline">\(\phi(x)+\psi(x) \leq c(x,y)\)</span> for <span class="math inline">\(d\mu\)</span> for almost all <span class="math inline">\(x \in X\)</span> and for <span class="math inline">\(d\nu\)</span> almost all <span class="math inline">\(y \in Y\)</span>.</p>
+<p>As mentioned in Villani Section 1.3 pg. 39<!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->, if we try to extend the proof of the compact case we run into a problem since the dual of <span class="math inline">\(C_{b}(X\times Y)\)</span> strictly contains <span class="math inline">\(\mathcal{M}(X\times Y)\)</span>. If we restrict to the closed subspace <span class="math inline">\(C_{0}(X\times Y) \subset C_{b}(X\times Y)\)</span> then any element in <span class="math inline">\(C_{b}(X\times Y)'\)</span> which acts continuously, as mentioned before, can be represented by a unique <span class="math inline">\(\pi \in \mathcal{M}(X\times Y)\)</span> such that</p>
+<p>:<span class="math inline">\(&lt;l,f&gt; = \int_{X\times Y} f(x,y) d \pi, \text{ for every }  f \in C_{0}(X \times Y)\)</span>.</p>
+<p>We can then write <span class="math inline">\(l = \pi +R\)</span> where <span class="math inline">\(R\)</span> is a continuous linear functional supported at infinity, i.e.&nbsp;<span class="math inline">\(\forall f \in C_{0}(X\times Y)\)</span> implies <span class="math inline">\(&lt;R,f&gt;=0\)</span>.</p>
+<p>From what is discussed in the previous section, the behavior of some <span class="math inline">\(R\)</span> may not be clear at first glance as the following result shows in exercise 1.23 of <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->.</p>
+<p>Let <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> be two Borel probability measures on <span class="math inline">\(X \times Y\)</span> respectively There is a continuous linear functional <span class="math inline">\(L\)</span> on <span class="math inline">\(C_{b}(X\times Y)\)</span>, supported at infinity, such that the following holds:</p>
+<p>:<span class="math inline">\(\forall (\phi,\psi) \in C_{0}(X) \times C_{0}(Y), &lt;L,\phi +\psi&gt;= \int_{X}\phi d\mu + \int_{Y}\psi d\nu.  \text{        } \bigstar\)</span>. To prove this we want to apply what we have seen in the previous section. Lets consider the function <span class="math inline">\(u(x,y) \in C_0(X \times Y)\)</span>: for fixed <span class="math inline">\(x\)</span> we can see this function as a function of <span class="math inline">\(y\)</span> i,e, let <span class="math inline">\(\hat{u}(y)=u(x,y)\)</span>. Noticing that <span class="math inline">\(\hat{u} \in  C_0(Y)\)</span>, so we can assign a limit at infinity, <span class="math inline">\(l\)</span>, to <span class="math inline">\(\hat{u}\)</span> and then extend it to all <span class="math inline">\(\phi \in  C_b(Y)\)</span> following the construction of <span class="math inline">\(L\)</span> in the precious section. Similarly we will consider for any fixed <span class="math inline">\(y\)</span> the function <span class="math inline">\(u(x,y) \in C_0(X \times Y)\)</span> as a function of <span class="math inline">\(x\)</span>. Note that such an extension is supported at infinity! This will allow us to first write the two functions:</p>
+<p>:<span class="math inline">\(u_1(x,\infty)= l(\hat{u}(y)), u_2(\infty,y)=l(\hat{u}(x))\)</span>. Since we are only considering functions that vanish at infinity we can conclude that our <span class="math inline">\(u_1 \in C_b(X)\)</span> and <span class="math inline">\(u_2 \in C_b(Y)\)</span> satisfy the following: :<span class="math inline">\(&lt;l, u_1+u_2 &gt;= \int_{X}u_1(x,\infty) d\mu (x) + \int_{Y}u_2(\infty,y) d\nu(y)\)</span>.</p>
+<p>Here <span class="math inline">\(l\)</span>, with a slightly abuse of notation, is the simultaneous assignment of the limit at infinity in <span class="math inline">\(C_b(X)\)</span> and <span class="math inline">\(C_b(Y)\)</span>. The simultaneous extension <span class="math inline">\(L\)</span>, again with a little abuse of notation, will be a bounded linear functional on <span class="math inline">\(C_{b}(X\times Y)\)</span>and it will satisfy <span class="math inline">\(\bigstar\)</span> when restricted to <span class="math inline">\(C_{0}(X)\times C_{0}(Y)\)</span>. By construction, shown in the previous section, <span class="math inline">\(L\)</span> is supported at infinity which means that when restricted to <span class="math inline">\(C_{0}(X \times Y)\)</span>, it acts like the <span class="math inline">\(0\)</span> map. This means that we can’t conclude easily that <span class="math inline">\(L\)</span> can be represented as an element of <span class="math inline">\(\Pi(\mu,\nu)\)</span>.</p>
+<p>It turns out that in our hypothesis we can have the decomposition <span class="math inline">\(L = \pi +R\)</span> where <span class="math inline">\(R\)</span> is a continuous linear functional supported at infinity and then <span class="math inline">\(L\)</span> can be indeed represented as an element of <span class="math inline">\(\Pi(\mu,\nu)\)</span>; we will write: <span class="math inline">\(L \in \Pi(\mu,\nu)\)</span>. The key idea to prove this is to use the identity <span class="math inline">\(&lt;L,1&gt;=1\)</span>. The detailed proof can be found again in Villani lemma 1.25 <!-- [@citation] Villani, Cedric.  Topics In Optimal Transportation. American Mathematical Soc., 2003. -->.</p>
 
 
 </section>
