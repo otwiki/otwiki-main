@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Fenchel-Rockafellar and Linear Programming – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +138,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Fenchel-Rockafellar and Linear Programming</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Micah Pedrick and Seyit Emre Duzoylum </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +161,65 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>The Fenchel-Rockafellar Theorem is a well-known result from convex analysis that establishes a minimax principle between convex functions and their convex conjugates under some regularity conditions. One fundamental application of this theorem is the characterization of the dual problem of a finite dimensional linear program.</p>
+<section id="the-fenchel-rockafellar-theorem" class="level2">
+<h2 class="anchored" data-anchor-id="the-fenchel-rockafellar-theorem">The Fenchel-Rockafellar Theorem</h2>
+<p>Let <span class="math inline">\(\phi : X \to \mathbb{R} \cup \left\{+\infty\right\}\)</span> and <span class="math inline">\(\psi : X \to \mathbb{R} \cup \left\{+\infty\right\}\)</span> be convex, lower semicontinuous and proper functions. Suppose that there exists <span class="math inline">\(x_0 \in X\)</span> such that <span class="math inline">\(\phi(x_0),\varphi(x_0) &lt; \infty\)</span>, where <span class="math inline">\(\phi\)</span> is continuous at <span class="math inline">\(x_0\)</span>. Then, it holds that</p>
+<p><math display="block"> = {}.</math></p>
+<section id="proof" class="level3">
+<h3 class="anchored" data-anchor-id="proof">Proof</h3>
+<p>We provide a sketch of the proof, the reader is referred to Brezis<ref name="Brezis"> for further reading. Note that, by Young’s Inequality, for any <math>x X</math> and <span class="math inline">\(u \in X^*\)</span> we have <math display="block">(x) + ^</math><em>(-u) +</em> (x) + ^(u) x, -u + x, u = 0. Hence, the infimum of the left hand side is greater than or equal to the supremum of the right hand side. If the infimum is <span class="math inline">\(-\infty\)</span>, equality must be obtained, and for every <span class="math inline">\(u \in X^*\)</span> the supremum is realized; otherwise assume <span class="math inline">\(\phi(x) + \psi(x) &gt; -\infty\)</span> for all <span class="math inline">\(x \in X\)</span>, and let <span class="math inline">\(m\)</span> be the value of the infimum.</ref></p>
+<p>Let <span class="math inline">\(A := \left\{(x, t) : \phi(x) \leq t\right\},\)</span> and observe that since <span class="math inline">\(\phi\)</span> is continuous at <span class="math inline">\(x_0\)</span>, the interior of <span class="math inline">\(C\)</span> is nonempty. Likewise, let <span class="math inline">\(B := \left\{(x, t) : t \leq m - \psi(x)\right\}\)</span>. Both sets are convex, and by construction we have <span class="math inline">\(B \cap \text{int}A = \emptyset\)</span>. So a <a href="https://en.wikipedia.org/wiki/Hahn%E2%80%93Banach_theorem#Separation_of_sets">geometric Hahn-Banach Theorem</a> implies that there is some nonzero <span class="math inline">\((f, k) \in X^* \times \mathbb{R}\)</span> and <span class="math inline">\(\alpha \in \mathbb{R}\)</span> such that <math display="block"></math></p>
+<span class="math display">\[\begin{cases} \langle x, f \rangle + kt \geq \alpha, &amp; (x, t) \in A, \\ \langle x, f \rangle + kt \leq \alpha, &amp; (x, t) \in B.\end{cases}\]</span>
+<p> Since <span class="math inline">\(\phi\)</span> is finite at <span class="math inline">\(x_0\)</span>, letting <span class="math inline">\(t \to +\infty\)</span> shows that <span class="math inline">\(k\)</span> is nonnegative, and if <span class="math inline">\(k = 0\)</span>, continuity and joint finiteness imply <span class="math inline">\(\lVert f \rVert = 0\)</span>, a contradiction, so <span class="math inline">\(k &gt; 0\)</span>. Thus, we can use the inequalities above with the definitions of <span class="math inline">\(\phi^*\)</span> and <span class="math inline">\(\psi^*\)</span> to conclude that <math display="block"> ^(-f k) -k, ^(f k) k - m.</math> Which implies that <math display="block">-^(-f k) - ^(f k) m.</math> Finally, since the supremum includes this term, it must also be greater than or equal to the infimum, which yields their equality.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="application-to-linear-programs" class="level2">
+<h2 class="anchored" data-anchor-id="application-to-linear-programs">Application to Linear Programs</h2>
+<p>Let <span class="math inline">\(A_1 \in \mathbb{R}^{p \times m}\)</span>,<span class="math inline">\(A_2 \in \mathbb{R}^{q\times n}\)</span>,<span class="math inline">\(b_1 \in \mathbb{R}^{p}\)</span>, <span class="math inline">\(b_2 \in \mathbb{R}^{q}\)</span>,<span class="math inline">\(c_1 \in \mathbb{R}^{m}\)</span> and <span class="math inline">\(c_2 \in \mathbb{R}^{m}\)</span> and consider the following finite dimensional linear program<ref name="Rockafellar"></ref></p>
+<p><math display="block"> = </math></p>
+<span class="math display">\[\begin{aligned}
+&amp; {\text{         }\inf}
+&amp; &amp; \langle c_1, x \rangle + \langle c_2, y \rangle \\
+&amp; \text{subject to} &amp; &amp;  A_1 x \geq b_1 \\
+&amp;  &amp; &amp;  A_2 y = b_2 \\
+&amp;  &amp; &amp;  x \geq 0 \\
+\end{aligned}\]</span>
+<p></p>
+<p>where <span class="math inline">\(x \in \mathbb{R}^{m}\)</span> and <span class="math inline">\(y \in \mathbb{R}^{n}\)</span>. Moreover, let us suppose that there exist at least one feasible solution <span class="math inline">\(\tilde{x} \in \mathbb{R}^{m},\tilde{y} \in \mathbb{R}^{n}\)</span> such that <span class="math inline">\(A_1 \tilde{x} &gt; b_1\)</span> <span class="math inline">\(A_2 \tilde{y} = b_2\)</span> and <span class="math inline">\(\tilde{x} &gt; 0\)</span>. Then, dual problem of <span class="math inline">\(\mathcal{P}\)</span> is given by</p>
+<p><math display="block"> = </math></p>
+<span class="math display">\[\begin{aligned}
+&amp; {\text{         }\max}
+&amp; &amp; \langle  b_1 , \alpha  \rangle + \langle b_2 , \beta \rangle \\
+&amp; \text{subject to} &amp; &amp;  A_1^T \alpha \leq c_1 \\
+&amp;  &amp; &amp;  A_2^T \beta = c_2 \\
+&amp;  &amp; &amp;  \alpha \geq 0 \\
+\end{aligned}\]</span>
+<p></p>
+<p>where <span class="math inline">\(\alpha \in \mathbb{R}^{p}\)</span> and <span class="math inline">\(\beta \in \mathbb{R}^{q}\)</span>. Furthermore, <span class="math inline">\(\mathcal{D}\)</span> attains its optimal value and we have <span class="math inline">\(\mathcal{P}  =  \mathcal{D}\)</span>.</p>
+<section id="proof-1" class="level3">
+<h3 class="anchored" data-anchor-id="proof-1">Proof</h3>
+<p>Note that, the linear program may be equivalently written as</p>
+<p><math display="block"> </math></p>
+<p>where <span class="math inline">\(\Chi_A\)</span> denotes the characteristic function of <span class="math inline">\(A \subseteq \mathbb{R}^n\)</span>. Further, let us define <span class="math inline">\(\phi(x,y) = \langle c_1, x \rangle + \langle c_2, y \rangle + \Chi_{ \mathbb{R}_+ }(x)\)</span>, and <span class="math inline">\(\varphi(x,y) = \Chi_{ \mathbb{R}_+ }(b_1 - A_1 x) +  \Chi_{\{0\}} (b_2 - A_2 y)\)</span>. Note that, both <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\varphi\)</span> are convex, lower semicontinuous and proper functions, where we have <span class="math inline">\(\phi ( \tilde{x},\tilde{y}),\varphi(\tilde{x},\tilde{y}) &lt; \infty\)</span>. Moreover, since we have <span class="math inline">\(\tilde{x} &gt; 0\)</span>, we observe that <span class="math inline">\(\phi\)</span> is continuous at <span class="math inline">\((\tilde{x},\tilde{y})\)</span>. Therefore, by the Fenchel-Rockafellar Theorem we obtain</p>
+<p><math display="block"> = . </math></p>
+<p>In terms of convex conjugate of <span class="math inline">\(\phi\)</span> we have</p>
+<p><math display="block"> </math><span class="math display">\[\begin{align} \phi^\star(-w,-t) &amp; = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ -\langle x, w+c_1 \rangle - \langle y, t+c_2 \rangle - \Chi_{ \mathbb{R}_+ }(x)  \right\} \\ &amp; = \underset{ x \in \mathbb{R}^{m}_{-},y \in \mathbb{R}^{n} }{\sup} \left\{ -\langle x, w+c_1 \rangle - \langle y, t+c_2 \rangle  \right\} \\ &amp; = \Chi_{ \mathbb{R}_+ }(w+c_1) + \Chi_{\{0\}}(t+c_2).
+
+\end{align}\]</span> </p>
+<p>Furthermore, for the convex conjugate of <span class="math inline">\(\varphi\)</span> we observe</p>
+<p><math display="block"> </math><span class="math display">\[\begin{align} \varphi^\star(w,t) &amp; = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \langle x, w \rangle + \langle y, t \rangle - \Chi_{ \mathbb{R}_+ }(b_1 - A_1 x) -  \Chi_{\{0\}} (b_2 - A_2 y)  \right\}
+\\ &amp; =  \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \langle x, w \rangle + \langle y, t \rangle - \underset{ \alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q} }{\sup} \left\{ \langle  b_1 - A_1 x ,\alpha \rangle + \langle  b_2 - A_2 y , \beta \rangle \right\}  \right\}
+\\ &amp; = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \underset{ \alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q} }{\inf} \left\{ \langle x, w \rangle + \langle y, t \rangle + \langle   A_1 x - b_1 , \alpha  \rangle + \langle A_2 y - b2 , \beta \rangle \right\}  \right\}
+\\ &amp; = \underset{ x \in \mathbb{R}^{m},y \in \mathbb{R}^{n} }{\sup} \left\{ \underset{ \alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q} }{\inf} \left\{ \langle x, w+ A_1^T \alpha \rangle + \langle y, t+A_2^T\beta \rangle - \langle  b_1 , \alpha  \rangle - \langle b_2 , \beta \rangle \right\}  \right\}
+\end{align}\]</span> </p>
+<p>Notice that, <span class="math inline">\(\varphi^\star\)</span> is finite if and only if we have <span class="math inline">\(w = A_1^T \alpha\)</span> and <span class="math inline">\(t = A_2^T\beta\)</span> for some <span class="math inline">\(\alpha \in \mathbb{R}^{p}_+ , \beta \in \mathbb{R}^{q}\)</span>. Therefore, as <span class="math inline">\(\phi^\star = \Chi_{ \mathbb{R}_+ }(w+c_1) + \Chi_{\{0\}}(t+c_2)\)</span>, by combining these two results with the Fenchel-Rockafellar Theorem we obtain the dual linear program as follows.</p>
+<p><math display="block"> </math></p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="./ConvergenceMetrizability.html">Convergence of Measures and Metrizability</a></li>
-<li><a href="./FenchelMoreau.html">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="./FenchelRockafellar.html">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><references> <ref name="Brezis"><a href="https://link.springer.com/book/10.1007/978-0-387-70914-7">H. Brezis, <em>Functional Analysis, Sobolev Spaces, and Partial Differential Equations</em>, Section 1.4</a></ref> <ref name="Rockafellar"><a href="https://link.springer.com/book/10.1007/978-3-642-02431-3">T. Rockafellar, <em>Variational Analysis</em>, Section 11.H</a></ref> </references></p>
 
 
 </section>
