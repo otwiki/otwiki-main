@@ -1,0 +1,92 @@
+---
+title: "Gradient flows in Hilbert spaces"
+authors: Djordje Nikolic and Zach Wagner
+---
+
+**Gradient Flows in Hilbert Spaces** are generalizations of time-derivatives with a gradient constraint. Specifically, a gradient flow is a Hilbert Space valued function who's time derivative lies in some generalized collection of gradient vectors. Gradient flows are a key topic in the study of non-linear time evolution partial differential equations. In this exposition, we will draw from Ambrosio et al.'s resource *Lectures on Optimal Transport* and Evans' *Partial Differential Equations*.
+
+## Introduction
+
+The heat equation is a classic example of a time evolution partial differential equation. In particular, the heat equation is a linear parabolic partial differential equation. Such PDEs are well understood and are solvable using several different approaches. One particularly interesting technique is to view the PDE as a Banach-space valued ODE in the time variable. In this case, we can try to understand how to write the solution of the PDE as a flow in time which is a generalization of the exponential function. The techniques which one implements to find such a solution ultimately results in the Hille-Yosida theorem, which gives necessary and sufficient conditions for an operator $T$ to be infinitesimal generator of a contraction semigroup of the given PDE<ref name="Evans"/>. In some sense, these ideas can be extended to non-linear time evolution PDEs, leading to the general notion of flows on Hilbert spaces. We will discuss in this article how the theory of flows can be used to yield existence of a solution of a "non-linear heat equation."
+
+## Definitions
+
+Let $H$ be a Hilbert space with inner product $\langle\cdot,\cdot\rangle$ with induced metric $||\cdot||$. Throughout this exposition, we assume that $f:H\rightarrow(-\infty,\infty]$ is proper, so that the domain on which it takes finite values, $\text{dom}(f)$, is not empty.
+
+First, we recall the notion of the subdifferential, rewritten from Ambrosio et al.'s definition<ref name="Ambrosio, Brué, Semola"/>.
+
+The **subdifferential** of $f$ at $x\in\text{dom}(f)$ is the collection,
+
+:$\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle+o(||u-v||) \right\rbrace$
+
+*Remark:* observe that we are not assuming $f$ is convex, only that it is proper. In fact, Ambrosio et al. discusses the case when $f$ is $\lambda$-convex, which generalizes the notion of convexity. We have omitted that discussion for the sake of clarity and brevity. If $f$ is indeed convex, then the subdifferential becomes,
+
+:$\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle \quad\text{for each } u\in H\right\rbrace$
+
+A **gradient flow** $x(t):(0,\infty)\rightarrow\text{dom}(f)$ is a locally absolutely continuous function with the property that $x'(t)\in\partial(f(x(t))$ for almost every $t$ (with respect to Lebesgue measure)<ref name="Ambrosio, Brué, Semola"/>. Note that the $x(t)$ being locally absolutely continuous is necessary for the existence (almost everywhere) of $x'(t)$<ref name="Ambrosio, Brué, Semola"/>. It will be particularly useful to identify the starting point of a gradient flow $x(t)$, which is given by $x_0:=\lim_{t\rightarrow 0}x(t)$.
+
+## Main Existence Theorem
+
+### From Linear to Nonlinear Operators
+
+Recall that the Hille-Yosida theorem states the following:
+
+:**Theorem**<ref name="Evans"/> Let $T$ be a densely defined linear operator on a Banach space (note that $T$ need not be bounded, but we assume $T$ is closed). Denote $\rho(T):=\left\lbrace z\in\mathbb{C}:(z-T) \text{ is invertible and bounded}\right\rbrace$ as the resolvent set of $T$. Then $T$ is the infinitesimal generator of a semigroup $S_t$ if and only if, for each $\lambda>0$, we have $\lambda\in\rho(T)$ and $||(\lambda-T)^{-1}||\leq\frac{1}{\lambda}$
+
+Using this result, we may view a linear time evolution PDE as a Banach space valued problem of the following form:
+
+:$\phi'(t)=T\phi$ :$\phi(0)=\phi_0$
+
+which has solution $\phi(t):=S_t\phi_0$<ref name="Evans"/> . In the ODE above, $T$ denotes the linear differential operator in the original linear time evolution PDE.
+
+This approach works well when $T$ is linear, but requires some significant modification in the case that $T$ is nonlinear. In particular, observe that the Hille-Yosida theorem makes use of the resolvent of the relevant linear operator. In some sense, the resolvent bypasses the problems that arise from the unboundedness of the linear operator; in particular, it makes sense to discuss power series expansions involving the resolvent. In the unbounded case, one must introduce a generalization of the resolvent.
+
+In the notation of Ambrosio et al., the analogue of the resolvent used in the proof of the Brézis-Komura Theorem is $(I+\epsilon T)^{-1}$ where $T$ is a non-linear operator on a Hilbert Space $H$<ref name="Ambrosio, Brué, Semola"/>. Moreover, the existence argument in classical proof the Brézis-Komura Theorem requires a modification to the generalized resolvent of $T$. This modification is the **Yosida Regularization,**<ref name="Ambrosio, Brué, Semola"/>
+
+:$Y(T,\epsilon):=\frac{I-(I+\epsilon T)^{-1}}{\epsilon}$
+
+where $\epsilon$ is some non-negative parameter. The Yosida Regularization, being Lipschitz as an operator on $H$ with Lipschitz constant $\frac{2}{\epsilon}$ <ref name="Brezis" />, allows one to construct the starting point for a solution in the Brézis-Komura Theorem.<ref name="Evans"/> This is analogous to the \[\[The_Moreau-Yosida_Regularization\|Moreau-Yosida Regularization\]\], where lower semicontinuous function is approximated by a Lipschitz function.
+
+Another way to see the Yosida Regularization is via a time-discretization, the approach first used by Jordan, Kinderlehrer and Otto<ref name="JKO" />. There are two ways of discretizing a gradient flow, namely Euler schemes, explicit one:
+
+:$\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n})$, where $X_{\epsilon}^{0} = X^{0}$, and implicit one:
+
+:$\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n+1})$, where $X_{\epsilon}^{0} = X^{0}.$
+
+Note that for implicit scheme $X_{\epsilon}^{n} = (I + \nabla f)^{-n}X_{\epsilon}^{0}.$
+
+Explicit one is easier for implementation, but the implicit one is more natural here since it decreases, same as $f(x(t)).$ However, using our definition of gradient flow $\partial f$, we can define Yosida Regularization of $\partial f$ with step $\epsilon$,
+
+:$(\partial f)_{\epsilon} = :=\frac{I-(I+\epsilon (\partial f))^{-1}}{\epsilon}.$
+
+Now, implicit scheme can be interpreted as explicit scheme applied to above Yosida Regularizaton. Namely,
+
+:$X_{\epsilon}^{n+1}-X_{\epsilon}^{n} = (I + \partial f)^{-1}X_{\epsilon}^{n} - X_{\epsilon}^{n} = -\epsilon (\partial f)_{\epsilon} X_{\epsilon}^{n},$
+
+as we claimed (more details could be found here <ref name="Santambrogio" />, <ref name="Villani" />, <ref name="Ambrosio, Brué, Semola" /> ).
+
+In order to formulate the Brézis-Komura Theorem, we introduce $\lambda$- convexity:
+
+:**Definition**<ref name="Ambrosio, Brué, Semola"/> Given $\lambda \in \mathbb{R},$ we say that $f:H \rightarrow (-\infty,\infty]$ is $\lambda$- convex if $f - \frac{\lambda}{2}|\cdot|^{2}$ is convex.
+
+### The Brézis-Komura Theorem
+
+We restate the Brézis-Komura Theorem as is stated in Ambrosio et al.
+
+:**Theorem**<ref name="Ambrosio, Brué, Semola"/> Assume that $f$ is $\lambda$-convex for some $\lambda \in \mathbb{R}$ and lower semicontinuous. For every $x_{0}\in\overline{\text{dom}(f)}$, there exists a unique gradient flow $x(t):=S_tx_0$ starting at $x_{0}.$ The family of operators $\left\lbrace S_t\right\rbrace_{t> 0},$ satisfies the semigroup property $S_{t+s} = S_{t} \circ S_{s},$ and the contractivity property :$|S_{t}x_{0} - S_{t}y_{0}| \leq e^{-\lambda t}|x_{0}-y_{0}| \quad \forall x_{0},y_{0} \in \overline{\text{dom}(f)}.$
+
+## Example and Applications
+
+As suggested by our previous discussion, the Brézis-Komura Theorem may be used to assert the existence of flows solving certain nonlinear time-evolution PDEs. Several nonlinear time-evolution PDEs and their solutions are discussed by both Ambrosio et al. and Evans. A simple example consists of a particular case of the so-called $p$-Laplace equation<ref name="Ambrosio, Brué, Semola"/> on $L^2(\mathbb{R}^n)$, which seeks to find a solution to the heat-like equation $u_t-\nabla\cdot(|\nabla u|^2\nabla u)=0$. Motivated by the applicable variational formulation of this problem, one may consider the function $T(u):=\int_{\mathbb{R}^n}\frac{|\nabla u|^4}{4}$ whenever $u\in L^2(\mathbb{R}^n)\cap W^{1,4}(\mathbb{R}^n)$, with $T(u):=\infty$ otherwise. Applying the Brézis-Komura Theorem yields a flow $x(t)$ such that $x'(t)=\nabla\cdot(|\nabla x|^2\nabla x)$. Some care must be taken to show that the subdifferential of $T$ coincides with the right hand side of the expression for $x'(t)$.
+
+In general, the $p$-Laplace equation is given by $u_t-\nabla\cdot(|\nabla u|^{p-2}\nabla u)=0$ and is solved on $L^2(\mathbb{R}^n)$. Note that the $p$-Laplace equation is a generalization of the heat equation and we may recover the heat equation on $L^2(\mathbb{R}^n)$ when $p=2$. In that case, the Brézis-Komura Theorem may be applied to the function $T(u):=\int_{\mathbb{R}^n}\frac{|\nabla u|^2}{2}$ whenever $u\in H^1(\mathbb{R}^n)$, with $T(u):=\infty$ otherwise. Thus, we acquire the existence of a gradient flow which satisfies the heat equation. Heat equation can also be seen as a gradient flow for the energy functional $T(u) = \int |u|^{2},$ where metric tensor is defined by $H^{-1}$ metric. Hence, there are many ways to interpret PDE as a gradient flow.
+
+If we look at the similar energy functional $T(\rho) = |\rho|_{H^{-1}(\Omega)}^{2}$ for probability density function $\rho,$ we get gradient flow $\frac{\partial \rho}{\partial t} = - \nabla \cdot (\rho \nabla \Delta^{-1}\rho),$ that is studied in Ginzburg-Landau dynamics (see <ref name="Villani" />).
+
+The Brézis-Komura Theorem is also used to assert the existence of the Riemannian Heat Semigroup<ref name="Ambrosio, Brué, Semola"/>. This forms the starting point for \[\[Optimal Transport and Ricci curvature\|connecting optimal transport and ricci curvature\]\].
+
+Denote the Boltzmann's $H$ functional $T(\rho) = \int \rho \log(\rho)$ for probability density function $\rho$. If we use the Wasserstein distance $W_{2}$, then the gradient flow satisfies the [Continuity Equation](http://34.106.105.83/wiki/The_continuity_equation_and_Benamour_Brenier_formula) $\frac{\partial \rho}{\partial t} + \nabla \cdot (v\rho) = 0,$ where $v=\frac{-\nabla \rho}{\rho}.$ Hence, this is also the heat equation, $\frac{\partial \rho}{\partial t} = \Delta \rho.$
+
+## References
+
+<references> <ref name="Ambrosio, Brué, Semola">[L Ambrosio, E Brué, D Semola, *Lectures on Optimal Transport*, p. 109-124, p.138, p. 230](https://link.springer.com/book/10.1007/978-3-030-72162-6)</ref> <ref name="Evans"> L Evans, *Partial Differential Equations*, p. 435-443, p. 562-579</ref> <ref name="Brezis"> H.Brezis, *Functional Analysis, Sobolev Spaces and Partial Differential Equations*, p. 181-182</ref> <ref name="JKO"> Jordan, R., Kinderlehrer, D., and Otto, F., *The variational formulation of the Fokker-Planck equation*, SIAM J.Math Anal. 29, 1 (1998) </ref> <ref name="Santambrogio"> F.Santambrogio, *Optimal Transport for Applied Mathematicians*, p.287 </ref> <ref name="Villani"> C.Villani, *Topics in Optimal Transportation*, p. 260-261 </ref> </references>
