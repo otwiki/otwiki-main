@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ashwin Trisal">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Convergence of Measures and Metrizability – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +139,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Convergence of Measures and Metrizability</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ashwin Trisal </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +162,33 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<p>This article addresses narrow and wide convergence of probability measures.</p>
+<section id="nets" class="level2">
+<h2 class="anchored" data-anchor-id="nets">Nets</h2>
+<p>When speaking about general topological spaces that are not metric spaces, understanding the convergence of sequences does not determine topology or continuity. A generalization of sequences, known as <b>nets</b>, can be used to show continuity.<ref name="Kelley"> Roughly, a net consists of a directed set <span class="math inline">\(\{x_\gamma\}_{\gamma\in\Gamma}\)</span>: a function from a partially ordered set <span class="math inline">\(\Gamma\)</span> such that for each <span class="math inline">\(\gamma_1,\gamma_2\in\Gamma,\exists \gamma_3\in\Gamma\)</span> such that <span class="math inline">\(\gamma_1,\gamma_2\preceq\gamma_3\)</span>. We say that this net converges to <span class="math inline">\(x\)</span> if, for every open set <span class="math inline">\(U\ni x\)</span>, there exists some large <span class="math inline">\(a_U\)</span> such that for all <span class="math inline">\(a_U\preceq a\)</span>, <span class="math inline">\(x_{\gamma_a}\in U\)</span>.</ref></p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="weak-star-topologies" class="level2">
+<h2 class="anchored" data-anchor-id="weak-star-topologies">Weak-star Topologies</h2>
+<p>Given a Banach space <span class="math inline">\(X\)</span> and its Banach dual <span class="math inline">\(X^*\)</span>, the dual can be endowed with the weakest topology that makes the evaluation maps at elements of <span class="math inline">\(X\)</span> continuous. This is called the <a href="https://en.wikipedia.org/wiki/Weak_topology#Weak-*_topology">weak-* topology on <span class="math inline">\(X^*\)</span> relative to <span class="math inline">\(X\)</span></a><ref name="KR">. By <a href="https://en.wikipedia.org/wiki/Banach%E2%80%93Alaoglu_theorem">Banach-Alaoglu</a><ref name="KR">, the unit ball of <span class="math inline">\(X^*\)</span> (which we call <span class="math inline">\((X^*)_1\)</span>) with the weak-star topology is compact.</ref></ref></p>
+<p>In the case where <span class="math inline">\(X\)</span> is norm separable, the weak-star topology on the unit ball of <span class="math inline">\(X^*\)</span> can, in fact, be metrized.<ref name="Rudin"> Fix a sequence <span class="math inline">\(\{x_n\}_{n=1}^\infty\)</span> that is countable and dense in <span class="math inline">\(X\)</span>. Define the metric <span class="math inline">\(d\)</span> by <span class="math inline">\(d(\phi,\psi):=\sum_{n=0}^\infty 2^{-n}\frac{|\phi(x_n)-\psi(x_n)|}{1+|\phi(x_n)-\psi(x_n)|}\)</span>. This is a sum of pseudometrics, necessarily convergent because each term is less than or equal to <span class="math inline">\(2^{-n}\)</span>, and is nondegenerate because if <span class="math inline">\(d(\phi,\psi)=0\)</span>, then <span class="math inline">\(\phi(x_n)=\psi(x_n)\)</span> for each <span class="math inline">\(x_n\)</span>, which would imply that the continuous functions <span class="math inline">\(\phi,\psi\)</span> agreed on a dense subset of a metric space. The identity map from <span class="math inline">\(((X^*)_1,w*)\)</span> to <span class="math inline">\(((X^*)_1,d)\)</span> is continuous: choose a convergent net in <span class="math inline">\((X^*)_1\)</span>, <span class="math inline">\((\phi_\gamma)_{\gamma\in\Gamma} \to \phi\)</span>. Then for each <span class="math inline">\(\epsilon&gt;0\)</span>, perform the following truncation process: choose a large <span class="math inline">\(N\)</span> so that <span class="math inline">\(\sum_{n=N+1}^\infty 2^{-n}=2^{-N}&lt;\frac{\epsilon}{2}\)</span>. Because <span class="math inline">\(\phi_\gamma\xrightarrow{w*}\phi\)</span>, for each <span class="math inline">\(n\in\{1,\ldots,N\}\)</span>, there is some large <span class="math inline">\(\gamma_n\)</span> such that for all <span class="math inline">\(\gamma\succeq\gamma_n\)</span>, <span class="math inline">\(|\phi_\gamma(x_n)-\phi(x_n)|&lt;\frac{\epsilon}{2\cdot N\cdot 2^{-n}}\)</span>. By the net order axioms, there is some large <span class="math inline">\(\gamma_0\succeq\gamma_i\forall i\in\{1,\ldots,N\}\)</span>. So for each <span class="math inline">\(\gamma\succeq \gamma_0\)</span>, <span class="math inline">\(d(\phi_\gamma,\phi)&lt;\sum_{n=1}^N \frac{1}{2N}+\sum_{n=N+1}^\infty 2^{-n}&lt;\epsilon\)</span>. Now the identity map between the two spaces is a continuous bijection between a compact and a Hausdorff topological space, and is therefore a homeomorphism. So it metrizes the weak-star topology.</ref></p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="metrizability-for-duals-of-cx-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="metrizability-for-duals-of-cx-spaces">Metrizability for duals of <math>C(X)</math>-spaces</h2>
+<p>If <span class="math inline">\(X\)</span> is a compact Hausdorff metric space, <span class="math inline">\(C(X)=C_b(X)=C_0(X)\)</span> is separable, due to the following argument: compact metric spaces are always separable<ref name="SE metric">. Pick a countable dense subset <span class="math inline">\(\{x_n\}_{n\in\mathbb N}\subseteq X\)</span>, and consider the smallest <span class="math inline">\(\mathbb Q\)</span>-algebra generated by the functions <span class="math inline">\(d(x,x_n)\)</span>. This is a countable union of countable sets and therefore countable. As a subalgebra which separates points and contains the constant function, it must be dense by Stone-Weierstrass. So the unit ball of the dual of <span class="math inline">\(C(X)\)</span> is metrizable.</ref></p>
+<p>Conversely, let <span class="math inline">\(X\)</span> be a locally compact Hausdorff topological space, and assume that the unit ball of the dual of <span class="math inline">\(C_b(X)\)</span> is metrizable. Then, because <span class="math inline">\(X\rightarrow (C_b(X))^*\)</span> via point evaluation, which is a norm <span class="math inline">\(1\)</span> map, and because the topology on <span class="math inline">\(X\)</span> is exactly the topology of weak-star convergence in <span class="math inline">\(C_b(X)^*\)</span><ref name="gelfand">, this means that <span class="math inline">\(X\)</span> is metrizable as well. So <span class="math inline">\(X\)</span> is a metrizable space which lives inside a compact metrizable space. This is in fact equivalent to the Stone-Cech compactification of <span class="math inline">\(X\)</span> being metrizable <ref name="SE stone cech">, which is quite rare.</ref></ref></p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="narrow-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="narrow-convergence">Narrow Convergence</h2>
+<p>For every finite signed Radon measure <span class="math inline">\(\mu\)</span> on a locally compact Hausdorff space <span class="math inline">\(X\)</span>, there is some element <span class="math inline">\(f\in C_0(X)\)</span> such that <span class="math inline">\(\int_X f\,d\mu\neq 0\)</span>. Moreover, letting <span class="math inline">\(|\mu|\)</span> denote the total variation of the measure, there is a net of functions <span class="math inline">\(f_\gamma\in C_0(X)\)</span> such that <span class="math inline">\(\int_X f_\gamma\,d\mu\rightarrow |\mu|\)</span>, and <span class="math inline">\(\int_X f\,d\mu\le \|f\|_\infty |\mu|\)</span>. This means that <span class="math inline">\(\mathcal M(X)\hookrightarrow C_0(X)^*\)</span>, and can be isometrically identified with a subset of the dual. In particular, because the total variation norm does not increase with respect to continuous bounded functions, <span class="math inline">\(\mathcal M(X)\hookrightarrow C_b(X)^*\)</span>. Narrow convergence is weak-star convergence in <span class="math inline">\(\mathcal M(X)\)</span> with respect to <span class="math inline">\(C_b(X)\)</span>: a net of measures <span class="math inline">\(\mu_\gamma\)</span> converges to <span class="math inline">\(\mu\)</span> narrowly if, for every <span class="math inline">\(f\in C_b(X)\)</span>, <span class="math inline">\(\int_X f\,d\mu_n\to\int_X f\,d\mu\)</span><ref name="villani">.</ref></p>
+<p>Although in general the topology of narrow convergence is not metrizable on the unit ball – for example, on any compact Hausdorff space which is not metrizable – it is on the class of probability measures, so long as <span class="math inline">\(X\)</span> is separable. Take, again, a countable dense subset of <span class="math inline">\(X\)</span>, <span class="math inline">\(D\)</span>, and taking the family of functions <span class="math inline">\(\mathcal C_2=\{h(x)=(q_1+q_2d(x,y))\wedge k\,|\, q_1,q_2,k\in\mathbb Q, q_2,k\in (0,1), y\in D\}\)</span>. Let <span class="math inline">\(\mathcal C_1\)</span> be the family of functions generated by taking infima of finitely many elements of <span class="math inline">\(\mathcal C_2\)</span>, and let <span class="math inline">\(\mathcal C_0=\{\lambda h\,|\,\lambda\in\mathbb Q,h\in\mathcal C_1\)</span>. This is still countable, and approximates integrals of elements of <span class="math inline">\(C_b\)</span> well weakly-star, so there is a metric on the probabilities by enumerating <span class="math inline">\(\mathcal C_0=\{f_k\}_{k=1}^\infty\)</span>, and <span class="math inline">\(d(\mu,\nu)=\sum_{k=1}^\infty 2^{-k}|\int f_k\,d\mu-\int f_k\,d\nu|\)</span><ref name="Ambrosio">.</ref></p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
+<section id="wide-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="wide-convergence">Wide Convergence</h2>
+<p>Wide convergence is the weak-star convergence with respect to elements of <span class="math inline">\(C_0(X)\)</span> rather than <span class="math inline">\(C_b(X)\)</span><ref name="villani">. As such, it is a weaker topology on the class of probability measures. When <span class="math inline">\(X\)</span> is a locally compact separable metric space (in particular, locally compact metric spaces which are <span class="math inline">\(\sigma\)</span>-compact are separable), we can find a separating family of functions which form a countable subalgebra. One way to do this is by taking, for each point <span class="math inline">\(x_n\)</span> in a countable dense subset, a compact neighborhood <span class="math inline">\(K_n\ni x_n\)</span> and taking a partition of unity subordinate to that compact, <span class="math inline">\(\varphi_n\)</span>. Taking the <span class="math inline">\(\mathbb Q\)</span>-algebra generated by this countable family of functions will separate points, which will make it dense in <span class="math inline">\(C_0(X)\)</span> by Stone-Weierstrass. So <span class="math inline">\(C_0(X)\)</span> is separable, which means that the unit ball of the dual is metrizable.</ref></p>
 </section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li>[Convergence of Measures and Metrizability]ConvergenceMetrizability.qmd)</li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Moreau_and_Primal/Dual_Optimization_Problems">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Fenchel-Rockafellar_and_Linear_Programming">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><references> <ref name="KR">Kadison, Ringrose. <em>Fundamentals of the Theory of Operator Algebras, Volume I.</em> Ch. 1.3, 1.6. Academic Press, 1983.</ref> <ref name="Kelley">Kelley, <em>General Topology</em> Ch. 2. Springer, 1975.</ref> <ref name="Rudin">Rudin, <em>Functional Analysis</em> Ch. 3. 1991.</ref> <ref name="SE metric"><a href="https://math.stackexchange.com/questions/974233/prove-if-x-is-a-compact-metric-space-then-x-is-separable/974252">Math StackExchange, <em>Prove if</em> <span class="math inline">\(X\)</span> is a compact metric space, then <span class="math inline">\(X\)</span> is separable. 2020.</a></ref> <ref name="SE stone cech"><a href="https://math.stackexchange.com/questions/260794/stone-%c4%8cech-via-c-bx-cong-c-beta-x">Math StackExchange, <em>Stone-Cech via</em> <span class="math inline">\(C_b(X)\cong C(\beta X)\)</span>. 2020.</a></ref> <ref name="Ambrosio"><a href="http://www2.stat.duke.edu/~sayan/ambrosio.pdf">Ambrosio, Gigli, Savaré. <em>Gradient Flows.</em> Ch. 5.1. 2000</a></ref> <ref name="gelfand">[http://www.mathnet.ru/php/archive.phtml?wshow=paper&amp;jrnid=sm&amp;paperid=6155&amp;option_lang=eng Gelfand, Naimark. <em>On the imbedding of normed rings into the ring of operators on Hilbert space.</em> 1943.</ref> <ref name="villani"><a href="https://ljk.imag.fr/membres/Emmanuel.Maitre/lib/exe/fetch.php?media=b07.stflour.pdf">Villani. <em>Optimal transport, old and new.</em> 2006.</a></ref> </references></p>
 
 
 </section>
