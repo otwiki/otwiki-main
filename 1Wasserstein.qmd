@@ -1,5 +1,6 @@
 ---
 title: "1-Wasserstein Metric and Generalizations"
+author: Seyit Emre Duzoylum.
 ---
 
 Let $\mathcal{M}$ denote the space of all Radon measures on $\mathbb{R}^d$ with finite mass. Moreover, let $\mathcal{M}^p$ denote the space of Radon measures with finite $p^{th}$ moment, that is, $\int_{\mathbb{R}^d} |x|^p d\mu(x) < \infty$. Then, for $\mu,\nu \in \mathcal{M}^p$ with $|\mu|=|\nu|$ the $p$-Wasserstein distance is defined as<ref name="Picolli" /> :$W_p(\mu,\nu) = ( |\mu| \underset{ \pi \in \Gamma(\mu,\nu) }{ \inf } \int_{\mathbb{R}^d \times \mathbb{R}^d } |x-y|^p d\pi(x,y))^{1/p}$ where $\Gamma(\mu,\nu)$ denotes the set of all transport plans from $\mu$ to $\nu$. Note that, if we restrict $\mu$ and $\nu$ to be probability measures, then the $p$-Wasserstein distance can be seen as a special case of the [Kantorovich Problem](http://34.106.105.83/wiki/Kantorovich_Problem), where $c(x_1,x_2) = |x_1-x_2|^p$. Furthermore, if we let $\mathcal{P}^p$ denote the space of probability measures on $\mathbb{R}^d$ with finite $p^{th}$ moment, then $W_p$ defines a metric on $\mathcal{P}^p$.
