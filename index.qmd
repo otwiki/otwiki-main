@@ -12,7 +12,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 
 ### The optimal transportation problem
 
--   [Monge Problem](https://www.otwiki.xyz/wiki/Monge_Problem)
+-   [Monge Problem](Monge.qmd)
 -   [Kantorovich Problem](Kantorovich_Problem.qmd)
 -   [Optimal Transport in One Dimension](1DimensionOT_Revised.qmd)
 -   [Kantorovich Dual Problem (for general costs)](KDualProblem.qmd)
