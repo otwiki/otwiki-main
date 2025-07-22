@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Alexander Sabater">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>The Moreau-Yosida Regularization – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +139,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">The Moreau-Yosida Regularization</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alexander Sabater </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +162,82 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
+<p>The <strong>Moreau-Yosida regularization</strong> is a technique used to approximate lower semicontinuous functions by <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity">Lipschitz functions</a>. An important application of this result is to prove Portmanteau’s Theorem, which states that integration against a lower semicontinuous and bounded below function is lower semicontinuous with respect to the (ConvergenceMetrizability.qmd) in the space of <a href="https://en.wikipedia.org/wiki/Probability_measure">probability measures</a>.</p>
+<section id="definitions" class="level2">
+<h2 class="anchored" data-anchor-id="definitions">Definitions</h2>
+<p>Let <span class="math inline">\((X,d)\)</span> be a <a href="https://en.wikipedia.org/wiki/Metric_space">metric space</a>, and let <span class="math inline">\(\mathcal{P}(X)\)</span> denotes the collection of probability measures on <span class="math inline">\(X\)</span>. <span class="math inline">\((X,d)\)</span> is said to be a <strong>Polish space</strong> if it is <a href="https://en.wikipedia.org/wiki/Complete_metric_space">complete</a> and <a href="https://en.wikipedia.org/wiki/Separable_space">separable</a>.</p>
+<p>A function <span class="math inline">\(g : X \to (-\infty,+\infty]\)</span> is said to be <strong>proper</strong> <ref name="OT"> if it is not identically equal to <span class="math inline">\(+\infty\)</span>, that is, if there exists <span class="math inline">\(x \in X\)</span> such that <span class="math inline">\(g(x) &lt; +\infty\)</span>. The <strong>domain</strong> <span class="math inline">\(D(g)\)</span> of <span class="math inline">\(g\)</span> is the set</ref></p>
+<p>:<span class="math inline">\(D(g) := \{ x \in X | g(x) &lt; +\infty \}\)</span>.</p>
+<p>For a given function <span class="math inline">\(g : X \to (-\infty,+\infty]\)</span> and <span class="math inline">\(k \geq 0\)</span>, its <strong>Moreau-Yosida regularization</strong> <ref name="OT"> <span class="math inline">\(g_k : X \to [-\infty,+\infty]\)</span> is given by</ref></p>
+<p><span class="math inline">\(g_k(x) := \inf\limits_{y \in X} \left[ g(y) + k d(x,y) \right].\)</span></p>
+<p>The distance term <span class="math inline">\(d(x,y)\)</span> may often be raised to a positive exponent <span class="math inline">\(p\)</span>, in particular <span class="math inline">\(p = 2\)</span>. For example, when <span class="math inline">\(X\)</span> is a <a href="https://en.wikipedia.org/wiki/Hilbert_space">Hilbert space</a> <ref name="BC"> <ref name="AGS">, <span class="math inline">\(g_k\)</span> is taken to be</ref></ref></p>
+<p><span class="math inline">\(g_k(x) := \inf\limits_{y \in X} \left[ g(y) + \frac{k}{2} \| x - y \|^2 \right].\)</span></p>
+<p>This particular variant in a Hilbert space setting is explored in more detail below.</p>
+<p>The dependence on the parameter <span class="math inline">\(k\)</span> may also be written instead as</p>
+<p>:<span class="math inline">\(\inf\limits_{y \in X} \left[ g(y) + \frac{1}{\tau} d(x,y) \right]\)</span></p>
+<p>for <span class="math inline">\(\tau \in (0,+\infty)\)</span>.</p>
+<p>Note that</p>
+<p>:<span class="math inline">\(g_k(x) = \inf\limits_{y \in X} \left[ g(y) + k d(x,y) \right] \leq g(x) + k d(x,x) = g(x)\)</span>.</p>
+</section>
+<section id="examples" class="level2">
+<h2 class="anchored" data-anchor-id="examples">Examples</h2>
 <ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
+<li>If <span class="math inline">\(k = 0\)</span>, then by definition <span class="math inline">\(g_0\)</span> is constant and <span class="math inline">\(g_0 \equiv \inf\limits_{y \in X} g(y)\)</span>.</li>
+<li>If <span class="math inline">\(g\)</span> is <em>not</em> proper, then <span class="math inline">\(g_k = +\infty\)</span> for all <span class="math inline">\(k \geq 0\)</span>.</li>
+</ul>
+<p>Take <span class="math inline">\((X,d) := (\mathbb{R},|\cdot|)\)</span>. If <span class="math inline">\(g\)</span> is finite-valued and differentiable, we can write down an expression for <span class="math inline">\(g_k\)</span>. For a fixed <span class="math inline">\(x \in \mathbb{R}\)</span>, the map <span class="math inline">\(g_{k,x} : y \mapsto g(y) + k|x - y|\)</span> is continuous everywhere and differentiable everywhere except for when <span class="math inline">\(y = x\)</span>, where the derivative does not exist due to the absolute value. Thus we can apply standard optimization techniques from Calculus to solve for <span class="math inline">\(g_k(x)\)</span>: find the critical points of <span class="math inline">\(g_{k,x}\)</span> and take the infimum of <span class="math inline">\(g_{k,x}\)</span> evaluated at the critical points. One of these values will always be the original function <span class="math inline">\(g\)</span> evaluated at <span class="math inline">\(x\)</span>, since this corresponds to the critical point <span class="math inline">\(y = x\)</span> for <span class="math inline">\(g_{k,x}\)</span>. * Let <span class="math inline">\(g(x) := x^2\)</span>. Then</p>
+<p>:<span class="math inline">\(g_k(x) = \min \left\{ x^2 , \frac{k^2}{2} + k \left| x \pm \frac{k}{2} \right| \right\}.\)</span></p>
+</section>
+<section id="approximating-lower-semicontinuous-functions-by-lipschitz-functions" class="level2">
+<h2 class="anchored" data-anchor-id="approximating-lower-semicontinuous-functions-by-lipschitz-functions">Approximating Lower Semicontinuous Functions by Lipschitz Functions</h2>
+<p><strong>Proposition.</strong> <ref name="OT"><ref name="S"> Let <span class="math inline">\((X,d)\)</span> be a Polish space and let <span class="math inline">\(g : X \to (-\infty,+\infty]\)</span>. * If <span class="math inline">\(g\)</span> is proper and bounded below, so is <span class="math inline">\(g_k\)</span>. Furthermore, <span class="math inline">\(g_k\)</span> is Lipschitz continuous for all <span class="math inline">\(k \geq 0\)</span>. * If, in addition, <span class="math inline">\(g\)</span> is lower semicontinuous, then <span class="math inline">\(g_k(x) \nearrow g(x)\)</span> for all <span class="math inline">\(x \in X\)</span>. * In this case, <span class="math inline">\(g_k \wedge k := \min(g_k,k)\)</span> is continuous and bounded and <span class="math inline">\(g_k(x) \wedge k \nearrow g(x)\)</span> for all <span class="math inline">\(x \in X\)</span>.</ref></ref></p>
+<p><strong>Proof.</strong> * Since <span class="math inline">\(g\)</span> is proper, there exists <span class="math inline">\(y_0 \in X\)</span> such that <span class="math inline">\(g(y_0) &lt; +\infty\)</span>. Then for any <span class="math inline">\(x \in X\)</span> :<span class="math inline">\(-\infty &lt; \inf\limits_{y \in Y} g(y) \leq g_k(x) \leq g(y_0) + k d(x,y_0) &lt; +\infty .\)</span> Thus <span class="math inline">\(g_k\)</span> is proper and bounded below. Next, for a fixed <span class="math inline">\(y \in X\)</span>, let <span class="math inline">\(h_{k,y}(x) := g(y) + d(x,y)\)</span>. Then as :<span class="math inline">\(h_{k,y}(x_1) - h_{k,y}(x_2) = k d(x_1,y) - k d(x_2,y) \leq k d(x_1,x_2)\)</span> , the family <span class="math inline">\(\{ h_{k,y} \}_{y \in X}\)</span> is uniformly Lipschitz and hence equicontinuous. Thus <span class="math inline">\(g_k = \inf\limits_{y \in Y} h_{k,y}\)</span> is Lipschitz continuous. * Suppose that <span class="math inline">\(g\)</span> is also lower semicontinuous. Note that for all <span class="math inline">\(k_1 \leq k_2\)</span>, <span class="math inline">\(g_{k_1}(x) \leq g_{k_2}(x) \leq g(x)\)</span>. Thus it suffices to show that <span class="math inline">\(\liminf\limits_{k \to \infty} g_k(x) \geq g(x)\)</span>. This inequality is automatically satisfied when the left hand side is infinite, so without loss of generality assume that <span class="math inline">\(\liminf\limits_{k \to \infty} g_k(x) &lt; +\infty\)</span>. By definition of infimum, for each <span class="math inline">\(k \in \mathbb{N}\)</span> there exists <span class="math inline">\(y_k \in X\)</span> such that</p>
+<p>:<span class="math inline">\(g(y_k) + k d(x,y_k) \leq g_k(x) + \frac{1}{k}\)</span>.</p>
+<p>Then :<span class="math inline">\(+\infty &gt; \liminf\limits_{k \to \infty} g_k(x) \geq \liminf\limits_{k \to \infty} \left[ g(y_k) + k d(x,y_k) \right].\)</span></p>
+<p><span class="math inline">\(g(y_k)\)</span> is bounded below by assumption, while the only way <span class="math inline">\(kd(x,y_k)\)</span> to be finite in the limit is for <span class="math inline">\(d(x,y_k)\)</span> to vanish in the limit. Thus <span class="math inline">\(y_k\)</span> converges to <span class="math inline">\(x\)</span> in <span class="math inline">\(X\)</span>, and by lower semicontinuity of <span class="math inline">\(g\)</span>,</p>
+<p>:<span class="math inline">\(\liminf\limits_{k \to \infty} g_k(x) \geq \liminf\limits_{k \to \infty} \left[ g(y_k) + k d(x,y_k) \right] \geq g(x)\)</span>.</p>
+<ul>
+<li>By definition, <span class="math inline">\(g_k \wedge k \in C_b(X)\)</span>. Since <span class="math inline">\(g_k(x) \nearrow g(x)\)</span> for all <span class="math inline">\(x \in X\)</span>, <span class="math inline">\(g_k(x) \wedge k \nearrow g(x)\)</span> for all <span class="math inline">\(x \in X\)</span>.</li>
 </ul>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="portmanteau-theorem" class="level2">
+<h2 class="anchored" data-anchor-id="portmanteau-theorem">Portmanteau Theorem</h2>
+<p><strong>Theorem (Portmanteau).</strong> <ref name="OT"> <ref name="S"> Let <span class="math inline">\((X,d)\)</span> be a Polish space, and let <span class="math inline">\(g : X \to (-\infty,+\infty]\)</span> be lower semicontinuous and bounded below. Then the functional <span class="math inline">\(\mu \mapsto \int_X g \, \mathrm{d}\mu\)</span> is lower semicontinuous with respect to (Convergence of Measures and Metrizability.qmd) in <span class="math inline">\(\mathcal{P}(X)\)</span>, that is</ref></ref></p>
+<p><span class="math inline">\(\mu_n \to \mu \text{ narrowly} \Longrightarrow \liminf\limits_{n \to \infty} \int_X g_n \, \mathrm{d}\mu \geq \int_X g \, \mathrm{d}\mu\)</span>.</p>
+<p><strong>Proof.</strong> By the Moreau-Yosida approximation, for all <span class="math inline">\(k \geq 0\)</span>,</p>
+<p>:<span class="math inline">\(\liminf\limits_{n \to \infty} \int_X g \, \mathrm{d} \mu_n \geq \liminf\limits_{n \to \infty} \int_X g_k \wedge k \, \mathrm{d}\mu_n  = \int_X g_k \wedge k \, \mathrm{d}\mu\)</span>.</p>
+<p>Taking <span class="math inline">\(k \to \infty\)</span>, [[Fatou’s Lemma]] ensures that</p>
+<p>:<span class="math inline">\(\liminf\limits_{n \to \infty} \int_X g \, \mathrm{d} \mu_n \geq \liminf\limits_{k \to \infty} \int_X g_k \wedge k \, \mathrm{d}\mu \geq \int_X g \, \mathrm{d}\mu\)</span>.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="etymology-of-portmanteau-theorem" class="level2">
+<h2 class="anchored" data-anchor-id="etymology-of-portmanteau-theorem">Etymology of Portmanteau Theorem</h2>
+<p>The curious epithet attached to the above theorem is due to <a href="https://en.wikipedia.org/wiki/Patrick_Billingsley">Billingsley</a> <ref name="Billingsley">, with a citation to a Jean-Pierre Portmanteau’s <em>Espoir pour l’ensemble vide?</em> published in <em>Annales de l’Université de Felletin</em> in 1915. This is believed to be a fictional citation made as a play on words <ref name="Pages">. * The publication date is far too early; <a href="https://en.wikipedia.org/wiki/Probability_axioms">Kolmogorov’s probability axioms</a> were published in 1933. <ref name="Kolmogorov"> * <a href="https://en.wikipedia.org/wiki/Felletin">Felletin</a> is a small town in central France with no university, and there is no record of a Jean-Pierre Portmanteau aside from this citation. * “Espoir pour l’ensemble vide” translates to “hope for the empty set” (translation was by Google, please confirm or amend if you speak French!)</ref></ref></ref></p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="generalizations" class="level2">
+<h2 class="anchored" data-anchor-id="generalizations">Generalizations</h2>
+<p>The Moreau-Yosida regularization is a specific case of a type of convolution, and many of the above results follow from this generalization. This material is adapted from Bauschke-Combettes Chapter 12 <ref name="BC">, where the setting is over a Hilbert space instead of a more general Polish space.</ref></p>
+<p>Let <span class="math inline">\(\mathcal{H}\)</span> be a Hilbert space, and let <span class="math inline">\(f , g : \mathcal{H} \to (-\infty,+\infty]\)</span>. The <strong>infimal convolution</strong> or <strong>epi-sum</strong> <span class="math inline">\(f \, \square \, g : \mathcal{H} \to [-\infty,+\infty]\)</span> of <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> is</p>
+<p><span class="math inline">\((f \, \square \, g)(x) := \inf\limits_{y \in \mathcal{H}} \left[ f(y) + g(x-y) \right]\)</span>.</p>
+<p><span class="math inline">\(f \, \square \, g\)</span> is said to be <strong>exact</strong> at a point <span class="math inline">\(x \in \mathcal{H}\)</span> if this infimum is attained. <span class="math inline">\(f \, \square \, g\)</span> is said to be exact if it is exact at every point of its domain, and in this case it is denoted by <span class="math inline">\(f \, \dot{\square} \, g\)</span>.</p>
+<p><strong>Remark.</strong> Bauschke-Combettes uses a box with a dot in the middle for <span class="math inline">\(f \, \square \, g\)</span> to be exact. Due to technical difficulties, we will use <span class="math inline">\(f \, \dot{\square} \, g\)</span> instead.</p>
+<p>For an example, let <span class="math inline">\(A, B \subseteq \mathcal{H}\)</span> be nonempty. Then <span class="math inline">\(\chi_A \, \square \, \chi_B\)</span> is exact, and <span class="math inline">\(\chi_A \, \dot{\square} \, \chi_B = \chi_{A + B}\)</span>.</p>
+<p><strong>Proposition.</strong> Let <span class="math inline">\(g : \mathcal{H} \to (-\infty,+\infty]\)</span> be proper, <span class="math inline">\(p \in [1,+\infty)\)</span>, and for <span class="math inline">\(k \in (0,+\infty)\)</span>, let <span class="math inline">\(g_k : \mathcal{H} \to (-\infty,+\infty]\)</span> be given by</p>
+<p>:<span class="math inline">\(g_k := g \, \square \, \left( \frac{k}{p} \| \cdot \|^p \right)\)</span>.</p>
+<p>Then the following hold for all <span class="math inline">\(k \in (0,+\infty)\)</span> and <span class="math inline">\(x \in \mathcal{H}\)</span>: * <span class="math inline">\(D(g_k) = \mathcal{H}\)</span>, * for <span class="math inline">\(0 &lt; k_1 \leq k_2 &lt; +\infty\)</span>, <span class="math inline">\(\inf\limits_{y \in \mathcal{H}} g(y) \leq g_{k_1}(x) \leq g_{k_2}(x) \leq g(x)\)</span>, * <span class="math inline">\(\inf\limits_{x \in \mathcal{H}} g_k(x) = \inf\limits_{x \in \mathcal{H}} g(x)\)</span>, * <span class="math inline">\(g_k(x) \searrow \inf\limits_{y \in \mathcal{H}} g(y)\)</span> as <span class="math inline">\(k \downarrow 0\)</span>, and * <span class="math inline">\(g_k\)</span> is bounded above on every ball in <span class="math inline">\(\mathcal{H}\)</span>.</p>
+<p><strong>Remark.</strong> The convention given above differs slightly from Bauschke-Combettes to fit the convention in this article. The Moreau-Yosida regularization is the special case where <span class="math inline">\(p = 1\)</span>, and is called the <strong>Pasch-Hausdorff Envelope</strong> in Bauschke-Combettes.</p>
+<p><strong>Proposition.</strong> Let <span class="math inline">\(g : \mathcal{H} \to (-\infty,+\infty]\)</span> be lower semicontinuous and convex, let <span class="math inline">\(k \in (0,+\infty)\)</span>, and let <span class="math inline">\(p \in (1,+\infty)\)</span>. Then the infimal convolution <span class="math inline">\(g_k\)</span> is convex, proper, continuous, and exact. Moreover, for every <span class="math inline">\(x \in \mathcal{H}\)</span>, the infimum</p>
+<p><span class="math inline">\(g_k(x) = \inf\limits_{y \in \mathcal{H}} \left[ g(y) + \frac{k}{p} \| x - y \|^p \right]\)</span></p>
+<p>is uniquely attained.</p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="./ConvergenceMetrizability.html">Convergence of Measures and Metrizability</a></li>
-<li><a href="./FenchelMoreau.html">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="./FenchelRockafellar.html">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="./MoreauYosida.html">The Moreau-Yosida Regularization</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces">Gradient flows in Hilbert spaces</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Ambrosio, Luigi, Nicola Gigli, and Giuseppe Savaré. <em>Gradient Flows in Metric Spaces and in the Space of Probability Measures.</em> Ch. 3.1. Birkhäuser, 2005.</p>
+<p>Billingsley, Patrick. <em>Convergence of Probability Measures, 2nd Ed.</em> John Wiley &amp; Sons, Inc.&nbsp;1999.</p>
+<p>Bauschke, Heinz H. and Patrick L. Combettes. <em>Convex Analysis and Monotone Operator Theory in Hilbert Spaces, 2nd Ed.</em> Ch. 12. Springer, 2017.</p>
+<p>Kolmogorov, Andrey (1950) 1933. Foundations of the theory of probability. New York, USA: Chelsea Publishing Company.</p>
+<p>Pagès, Gilles. <em>Numerical Probability: An Introduction with Applications to Finance.</em> Ch. 4.1. Springer, 2018.</p>
+<p>Craig, Katy C. Lower Semicontinuity in the Narrow Topology. Math 260J. Univ. of Ca. at Santa Barbara. Winter 2022.</p>
+<p>Santambrogio, Filippo. <em>Optimal Transport for Applied Mathematicians: Calculus of Variations, PDEs, and Modeling</em> Ch. 1.1. Birkhäuser, 2015.</p>
 
 
 </section>
