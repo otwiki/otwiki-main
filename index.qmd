@@ -20,7 +20,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds](https://www.otwiki.xyz/wiki/Regularity_of_Optimal_Transport_Maps_and_the_Monge-Ampére_Equation_on_Riemannian_Manifolds)
 -   [1-Wasserstein metric and generalizations](1Wasserstein.qmd)
 -   [Dynamic Optimal Transport](Dynamic_OT.qmd)
--   [Optimal Transport and Ricci curvature](https://www.otwiki.xyz/wiki/Optimal_Transport_and_Ricci_curvature)
+-   [Optimal Transport and Ricci curvature](RicciCurvature.qmd)
 
 ### The 2-Wasserstein Metric
 

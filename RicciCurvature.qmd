@@ -1,0 +1,130 @@
+---
+title: "Optimal Transport and Ricci Curvature"
+author: Fabio Ricci
+---
+
+## Introduction and Motivation
+
+This article provides a brief introduction into a connection of optimal transport and the curvature tensor of a Riemannian manifold. In fact, we are going to study the transport map $T_t(x):=\text{exp}_x( t\xi(x)),$ where $\xi$ denotes a $C^1$ vector field on the manifold $(M,g).$
+
+These kind of maps appear very naturally in the context of optimal transport. Recall that in optimal transport one is particularly interested in the Monge Problem, being the following optimization problem: Let $(M,g)$ be a compact and connected Riemannian manifold. Let furthermore, $\mu=fdV , \nu=gdV$ denote two probability measures on $M$ which are absolutely continuous with respect to the measure on the manifold, induced by the metric. the Monge Problem is then given by $\inf_{T\#\mu =\nu} \int d(x,T(x))^2\,dV,$ where the infimum is taken among all measurable maps $T:M\rightarrow M$ and $d$ denotes the Metric on $(M,g)$ induced by $g.$ Then the Monge Problem admits a unique solution $T.$ Moreover, in that case $T(x)=\exp_x(\nabla \psi(x))$ for some $\psi$ (see <ref name=Figalli />for more details of this).
+
+To conclude the introductory part of this article, let us also mention that these kind of transport maps, turned out to be useful in the area of geometric analysis. In fact, Simon Brendle could prove a Sobolev inequality on non compact Riemannian manifolds with nonnegative Ricci curvature, the proof of which makes use of defining a map which is of the type $T(x)=\exp_x(\nabla u(x))$ ( see proof of Theorem 1.1 in <ref name=Brendle /> for more details).
+
+## Curvature and Optimal Transport
+
+Let $(M,g)$ be a Riemannian manifold. In this article we assume basic knowledge about the notions of curvature and geodesics on a manifold. For some background information on these topics, we refer the reader to Chapter three to five in <ref name=DoCarmo />.
+
+The Goal of this article is to show the follwing \### Proposition Let $T_t(x)=\exp_x(t\nabla \psi (x)),$ where $\psi$ denotes a $C^2$ function on $M$ and let $\mathcal J (t):=\text{log}(\text{det}[d_xT_t]).$ Then the following inequality holds true:
+
+$\mathcal J''+\frac{1}{n} \mathcal J'+ \text{Ric}_{\gamma(t)}(\gamma'(t),\gamma'(t))\leq 0, \quad \text{ for all } t \text{ such that } \mathcal J(t)>0,$
+
+where $\gamma$ is defined to be the mapping $t \mapsto T_t(x),$ which is a geodesic.
+
+Notice that this inequality involves the transport map $T$ and the Ricci curvature tensor and therefore constitutes a connection of the curvature and the optimal transport problem.
+
+### Remarks
+
+Before we prove the Proposition, let us do some remarks: let $x \in M$ be given and let $e_i$ for $i = 1, \dots, n$ be an orthonormal basis. After doing parallel transport along $\gamma$, we have an orthonormal basis also in $T_{T_t(x)}M$. Let $\textbf J$ denote the matrix representation of $d_xT_t: T_xM\rightarrow T_{T_t(x)}M.$ Then we have that $\textbf J''+R\textbf J=0$ where $R$ denotes the matrix $(R(\gamma', e_i,\gamma', e_j))_{i,j}.$ Indeed, this follows right away from the fact that $J_i(t):= d_xT_t(e_i)$ is a Jacobi field along $\gamma$ for each $i =1,\dots,n.$
+
+### Proof of the Proposition
+
+With the notation of the proposition stated above, we compute the derivative of $\mathcal J$ as follows: $\frac{d}{dt}\mathcal J(t) = \text{trace}(\textbf J' \textbf J^{-1})$ which follows right away from Jacobi's formula. Let now $U(t):=\textbf J' \textbf J^{-1}$. Since $\textbf J$ satisfies the matrix Jacobi equation as noticed in the preceding remark, we may infer a Ricatti equation for $U$. Indeed, taking derivative of $U( t)$ we obtain the following equation
+
+$U' =\textbf J ''  \textbf J^{-1} +\textbf J' \frac{d}{dt}\textbf J^{-1}.$
+
+Now observe that
+
+$\frac{d}{dt}\textbf J^{-1}= - \textbf J^{-1}\textbf J '  \textbf J^{-1}.$
+
+In fact, notice that we only consider $t$ such that $\det( \textbf J) >0$. Thus the inverse matrix exists for all $t$ in a small neighborhood of that $t$. Then we have that
+
+$0= \frac{d}{dt} 1_n= \frac{d}{dt}\textbf J\textbf J^{-1}= \textbf J'\textbf J^{-1}+\textbf J\frac{d}{dt}\textbf J^{-1}$
+
+from which, after rearranging and multiplying with the inverse from the left, one gets the desired equality. Plugging this into the equation concerning the derivative of $U$, we get that
+
+$U' =\textbf J _  \textbf J^{-1}-\textbf J'\textbf J^{-1}\textbf J '  \textbf J^{-1}= \textbf J _  \textbf J^{-1}- U^2.$
+
+Then, using the matrix Jacobi equation, we get that
+
+$U' =-R  \textbf J\textbf J^{-1}-U^2= -R-U^2,$
+
+so that
+
+$U' +R+U^2=0.$
+
+Notice that this is a first order ODE. Since $U(0)= \text{Hess } \psi,$ is symmetric, we have that $U^T$ also satisfies the Ricatti equation with same initial condition, from which we get that $U=U^T$.
+
+Moreover, since the Ricatti equation is an equation of matrices, we can now take the trace in that equation. We therefore obtain that
+
+$\text{tr} (U')+\text{Ric}_{\gamma}(\gamma', \gamma')+ \text{tr}(U^2)=0.$
+
+As $U$ is symmetric, we get that $\text{tr}{U^2}\geq \frac{1}{n}\text{tr}(U)^2$,
+
+we therefore obtain our desired inequality.
+
+## Ricci Curvature lower bounds and Entropy
+
+In this section we will consider a generic measure metric space and we will try to define the notion of Ricci curvature lower bound. In literature was first extended the notion of sectional curvature thanks to the work of Alexandrov <ref>Alexandrov, A. D., A theorem on triangles in a metric space and some applications. Trudy Mat. Inst. Steklov, 38 1951</ref> comparing symmetries of the geodesics triangles, as expected this lower bounds are a natural extension of Sectional Curvature lower bounds, and they coincide in the setting of a Riemannian manifold. This construction became extremely interesting when (40 years later!) Grove and Petersen <ref> Grove, K. & Petersen, P., Manifolds near the boundary of existence. J. Differential Geom., 33 (1991), 379–394</ref> pointed out that this lower bounds are stable under the so called Gromov-Hausdorff convergence. It is well known that the family of Riemannian manifolds with Ricci lower bounds are not closed under the Gromov-Hausdorff convergence or any other reasonable notion of convergence. [Is the previous sentence correct? See also the discussion here: \[\[]{style="color:#0000FF"}. We present here an extension of Ricci curvature lower bounds for measure metric spaces that will also preserve this convergence! In the rest of this article we will follow Sturm papers <!-- [@citation](https://mathoverflow.net/questions/161116/ricci-curvature-under-rough-convergence]]) K.-T. Sturm, “On the geometry of metric measure spaces”, Acta Math. 196, p. 65-131 (2006) --> and <!-- [@citation] K.-T. Sturm, “On the geometry of metric measure spaces II”, Acta Math. 196, p. 133-177 (2006) -->. It is important to mention that at the same time of these papers the same results were obtained independently by Lott-Villani in <!-- [@citation] Lott-Villani, Ricci curvature for metric-measure spaces via optimal transport Pages 903-991 from Volume 169 (2009) -->.
+
+### CD(K,<math>\infty</math>) condition.
+
+This is the dimension independent notion of Ricci curvature bounds. We will require our space $(M,d,m)$ to be complete and separable and the measure to be locally finite. These assumptions come from the discussion of curvature dimension condition in the well known paper from Bakry and Emery <ref> Bakry, D. & Emery, M. ´ , Diffusions hypercontractives, in S´eminaire de Probabilit´es, XIX, 1983/84, pp. 177–206. Lecture Notes in Math., 1123. Springer, Berlin, 1985. </ref>. We denote with $\mathcal{P}_2(M,d,m)$ the subspace of all measures $\nu \in \mathcal{P}_2(M,d)$ that are absolutely continuous with $m$. We can now apply Radon-Nikodym theorem <!-- [@citation] W. Rudin.  Real and Complex Analysis. New York: McGraw-Hill, 1987. --> and we can write $\nu=\rho m$, where $\rho$ is the density from the Radon-Nikodym theorem. Using this decomposition we can now define the relative entropy of $\nu$ respect to $m$ in the following way:
+
+:$\operatorname{Ent}(\nu|m)= \lim_{\epsilon \downarrow 0}\int_{\rho >\epsilon} \rho \log \rho dm.$ Note that if $\int_{\rho >1} \rho \log \rho dm <\infty.$ then our definition of entropy coincides with $\int_{\rho >0} \rho \log \rho dm .$. If that is not satisfied then we just say that $\operatorname{Ent}(\nu|m)=\infty.$ We also say that the entropy is infinity for any measure that is not absolutely continuous with $m$. We can now define the space of absolutely continuous measures with $m$ that have finite relative entropy respect to $m$:
+
+:$\mathcal{P}_2^{\star}(M,d,m)=\{\nu \in \mathcal{P}_2(M,d) : \operatorname{Ent}(\nu|m)<\infty\}$.
+
+It's very surprising that the notion of curvature is related to the (weak) K-convexity of the relative entropy on $\mathcal{P}_2^{\star}(M,d,m)$. in the following sense: We say that $(M,d,m)$ has curvature globally $\geq K$ for a generic $K \in \mathbb{R}$ if for each pair $\nu_0,\nu_1 \in \mathcal{P}_2^{\star}(M,d,m)$ there exists a geodesics $\Gamma : [0,1] \longrightarrow \mathcal{P}_2^{\star}(M,d,m)$ connecting $\nu_0$ and $\nu_1$ such that:
+
+:$\operatorname{Ent}(\Gamma(t)|m)\leq (1-t)\operatorname{Ent}(\Gamma(0)|m)+t \operatorname{Ent}(\Gamma(1)|m) - \frac{K}{2}t(1-t)d^2_W(\Gamma(0),\Gamma(1)) \text{ for all } t \in [0,1].$.
+
+We now have an intrinsic notion of curvature that we denote in the following way:
+
+:$\underline{Curv}(M,d,m)=\sup\{ K \in \mathbb{R} : (M,d,m) \text{ has curvature } \geq K \}.$
+
+To make sure that we have introduced an interesting notion of curvature, we need these definition to agree with the classical Ricci curvature lower bounds in the case that our space is also a Riemannian manifold. This indeed happen and it's Theorem 4.9 in Sturm's paper and a detailed proof can be found in <ref> von Renesse, M.-K. & Sturm, K.-T., Transport inequalities, gradient estimates, entropy, and Ricci curvature. Comm. Pure Appl. Math., 58 (2005), 923–940 </ref>: If M is a complete Riemannian manifold with Riemannian distance $d$ and volume $m$, denote with $m'=e^{-V}m$, where $V$ is a twice differentiable function $V: M \longrightarrow \mathbb{R}$ then we have the following:
+
+:$\underline{Curv}(M,d,m')=\inf\{\operatorname{Ric}_M{\xi,\xi}+\operatorname{Hess}V(\xi,\xi) : \xi \in TM \text{ and } |\xi|=1\}$.
+
+In particular this tells us that in the Riemannian setting $(M,d,m)$ has curvature $\geq K$ if and only if Ricci curvature is $\geq K$.
+
+### CD(K,N) condition.
+
+In the previous section we have defined a dimensional independent notion of curvature lower bound. We want now to reinforce the curvature bound $Curv \geq K$ by adding a condition on the dimension. There are the so called $CD(K,N)$ conditions where $K$ has to be intended as lower bound for the curvature and $N$ as an upper bound for the dimension. The notion of curvature we discussed in the previous section will coincide, in some sense, when $N=\infty$. Again this new construction will coincide with the usual notion of Ricci curvature lower bound in the case we have a Riemannian manifold. The main idea is to substitute the relative entropy with the Renyi entropy functional (note that this is interesting for finite N):
+
+:$S_N(\nu|m)=-\int \nu^{1-\frac{1}{N}}$.
+
+It is easy to state the $CD(0,N)$ condition, it simply means that for all $N'\geq N$ the entropy functional we have just defined $S_N(\cdot|m)$ is convex on the $L_2-$Wasserstein space $\mathcal{P}_2(M,d)$. In the case of a Riemannian manifold this characterizes manifolds with dimension $\leq N$ and Ricci curvature $\geq 0$, this result can be found in<!-- [@citation] K. Sturm, Convex functionals of probability measures and nonlinear diffusions on manifolds. J. Math. Pures Appl., 84 (2005), 149–168 -->. The argument is based on the fact that the Jacobian determinant $J_t=\det dF_t$ of any transport map $T_t=\exp (-t\nabla \phi)$ satisfies $\frac{\partial^2}{\partial t^2}J_t^{\frac{1}{N}} \leq 0$ if and only if $M$ has dimension $\leq N$ and Ricci curvature $\geq 0$. It can also be proved that this condition is equivalent to the Brunn-Minkowski inequality:
+
+:$m(A_t)^{\frac{1}{N'}}\geq (1-t) m(A_0)^{\frac{1}{N'}}+tm(A_1)^{\frac{1}{N'}},$
+
+For any $N'\geq N$, any $t \in [0,1]$ and any pair of sets $A_0,A_1 \subset M$ where $A_t$ denotes the set of points $\gamma_T$ on geodesics with endpoints $\gamma_0 \in A_0$ and $\gamma_1 \in A_1$.
+
+The condition $CD(K,N)$ for a general $K \in \mathbb{R}$ is more complicated, assuming measurable choice of a unique geodesic condition: the existence of a unique geodesic $\gamma_t(x,y)$ connecting $x$ and $y$ for $m\otimes m$-almost any $(x,y) \in M^2$. Then choose any two absolutely continues probability measures, thanks to Radon Nykodim we can write them as $\rho_0 m$ and $\rho_1 m$, then there existes an optimal coupling $q$ that satisfies:
+
+:$\rho_t(\gamma_t(x,y)) \leq \Big( \tau_{K,N}^{(1-t)}(d(x,y))\rho_0^{-\frac{1}{N}}(x)+\tau_{K,N}^{(t)}(d(x,y))\rho_1^{-\frac{1}{N}}(y)\Big)^{-N}.$ for all $t \in [0,1]$ and $q$- almost everywhere $(x,y)\in M^2$, denoted with $\rho_t$, the density of the push-forward of $q$ under the map $(x,y) \mapsto \gamma_t(x,y)$ and $\tau$ is defined in the following way, denote $H=\sqrt{\frac{K}{N-1}}$:
+
+:$\tau_{K,N}^{(t)}=t^{\frac{1}{N}}\Big(\frac{\sin(Ht\theta}{\sin(H\theta}\Big)^{1-\frac{1}{N}}$. With the usual hyperbolic function interpretation when $K\leq 0$.
+
+It can be shown that the condition on the Jacoby determinant is replaced now by<!-- [@citation] K. Sturm, Convex functionals of probability measures and nonlinear diffusions on manifolds. J. Math. Pures Appl., 84 (2005), 149–168 Corollary 3.4 -->:
+
+:$\frac{\partial^2}{\partial t^2}J_t^{\frac{1}{N}} \leq -\frac{K}{N} J_t^{\frac{1}{N}}(x)d^2(x,F_1(x))$.
+
+This leads to a distorted Brunn-Minkowski type inequality:
+
+:$J_t^{\frac{1}{N}}(x)\geq \tau_{K,N}^{(1-t)}(d(x,T_1(x)))J_0^{\frac{1}{N}}(x)+\tau_{K,N}^{(t)}(d(x,T_1(x)))J_1^{\frac{1}{N}}(x)$.
+
+Again in this case, this is the usual notion of Ricci curvature lower bound if our space has the extra structure of a Riemannian manifold. The proof of this, together with all the result mentioned were also developed independently in <ref> J. Lott, C. Villani, Ricci curvature for metric-measure spaces via optimal transport. (2005).</ref>
+
+## References
+
+<references>
+
+<ref name="Figalli"> [A. Figalli, C. Villiani, *OPTIMAL TRANSPORT AND CURVATURE*, Notes for a CIME lecture course in Cetraro, June 2009](https://cedricvillani.org/sites/dev/files/old_images/2012/08/P12.CIME_.pdf) </ref>
+
+<ref name="Brendle "> [S. Brendle, *Sobolev inequalities in manifolds with nonnegative curvature*, 2021. arXiv: 2009.13717.](https://arxiv.org/abs/2009.13717) </ref>
+
+<ref name="DoCarmo "> [M. P. do Carmo, *Riemannian Geometry*,Mathematics: Theory & Applications. Birkhauser Boston, Inc., Boston, MA, 1992](https://books.google.com/books/about/Riemannian_Geometry.html?id=ct91XCWkWEUC) </ref>
+
+</references>
