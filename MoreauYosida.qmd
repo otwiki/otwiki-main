@@ -1,0 +1,120 @@
+---
+title: "The Moreau-Yosida Regularization"
+author:Alexander Sabater
+---
+
+The **Moreau-Yosida regularization** is a technique used to approximate \[\[lower semicontinuous functions\]\] by [Lipschitz functions](https://en.wikipedia.org/wiki/Lipschitz_continuity). An important application of this result is to prove Portmanteau's Theorem, which states that integration against a lower semicontinuous and bounded below function is lower semicontinuous with respect to the \[\[Convergence of Measures and Metrizability#Narrow Convergence\|narrow convergence\]\] in the space of [probability measures](https://en.wikipedia.org/wiki/Probability_measure).
+
+## Definitions
+
+Let $(X,d)$ be a [metric space](https://en.wikipedia.org/wiki/Metric_space), and let $\mathcal{P}(X)$ denotes the collection of probability measures on $X$. $(X,d)$ is said to be a **Polish space** if it is [complete](https://en.wikipedia.org/wiki/Complete_metric_space) and [separable](https://en.wikipedia.org/wiki/Separable_space).
+
+A function $g : X \to (-\infty,+\infty]$ is said to be **proper** <ref name="OT"/> if it is not identically equal to $+\infty$, that is, if there exists $x \in X$ such that $g(x) < +\infty$. The **domain** $D(g)$ of $g$ is the set
+
+:$D(g) := \{ x \in X | g(x) < +\infty \}$.
+
+For a given function $g : X \to (-\infty,+\infty]$ and $k \geq 0$, its **Moreau-Yosida regularization** <ref name="OT"/> $g_k : X \to [-\infty,+\infty]$ is given by
+
+$g_k(x) := \inf\limits_{y \in X} \left[ g(y) + k d(x,y) \right].$
+
+The distance term $d(x,y)$ may often be raised to a positive exponent $p$, in particular $p = 2$. For example, when $X$ is a [Hilbert space](https://en.wikipedia.org/wiki/Hilbert_space) <ref name="BC"/> <ref name="AGS"/>, $g_k$ is taken to be
+
+$g_k(x) := \inf\limits_{y \in X} \left[ g(y) + \frac{k}{2} \| x - y \|^2 \right].$
+
+This particular variant in a Hilbert space setting is explored in more detail below.
+
+The dependence on the parameter $k$ may also be written instead as
+
+:$\inf\limits_{y \in X} \left[ g(y) + \frac{1}{\tau} d(x,y) \right]$
+
+for $\tau \in (0,+\infty)$.
+
+Note that
+
+:$g_k(x) = \inf\limits_{y \in X} \left[ g(y) + k d(x,y) \right] \leq g(x) + k d(x,x) = g(x)$.
+
+## Examples
+
+-   If $k = 0$, then by definition $g_0$ is constant and $g_0 \equiv \inf\limits_{y \in X} g(y)$.
+-   If $g$ is *not* proper, then $g_k = +\infty$ for all $k \geq 0$.
+
+Take $(X,d) := (\mathbb{R},|\cdot|)$. If $g$ is finite-valued and differentiable, we can write down an expression for $g_k$. For a fixed $x \in \mathbb{R}$, the map $g_{k,x} : y \mapsto g(y) + k|x - y|$ is continuous everywhere and differentiable everywhere except for when $y = x$, where the derivative does not exist due to the absolute value. Thus we can apply standard optimization techniques from Calculus to solve for $g_k(x)$: find the critical points of $g_{k,x}$ and take the infimum of $g_{k,x}$ evaluated at the critical points. One of these values will always be the original function $g$ evaluated at $x$, since this corresponds to the critical point $y = x$ for $g_{k,x}$. \* Let $g(x) := x^2$. Then
+
+:$g_k(x) = \min \left\{ x^2 , \frac{k^2}{2} + k \left| x \pm \frac{k}{2} \right| \right\}.$
+
+![Plot of $g(x) = x^2$ and $g_k(x)$ for $k = 0, 1, 2, 3$.](Ex%201.png)
+
+## Approximating Lower Semicontinuous Functions by Lipschitz Functions
+
+**Proposition.** <ref name="OT"/><ref name="S"/> Let $(X,d)$ be a Polish space and let $g : X \to (-\infty,+\infty]$. \* If $g$ is proper and bounded below, so is $g_k$. Furthermore, $g_k$ is Lipschitz continuous for all $k \geq 0$. \* If, in addition, $g$ is lower semicontinuous, then $g_k(x) \nearrow g(x)$ for all $x \in X$. \* In this case, $g_k \wedge k := \min(g_k,k)$ is continuous and bounded and $g_k(x) \wedge k \nearrow g(x)$ for all $x \in X$.
+
+![Plot of $g(x) = x^2$ and $g_k(x) \wedge k$ for $k = 0, 3, 6, 9$.](Ex%202.png)
+
+**Proof.** \* Since $g$ is proper, there exists $y_0 \in X$ such that $g(y_0) < +\infty$. Then for any $x \in X$ :$-\infty < \inf\limits_{y \in Y} g(y) \leq g_k(x) \leq g(y_0) + k d(x,y_0) < +\infty .$ Thus $g_k$ is proper and bounded below. Next, for a fixed $y \in X$, let $h_{k,y}(x) := g(y) + d(x,y)$. Then as :$h_{k,y}(x_1) - h_{k,y}(x_2) = k d(x_1,y) - k d(x_2,y) \leq k d(x_1,x_2)$ , the family $\{ h_{k,y} \}_{y \in X}$ is uniformly Lipschitz and hence equicontinuous. Thus $g_k = \inf\limits_{y \in Y} h_{k,y}$ is Lipschitz continuous. \* Suppose that $g$ is also lower semicontinuous. Note that for all $k_1 \leq k_2$, $g_{k_1}(x) \leq g_{k_2}(x) \leq g(x)$. Thus it suffices to show that $\liminf\limits_{k \to \infty} g_k(x) \geq g(x)$. This inequality is automatically satisfied when the left hand side is infinite, so without loss of generality assume that $\liminf\limits_{k \to \infty} g_k(x) < +\infty$. By definition of infimum, for each $k \in \mathbb{N}$ there exists $y_k \in X$ such that
+
+:$g(y_k) + k d(x,y_k) \leq g_k(x) + \frac{1}{k}$.
+
+Then :$+\infty > \liminf\limits_{k \to \infty} g_k(x) \geq \liminf\limits_{k \to \infty} \left[ g(y_k) + k d(x,y_k) \right].$
+
+$g(y_k)$ is bounded below by assumption, while the only way $kd(x,y_k)$ to be finite in the limit is for $d(x,y_k)$ to vanish in the limit. Thus $y_k$ converges to $x$ in $X$, and by lower semicontinuity of $g$,
+
+:$\liminf\limits_{k \to \infty} g_k(x) \geq \liminf\limits_{k \to \infty} \left[ g(y_k) + k d(x,y_k) \right] \geq g(x)$.
+
+-   By definition, $g_k \wedge k \in C_b(X)$. Since $g_k(x) \nearrow g(x)$ for all $x \in X$, $g_k(x) \wedge k \nearrow g(x)$ for all $x \in X$.
+
+## Portmanteau Theorem
+
+**Theorem (Portmanteau).** <ref name="OT"/> <ref name="S"/> Let $(X,d)$ be a Polish space, and let $g : X \to (-\infty,+\infty]$ be lower semicontinuous and bounded below. Then the functional $\mu \mapsto \int_X g \, \mathrm{d}\mu$ is lower semicontinuous with respect to \[\[Convergence of Measures and Metrizability#Narrow Convergence\|narrow convergence\]\] in $\mathcal{P}(X)$, that is
+
+$\mu_n \to \mu \text{ narrowly} \Longrightarrow \liminf\limits_{n \to \infty} \int_X g_n \, \mathrm{d}\mu \geq \int_X g \, \mathrm{d}\mu$.
+
+**Proof.** By the Moreau-Yosida approximation, for all $k \geq 0$,
+
+:$\liminf\limits_{n \to \infty} \int_X g \, \mathrm{d} \mu_n \geq \liminf\limits_{n \to \infty} \int_X g_k \wedge k \, \mathrm{d}\mu_n  = \int_X g_k \wedge k \, \mathrm{d}\mu$.
+
+Taking $k \to \infty$, \[\[Fatou's Lemma\]\] ensures that
+
+:$\liminf\limits_{n \to \infty} \int_X g \, \mathrm{d} \mu_n \geq \liminf\limits_{k \to \infty} \int_X g_k \wedge k \, \mathrm{d}\mu \geq \int_X g \, \mathrm{d}\mu$.
+
+## Etymology of Portmanteau Theorem
+
+The curious epithet attached to the above theorem is due to [Billingsley](https://en.wikipedia.org/wiki/Patrick_Billingsley) <ref name="Billingsley"/>, with a citation to a Jean-Pierre Portmanteau's *Espoir pour l'ensemble vide?* published in *Annales de l'Université de Felletin* in 1915. This is believed to be a fictional citation made as a play on words <ref name="Pages"/>. \* The publication date is far too early; [Kolmogorov's probability axioms](https://en.wikipedia.org/wiki/Probability_axioms) were published in 1933. <ref name="Kolmogorov"/> \* [Felletin](https://en.wikipedia.org/wiki/Felletin) is a small town in central France with no university, and there is no record of a Jean-Pierre Portmanteau aside from this citation. \* "Espoir pour l'ensemble vide" translates to "hope for the empty set" (translation was by Google, please confirm or amend if you speak French!)
+
+## Generalizations
+
+The Moreau-Yosida regularization is a specific case of a type of convolution, and many of the above results follow from this generalization. This material is adapted from Bauschke-Combettes Chapter 12 <ref name="BC"/>, where the setting is over a Hilbert space instead of a more general Polish space.
+
+Let $\mathcal{H}$ be a Hilbert space, and let $f , g : \mathcal{H} \to (-\infty,+\infty]$. The **infimal convolution** or **epi-sum** $f \, \square \, g : \mathcal{H} \to [-\infty,+\infty]$ of $f$ and $g$ is
+
+$(f \, \square \, g)(x) := \inf\limits_{y \in \mathcal{H}} \left[ f(y) + g(x-y) \right]$.
+
+$f \, \square \, g$ is said to be **exact** at a point $x \in \mathcal{H}$ if this infimum is attained. $f \, \square \, g$ is said to be exact if it is exact at every point of its domain, and in this case it is denoted by $f \, \dot{\square} \, g$.
+
+**Remark.** Bauschke-Combettes uses a box with a dot in the middle for $f \, \square \, g$ to be exact. Due to technical difficulties, we will use $f \, \dot{\square} \, g$ instead.
+
+For an example, let $A, B \subseteq \mathcal{H}$ be nonempty. Then $\chi_A \, \square \, \chi_B$ is exact, and $\chi_A \, \dot{\square} \, \chi_B = \chi_{A + B}$.
+
+**Proposition.** Let $g : \mathcal{H} \to (-\infty,+\infty]$ be proper, $p \in [1,+\infty)$, and for $k \in (0,+\infty)$, let $g_k : \mathcal{H} \to (-\infty,+\infty]$ be given by
+
+:$g_k := g \, \square \, \left( \frac{k}{p} \| \cdot \|^p \right)$.
+
+Then the following hold for all $k \in (0,+\infty)$ and $x \in \mathcal{H}$: \* $D(g_k) = \mathcal{H}$, \* for $0 < k_1 \leq k_2 < +\infty$, $\inf\limits_{y \in \mathcal{H}} g(y) \leq g_{k_1}(x) \leq g_{k_2}(x) \leq g(x)$, \* $\inf\limits_{x \in \mathcal{H}} g_k(x) = \inf\limits_{x \in \mathcal{H}} g(x)$, \* $g_k(x) \searrow \inf\limits_{y \in \mathcal{H}} g(y)$ as $k \downarrow 0$, and \* $g_k$ is bounded above on every ball in $\mathcal{H}$.
+
+**Remark.** The convention given above differs slightly from Bauschke-Combettes to fit the convention in this article. The Moreau-Yosida regularization is the special case where $p = 1$, and is called the **Pasch-Hausdorff Envelope** in Bauschke-Combettes.
+
+**Proposition.** Let $g : \mathcal{H} \to (-\infty,+\infty]$ be lower semicontinuous and convex, let $k \in (0,+\infty)$, and let $p \in (1,+\infty)$. Then the infimal convolution $g_k$ is convex, proper, continuous, and exact. Moreover, for every $x \in \mathcal{H}$, the infimum
+
+:$g_k(x) = \inf\limits_{y \in \mathcal{H}} \left[ g(y) + \frac{k}{p} \| x - y \|^p \right]$
+
+is uniquely attained.
+
+## References
+
+<!--Bauschke-Combette Ch 12.<ref name="BC"/>; Santambrogio (6)<ref name="S" />; Ambrosio-Gigli-Savare (59-61)<ref name="AGS" />-->
+
+<references> <ref name="AGS">Ambrosio, Luigi, Nicola Gigli, and Giuseppe Savaré. *Gradient Flows in Metric Spaces and in the Space of Probability Measures.* Ch. 3.1. Birkhäuser, 2005.</ref> <ref name="Billingsley">Billingsley, Patrick. *Convergence of Probability Measures, 2nd Ed.* John Wiley & Sons, Inc. 1999. </ref> <ref name="BC">Bauschke, Heinz H. and Patrick L. Combettes. *Convex Analysis and Monotone Operator Theory in Hilbert Spaces, 2nd Ed.* Ch. 12. Springer, 2017.</ref> <ref name="Kolmogorov">Kolmogorov, Andrey (1950) \[1933\]. Foundations of the theory of probability. New York, USA: Chelsea Publishing Company.</ref> <ref name="Pages">Pagès, Gilles. *Numerical Probability: An Introduction with Applications to Finance.* Ch. 4.1. Springer, 2018.</ref> <ref name="OT">Craig, Katy C. Lower Semicontinuity in the Narrow Topology. Math 260J. Univ. of Ca. at Santa Barbara. Winter 2022.</ref> <ref name="S">Santambrogio, Filippo. *Optimal Transport for Applied Mathematicians: Calculus of Variations, PDEs, and Modeling* Ch. 1.1. Birkhäuser, 2015.</ref> <!--
+<ref name="P">https://math.stackexchange.com/questions/43747/where-did-the-portmanteau-theorem-get-its-name
+<ref name="Q">https://www.quora.com/What-is-the-Portmanteau-theorem-And-who-knows-the-reason-for-that-name
+-->
+
+</references>

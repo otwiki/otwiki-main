@@ -62,7 +62,7 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Convergence of Measures and Metrizability](ConvergenceMetrizability.qmd)
 -   [Fenchel-Moreau and Primal/Dual Optimization Problems](FenchelMoreau.qmd)
 -   [Fenchel-Rockafellar and Linear Programming](FenchelRockafellar.qmd)
--   [The Moreau-Yosida Regularization](https://www.otwiki.xyz/wiki/The_Moreau-Yosida_Regularization)
+-   [The Moreau-Yosida Regularization](MoreauYosida.qmd)
 -   [Gradient flows in Hilbert spaces](https://www.otwiki.xyz/wiki/Gradient_flows_in_Hilbert_spaces)
 -   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
 -   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
