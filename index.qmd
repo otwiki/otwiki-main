@@ -64,20 +64,20 @@ Contact Katy Craig if you would like to contribute to this wiki.
 -   [Fenchel-Rockafellar and Linear Programming](FenchelRockafellar.qmd)
 -   [The Moreau-Yosida Regularization](MoreauYosida.qmd)
 -   [Gradient flows in Hilbert spaces](GFHilbert.qmd)
--   [The continuity equation and Benamour Brenier formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula)
--   [Isoperimetric inequality and OMT](https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT)
+-   [The continuity equation and Benamou Brenier formula](CtyEqn.qmd)
+-   [Isoperimetric inequality and OMT](Isoperimetric.qmd)
 -   [Gaussian Measures](Gaussian_Measures.qmd)
 -   [Analysis in metric spaces](Analysis_in_Metric_Spaces.qmd)
 -   [Gradient flows in metric spaces](GFMetricSpace.qmd)
 
-### Applications of optimal transport
+### Applications of Optimal Transport
 
--   [Machine Learning](https://www.otwiki.xyz/wiki/Machine_Learning)
--   [Shallow neural networks as Wasserstein gradient flows](https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows)
+-   [Machine Learning and Optimal Transport](MachineLearning.qmd)
+-   [Shallow Neural Networks as Wasserstein Gradient Flows](ShallowNeuralNetworks.qmd)
 -   [Wasserstein Generative Adversarial Networks](WGAN.qmd)
 -   [Knothe Maps and Conditional Sampling](Knothe_Maps_Conditional_Sampling.qmd)
 
-### Other
+### Other Scientific Wikis
 
 -   [Nonlocal Equations Wiki](https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?)
 -   [Proteopedia](http://proteopedia.org/wiki/index.php/Main_Page)

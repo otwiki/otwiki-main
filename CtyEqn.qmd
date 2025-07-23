@@ -1,0 +1,77 @@
+---
+title: "The Continuity Equation and Benamou Brenier Formula"
+authors: Christian Hong and Djordje Nikolic
+---
+
+## Introduction
+
+The continuity equation is an important equation in many fields of science, for example, electromagnetism, computer vision, fluid dynamics etc. However, in the field of optimal transport, the formulation from fluid dynamics is of a large significance. This form helps to explain the dynamic formulation of special cases of [Wasserstein metric](https://en.wikipedia.org/wiki/Wasserstein_metric) via the continuity equation, and we will focus in this direction. Related to this is the Benamou-Brenier Formula, which implies a Riemannian structure on our space of measures. For more general information about the continuity equation, look at the article [Continuity equation](https://en.wikipedia.org/wiki/Continuity_equation).
+
+## Continuity equation in fluid dynamics
+
+First, because of the intuition, we will introduce the definition of the continuity equation in fluid mechanics. The exposition in this section will follow the book by Chorin and Marsden<ref name="Marsden" />.
+
+Suppose that mass of our fluid is conserved, through time. Denote $\rho(x,t)$ as a density function, representing the mass-density of fluid, and $v(x,t)$ as a velocity of particle at position $x$, at time $t$. Then, for any subspace $W$ of $\mathbb{R}^{3}$ we have: :$\partial_{t}[\int_{W} \rho(x,t) dV] = - \int_{\partial W} \rho v \cdot ndS.$
+
+In this section, we assume both density function and particle velocity are smooth enough. Hence, after differentiating under the integral and applying the Divergence Theorem, we get: :$\int_{W} \partial_{t}\rho(x,t) dV = - \int_{W} \nabla\cdot(\rho v) dV.$
+
+Finally, we conclude that: :$\int_{W} \partial_{t}\rho + \nabla\cdot(\rho v) dV = 0,$ which implies, since $W$ is arbitrary, that: :$\partial_{t}\rho + \nabla\cdot(\rho v) = 0.$ The last equation is the continuity equation in fluid dynamics, written in the differential form. We use the equation in this form in optimal transport.
+
+An important perspective comes from viewing the fluid as an system of particles moving in space (Langrangian perspective), as opposed to some continuous density that varies at specific points (Eulerian perspective) due to internal currents. This alternate perspective can be formalized via an ordinary differential equation<ref name="Ambrosio" />. :<math>
+
+\begin{cases}
+\gamma'(t) = v(\gamma(t), t) & \\
+\gamma(0) = x &
+\end{cases}
+
+</math> where $v(x,t)$ is some vector field varying with time, and $\gamma(t)$ is absolutely continuous. Since we are not assuming our curve is differentiable, we can instead consider the integral form of our ODE :$\gamma(t) = x + \int_0^t v_s(\gamma(s)) \, ds$ In both cases, $x$ represents the starting point of our curve, which indicates the path of a specific particle in our fluid. The important fact is that the continuity equation and our ODE system are equivalent in a weak sense when given the same $v(x, t)$. Intuitively, the continuity equation is stating the the change in density at a point is dictated by the flow of particles, $\rho \cdot v(x,t)$ into that point. From the Lagrangian point of view, this flow is the result of all the trajectories of particles that follow the current $v(x,t)$ into the desired point.
+
+## Continuity equation in optimal transport
+
+The previous discussion assumed that the density function was smooth, which is not true of the general measures we consider in optimal transport. Even when a measure $\mu$ is absolutely continuous with respect to Lebesgue measure, which we write with a mild abuse of notation as $d\mu(x) = \mu(x) dx$, $\mu$ does not have to be smooth. So, we need to state a proper weak formulation of the continuity equation. Smooth functions satisfy all the cases below.
+
+Here, we will present definitions and reasoning from book by F.Santambrogio<ref name="Santambrogio" />.
+
+From this point, we are looking at the following equation: :$\partial_{t}\mu_{t} + \nabla\cdot (\mu_{t}v_{t}) = 0.$
+
+We will give two different notions of solutions to the continuity equation.
+
+:\* **Distributional solution.** All the measures we are interested in satisfy $\int_{0}^{1} ||v_{t}||_{L^{1}(\mu_{t})}dt < \infty$, and solve continuity equation in a distributional sense, namely :$\int_{0}^{T}\int_{\Omega} [\partial_{t}\phi + \nabla\phi\cdot v_{t}] d\mu_{t} dt = 0,$ for all bounded Lipschitz functions $\phi \in C_{c}^{1}((0,T) \times \overline{\Omega})$, where $\Omega$ is a bounded domain or the whole space $\mathbb{R}^{d}$, and $0<T<1$. We assume no-flux condition in this case, namely $\mu_{t}v_{t} \cdot n = 0$ on the boundary $\partial\Omega.$ This notion of solution is called a *distributional* solution.
+
+The main goal of the classical optimal transport theory is how to find the least expensive way to move one measure to the another one. For more information, look at [Monge Problem](http://34.106.105.83/wiki/Monge_Problem).So, we have to impose initial and terminal conditions on measures, for example $\mu_{0} = \mu$, and $\mu_{1} = \nu.$ Then, our equation becomes $\int_{0}^{T}\int_{\Omega} [\partial_{t}\phi + \nabla\phi\cdot v_{t}] d\mu_{t} dt = \int_{\Omega}\phi(T,x)d\nu(x) - \int_{\Omega}\phi(0,x)d\mu(x),$ for all $\phi \in C_{c}^{1}([0,T]\times \overline{\Omega}).$
+
+:\* **Weak solution.** Another way to interpret solutions to the continuity equation is to assume that function $t \rightarrow \int_{\Omega} \psi d\mu_{t}$ is absolutely continuous, and for a.e. $t$ it holds: $\partial_{t} \int_{\Omega} \psi d\mu_{t} = \int_{\Omega} \nabla\psi \cdot v_{t}d\mu_{t},$ for all test functions $\psi \in C_{c}^{1}(\overline{\Omega})$ This kind of solution is called a *weak* solution.
+
+Some connections between these two types of solutions are given in the following propositions.
+
+:   **Proposition 1.**, (p.124,<ref name=Santambrogio />) Distributional and weak solutions are equivalent. Every weak solution is a distributional solution. On the other hand, every distributional solution admits a representative (a.e. equal), that is weakly continuous and a weak solution.
+
+:   **Proposition 2.**,(p.124,<ref name=Santambrogio />) Let $\mu$ be the Lipschitz function in $(t,x)$ and $v$ be the Lipschitz function in $x.$ Suppose that the continuity equation is satisfied in the weak sense. Then it is satisfied in a.e. sense.
+
+The following theorem will provide us with existence and uniqueness of the continuity equation solution. For simplicity, we will assume that $\Omega = \mathbb{R}^{d}.$
+
+:   **Theorem.**<ref name=Santambrogio /> Let measurable function $v: (0,T) \times \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ be a Lipschitz continuous in $x$, uniformly in $t$, and uniformly bounded. Suppose that flow $X_{t}$ of the classical ODE problem, with function $v$ exists. Then, for any probability measure $\mu_{0}$, push-forward measures $\mu_{t} = X_{t}\#\mu_{0}$ satisfy the continuity equation with the initial condition $\mu_{0}$. Moreover, for all measures $\mu_{t}$ absolutely continuous with respect to Lebesgue measure, the previous solution is the only solution the continuity equation admits.
+
+:   *Sketch of the Proof.* Proving existence, or checking that $\mu_{t}$ satisfies the continuity equation in a sense of the weak solution is straightforward, using change of variables in the integral. However, resolving the uniqueness of this solution when it is absolutely continuous with respect to Lebesgue measure requires narrowing a test function space, using distributional solution. Hence, we can control the flow $X_{t}$ in a better way, and using a linear transport equation solution, we can prove the uniqueness of solution of our continuity equation.
+
+## Applications
+
+The following theorem can be found at the book by L.Ambrosio, E.Brué, and D.Semola<ref name="Ambrosio" />.
+
+:   **Theorem (Benamou-Brenier Formula).**<ref name="Ambrosio" /> Let $\mu, \nu \in \mathcal{P}_{2}(\mathbb{R}^{d})$. Then :$W_{2}^{2}(\mu, \nu)=\min_{(\mu(t),\nu(t))} \{\int_{0}^{1} |v(\cdot,t)|_{L^{2}(\mu(t))}^{2}dt \quad | \quad \partial_{t}\mu+\nabla\cdot(v\mu)=0,\quad \mu(0)=\mu,\quad \mu(1)=\nu \}.$
+
+This formula is important for defining the Riemannian structure of our Wasserstein space. In particular, this is related to the fact that the distance minimizing curves on Riemannian manifolds are geodesics. The property at play here is the fact that geodesics minimize the action of the Riemannian metric. In other words, an optimal transport plan between measures $\mu$ and $\nu$ is actually related to a geodesic connecting these measures on a Riemannian manifold. The Benamou-Brenier Formula implies that the correct action on this space is $\min_{(\mu(t),\nu(t))} \int_{0}^{1} |v(\cdot,t)|_{L^{2}(\mu(t))}^{2}dt$ where $v(\cdot, t)$ gives the velocity of the curve $\mu$. This implies the correct Riemannian metric for our Wasserstein space. You can see more at [Formal Riemannian Structure of the Wasserstein metric](http://34.106.105.83/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric).
+
+In addition, using the continuity equation we can describe geodesics in the Wasserstein space. For more details look at [Geodesics and generalized geodesics](http://34.106.105.83/wiki/Geodesics_and_generalized_geodesics).
+
+# References
+
+<references>
+
+<ref name="Marsden"> [A.J.Chorin, J.E.Marsden, *A Mathematical Introduction to Fluid Mechanics*, Chapter 1, pages 1-11](https://link.springer.com/book/10.1007/978-1-4612-0883-9) </ref>
+
+<ref name="Santambrogio"> [F.Santambrogio, *Optimal Transport for Applied Mathematicians*, Chapter 4, pages 123-126](https://link.springer.com/book/10.1007/978-3-319-20828-2) </ref>
+
+<ref name="Ambrosio"> [L.Ambrosio, E.Brué, D.Semola, *Lectures on Optimal Transport*, Lecture 16.1., pages 183-189](https://link.springer.com/book/10.1007/978-3-030-72162-6) </ref>
+
+</references>

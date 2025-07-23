@@ -1,0 +1,113 @@
+---
+title: "The Isometric Inequality and Optimal Transport"
+authors: Fabio Ricci and Malik Tuerkoen
+---
+
+## The classic isoperimetric inequality
+
+A very interesting application of optimal transport is a proof of the isoperimetric inequality. The first proof with an OMT argument is due to Gromov and the main tool is the Knothe's map. <!-- [@citation] V.D. Milman, G. Schechtman, Asymptotic Theory of Finite-Dimensional Normed Spaces, with an appendix by M. Gromov, Lecture notes in Mathematics, vol. 1200 (Springer, Berlin, 1986) -->. This proof is based on an idea by Knothe <!-- [@citation] Herbert Knothe. "Contributions to the theory of convex bodies.." Michigan Math. J. 4 (1) 39 - 52, 1957 -->. The classic isoperimetric inequality in $\mathbb{R}^n$ states that the round ball has the minimal (n-1)-dimensional volume of the boundary among all the domains with a given fixed volume. This is equivalent to say that every set $E$ has a larger perimeter than the ball $B$ with the same volume. I will present this proof following the exposition given in chapter two in <!-- [@citation] F. Santambrogio. Optimal Transport for Applied Mathematicians. Calculus of Variations, PDEs and Modeling (2015) -->. The usual way to state this is the following:
+
+:$\operatorname{Per}(E) \geq n \omega_n^{1/n}|E|^{1-1/n}.$ Here $\omega_n$ is the volume of the unit ball in $\mathbb{R}^n$. The idea of the proof is to construct a map T called Knothe transport and use it between the two densities: $\mu=\mathcal{L}_B$, the inequality will follow from some symmetries and consideration on the Jacobian determinant of this map.
+
+## The Knothe's transport
+
+For this part I will follow the first chapter in <!-- [@citation] A. Figalli, F. Glaudo An Invitation to Optimal Transport, Wasserstein Distances, and Gradient Flows -->. In some sense, it can be seen as a multidimension generalization of monotone rearrangement. Take any two measures $\mu,\nu \in \mathcal{P}(\mathbb{R})$ and define
+
+:$F(x)= \int_{-\infty}^x d\mu(t), \text{ } G(y)= \int_{-\infty}^x d\nu(t)$, This maps may not be well defined, since at some points the measures may have a delta. For the purpose of this exposition we will assume that those functions are well defined, for the precise definition and convention to include the mass of the deltas in the integral. It follow easily from the definition that those maps are not decreasing. We now define $G^{-1}(y)=\inf{ \{t \in \mathbb{R} | G(t) > y \} }$. We are now ready to define the following monotone rearrangement map :
+
+:$T=G^{-1} \circ F : \mathbb{R} \longrightarrow \mathbb{R}$. Note that this map is also not decreasing. In the case that our first density $\mu$ has no deltas then it can be shown that $T$ is indeed a transport map (Theorem 1.4.7). To prove the isoperimetric inequality we only use the fact that this map is a transport map and its nondecreasing but we also know, from Benier's theorem, that $T$ is is also a optimal transport map. We now move to the two dimensional case: the key ingredient to the Knothe transport map is what is known as the disintegration theorem 1.4.10: Given $\mu \in \mathcal{P}(\mathbb{R}^2)$ and let $\mu_1=\pi_1 \#  \mu \in \mathcal{P}(\mathbb{R})$ where $\pi_1$is the projection on the first component of $\mathbb{R}^2$: $\pi_1(x_1,x_2)=x_1$, Then there exist an uncountable family of probability measures $(\mu_{x_1})_{x_1 \in \mathbb{R}} \subset \mathcal{P} (\mathbb{R})$ such that for any $\phi : \mathbb{R}^2 \longrightarrow \mathbb{R}$ continuous and bounded we have that:
+
+:$\int_{\mathbb{R}^2} \phi(x_1,x_2)d\mu(x_1,x_2)=\int_{\mathbb{R}}\Bigg(\int_{\mathbb{R}}\phi(x_1,x_2)d\mu_{x_1}(x_2)\Bigg)d\mu_1(x_1)$. The disintegration of the measure $\mu$ is often also denoted as $\mu=\mu_{x_1} \otimes \mu_1 = \mu_{x_1}(dx_2) \otimes \mu_1(dx_1)$. Now we are ready to construct the Knothe map. Fix any two absolutely continuous measures in $\mathbb{R^2}$: $\mu_(x_1,x_2)=f(x_1,x_2)dx_1dx_2$ and $\mu_(x_1,x_2)=g(x_1,x_2)dx_1dx_2$, define $F_1(x_1)=\int_{\mathbb{R}}f(x_1,x_2)dx_2$ and $G_1(y_1)=\int_{\mathbb{R}}g(y_1,y_2)dy_2$. Note that using these notation we can write:
+
+:$\mu(x_1,x_2)=\frac{f(x_1,x_2)}{F_1(x_1)}dx_2\otimes F_1(x_1)dx_1$ and $\nu(y_1,y_2)=\frac{g(y_1,y_2)}{G_1(y_1)}dy_2\otimes G_1(y_1)dy_1$. Applying the monotone rearrangement we get a map $T_1:\mathbb{R} \longrightarrow \mathbb{R}$ that satisfies $T_1 \#F_1dx_1=G_1dy_1.$, We want to send the disintegration of $\mu$ at $x_1$ to the disintegration of $\nu$ at the point $T(x_1)$, in symbols let $T_2(x_1,\cdot)\# \Bigg(\frac{f(x_1,\cdot)dx_2}{F_1(x_1)}\Bigg)=\frac{g(T_1(x_1),\cdot)dy_2}{G_1(T_1(x_1))}$. The Knothe map is now defined as:
+
+:$T(x_1,x_2)=(T_1(x_1),T_2(x_1,x_2))$. It is not hard to check that this map is indeed transports $\mu$ to $\nu$ (Theorem 1.4.13) of . By monotonicity of the monotone rearrangement, assuming that the map T is differentiable, we can say that: :<math> \nabla T= \left[ {\begin{array}{cc}
+\partial_1T_1\geq 0 & \star \\
+0 & \partial_1T_1\geq 0 \\
+\end{array} } \right]</math>. We can iterate the same construction and obtain a Knothe map on $\mathbb{R}^n$, the recursive nature of this definition is well described in <!-- [@citation] Luigi Ambrosio, Elia Brué, Daniele Semola - Lectures on Optimal Transport Remark 5.10 pag. 52 -->, the formal construction can be found here <!-- [@citation] F. Santambrogio. Optimal Transport for Applied Mathematicians. Calculus of Variations, PDEs and Modeling (2015) pag. 67-72 -->.
+
+## Proof of the classic isoperimetric inequality
+
+We now present three key properties of the Knothe map from $\mu$ to $\nu$, this is Proposition 1.5.2 Let now $E \subset \mathbb{R}^n$ be a bounded set with smooth boundary, $|E|$ its Lebesgue measure and the probability measures $\mu=\frac{\chi_E}{|E|}dx$ and $\nu=\frac{\chi_{B_1}}{\omega_n}$, where $\chi_A$ is the characteristic function of the set $A$: $\chi_A$ is identically one in $A$ and zero elsewhere, and $B_1$ is the unit ball in $\mathbb{R}^n$. Denote with $T$ be a Knothe map from $\mu$ to $\nu$. First by just noticing that if $x \in E$ then $T(x) \in B_1$ we can conclude: :$\forall x \in E, |T(x)|\leq 1$
+
+Thank to a change of variable and using the fact that the jacobian map $\nabla T$ is upper triangular and its diagonal entries are non negative (similar to the two dimensional case) it can be shown that: :$\det \nabla T = \frac{\omega_n}{|E|}$ in $E$
+
+Now since the matrix is upper triangular, it's very easy to compute the determinant as the product of the diagonal entries, we then get an estimate on the divergence of $T$: :$\operatorname{div} T \geq n (\det \nabla T )^{\frac{1}{n}} :$.
+
+We are now ready to prove the classic isoperimetric inequality, this is Theorem 1.5.1 of Denote by $n_E$ the outer unit normal of $\partial E$ and by $d \sigma$ the surface element of $\partial E$. We can now write thanks to the first property of the Knothe map: :$\operatorname{Per}(E)=\int_{\partial E} d\sigma \geq \int_{\partial E} |T| d\sigma$
+
+As a straightforward application of Stokes theorem together with our lower bound for the divergence we get: :$\int_{\partial E} |T| d\sigma \geq \int_{\partial E} T \cdot n_E d\sigma = \int_{E} \operatorname{div} T dx \geq n \int_{E} (\det \nabla T )^{\frac{1}{n}} dx$
+
+We can now conclude with our explicit expression for the Jacobian of $T$ in $E$, :$n\int_{E} (\det \nabla T )^{\frac{1}{n}} dx =n\int_{E} \Bigg( \frac{\omega_n}{|E|}\Bigg)^{\frac{1}{n}}dx=  n \omega_n^{1/n}|E|^{1-1/n}.$
+
+## The isoperimetric inequality in <math> CD(0,N) </math> spaces
+
+There is a more general version of the classic isoperimetric inequality for Riemannian manifolds and even more in general for $CD(0,N)$spaces. In the Riemannian setting this result is proved first by Simon Brendle in Corollary 1.3 of<!-- [@citation] S. Brendle, Sobolev inequalities in manifolds with nonnegative curvature (2020) pag. 2 -->, the proof is based on PDE techniques, notably on the so called ABP-method (Aleksandrov-Bakelman-Pucci estimates, a standard reference for this would be <!-- [@citation] X. Cabr´e, X. Ros-Oton, J. Serra, Sharp isoperimetric inequalities via the ABP method. J. Eur. Math. Soc. 18 (2016) -->).
+
+Since OMT-theory has been worked very well in a much more general setting of metric measure spaces, we can construct the so called $CD(K,N)$ spaces where $K$ is a lower bound for the Ricci curvature and $N$ is an upper bound for the dimension (Wiki article on Ricci Curvature and OMT \[http://34.106.105.83/wiki/Optimal_Transport_and_Ricci_curvature\]). This has been worked out independently by Lott and Villani: <ref> J. Lott, C. Villani, Ricci curvature for metric measure spaces via optimal transport. Ann. of Math. (2) 169 (3) (2009) </ref> and Sturm in two very beautiful papers: <!-- [@citation] K.-T. Sturm, On the geometry of metric measure spaces. I, Acta Math. 196 (1) (2006), 65–131. --> and <!-- [@citation] K.-T. Sturm, On the geometry of metric measure spaces. II, Acta Math. 196 (1) (2006), 133–177. -->. The idea is to express the curvature in terms of the convexity of a specific entropy function defined on the space. It is also well known that even in the case of non negative curvature, i.e. $CD(0,N)$ without an additional condition, a general sharp isoperimetric inequality cannot hold! This can be found in two papers from Milman: <!-- [@citation] E. Milman, Sharp isoperimetric inequalities and model spaces for the curvature-dimension-diameter condition. J. Eur. Math. Soc. 17 (5) (2015) --> and <!-- [@citation] E. Milman, Beyond traditional curvature-dimension I: new model spaces for isoperimetric and concentration inequalities in negative dimension. Trans. Amer. Math. Soc. 369 (2017), no. 5, 3605–3637 -->. To my knowledge, one of the most general result in this direction is Theorem 1.1 in <!-- [@citation] Z. M. Balogh, A.Kristály Sharp geometric inequalities in spaces with nonnegative Ricci curvature and Euclidean volume growth (2021) -->. In this case the condition is the so called Euclidean volume growth condition at infinity. If we denote with $B_x(r)=\{y \in M: d(x,y)<r \}$, by an generalization of the classical Bishop-Gromov volume growth inequality, theorem 2.3 of<!-- [@citation] E. Milman, Beyond traditional curvature-dimension I: new model spaces for isoperimetric and concentration inequalities in negative dimension. Trans. Amer. Math. Soc. 369 (2017), no. 5, 3605–3637 -->, it follows that the map $r \mapsto \frac{m(B_x(r))}{r^N}$ is non increasing on $(0,\infty)$ for any $x \in M$. The Euclidean volume growth at infinity is a the positivity of the following limit:
+
+:$\theta = \lim_{r\rightarrow \infty} \frac{m(B_x(r))}{\omega_Nr^N} >0$. It can be shown that this is independent of the choice of $x \in M$. In the Riemannian contest this condition rises naturally thanks since the Bishop-Gromov relative volume comparison theorem assurers that the limit exists and that $\theta \leq 1$.
+
+We are now ready to state Theorem 1.1 : Let $M$ be a metric measure space satisfying the $CD(0,N)$ condition for some $N>1$ together with the Euclidean volume growth assumptions, for any bounded Borel subsets $E\subset M$ the following holds: :$m^+(E) \geq N \omega_N^{\frac{1}{N}}\theta^{\frac{1}{N}}m(E)^{1-\frac{1}{N}}$. Here $m^+(E)$ is the exterior Minkowski content of $E$ that if we have more regularity can be interpreted just as the (n-1)-dimensional surface area of $\partial E$.
+
+## Anisotropic Isoperimetric inequality
+
+The Anisotropic Isoperimetric inequality is a generalization of the isoperimetric inequality. Recall that the isoperimetric inequality states that for any measurable set of finite volume, one has that $\text{Per}(E)\geq N\omega_N^{\tfrac{1}{N}}|E|^\frac{N-1}{N} .$ where equality holds true if and only if $E=B(x_0)$ where $B(x_0)$ denotes a ball in $\mathbb R^N$ with center $x_0$. This can be generalized to the so-called $\textit{Anisotropic}\, \textit{Isoperimetric}\, \textit{inequality}$ In order to state the inequality, we have to define the notion of a anisotropic perimeter. \### Anisotropic Perimeter The anisotropic perimeter arises as a generalization of the perimeter in the Euclidean space. It also appears as a model for surface tension in the study of equilibrium configurations of solid crystals with sufficiently small grains ( see <ref>Figalli, A., Maggi, F. & Pratelli, A. A mass transportation approach to quantitative isoperimetric inequalities. Invent. math. 182, 167–211 (2010). https://doi.org/10.1007/s00222-010-0261-z </ref>, <!-- [@citation] C. Herring, Some theorems on the free energies of crystal surfaces, Phys. Rev. 82 (1951), 87-93. --> for more details on its applications.) It measures the anisotropy of a given set $E$ with respect to a fixed set convex set $K$ which contains the origin and is open. More precisely, for any open, convex and bounded subset $K\subset \mathbb R^N$ containing the origin, define a weight function being
+
+$\| \nu\|_*:=\sup \{\langle \nu,x\rangle: x \in K\}, \quad x\in \mathbb S^{N-1}.$
+
+Then for any open and smooth set $E\subset \mathbb R^N$ we define the anisotropic perimeter
+
+$P_K(E):=\int_{\partial E} \|\nu_E\|_*\, d\mathcal H^{N-1}$ Notice, though, that the normal perimeter is also defined for arbitrary measurable sets. To define the anisotropic perimeter for such a large class of sets though, involves a little bit more background in geometric measure theory and functions of bounded variations which is why we commit the discussion here. Please see <ref>Figalli, A., Maggi, F. & Pratelli, A. A mass transportation approach to quantitative isoperimetric inequalities. Invent. math. 182, 167–211 (2010). https://doi.org/10.1007/s00222-010-0261-z </ref> for a rigorous definition of this general case.
+
+Now let us understand how this notion of perimeter is related to the classical perimeter: recall that for measuresble sets $E$ with Lipschitz boundary, one has
+
+$P(E)=\int_{\partial E} d\mathcal H^{N-1}=\mathcal H^{N-1}(\partial E)$
+
+(see <!-- [@citation] L. Ambrosio, N. Fusco, D. Pallara: Functions of Bounded Variation and Free Discontinuity Problems, Oxford University Press, 2000. --> for a rigorous introduction to functions of bounded variations and perimeters of measurable sets. The main connection between these two perimeter can be seen as follows: Let $K=B_1$ the unit ball in the Euclidean space around the origin. Then, for any $x \in \partial E$, we have that
+
+$\|\nu_E(x)\|_*=\sup\{ \langle \nu_E(x), v\rangle:\quad  v\in B_1\}=1$, where the last equality follows from the Cauchy Schwarz inequality, being
+
+$|\langle v,w\rangle| \leq \|v\| \|w\|$ where equality occurs if and only if $v=\lambda w$ for some $\lambda \in \mathbb R$. Then we have that $P_K(E)=\int_{\partial E} d \mathcal H^{N-1}=P(E).$ Notice, though, that the anisotropic perimeter does not obey as nice properties as the classical perimeter: \#### Easy Example Let us now consider an easy example for the anisotropic perimeter. Let us consider the case $K=\{(x,y)\in \mathbb R^2:\quad |x|^2+|y-\varepsilon|^2< \varepsilon ^2\}\cup [-\delta ,\delta ]\times  [-5,\varepsilon]\cup \{(x,y)\in \mathbb R^2:\quad |x|^2+|y+5|^2< 1\},$
+
+which is clearly a convex set containing the origin for $0<\delta <<\varepsilon <1$. Now let us consider the set $E=[-a,a]\times [-\hat \delta,\hat \delta ]$, where $\hat \delta >0$ is small. Then we have that
+
+$P_K(E)>P_K(A(E))$ where $A$ denotes a rotation by $90$ degrees, as one can see that by drawing a simple picture and choosing the parameter $a$ larger and $\delta ,\hat \delta$ smaller. So we have that $P_K(\cdot )$ is not invariant under rotations, unlike its classical version, the normal perimeter.
+
+We are now in the position to state the
+
+### Anisotropic isoperimetric inequality
+
+Let $K$ be an open and bounded, convex set which contains the origin. Let $E\subset \mathbb R^N$ be a measurable set of finite volume, then $P_K(E)\geq N|K|^{\frac{1}{N}}|E|^\frac{N-1}{N}$
+
+where equality holds if and only if $E=K-c$ for some $c \in \mathbb R$. Taking a look at this inequality and the isoperimetric inequality, one naturally expects that for $K=B_1$, the unit ball in $\mathbb R^N$ one recovers the classical isoperimetric inequality. This is indeed the case as we have seen above that the two perimeter coincides. Let us now go over the
+
+### Proof of the anisotropic isoperimetric inequality
+
+The proof of that inequality really follows with similar arguments as in the classical case. We restrict ourselves to the case where the Transport map is smooth as a gradient of a strictly convex function. For a general proof see <ref>Figalli, A., Maggi, F. & Pratelli, A. A mass transportation approach to quantitative isoperimetric inequalities. Invent. math. 182, 167–211 (2010). https://doi.org/10.1007/s00222-010-0261-z </ref> We follow the proof given in <ref>A. Figalli, Quantitative isoperimetric inequalities, with applications to the stability of liquid drops and crystals, Concentration, functional inequalities and isoperimetry, 77-87, Contemp. Math., 545, Amer. Math. Soc., Providence, RI, 2011.</ref> Indeed, as in the proof of the classical isoperimetric inequality, we get a transport map $T$ which now pushes forward the density $\frac{\chi_E}{|E|}dx$ to the density $\frac{\chi_K}{|K|}dx$, where $dx$ denotes the $N$ dimensional Lebesgue measure on $\mathbb R^N$ . By our assumption on the transport map, we know that there are positive $\lambda_i:\mathbb R^N \rightarrow \mathbb R$ for $i=1\dots,n$ such that
+
+$\nabla T=\sum_{i=1}^N\lambda_i\cdot e_i \otimes e_i$
+
+where $e_i$ denotes an orthonormal basis. Then from the geometric arithmetic inequality, we get that
+
+$N(\det \nabla T)^\frac{1}{N}=N\Bigl(\Pi_{i=1}^N)\lambda_i\Bigr)^\frac{1}{N}\leq \sum_{k=1}^N\lambda_k=\text{div}T$
+
+Moreover, one can show that on $E$ one has that
+
+$\det \nabla T=\frac{|K|}{|E|}$
+
+Then we get from the divergence theorem that
+
+$N|K|^\frac{1}{N}|E|^\frac{N-1}{N}=\int_E N(\det \nabla T)^\frac{1}{N}\, dx\leq \int_E\text{div}T\,dx=\int_{\partial E}T\cdot \nu_E\, d\mathcal H^{N-1}$
+
+Now for $x \in \mathbb R^N$, define
+
+$\|x\|:=\inf \{\lambda>0: \frac{x}{\lambda}\in K\}$
+
+Then we have that $\|T(x)\|\leq 1$ for $x\in E$. Indeed, notice that $K=\{x\in \mathbb R ^N\,|\, \|x\|<1\}$. Thus as $T(x)\in K$ for $x\in E$ one obtains the desired inequality. Moreover, we have that $x\cdot y\leq \|x\|\|y\|_*\quad \text{for }y\in \mathbb S^{N-1}, x\in \mathbb R^N$
+
+We therefore conclude that
+
+$N|K|^{\frac{1}{N}}|E|^\frac{N-1}{N}\leq \int_{\partial E} \|T\|\|\nu_E\|_*\, d\mathcal H^{N-1}\leq P_K(E)$
+
+as desired. To see a proof of the equality case, we refer the reader to \[<ref>A. Figalli, Quantitative isoperimetric inequalities, with applications to the stability of liquid drops and crystals, Concentration, functional inequalities and isoperimetry, 77-87, Contemp. Math., 545, Amer. Math. Soc., Providence, RI, 2011.</ref>, Chapter 1\].
