@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The Isometric Inequality and Optimal Transport – OT WIKI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">OT WIKI</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The Isometric Inequality and Optimal Transport</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Fabio Ricci and Malik Tuerkoen </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-classic-isoperimetric-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="the-classic-isoperimetric-inequality">The classic isoperimetric inequality</h2>
+<p>A very interesting application of optimal transport is a proof of the isoperimetric inequality. The first proof with an OMT argument is due to Gromov and the main tool is the Knothe’s map. <!-- [@citation] V.D. Milman, G. Schechtman, Asymptotic Theory of Finite-Dimensional Normed Spaces, with an appendix by M. Gromov, Lecture notes in Mathematics, vol. 1200 (Springer, Berlin, 1986) -->. This proof is based on an idea by Knothe <!-- [@citation] Herbert Knothe. "Contributions to the theory of convex bodies.." Michigan Math. J. 4 (1) 39 - 52, 1957 -->. The classic isoperimetric inequality in <span class="math inline">\(\mathbb{R}^n\)</span> states that the round ball has the minimal (n-1)-dimensional volume of the boundary among all the domains with a given fixed volume. This is equivalent to say that every set <span class="math inline">\(E\)</span> has a larger perimeter than the ball <span class="math inline">\(B\)</span> with the same volume. I will present this proof following the exposition given in chapter two in <!-- [@citation] F. Santambrogio. Optimal Transport for Applied Mathematicians. Calculus of Variations, PDEs and Modeling (2015) -->. The usual way to state this is the following:</p>
+<p>:<span class="math inline">\(\operatorname{Per}(E) \geq n \omega_n^{1/n}|E|^{1-1/n}.\)</span> Here <span class="math inline">\(\omega_n\)</span> is the volume of the unit ball in <span class="math inline">\(\mathbb{R}^n\)</span>. The idea of the proof is to construct a map T called Knothe transport and use it between the two densities: <span class="math inline">\(\mu=\mathcal{L}_B\)</span>, the inequality will follow from some symmetries and consideration on the Jacobian determinant of this map.</p>
+</section>
+<section id="the-knothes-transport" class="level2">
+<h2 class="anchored" data-anchor-id="the-knothes-transport">The Knothe’s transport</h2>
+<p>For this part I will follow the first chapter in <!-- [@citation] A. Figalli, F. Glaudo An Invitation to Optimal Transport, Wasserstein Distances, and Gradient Flows -->. In some sense, it can be seen as a multidimension generalization of monotone rearrangement. Take any two measures <span class="math inline">\(\mu,\nu \in \mathcal{P}(\mathbb{R})\)</span> and define</p>
+<p>:<span class="math inline">\(F(x)= \int_{-\infty}^x d\mu(t), \text{ } G(y)= \int_{-\infty}^x d\nu(t)\)</span>, This maps may not be well defined, since at some points the measures may have a delta. For the purpose of this exposition we will assume that those functions are well defined, for the precise definition and convention to include the mass of the deltas in the integral. It follow easily from the definition that those maps are not decreasing. We now define <span class="math inline">\(G^{-1}(y)=\inf{ \{t \in \mathbb{R} | G(t) &gt; y \} }\)</span>. We are now ready to define the following monotone rearrangement map :</p>
+<p>:<span class="math inline">\(T=G^{-1} \circ F : \mathbb{R} \longrightarrow \mathbb{R}\)</span>. Note that this map is also not decreasing. In the case that our first density <span class="math inline">\(\mu\)</span> has no deltas then it can be shown that <span class="math inline">\(T\)</span> is indeed a transport map (Theorem 1.4.7). To prove the isoperimetric inequality we only use the fact that this map is a transport map and its nondecreasing but we also know, from Benier’s theorem, that <span class="math inline">\(T\)</span> is is also a optimal transport map. We now move to the two dimensional case: the key ingredient to the Knothe transport map is what is known as the disintegration theorem 1.4.10: Given <span class="math inline">\(\mu \in \mathcal{P}(\mathbb{R}^2)\)</span> and let <span class="math inline">\(\mu_1=\pi_1 \#  \mu \in \mathcal{P}(\mathbb{R})\)</span> where <span class="math inline">\(\pi_1\)</span>is the projection on the first component of <span class="math inline">\(\mathbb{R}^2\)</span>: <span class="math inline">\(\pi_1(x_1,x_2)=x_1\)</span>, Then there exist an uncountable family of probability measures <span class="math inline">\((\mu_{x_1})_{x_1 \in \mathbb{R}} \subset \mathcal{P} (\mathbb{R})\)</span> such that for any <span class="math inline">\(\phi : \mathbb{R}^2 \longrightarrow \mathbb{R}\)</span> continuous and bounded we have that:</p>
+<p>:<span class="math inline">\(\int_{\mathbb{R}^2} \phi(x_1,x_2)d\mu(x_1,x_2)=\int_{\mathbb{R}}\Bigg(\int_{\mathbb{R}}\phi(x_1,x_2)d\mu_{x_1}(x_2)\Bigg)d\mu_1(x_1)\)</span>. The disintegration of the measure <span class="math inline">\(\mu\)</span> is often also denoted as <span class="math inline">\(\mu=\mu_{x_1} \otimes \mu_1 = \mu_{x_1}(dx_2) \otimes \mu_1(dx_1)\)</span>. Now we are ready to construct the Knothe map. Fix any two absolutely continuous measures in <span class="math inline">\(\mathbb{R^2}\)</span>: <span class="math inline">\(\mu_(x_1,x_2)=f(x_1,x_2)dx_1dx_2\)</span> and <span class="math inline">\(\mu_(x_1,x_2)=g(x_1,x_2)dx_1dx_2\)</span>, define <span class="math inline">\(F_1(x_1)=\int_{\mathbb{R}}f(x_1,x_2)dx_2\)</span> and <span class="math inline">\(G_1(y_1)=\int_{\mathbb{R}}g(y_1,y_2)dy_2\)</span>. Note that using these notation we can write:</p>
+<p>:<span class="math inline">\(\mu(x_1,x_2)=\frac{f(x_1,x_2)}{F_1(x_1)}dx_2\otimes F_1(x_1)dx_1\)</span> and <span class="math inline">\(\nu(y_1,y_2)=\frac{g(y_1,y_2)}{G_1(y_1)}dy_2\otimes G_1(y_1)dy_1\)</span>. Applying the monotone rearrangement we get a map <span class="math inline">\(T_1:\mathbb{R} \longrightarrow \mathbb{R}\)</span> that satisfies <span class="math inline">\(T_1 \#F_1dx_1=G_1dy_1.\)</span>, We want to send the disintegration of <span class="math inline">\(\mu\)</span> at <span class="math inline">\(x_1\)</span> to the disintegration of <span class="math inline">\(\nu\)</span> at the point <span class="math inline">\(T(x_1)\)</span>, in symbols let <span class="math inline">\(T_2(x_1,\cdot)\# \Bigg(\frac{f(x_1,\cdot)dx_2}{F_1(x_1)}\Bigg)=\frac{g(T_1(x_1),\cdot)dy_2}{G_1(T_1(x_1))}\)</span>. The Knothe map is now defined as:</p>
+<p>:<span class="math inline">\(T(x_1,x_2)=(T_1(x_1),T_2(x_1,x_2))\)</span>. It is not hard to check that this map is indeed transports <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span> (Theorem 1.4.13) of . By monotonicity of the monotone rearrangement, assuming that the map T is differentiable, we can say that: :<math> T= </math>. We can iterate the same construction and obtain a Knothe map on <span class="math inline">\(\mathbb{R}^n\)</span>, the recursive nature of this definition is well described in <!-- [@citation] Luigi Ambrosio, Elia Brué, Daniele Semola - Lectures on Optimal Transport Remark 5.10 pag. 52 -->, the formal construction can be found here <!-- [@citation] F. Santambrogio. Optimal Transport for Applied Mathematicians. Calculus of Variations, PDEs and Modeling (2015) pag. 67-72 -->.</p>
+</section>
+<section id="proof-of-the-classic-isoperimetric-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="proof-of-the-classic-isoperimetric-inequality">Proof of the classic isoperimetric inequality</h2>
+<p>We now present three key properties of the Knothe map from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>, this is Proposition 1.5.2 Let now <span class="math inline">\(E \subset \mathbb{R}^n\)</span> be a bounded set with smooth boundary, <span class="math inline">\(|E|\)</span> its Lebesgue measure and the probability measures <span class="math inline">\(\mu=\frac{\chi_E}{|E|}dx\)</span> and <span class="math inline">\(\nu=\frac{\chi_{B_1}}{\omega_n}\)</span>, where <span class="math inline">\(\chi_A\)</span> is the characteristic function of the set <span class="math inline">\(A\)</span>: <span class="math inline">\(\chi_A\)</span> is identically one in <span class="math inline">\(A\)</span> and zero elsewhere, and <span class="math inline">\(B_1\)</span> is the unit ball in <span class="math inline">\(\mathbb{R}^n\)</span>. Denote with <span class="math inline">\(T\)</span> be a Knothe map from <span class="math inline">\(\mu\)</span> to <span class="math inline">\(\nu\)</span>. First by just noticing that if <span class="math inline">\(x \in E\)</span> then <span class="math inline">\(T(x) \in B_1\)</span> we can conclude: :<span class="math inline">\(\forall x \in E, |T(x)|\leq 1\)</span></p>
+<p>Thank to a change of variable and using the fact that the jacobian map <span class="math inline">\(\nabla T\)</span> is upper triangular and its diagonal entries are non negative (similar to the two dimensional case) it can be shown that: :<span class="math inline">\(\det \nabla T = \frac{\omega_n}{|E|}\)</span> in <span class="math inline">\(E\)</span></p>
+<p>Now since the matrix is upper triangular, it’s very easy to compute the determinant as the product of the diagonal entries, we then get an estimate on the divergence of <span class="math inline">\(T\)</span>: :<span class="math inline">\(\operatorname{div} T \geq n (\det \nabla T )^{\frac{1}{n}} :\)</span>.</p>
+<p>We are now ready to prove the classic isoperimetric inequality, this is Theorem 1.5.1 of Denote by <span class="math inline">\(n_E\)</span> the outer unit normal of <span class="math inline">\(\partial E\)</span> and by <span class="math inline">\(d \sigma\)</span> the surface element of <span class="math inline">\(\partial E\)</span>. We can now write thanks to the first property of the Knothe map: :<span class="math inline">\(\operatorname{Per}(E)=\int_{\partial E} d\sigma \geq \int_{\partial E} |T| d\sigma\)</span></p>
+<p>As a straightforward application of Stokes theorem together with our lower bound for the divergence we get: :<span class="math inline">\(\int_{\partial E} |T| d\sigma \geq \int_{\partial E} T \cdot n_E d\sigma = \int_{E} \operatorname{div} T dx \geq n \int_{E} (\det \nabla T )^{\frac{1}{n}} dx\)</span></p>
+<p>We can now conclude with our explicit expression for the Jacobian of <span class="math inline">\(T\)</span> in <span class="math inline">\(E\)</span>, :<span class="math inline">\(n\int_{E} (\det \nabla T )^{\frac{1}{n}} dx =n\int_{E} \Bigg( \frac{\omega_n}{|E|}\Bigg)^{\frac{1}{n}}dx=  n \omega_n^{1/n}|E|^{1-1/n}.\)</span></p>
+</section>
+<section id="the-isoperimetric-inequality-in-cd0n-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="the-isoperimetric-inequality-in-cd0n-spaces">The isoperimetric inequality in <math> CD(0,N) </math> spaces</h2>
+<p>There is a more general version of the classic isoperimetric inequality for Riemannian manifolds and even more in general for <span class="math inline">\(CD(0,N)\)</span>spaces. In the Riemannian setting this result is proved first by Simon Brendle in Corollary 1.3 of<!-- [@citation] S. Brendle, Sobolev inequalities in manifolds with nonnegative curvature (2020) pag. 2 -->, the proof is based on PDE techniques, notably on the so called ABP-method (Aleksandrov-Bakelman-Pucci estimates, a standard reference for this would be <!-- [@citation] X. Cabr´e, X. Ros-Oton, J. Serra, Sharp isoperimetric inequalities via the ABP method. J. Eur. Math. Soc. 18 (2016) -->).</p>
+<p>Since OMT-theory has been worked very well in a much more general setting of metric measure spaces, we can construct the so called <span class="math inline">\(CD(K,N)\)</span> spaces where <span class="math inline">\(K\)</span> is a lower bound for the Ricci curvature and <span class="math inline">\(N\)</span> is an upper bound for the dimension (Wiki article on Ricci Curvature and OMT [http://34.106.105.83/wiki/Optimal_Transport_and_Ricci_curvature]). This has been worked out independently by Lott and Villani: <ref> J. Lott, C. Villani, Ricci curvature for metric measure spaces via optimal transport. Ann. of Math. (2) 169 (3) (2009) </ref> and Sturm in two very beautiful papers: <!-- [@citation] K.-T. Sturm, On the geometry of metric measure spaces. I, Acta Math. 196 (1) (2006), 65–131. --> and <!-- [@citation] K.-T. Sturm, On the geometry of metric measure spaces. II, Acta Math. 196 (1) (2006), 133–177. -->. The idea is to express the curvature in terms of the convexity of a specific entropy function defined on the space. It is also well known that even in the case of non negative curvature, i.e.&nbsp;<span class="math inline">\(CD(0,N)\)</span> without an additional condition, a general sharp isoperimetric inequality cannot hold! This can be found in two papers from Milman: <!-- [@citation] E. Milman, Sharp isoperimetric inequalities and model spaces for the curvature-dimension-diameter condition. J. Eur. Math. Soc. 17 (5) (2015) --> and <!-- [@citation] E. Milman, Beyond traditional curvature-dimension I: new model spaces for isoperimetric and concentration inequalities in negative dimension. Trans. Amer. Math. Soc. 369 (2017), no. 5, 3605–3637 -->. To my knowledge, one of the most general result in this direction is Theorem 1.1 in <!-- [@citation] Z. M. Balogh, A.Kristály Sharp geometric inequalities in spaces with nonnegative Ricci curvature and Euclidean volume growth (2021) -->. In this case the condition is the so called Euclidean volume growth condition at infinity. If we denote with <span class="math inline">\(B_x(r)=\{y \in M: d(x,y)&lt;r \}\)</span>, by an generalization of the classical Bishop-Gromov volume growth inequality, theorem 2.3 of<!-- [@citation] E. Milman, Beyond traditional curvature-dimension I: new model spaces for isoperimetric and concentration inequalities in negative dimension. Trans. Amer. Math. Soc. 369 (2017), no. 5, 3605–3637 -->, it follows that the map <span class="math inline">\(r \mapsto \frac{m(B_x(r))}{r^N}\)</span> is non increasing on <span class="math inline">\((0,\infty)\)</span> for any <span class="math inline">\(x \in M\)</span>. The Euclidean volume growth at infinity is a the positivity of the following limit:</p>
+<p>:<span class="math inline">\(\theta = \lim_{r\rightarrow \infty} \frac{m(B_x(r))}{\omega_Nr^N} &gt;0\)</span>. It can be shown that this is independent of the choice of <span class="math inline">\(x \in M\)</span>. In the Riemannian contest this condition rises naturally thanks since the Bishop-Gromov relative volume comparison theorem assurers that the limit exists and that <span class="math inline">\(\theta \leq 1\)</span>.</p>
+<p>We are now ready to state Theorem 1.1 : Let <span class="math inline">\(M\)</span> be a metric measure space satisfying the <span class="math inline">\(CD(0,N)\)</span> condition for some <span class="math inline">\(N&gt;1\)</span> together with the Euclidean volume growth assumptions, for any bounded Borel subsets <span class="math inline">\(E\subset M\)</span> the following holds: :<span class="math inline">\(m^+(E) \geq N \omega_N^{\frac{1}{N}}\theta^{\frac{1}{N}}m(E)^{1-\frac{1}{N}}\)</span>. Here <span class="math inline">\(m^+(E)\)</span> is the exterior Minkowski content of <span class="math inline">\(E\)</span> that if we have more regularity can be interpreted just as the (n-1)-dimensional surface area of <span class="math inline">\(\partial E\)</span>.</p>
+</section>
+<section id="anisotropic-isoperimetric-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="anisotropic-isoperimetric-inequality">Anisotropic Isoperimetric inequality</h2>
+<p>The Anisotropic Isoperimetric inequality is a generalization of the isoperimetric inequality. Recall that the isoperimetric inequality states that for any measurable set of finite volume, one has that <span class="math inline">\(\text{Per}(E)\geq N\omega_N^{\tfrac{1}{N}}|E|^\frac{N-1}{N} .\)</span> where equality holds true if and only if <span class="math inline">\(E=B(x_0)\)</span> where <span class="math inline">\(B(x_0)\)</span> denotes a ball in <span class="math inline">\(\mathbb R^N\)</span> with center <span class="math inline">\(x_0\)</span>. This can be generalized to the so-called <span class="math inline">\(\textit{Anisotropic}\, \textit{Isoperimetric}\, \textit{inequality}\)</span> In order to state the inequality, we have to define the notion of a anisotropic perimeter. ### Anisotropic Perimeter The anisotropic perimeter arises as a generalization of the perimeter in the Euclidean space. It also appears as a model for surface tension in the study of equilibrium configurations of solid crystals with sufficiently small grains ( see <ref>Figalli, A., Maggi, F. &amp; Pratelli, A. A mass transportation approach to quantitative isoperimetric inequalities. Invent. math. 182, 167–211 (2010). https://doi.org/10.1007/s00222-010-0261-z </ref>, <!-- [@citation] C. Herring, Some theorems on the free energies of crystal surfaces, Phys. Rev. 82 (1951), 87-93. --> for more details on its applications.) It measures the anisotropy of a given set <span class="math inline">\(E\)</span> with respect to a fixed set convex set <span class="math inline">\(K\)</span> which contains the origin and is open. More precisely, for any open, convex and bounded subset <span class="math inline">\(K\subset \mathbb R^N\)</span> containing the origin, define a weight function being</p>
+<p><span class="math inline">\(\| \nu\|_*:=\sup \{\langle \nu,x\rangle: x \in K\}, \quad x\in \mathbb S^{N-1}.\)</span></p>
+<p>Then for any open and smooth set <span class="math inline">\(E\subset \mathbb R^N\)</span> we define the anisotropic perimeter</p>
+<p><span class="math inline">\(P_K(E):=\int_{\partial E} \|\nu_E\|_*\, d\mathcal H^{N-1}\)</span> Notice, though, that the normal perimeter is also defined for arbitrary measurable sets. To define the anisotropic perimeter for such a large class of sets though, involves a little bit more background in geometric measure theory and functions of bounded variations which is why we commit the discussion here. Please see <ref>Figalli, A., Maggi, F. &amp; Pratelli, A. A mass transportation approach to quantitative isoperimetric inequalities. Invent. math. 182, 167–211 (2010). https://doi.org/10.1007/s00222-010-0261-z </ref> for a rigorous definition of this general case.</p>
+<p>Now let us understand how this notion of perimeter is related to the classical perimeter: recall that for measuresble sets <span class="math inline">\(E\)</span> with Lipschitz boundary, one has</p>
+<p><span class="math inline">\(P(E)=\int_{\partial E} d\mathcal H^{N-1}=\mathcal H^{N-1}(\partial E)\)</span></p>
+<p>(see <!-- [@citation] L. Ambrosio, N. Fusco, D. Pallara: Functions of Bounded Variation and Free Discontinuity Problems, Oxford University Press, 2000. --> for a rigorous introduction to functions of bounded variations and perimeters of measurable sets. The main connection between these two perimeter can be seen as follows: Let <span class="math inline">\(K=B_1\)</span> the unit ball in the Euclidean space around the origin. Then, for any <span class="math inline">\(x \in \partial E\)</span>, we have that</p>
+<p><span class="math inline">\(\|\nu_E(x)\|_*=\sup\{ \langle \nu_E(x), v\rangle:\quad  v\in B_1\}=1\)</span>, where the last equality follows from the Cauchy Schwarz inequality, being</p>
+<p><span class="math inline">\(|\langle v,w\rangle| \leq \|v\| \|w\|\)</span> where equality occurs if and only if <span class="math inline">\(v=\lambda w\)</span> for some <span class="math inline">\(\lambda \in \mathbb R\)</span>. Then we have that <span class="math inline">\(P_K(E)=\int_{\partial E} d \mathcal H^{N-1}=P(E).\)</span> Notice, though, that the anisotropic perimeter does not obey as nice properties as the classical perimeter: #### Easy Example Let us now consider an easy example for the anisotropic perimeter. Let us consider the case <span class="math inline">\(K=\{(x,y)\in \mathbb R^2:\quad |x|^2+|y-\varepsilon|^2&lt; \varepsilon ^2\}\cup [-\delta ,\delta ]\times  [-5,\varepsilon]\cup \{(x,y)\in \mathbb R^2:\quad |x|^2+|y+5|^2&lt; 1\},\)</span></p>
+<p>which is clearly a convex set containing the origin for <span class="math inline">\(0&lt;\delta &lt;&lt;\varepsilon &lt;1\)</span>. Now let us consider the set <span class="math inline">\(E=[-a,a]\times [-\hat \delta,\hat \delta ]\)</span>, where <span class="math inline">\(\hat \delta &gt;0\)</span> is small. Then we have that</p>
+<p><span class="math inline">\(P_K(E)&gt;P_K(A(E))\)</span> where <span class="math inline">\(A\)</span> denotes a rotation by <span class="math inline">\(90\)</span> degrees, as one can see that by drawing a simple picture and choosing the parameter <span class="math inline">\(a\)</span> larger and <span class="math inline">\(\delta ,\hat \delta\)</span> smaller. So we have that <span class="math inline">\(P_K(\cdot )\)</span> is not invariant under rotations, unlike its classical version, the normal perimeter.</p>
+<p>We are now in the position to state the</p>
+<section id="anisotropic-isoperimetric-inequality-1" class="level3">
+<h3 class="anchored" data-anchor-id="anisotropic-isoperimetric-inequality-1">Anisotropic isoperimetric inequality</h3>
+<p>Let <span class="math inline">\(K\)</span> be an open and bounded, convex set which contains the origin. Let <span class="math inline">\(E\subset \mathbb R^N\)</span> be a measurable set of finite volume, then <span class="math inline">\(P_K(E)\geq N|K|^{\frac{1}{N}}|E|^\frac{N-1}{N}\)</span></p>
+<p>where equality holds if and only if <span class="math inline">\(E=K-c\)</span> for some <span class="math inline">\(c \in \mathbb R\)</span>. Taking a look at this inequality and the isoperimetric inequality, one naturally expects that for <span class="math inline">\(K=B_1\)</span>, the unit ball in <span class="math inline">\(\mathbb R^N\)</span> one recovers the classical isoperimetric inequality. This is indeed the case as we have seen above that the two perimeter coincides. Let us now go over the</p>
+</section>
+<section id="proof-of-the-anisotropic-isoperimetric-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="proof-of-the-anisotropic-isoperimetric-inequality">Proof of the anisotropic isoperimetric inequality</h3>
+<p>The proof of that inequality really follows with similar arguments as in the classical case. We restrict ourselves to the case where the Transport map is smooth as a gradient of a strictly convex function. For a general proof see <ref>Figalli, A., Maggi, F. &amp; Pratelli, A. A mass transportation approach to quantitative isoperimetric inequalities. Invent. math. 182, 167–211 (2010). https://doi.org/10.1007/s00222-010-0261-z </ref> We follow the proof given in <ref>A. Figalli, Quantitative isoperimetric inequalities, with applications to the stability of liquid drops and crystals, Concentration, functional inequalities and isoperimetry, 77-87, Contemp. Math., 545, Amer. Math. Soc., Providence, RI, 2011.</ref> Indeed, as in the proof of the classical isoperimetric inequality, we get a transport map <span class="math inline">\(T\)</span> which now pushes forward the density <span class="math inline">\(\frac{\chi_E}{|E|}dx\)</span> to the density <span class="math inline">\(\frac{\chi_K}{|K|}dx\)</span>, where <span class="math inline">\(dx\)</span> denotes the <span class="math inline">\(N\)</span> dimensional Lebesgue measure on <span class="math inline">\(\mathbb R^N\)</span> . By our assumption on the transport map, we know that there are positive <span class="math inline">\(\lambda_i:\mathbb R^N \rightarrow \mathbb R\)</span> for <span class="math inline">\(i=1\dots,n\)</span> such that</p>
+<p><span class="math inline">\(\nabla T=\sum_{i=1}^N\lambda_i\cdot e_i \otimes e_i\)</span></p>
+<p>where <span class="math inline">\(e_i\)</span> denotes an orthonormal basis. Then from the geometric arithmetic inequality, we get that</p>
+<p><span class="math inline">\(N(\det \nabla T)^\frac{1}{N}=N\Bigl(\Pi_{i=1}^N)\lambda_i\Bigr)^\frac{1}{N}\leq \sum_{k=1}^N\lambda_k=\text{div}T\)</span></p>
+<p>Moreover, one can show that on <span class="math inline">\(E\)</span> one has that</p>
+<p><span class="math inline">\(\det \nabla T=\frac{|K|}{|E|}\)</span></p>
+<p>Then we get from the divergence theorem that</p>
+<p><span class="math inline">\(N|K|^\frac{1}{N}|E|^\frac{N-1}{N}=\int_E N(\det \nabla T)^\frac{1}{N}\, dx\leq \int_E\text{div}T\,dx=\int_{\partial E}T\cdot \nu_E\, d\mathcal H^{N-1}\)</span></p>
+<p>Now for <span class="math inline">\(x \in \mathbb R^N\)</span>, define</p>
+<p><span class="math inline">\(\|x\|:=\inf \{\lambda&gt;0: \frac{x}{\lambda}\in K\}\)</span></p>
+<p>Then we have that <span class="math inline">\(\|T(x)\|\leq 1\)</span> for <span class="math inline">\(x\in E\)</span>. Indeed, notice that <span class="math inline">\(K=\{x\in \mathbb R ^N\,|\, \|x\|&lt;1\}\)</span>. Thus as <span class="math inline">\(T(x)\in K\)</span> for <span class="math inline">\(x\in E\)</span> one obtains the desired inequality. Moreover, we have that <span class="math inline">\(x\cdot y\leq \|x\|\|y\|_*\quad \text{for }y\in \mathbb S^{N-1}, x\in \mathbb R^N\)</span></p>
+<p>We therefore conclude that</p>
+<p><span class="math inline">\(N|K|^{\frac{1}{N}}|E|^\frac{N-1}{N}\leq \int_{\partial E} \|T\|\|\nu_E\|_*\, d\mathcal H^{N-1}\leq P_K(E)\)</span></p>
+<p>as desired. To see a proof of the equality case, we refer the reader to [<ref>A. Figalli, Quantitative isoperimetric inequalities, with applications to the stability of liquid drops and crystals, Concentration, functional inequalities and isoperimetry, 77-87, Contemp. Math., 545, Amer. Math. Soc., Providence, RI, 2011.</ref>, Chapter 1].</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/otwiki\.github\.io\/otwiki-main\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

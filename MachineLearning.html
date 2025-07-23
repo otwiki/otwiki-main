@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="EF">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Machine Learning and Optimal Transport – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +139,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Machine Learning and Optimal Transport</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>EF </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +162,67 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Optimal transport concepts applied to machine learning applications can also be referred to as computational Optimal Transport (OT). At its core, machine learning focuses on making comparisons between complex objects. To properly measure these similarities, a metric is needed, which is a distance function. Optimal transport is a natural tool in this case, as it is concerned with efficient distance functions (e.g.&nbsp;the Wasserstein metric).</p>
+<p>In addition, optimal transport respects the underlying structure and geometry of a problem while providing a framework for comparing probability distributions. Optimal transport methods have received attention from researchers in fields as varied as economics, statistics, and quantum mechanics. The categories that applications of OT methods in a machine learning context can be divided into include learning, domain adaptation, Bayesian inference, and hypothesis testing<ref name="Kolouri">Kolouri, Soheil, Serim Park, Matthew Thorpe, Dejan Stepcey, Gustavo Rohde. Optimal Mass Transport: Signal Processing and Machine-Learning Applications. IEEE Signal Process Mag. 2017 Jul.&nbsp;34(4): 43-59.</ref>.</p>
+<section id="learning-methods" class="level3">
+<h3 class="anchored" data-anchor-id="learning-methods">Learning Methods</h3>
+<p>These methods have used transport-based distances in a wide range of research contexts, ranging from language analysis to image recognition. To a certain extent, the geometry underlying optimal transport models helps to generate faster algorithms as well as establish data connections. Optimal transport models still have limitations, however, as some structure may not be captured. This structure can be described as either intrinsic or extrinsic. It is intrinsic if the distributions reflect structured objects (e.g.&nbsp;images with segments) and it can be characterized as extrinsic if there is additional information that creates structure (such as groupings) <ref name="Alvarez-Melis">Alvarez-Melis, David, Et al.&nbsp;Structured Optimal Transport. Proceedings of the 21st International Conference on Artificial Intelligence and Statistics (AISTATS) 2018, Lanzarote, Spain. PMLR: Volume 84. </ref>. The following are some types of models that fall into the learning methods in the OT category.</p>
+<section id="graph-based-semi-supervised-learning" class="level4">
+<h4 class="anchored" data-anchor-id="graph-based-semi-supervised-learning">Graph-based Semi-supervised Learning</h4>
+<p>Graph-based semi-supervised learning is an effective approach for classification from a large variety of domains, including image and text classification. It is possible to use graph-based algorithms with this method, and the method is often useful for unlabeled data. To imagine what data is best analyzed by this type of model, consider a graph with multiple nodes. These graph nodes are usually associated with a simple label, like a real number. Now consider more complex node labels, such as probability distributions or histograms. A concrete example of this would be a set of traffic cameras distributed across a geographical area, each of which produces a histogram or a distribution of commuter traffic over a given period of time. Many other interesting research questions exhibit a similar structure (e.g.&nbsp;climate data, rankings of restaurants, etc.). Optimal transport-inspired methods have used the two-Wasserstein distance between distributions to analyze models of this type <ref name="Solomon">Solomon, J., et al.&nbsp;Wasserstein Propagation for Semi-Supervised Learning. Proceedings of the 31st International Conference on Machine Learning, Beijing, China, 2014. JMLR: W&amp;CP volume 32. Copy- right 2014.</ref> The work of Solomon, et. al.&nbsp;in this area led to additional insights by Gao, et. al, where Wassertstein propagation on graphs was used as the basis for a message-passing algorithm. This technique facilitated a generalization that could be applied to hypergraphs through Wasserstein barycenters <ref name="Gao"> Gao, Tingran, et al.&nbsp;Wasserstein Soft Label Propagation on Hypergraphs: Algorithm and Generalization Error Bounds. Univ. of Chicago. 2019 </ref>.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="generative-adversarial-networks-gan" class="level4">
+<h4 class="anchored" data-anchor-id="generative-adversarial-networks-gan">Generative Adversarial Networks (GAN)</h4>
+<p>A class of frameworks for machine learning developed in 2014 by Ian Goodfellow (Goodfellow). Machine learning frameworks where two neural networks are used compete against each other in a game-theoretic sense. If a GAN is trained on a given set of training data, it can produced a new set of data that is at the surface similar to the original set of data (for example, it can create new, similar images based on an initial training set of images). These techniques have been used in semi-supervised learning. They offer increased flexibility in use of the objective function, including the use of f-divergences and Jensen-Shannon <ref name="Arjovsky"> Arjovsky, Martin, et al.&nbsp;Wasserstein GAN. arXiv:1701.07875v3 [stat.ML] 6 Dec 2017</ref>.</p>
+<section id="wasserstein-gan-wgan" class="level5">
+<h5 class="anchored" data-anchor-id="wasserstein-gan-wgan">Wasserstein GAN (WGAN)</h5>
+<p>This is classified as a type of tool for unsupervised learning, which uses a minimization of the distance between data distribution contained in the training set and the distribution of the observed data. In certain cases this produces a more stable training process. It minimizes an approximation of the earth mover (EM) distance. The optimization problem associated with the WGAN was shown to be sound by Arjovsky. This type of GAN reduces some of the problems associated with GAN approaches, including a reduction in the need to balance the training of the generator and the discriminator <ref name="Arjovsky">. The WGAN also estimates the EM distance in a continuous manner via training the discriminator <ref name="Arjovsky">. The following is an algorithm implementing the WGAN approach <ref name="Arjovsky">.</ref></ref></ref></p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="algorithm-wasserstein-generative-adversarial-networks-wgan" class="level4">
+<h4 class="anchored" data-anchor-id="algorithm-wasserstein-generative-adversarial-networks-wgan">Algorithm: Wasserstein Generative Adversarial Networks (WGAN)</h4>
+<p>Require : <span class="math inline">\(\alpha\)</span> learning rate, <span class="math inline">\(c\)</span> clipping parameter, <span class="math inline">\(m\)</span> batch size, <span class="math inline">\(n_{\text {critic }}\)</span> number of iterations of critic per generator iteration. Require : <span class="math inline">\(w_{0},\)</span> initial critic parameters, <span class="math inline">\(\theta_{0},\)</span> initial generator’s parameters. 1: <strong>while</strong> <span class="math inline">\(\theta\)</span> has not converged <strong>do</strong> 2: <strong>for</strong> <span class="math inline">\(t=0, \ldots, n_{\text {critic }}\)</span> <strong>do</strong> 3: Sample <span class="math inline">\(\left\{x^{(i)}\right\}_{i=1}^{m} \sim \mathbb{P}_{r}\)</span> a batch from the real data. 4: Sample <span class="math inline">\(\left\{z^{(i)}\right\}_{i=1}^{m} \sim p(z)\)</span> a batch of prior samples. 5: <span class="math inline">\(g_{w} \leftarrow \nabla_{w}\left[\frac{1}{m} \sum_{i=1}^{m} f_{w}\left(x^{(i)}\right)-\frac{1}{m} \sum_{i=1}^{m} f_{w}\left(g_{\theta}\left(z^{(i)}\right)\right)\right]\)</span> 6: <span class="math inline">\(w \leftarrow w+\alpha \cdot \operatorname{RMSProp}\left(w, g_{w}\right)\)</span> 7: <span class="math inline">\(w \leftarrow \operatorname{clip}(w,-c, c)\)</span> 8: <strong>end for</strong> 9: Sample <span class="math inline">\(\left\{z^{(i)}\right\}_{i=1}^{m} \sim p(z)\)</span> a batch of prior samples. 10: <span class="math inline">\(g_{\theta} \leftarrow-\nabla_{\theta} \frac{1}{m} \sum_{i=1}^{m} f_{w}\left(g_{\theta}\left(z^{(i)}\right)\right)\)</span> 11: <span class="math inline">\(\theta \leftarrow \theta-\alpha \cdot \operatorname{RMSProp}\left(\theta, g_{\theta}\right)\)</span> 12: <strong>end while</strong></p>
+<p>Recall that the EM distance is both continuous and differentiable, this implies that the critic should be trained to toward optimality. As the critic is trained more, the gradient (Wasserstein) becomes more reliable. The Wasserstein GAN can have problems due to the enforcement of the Lipschitz constraint the critic, which required weight clipping (reflected in algorithm) <ref name="Gulrajani"> Gulrajani, I., et al.&nbsp;Improved Training of Wasserstein GANs. arXiv:1704.00028v3 [cs.LG] 25 Dec 2017. </ref></p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
 </section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
+<section id="restricted-bolzman-machines-rbm" class="level3">
+<h3 class="anchored" data-anchor-id="restricted-bolzman-machines-rbm">Restricted Bolzman Machines (RBM)</h3>
+<p>Restricted Boltzman Machines (RBM) are probabilistic graphical models and can obtain hierarchical features at multiple levels. Originally created under the name “Harmonim” in 1986 by Smolensky, RBM can learn a probability distribution over a given set of inputs. These machines are able to learn complex and multi-scale distributions based on empirical data. The RBM generally has a layer of latent variables with a given probability distribution. This probability distribution is defined over a set of binary observed variables with a parameter that is to be learned.</p>
+<p>Learning of model parameters is usually facilitated by Kullback-Lieber divergence (divergence from the training sample to the model). In research by Montavan, it is assumed that a metric can be established between observations <ref name="Montavon"> Montavon, G., Klaus-Robert Muller, Marco Cuturi. Wasserstein Training of Restricted Boltzmann Machines. 30th Conference on Neural Information Processing Systems (NIPS 2016)</ref>. This was used to define the Wasserstein distance between the training sample distribution that the distribution formed by the Boltzman machine.</p>
 </section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="./ConvergenceMetrizability.html">Convergence of Measures and Metrizability</a></li>
-<li><a href="./FenchelMoreau.html">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="./FenchelRockafellar.html">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="./MoreauYosida.html">The Moreau-Yosida Regularization</a></li>
-<li><a href="./GFHilbert.html">Gradient flows in Hilbert spaces</a></li>
-<li><a href="./CtyEqn.html">The continuity equation and Benamou Brenier formula</a></li>
-<li><a href="./Isoperimetric.html">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
+<section id="entropy-regularized-wasserstein-loss" class="level3">
+<h3 class="anchored" data-anchor-id="entropy-regularized-wasserstein-loss">Entropy-regularized Wasserstein Loss</h3>
+<p>This has been used for multi-label classification. It is characterized by a relaxation of the transport problem which addresses unnormalized measure. It does this by replacing the equality constraints with soft penalties with respect to KL-divergence.<ref name="Peyre">Peyre, Gabriel, and Marco Cuturi, “Computational Optimal Transport”, Github, https://optimaltransport.github.io/pdf/ComputationalOT.pdf.</ref></p>
 </section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="./MachineLearning.html">Machine Learning and Optimal Transport</a></li>
-<li><a href="./ShallowNeuralNetworks.html">Shallow Neural Networks as Wasserstein Gradient Flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
+<section id="domain-adaptation" class="level3">
+<h3 class="anchored" data-anchor-id="domain-adaptation">Domain Adaptation</h3>
+<p>In this case the goal is to learn about or extrapolate from one domain to another, often by finding domain-invariant representations <ref name="Courty"> Courty, Nicolas, et al.&nbsp;Optimal Transport for Domain Adaptation. IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. X, No.&nbsp;X, Jan XX. 2018 </ref> In cases where these sorts of models are useful the distributions are generally different but related. This is a technique that is often used to transfer information based on labelled data to unlabeled data. For example, in some cases the labels are available in the source domain, but the classification needs to be conducted on the target. If the classifier is trained on the source domain, the data will have performance deficiencies in the targeted domain <ref name="Flamary"> Flamary, R. Domain Adaptation with Optimal Transport: From Mapping to Learning with Joint Distribution </ref>.</p>
+<p>By obtaining the best transportation plan connecting the probability distributions of source and target domains, estimates of learning samples are estimated. The transformation is non-linear and invertible. This allows for the use of a variety of machine learning methods that can be used on the transformed dataset. Regularized, unsupervised models have been used, as well as Joint Class Proportion and Optimal Transport (JCPOT) to address multi-source domain adaptation. <ref name="Peyre">The following is a summary of an algorithm implemented by Redko, et al:<ref name="Redko">Redko, I., et al.&nbsp;Optimal Transport for Multi-source Domain Adaptation under Target Shift. arXiv:1803.04899v1 [stat.ML] 13 Mar 2018 et al.&nbsp;</ref></ref></p>
+<section id="algorithm-joint-class-proportion-and-optimal-jcpot" class="level4">
+<h4 class="anchored" data-anchor-id="algorithm-joint-class-proportion-and-optimal-jcpot">Algorithm: Joint Class Proportion and Optimal (JCPOT)</h4>
+<p>1: <strong>Parameters:</strong> <span class="math inline">\(\epsilon,\)</span> maxIter, <span class="math inline">\(\forall k\left(\mathrm{C}^{(k)} and \lambda^{(k)}\right)\)</span> 2: <span class="math inline">\(cpt \leftarrow 0\)</span>, <span class="math inline">\(err \leftarrow \infty\)</span> 3: <span class="math inline">\(\zeta^{(k)} \leftarrow \exp \left(-\frac{\mathbf{C}^{(k)}}{\epsilon}\right), \quad \forall k\)</span> 4: <strong>while</strong> <span class="math inline">\(cpt\)</span> &lt; maxIter <strong>and</strong> <span class="math inline">\(err\)</span> &gt; threshold <strong>do</strong> 5: <span class="math inline">\(\zeta^{(k)} \leftarrow \operatorname{diag}\left(\frac{\mathbf{m}}{c(k) \mathbf{1}}\right) \zeta^{(k)}, \quad \forall k\)</span> 6: <span class="math inline">\(\mathbf{h}^{(c p t)} \leftarrow exp (\sum_{k=1}^{K} \lambda^{(k)} \log (\mathbf{D}_{1}^{(k)} \zeta^{(k)}1))\)</span> 7: <span class="math inline">\(\zeta^{(k)} \leftarrow \zeta^{(k)} \operatorname{diag}\left(\frac{\mathbf{D}_{2}^{(k)} \mathbf{h}}{\zeta^{(k)} \mathbf{1}}\right), \quad \forall k\)</span> 8: <span class="math inline">\(\operatorname{err} \leftarrow\left\|\mathbf{h}^{(c p t)}-\mathbf{h}^{(c p t-1)}\right\|_{2}\)</span> 9: <span class="math inline">\(\quad c p t \leftarrow c p t+1\)</span></p>
+<p>This algorithm describes the optimization problem solved in Redko, et al which used operators defined such that proportions between the source and target domains are equal. A Wasserstein barycenter problem was used to achieve this <ref name="Redko"> <ref name="Benamou"> Benamou, Jean-David, Carlier, Guillaume, Cuturi, Marco, Nenna, Luca, &amp; Peyré, Gabriel. 2015. Iterative Bregman projections for regularized Transportation problems. SIAM Journal on Scientific Computing, 37(2), A1111–A1138</ref>.</ref></p>
 </section>
-<section id="other-scientific-wikis" class="level3">
-<h3 class="anchored" data-anchor-id="other-scientific-wikis">Other Scientific Wikis</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+</section>
+</section>
+<section id="bayesian-inference" class="level2">
+<h2 class="anchored" data-anchor-id="bayesian-inference">Bayesian Inference</h2>
+<p>An important aspect of Bayesian inference is calculating expectations given a posterior probability function. This creates a complicated problem, mainly because of multidimensional integrals. The method usually used to solve these problems is Monte Carlo Markov Chains, which in turn introduce complications (slow convergence to empirical expectation, lack of sample independence) <ref name="Kolouri">Kolouri, Soheil, Serim Park, Matthew Thorpe, Dejan Stepcey, Gustavo Rohde. Optimal Mass Transport: Signal Processing and Machine-Learning Applications. IEEE Signal Process Mag. 2017 Jul.&nbsp;34(4): 43-59.</ref>. The need for these complicated MCMC models was bypassed in the work of El Moselhy and Marzouk <ref name="El Moselhy">El Moselhy, Tarek A., Youssef M Marzouk. Bayesian Inference with Optimal Maps. Journal of Computational Physics 231(23). September 2011. </ref> In a transport based method, Bayesian inference was formulated in terms of optimal transport theory, and the existence and uniqueness of a measure-preserving map was established. The map was subsequently parametrized and via the solution of an optimization problem. This approach helps bypass many of the problems associated with the MCMC models.</p>
+</section>
+<section id="hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h2>
+<p>There are many methods of hypothesis testing that connect to machine learning. This might be more colloquially described as “goodness-of-fit,” or a summary of how well the actual observed data fits the data predicted by a given model. The most common tests used in this context are the chi-square, Kolmogorov-Smirnov and the Anderson-Darling tests. These tests are generally based on some distance between probability laws <ref name="del Barrio">. As such, it is not surprising that del Barrio et al described tests of goodness of fit based on the <span class="math inline">\(L_2\)</span>-Wasserstein Distance <ref name="del Barrio">del Barrio E, Cuesta-Albertos JA, Matrán C, et al.&nbsp;Tests of goodness of fit based on the l_2-Wasserstein distance. The Annals of Statistics. 1999; 27(4):1230–1239 </ref>. The Wasserstein distance was also used (with an entropic smoothing) to investigate the connections between univariate (PP/QQ plots, ROC/ODC curves) and multivariate tests (energy statistics, kernel based maximum mean discrepancy) <ref name="Ramdas"> Ramdas, Aaditya, Nicolás García Trillos, and Marco Cuturi. On Wasserstein Two-Sample Testing and Related Families of Nonparametric Tests. Entropy 2017, 19(2), 47 </ref>.</ref></p>
+</section>
+<section id="additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
+<p>Recent research on cutting edge topics relating to optimal transport applications to machine learning can be found at <a href="https://www.msri.org/workshops/928">MSRI Workshops</a>.</p>
+<p>Tutorials on machine learning methods can be found at the following: <a href="https://remi.flamary.com/cours/tuto_otml.html">Optimal Transport for Machine Learning</a>.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><references></references></p>
 
 
 </section>

@@ -45,8 +45,12 @@
     <lastmod>2025-01-27T04:21:29.497Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/Kantorovich_Dual_Problem_Quad_Cost.html</loc>
-    <lastmod>2025-04-10T19:04:53.912Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/Bures-Wasserstein Gradient Flows.html</loc>
+    <lastmod>2025-03-18T22:57:02.309Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/index.html</loc>
+    <lastmod>2025-07-23T18:19:36.211Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/Continuous-time MOT and Skorohod Embedding.html</loc>
@@ -77,28 +81,32 @@
     <lastmod>2025-04-10T19:04:32.604Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/AuctionAlgorithm.html</loc>
-    <lastmod>2025-07-22T21:30:09.397Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/MachineLearning.html</loc>
+    <lastmod>2025-07-23T18:17:15.217Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/sliced_wasserstein_metric.html</loc>
-    <lastmod>2025-03-18T22:58:49.546Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/Knothe_Maps_Conditional_Sampling.html</loc>
-    <lastmod>2025-02-18T23:56:02.283Z</lastmod>
-  </url>
-  <url>
-    <loc>https://otwiki.github.io/otwiki-main/MoreauYosida.html</loc>
-    <lastmod>2025-07-22T21:58:06.855Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/ArticlesToRevise.html</loc>
+    <lastmod>2025-02-26T04:42:49.520Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/entropic_regularization_and_sinkhorn.html</loc>
     <lastmod>2025-03-18T22:44:41.101Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/ArticlesToRevise.html</loc>
-    <lastmod>2025-02-26T04:42:49.520Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/MoreauYosida.html</loc>
+    <lastmod>2025-07-22T21:58:06.855Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/Knothe_Maps_Conditional_Sampling.html</loc>
+    <lastmod>2025-02-18T23:56:02.283Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/sliced_wasserstein_metric.html</loc>
+    <lastmod>2025-03-18T22:58:49.546Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/AuctionAlgorithm.html</loc>
+    <lastmod>2025-07-22T21:30:09.397Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/Analysis_in_Metric_Spaces.html</loc>
@@ -129,12 +137,16 @@
     <lastmod>2025-03-01T00:29:56.027Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/index.html</loc>
-    <lastmod>2025-07-23T18:12:59.850Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/Isoperimetric.html</loc>
+    <lastmod>2025-07-23T18:15:55.283Z</lastmod>
   </url>
   <url>
-    <loc>https://otwiki.github.io/otwiki-main/Bures-Wasserstein Gradient Flows.html</loc>
-    <lastmod>2025-03-18T22:57:02.309Z</lastmod>
+    <loc>https://otwiki.github.io/otwiki-main/Kantorovich_Dual_Problem_Quad_Cost.html</loc>
+    <lastmod>2025-04-10T19:04:53.912Z</lastmod>
+  </url>
+  <url>
+    <loc>https://otwiki.github.io/otwiki-main/ShallowNeuralNetworks.html</loc>
+    <lastmod>2025-07-23T18:18:51.278Z</lastmod>
   </url>
   <url>
     <loc>https://otwiki.github.io/otwiki-main/KDualProblem.html</loc>

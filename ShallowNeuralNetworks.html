@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Paige Hillen">
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>Shallow Neural Networks as Wasserstein Gradient Flows – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +139,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">Shallow Neural Networks as Wasserstein Gradient Flows</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Paige Hillen </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +162,108 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p><a href="https://en.wikipedia.org/wiki/Artificial_neural_network#:~:text=Artificial%20neural%20networks%20(ANNs)%2C,neurons%20in%20a%20biological%20brain.">Artificial neural networks</a> (ANNs) consist of layers of artificial “neurons” which take in information from the previous layer and output information to neurons in the next layer. Gradient descent is a common method for updating the weights of each neuron based on training data. While in practice every layer of a neural network has only finitely many neurons, it is beneficial to consider a neural network layer with infinitely many neurons, for the sake of developing a theory that explains how ANNs work. In particular, from this viewpoint the process of updating the neuron weights for a shallow neural network can be described by a Wasserstein gradient flow.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="single-layer-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="single-layer-neural-networks">Single Layer Neural Networks</h2>
+<p>{See also <a href="https://en.wikipedia.org/wiki/Mathematics_of_artificial_neural_networks">Mathematics of Artificial Neural Networks</a>}</p>
+<section id="discrete-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="discrete-formulation">Discrete Formulation</h3>
+<dl>
+<dt>Let us introduce the mathematical framework and notation for a neural network with a single hidden layer.<ref name="Figalli"> Let <span class="math inline">\(D \subset \mathbb{R}^d\)</span> be open . The set <span class="math inline">\(D\)</span> represents the space of inputs into the network. There is some unknown function <span class="math inline">\(f:D \rightarrow \mathbb{R}\)</span> which we would like to approximate. Let <span class="math inline">\(N  \in \mathbb{N}\)</span> be the number of neurons in the hidden layer. Define</ref></dt>
+<dd>
+<p><span class="math inline">\(F_N : D \times \Omega^N \rightarrow \mathbb{R}^k\)</span></p>
+</dd>
+<dt>be given by</dt>
+<dd>
+<p><span class="math inline">\(F_N(x, \omega_1, \dots, \omega_N,\theta_1, \dots, \theta_N) = \frac{1}{N} \sum_{i=1}^N \omega_i h(\theta_i,x)\)</span></p>
+</dd>
+<dt>where <span class="math inline">\(h\)</span> is a fixed <a href="https://en.wikipedia.org/wiki/Activation_function">activation function</a> and <span class="math inline">\(\Omega^N\)</span> is a space of possible parameters <span class="math inline">\((\omega, \theta)= (\omega_1, \dots, \omega_N,\theta_1, \dots, \theta_N)\)</span>. The goal is to use training data to repeatedly update the weights <span class="math inline">\(\omega_i\)</span> and <span class="math inline">\(\theta_i\)</span> based on how close <span class="math inline">\(f_{N, \omega, \theta} := F_N( \cdot,  \omega_1, \dots, \omega_N,\theta_1, \dots, \theta_N)\)</span> is to the function <span class="math inline">\(f\)</span>. More concretely, we want to find <span class="math inline">\(\omega, \theta\)</span> that minimizes the loss function:</dt>
+<dd>
+<p><span class="math inline">\(l(f,f_{N, \omega, \theta}) := \frac{1}{2} \int_{D} |f(x)-f_{N,\omega,\theta}(x)|^2dx\)</span></p>
+</dd>
+</dl>
+<p>A standard way to choose and update the weights is to start with a random choice of weights <span class="math inline">\(\bar{\omega}, \bar{\theta}\)</span> and perform gradient descent on these parameters. Unfortunately, this problem is non-convex, so the minimizer may not be achieved. It turns out in practice, neural networks are surprisingly good at finding the minimizer. A nicer minimization problem that may provide insight into how neural networks work is a neural network model with infinitely many neurons.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="continuous-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-formulation">Continuous Formulation</h3>
+<dl>
+<dt>For the continuous formulation (i.e.&nbsp;when <span class="math inline">\(N = \infty\)</span>), we rephrase the above mathematical framework. In this case, it no longer makes sense to look for weights <span class="math inline">\(\omega, \theta\)</span> that minimize the loss function. We instead look for a probability measure <span class="math inline">\(\mu  \in \mathcal{P}(\Omega)\)</span> such that</dt>
+<dd>
+<p><span class="math inline">\(f_{\mu}(x) := \int_{\Omega} \Phi(\xi, x) d \mu (\xi)\)</span></p>
+</dd>
+</dl>
+<p>minimizes the loss function:</p>
+<p>:<span class="math inline">\(F(\mu) : = \frac{1}{2} \int_{D} (f - f_\mu)^2 dx\)</span>.</p>
+<p>Here <span class="math inline">\(\Phi(\xi, x)\)</span> is an activation function with parameter <span class="math inline">\(\xi = (\omega, \theta) \in \Omega\)</span>. We will in fact restrict choices of <span class="math inline">\(\mu\)</span> to probability measures with finite second moment, denoted <span class="math inline">\(\mathcal{P}_2(\Omega)\)</span>. This is a small technicality to ensure that the Wasserstein metric is indeed a metric.</p>
+<p>Note that by restricting choices of <span class="math inline">\(\mu\)</span> to probability measures of the form <span class="math inline">\(\mu_N = \frac{1}{N} \sum_{i=1}^{N} \delta_{\xi_i}\)</span>, the above minimization problem generalizes to case with finitely many neurons as well.</p>
+<p>To avoid overfitting the network to the training data, a potential term is added the loss function. For the remainder of this article, we define the loss function <span class="math inline">\(F\)</span> to be:</p>
+<p>:<span class="math inline">\(F(\mu) : = \frac{1}{2} \int_{D} (f - (\int_{\Omega} \Phi(\xi, x) d \mu (\xi)))^2 dx  +  \int_{\Omega} V(\xi)d\mu(\xi)\)</span></p>
+<p>for a convex potential function <span class="math inline">\(V: \Omega \rightarrow \mathbb{R}\)</span>. Often we choose <span class="math inline">\(V(\xi) = \frac{\lambda}{2} |\xi|^2\)</span>. In fact, <span class="math inline">\(F\)</span> is convex (along linear interpolations), in contrast to the minimization function in the finite neuron case.</p>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
+<section id="gradient-flow" class="level2">
+<h2 class="anchored" data-anchor-id="gradient-flow">Gradient Flow</h2>
+<p>When <span class="math inline">\(X \subseteq \mathbb{R}^n\)</span>, the gradient flow of a differentiable function <span class="math inline">\(g: X \rightarrow \mathbb{R}\)</span> starting at a point <span class="math inline">\(x_0\)</span> is a curve <span class="math inline">\(x(t): [0, T) \rightarrow X\)</span> satisfying the differential equation</p>
+<p>:<span class="math inline">\(\frac{d}{dt}x(t) = - \nabla g (x(t)), x(0)=x_0\)</span>.</p>
+<p>where <span class="math inline">\(\nabla g\)</span> is the gradient of g.<ref name="Schiebinger"></ref></p>
+<p>Crucially, the gradient flow heads in the direction that decreases the value of <span class="math inline">\(g\)</span> the fastest. We would like to use this nice property of gradient flow in our setting with the functional <span class="math inline">\(F\)</span>. However, it is not immediately straightforward how to do this, since <span class="math inline">\(F\)</span> is defined on the space of probability measures, rather than on <span class="math inline">\(\mathbb{R}^n\)</span>, so the usual gradient is not defined. Before we generalize the notion of gradient flow, recall that <span class="math inline">\(\nabla g\)</span> is the unique function from <span class="math inline">\(\mathbb{R}^n\)</span> to <span class="math inline">\(\mathbb{R}^n\)</span> such that</p>
+<p>:<span class="math inline">\(\langle\nabla g , v \rangle = D_v g\)</span>,</p>
+<p>where <span class="math inline">\(D_v g\)</span> is the directional derivative of <span class="math inline">\(g\)</span> in the direction <span class="math inline">\(v\)</span>. Motivated by this and using the <a href="http://34.106.105.83/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Riemannian structure of the space of probability measures</a>, we can define the a notion of gradient for our loss functional <span class="math inline">\(F\)</span>.</p>
+<p>Note that one can define <a href="http://34.106.105.83/wiki/Gradient_flows_in_Hilbert_spaces">gradient flows in a general Hilbert space</a>.</p>
+<section id="wasserstein-gradient-subdifferential" class="level3">
+<h3 class="anchored" data-anchor-id="wasserstein-gradient-subdifferential">Wasserstein Gradient / Subdifferential</h3>
+<p>We are looking for an element <span class="math inline">\(\nabla_{W_2} F (\mu)\)</span> in the tangent space of <span class="math inline">\(\mathcal{P}_2(\Omega)\)</span> at <span class="math inline">\(\mu\)</span> such that</p>
+<p>:<span class="math inline">\(\langle  \nabla_{W_2} F (\mu_*), \frac{d}{dt}\mu(t)|_{t=0} \rangle_{W_2} = \lim_{h \rightarrow 0} \frac{F(\mu(h)) - F(\mu_*)}{h}\)</span></p>
+<p>for any absolutely continuous curve <span class="math inline">\(\mu(t)\)</span> in <span class="math inline">\(\mathcal{P}_2(\Omega)\)</span> with <span class="math inline">\(\mu(0)=\mu_*\)</span>.</p>
+<p>We claim that in fact</p>
+<p>:<span class="math inline">\(\nabla_{W_2} F (\mu_*) = - \nabla \cdot (\mu_* \nabla \frac{\delta F}{\delta \mu_*})\)</span></p>
+<p>where <span class="math inline">\(\frac{\delta F}{\delta \mu_*}\)</span> is the first variation of <span class="math inline">\(F\)</span> at <span class="math inline">\(\mu_*\)</span> <ref name="Ambrosio"> (also called the <a href="https://en.wikipedia.org/wiki/Functional_derivative#cite_note-ParrYangP246A.2-3">functional derivative</a>).</ref></p>
+<p>We provide a formal argument for this equality that makes the most sense when <span class="math inline">\(\mu\)</span> is absolutely continuous with respect to the Lebesgue measure. In this case, we can think of <span class="math inline">\(\mu\)</span> as a density function with <span class="math inline">\(d \mu(x) = \mu(x) dx\)</span>. We can further assume that <span class="math inline">\(\mu\)</span> is in <span class="math inline">\(L^2(\Omega)\)</span>. Therefore the same notion of gradient for <span class="math inline">\(L^2\)</span> exists for <span class="math inline">\(F\)</span>, and in fact</p>
+<p>:<span class="math inline">\(\nabla_{L^2}F(\mu) = \frac{\delta F}{\delta \mu}\)</span></p>
+<p>Thus by definition of <span class="math inline">\(L^2\)</span> gradient and <span class="math inline">\(L^2\)</span> inner product, we should have</p>
+<p>:<span class="math inline">\(\lim_{h \rightarrow 0} \frac{F(\mu(h)) - F(\mu_*)}{h}= \langle \frac{\delta F}{\delta \mu_*} , \frac{d}{dt}\mu(t)|_{t=0} \rangle_{L^2}\)</span></p>
+<p>:<span class="math inline">\(= \int \frac{\delta F}{\delta \mu_*} \frac{d}{dt}\mu(t)|_{t=0} dx\)</span></p>
+<p>by the continuity equation for <span class="math inline">\(\mu(t)\)</span> and divergence theorem,</p>
+<p>:<span class="math inline">\(\int \frac{\delta F}{\delta \mu_*} \frac{d}{dt}\mu(t)|_{t=0} dx = - \int \frac{\delta F}{\delta \mu_*} (\nabla \cdot (v_*\mu_*)) dx= \int \nabla \frac{\delta F}{\delta \mu_*} (v_*\mu_*)dx = \int \nabla \frac{\delta F}{\delta \mu_*} v_* d\mu_*\)</span></p>
+<p>where <span class="math inline">\(v_*\)</span> is the unique velocity vector corresponding to <span class="math inline">\(\mu_*\)</span> by the equivalence of absolutely continuous curves and solutions of <a href="http://34.106.105.83/wiki/The_continuity_equation_and_Benamour_Brenier_formula">the continuity equation</a>. Now by the definition of the inner product structure of <span class="math inline">\((\mathcal{P}_2(\mathbb{R}^d), W_2)\)</span>, we have</p>
+<p>:<span class="math inline">\(\int \nabla \frac{\delta F}{\delta \mu_*} v_* d\mu_* = \langle - \nabla \cdot (\mu \nabla \frac{\delta F}{\delta \mu_*}),  \frac{d}{dt}\mu(t)|_{t=0} \rangle_{W_2}.\)</span></p>
+<p>Therefore we have</p>
+<p>:<span class="math inline">\(\nabla_{W_2}F(\mu_*)= - \nabla \cdot (\mu \nabla \frac{\delta F}{\delta \mu_*}).\)</span></p>
+<p>so the gradient flow for <span class="math inline">\(F\)</span> is an absolutely continuous curve of probability measure <span class="math inline">\(\mu_t\)</span> such that</p>
+<p>:<span class="math inline">\(\partial_t \mu_t  = \nabla \cdot (\mu_t \nabla \frac{\delta F}{\delta \mu_t})\)</span>.</p>
+<p>Now we actually compute this gradient flow for our loss functional <span class="math inline">\(F\)</span>.</p>
 </section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
+<section id="computing-the-wasserstein-gradient-flow-for-f" class="level3">
+<h3 class="anchored" data-anchor-id="computing-the-wasserstein-gradient-flow-for-f">Computing the Wasserstein Gradient Flow for F</h3>
+<p>First, we compute the first variation ( or <a href="https://en.wikipedia.org/wiki/Functional_derivative">functional derivative</a>) of a function from <span class="math inline">\(\mathcal{P}(\Omega)\)</span> to <span class="math inline">\(\mathbb{R}\)</span> of <span class="math inline">\(F\)</span></p>
+<p>:<span class="math inline">\(\frac{\delta F}{\delta \mu}(\mu_*) = \int_D \Phi( \cdot, x) [\int_\Omega \Phi(\bar{\xi},x)d \mu_*(\bar{xi}) - f(x) ]dx + V\)</span></p>
+<dl>
+<dt>Therefore we have</dt>
+<dd>
+<p><span class="math inline">\(\nabla \frac{\delta F}{\delta \mu}(\mu_*) = \int_D \nabla_{\xi} \Phi( \cdot, x) [\int_\Omega \Phi(\bar{\xi},x)d \mu_*(\bar{xi}) - f(x) ]dx + \nabla V .\)</span></p>
+</dd>
+</dl>
+<p>Hence the Wasserstein gradient flow is</p>
+<p>:<span class="math inline">\(\partial_t \mu_t = \rm{div}( \mu_t \nabla \frac{\delta F}{\delta \mu} (\mu_t))\)</span>.</p>
 </section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="./ConvergenceMetrizability.html">Convergence of Measures and Metrizability</a></li>
-<li><a href="./FenchelMoreau.html">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="./FenchelRockafellar.html">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="./MoreauYosida.html">The Moreau-Yosida Regularization</a></li>
-<li><a href="./GFHilbert.html">Gradient flows in Hilbert spaces</a></li>
-<li><a href="./CtyEqn.html">The continuity equation and Benamou Brenier formula</a></li>
-<li><a href="./Isoperimetric.html">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
 </section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of Optimal Transport</h3>
-<ul>
-<li><a href="./MachineLearning.html">Machine Learning and Optimal Transport</a></li>
-<li><a href="./ShallowNeuralNetworks.html">Shallow Neural Networks as Wasserstein Gradient Flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
+<section id="open-problems" class="level2">
+<h2 class="anchored" data-anchor-id="open-problems">Open Problems</h2>
+<section id="generalization" class="level3">
+<h3 class="anchored" data-anchor-id="generalization">Generalization</h3>
+<p><a href="https://en.wikipedia.org/wiki/Generalization_error">Generalization error</a> is how well a model generalizes for a new data not in your training data set. In practice, gradient descent does generalize really well, but it is an open problem to provide a theoretical framework to guarantee generalization. Wang, Meng, Chen and Liu 2021 made progress on studying the implicit regularization of the algorithm, and provide a framework for convergence. <ref name="Wang"></ref></p>
 </section>
-<section id="other-scientific-wikis" class="level3">
-<h3 class="anchored" data-anchor-id="other-scientific-wikis">Other Scientific Wikis</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><references> <ref name="Figalli"><a href="https://people.math.ethz.ch/~afigalli/lecture-notes-pdf/The-continuous-formulation-of-shallow-neural-networks-as-wasserstein-type-gradient-flows.pdf">X. Fernandez-Real and A. Figalli, <em>The Continuous Formulation of Shallow Neural Networks as Wasserstein-Type Gradient Flows</em></a></ref></references></p>
+<p><ref name="Ambrosio"><a href="http://www2.stat.duke.edu/~sayan/ambrosio.pdf">L. Ambrosio, N. Gigli, G. Savaré, <em>Gradient Flows in Metric Spaces and in the Space of Probability Measures</em></a></ref></p>
+<p><ref name="Schiebinger"> <a href="https://personal.math.ubc.ca/~geoff/courses/W2019T1/Lecture16.pdf">G. Schiebinger, <em>Gradient Flow in Wasserstein Space</em></a> </ref></p>
+<p><ref name="Wang"> <a href="https://arxiv.org/pdf/2012.06244.pdf">B. Wang, Q. Meng, W. Chen, T. Liu, <em>The Implicit Regularization for Adaptive Optimization Algorithms on Homogeneous Neural Networks</em></a> </ref></p>
+<p></p>
 
 
 </section>
