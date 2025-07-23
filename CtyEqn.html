@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimal Transport Wiki – OT WIKI</title>
+<title>The Continuity Equation and Benamou Brenier Formula – OT WIKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -109,13 +138,19 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Optimal Transport Wiki</h1>
+<h1 class="title">The Continuity Equation and Benamou Brenier Formula</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Christian Hong and Djordje Nikolic </p>
+          </div>
+  </div>
     
   
     
@@ -126,100 +161,67 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="GraphMongeSmall.png" class="img-fluid"></p>
-<p><strong>Welcome to the Optimal Transport Wiki!</strong></p>
-<p>Here is a list of <a href="./NewArticleIdeas.html">new article ideas</a>. Here is a list of <a href="./ArticlesToRevise.html">suggestions of articles to revise</a></p>
-<p>Contact Katy Craig if you would like to contribute to this wiki.</p>
-<section id="the-optimal-transportation-problem" class="level3">
-<h3 class="anchored" data-anchor-id="the-optimal-transportation-problem">The optimal transportation problem</h3>
-<ul>
-<li><a href="./Monge.html">Monge Problem</a></li>
-<li><a href="./Kantorovich_Problem.html">Kantorovich Problem</a></li>
-<li><a href="./1DimensionOT_Revised.html">Optimal Transport in One Dimension</a></li>
-<li><a href="./KDualProblem.html">Kantorovich Dual Problem (for general costs)</a></li>
-<li><a href="./Kantorovich_Dual_Problem_Quad_Cost.html">Kantorivich Dual Problem with Quadratic Cost</a></li>
-<li><a href="./RegularityOTMap.html">Regularity of Optimal Transport Maps and the Monge-Ampére Equation on Riemannian Manifolds</a></li>
-<li><a href="./1Wasserstein.html">1-Wasserstein metric and generalizations</a></li>
-<li><a href="./Dynamic_OT.html">Dynamic Optimal Transport</a></li>
-<li><a href="./RicciCurvature.html">Optimal Transport and Ricci curvature</a></li>
-</ul>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The continuity equation is an important equation in many fields of science, for example, electromagnetism, computer vision, fluid dynamics etc. However, in the field of optimal transport, the formulation from fluid dynamics is of a large significance. This form helps to explain the dynamic formulation of special cases of <a href="https://en.wikipedia.org/wiki/Wasserstein_metric">Wasserstein metric</a> via the continuity equation, and we will focus in this direction. Related to this is the Benamou-Brenier Formula, which implies a Riemannian structure on our space of measures. For more general information about the continuity equation, look at the article <a href="https://en.wikipedia.org/wiki/Continuity_equation">Continuity equation</a>.</p>
 </section>
-<section id="the-2-wasserstein-metric" class="level3">
-<h3 class="anchored" data-anchor-id="the-2-wasserstein-metric">The 2-Wasserstein Metric</h3>
-<ul>
-<li><a href="./GeoGenGeo.html">Geodesics and generalized geodesics</a></li>
-<li><a href="./RiemannianStructureOriginal.html">Formal Riemannian Structure of the Wasserstein metric</a></li>
-<li><a href="Riemannian_Structure_Wasserstein_Space">Formal Riemannian Structure and Gradient in the Wasserstein metric</a></li>
-<li><a href="./W2Hm1.html">Asymptotic equivalence of W_2 and H^-1</a></li>
-</ul>
+<section id="continuity-equation-in-fluid-dynamics" class="level2">
+<h2 class="anchored" data-anchor-id="continuity-equation-in-fluid-dynamics">Continuity equation in fluid dynamics</h2>
+<p>First, because of the intuition, we will introduce the definition of the continuity equation in fluid mechanics. The exposition in this section will follow the book by Chorin and Marsden<ref name="Marsden">.</ref></p>
+<p>Suppose that mass of our fluid is conserved, through time. Denote <span class="math inline">\(\rho(x,t)\)</span> as a density function, representing the mass-density of fluid, and <span class="math inline">\(v(x,t)\)</span> as a velocity of particle at position <span class="math inline">\(x\)</span>, at time <span class="math inline">\(t\)</span>. Then, for any subspace <span class="math inline">\(W\)</span> of <span class="math inline">\(\mathbb{R}^{3}\)</span> we have: :<span class="math inline">\(\partial_{t}[\int_{W} \rho(x,t) dV] = - \int_{\partial W} \rho v \cdot ndS.\)</span></p>
+<p>In this section, we assume both density function and particle velocity are smooth enough. Hence, after differentiating under the integral and applying the Divergence Theorem, we get: :<span class="math inline">\(\int_{W} \partial_{t}\rho(x,t) dV = - \int_{W} \nabla\cdot(\rho v) dV.\)</span></p>
+<p>Finally, we conclude that: :<span class="math inline">\(\int_{W} \partial_{t}\rho + \nabla\cdot(\rho v) dV = 0,\)</span> which implies, since <span class="math inline">\(W\)</span> is arbitrary, that: :<span class="math inline">\(\partial_{t}\rho + \nabla\cdot(\rho v) = 0.\)</span> The last equation is the continuity equation in fluid dynamics, written in the differential form. We use the equation in this form in optimal transport.</p>
+<p>An important perspective comes from viewing the fluid as an system of particles moving in space (Langrangian perspective), as opposed to some continuous density that varies at specific points (Eulerian perspective) due to internal currents. This alternate perspective can be formalized via an ordinary differential equation<ref name="Ambrosio">. :<math></math></ref></p>
+<span class="math display">\[\begin{cases}
+\gamma'(t) = v(\gamma(t), t) &amp; \\
+\gamma(0) = x &amp;
+\end{cases}\]</span>
+<p> where <span class="math inline">\(v(x,t)\)</span> is some vector field varying with time, and <span class="math inline">\(\gamma(t)\)</span> is absolutely continuous. Since we are not assuming our curve is differentiable, we can instead consider the integral form of our ODE :<span class="math inline">\(\gamma(t) = x + \int_0^t v_s(\gamma(s)) \, ds\)</span> In both cases, <span class="math inline">\(x\)</span> represents the starting point of our curve, which indicates the path of a specific particle in our fluid. The important fact is that the continuity equation and our ODE system are equivalent in a weak sense when given the same <span class="math inline">\(v(x, t)\)</span>. Intuitively, the continuity equation is stating the the change in density at a point is dictated by the flow of particles, <span class="math inline">\(\rho \cdot v(x,t)\)</span> into that point. From the Lagrangian point of view, this flow is the result of all the trajectories of particles that follow the current <span class="math inline">\(v(x,t)\)</span> into the desired point.</p>
 </section>
-<section id="variants-of-the-optimal-transport-problem" class="level3">
-<h3 class="anchored" data-anchor-id="variants-of-the-optimal-transport-problem">Variants of the optimal transport problem</h3>
-<ul>
-<li><a href="./MOT.html">Martingale optimal transport and mathematical finance</a></li>
-<li><a href="./DynamicMOT.html">Martingale optimal transport: dynamic formulation</a></li>
-<li><a href="./Wasserstein_Barycenters.html">Wasserstein barycenters and applications in image processing</a></li>
-<li><a href="./WassersteinOnGraphs.html">Wasserstein-like Metrics on Graphs</a></li>
-<li><a href="./HKdistance.html">Hellinger-Kantorovich Distance</a></li>
-<li><a href="./Continuous-time MOT and Skorohod Embedding.html">Continuous time martingale OT and Skorohod Embedding</a></li>
-<li><a href="./SchrodingerBridge.html">Schrodinger Bridge Problem</a></li>
-</ul>
+<section id="continuity-equation-in-optimal-transport" class="level2">
+<h2 class="anchored" data-anchor-id="continuity-equation-in-optimal-transport">Continuity equation in optimal transport</h2>
+<p>The previous discussion assumed that the density function was smooth, which is not true of the general measures we consider in optimal transport. Even when a measure <span class="math inline">\(\mu\)</span> is absolutely continuous with respect to Lebesgue measure, which we write with a mild abuse of notation as <span class="math inline">\(d\mu(x) = \mu(x) dx\)</span>, <span class="math inline">\(\mu\)</span> does not have to be smooth. So, we need to state a proper weak formulation of the continuity equation. Smooth functions satisfy all the cases below.</p>
+<p>Here, we will present definitions and reasoning from book by F.Santambrogio<ref name="Santambrogio">.</ref></p>
+<p>From this point, we are looking at the following equation: :<span class="math inline">\(\partial_{t}\mu_{t} + \nabla\cdot (\mu_{t}v_{t}) = 0.\)</span></p>
+<p>We will give two different notions of solutions to the continuity equation.</p>
+<p>:* <strong>Distributional solution.</strong> All the measures we are interested in satisfy <span class="math inline">\(\int_{0}^{1} ||v_{t}||_{L^{1}(\mu_{t})}dt &lt; \infty\)</span>, and solve continuity equation in a distributional sense, namely :<span class="math inline">\(\int_{0}^{T}\int_{\Omega} [\partial_{t}\phi + \nabla\phi\cdot v_{t}] d\mu_{t} dt = 0,\)</span> for all bounded Lipschitz functions <span class="math inline">\(\phi \in C_{c}^{1}((0,T) \times \overline{\Omega})\)</span>, where <span class="math inline">\(\Omega\)</span> is a bounded domain or the whole space <span class="math inline">\(\mathbb{R}^{d}\)</span>, and <span class="math inline">\(0&lt;T&lt;1\)</span>. We assume no-flux condition in this case, namely <span class="math inline">\(\mu_{t}v_{t} \cdot n = 0\)</span> on the boundary <span class="math inline">\(\partial\Omega.\)</span> This notion of solution is called a <em>distributional</em> solution.</p>
+<p>The main goal of the classical optimal transport theory is how to find the least expensive way to move one measure to the another one. For more information, look at <a href="http://34.106.105.83/wiki/Monge_Problem">Monge Problem</a>.So, we have to impose initial and terminal conditions on measures, for example <span class="math inline">\(\mu_{0} = \mu\)</span>, and <span class="math inline">\(\mu_{1} = \nu.\)</span> Then, our equation becomes <span class="math inline">\(\int_{0}^{T}\int_{\Omega} [\partial_{t}\phi + \nabla\phi\cdot v_{t}] d\mu_{t} dt = \int_{\Omega}\phi(T,x)d\nu(x) - \int_{\Omega}\phi(0,x)d\mu(x),\)</span> for all <span class="math inline">\(\phi \in C_{c}^{1}([0,T]\times \overline{\Omega}).\)</span></p>
+<p>:* <strong>Weak solution.</strong> Another way to interpret solutions to the continuity equation is to assume that function <span class="math inline">\(t \rightarrow \int_{\Omega} \psi d\mu_{t}\)</span> is absolutely continuous, and for a.e. <span class="math inline">\(t\)</span> it holds: <span class="math inline">\(\partial_{t} \int_{\Omega} \psi d\mu_{t} = \int_{\Omega} \nabla\psi \cdot v_{t}d\mu_{t},\)</span> for all test functions <span class="math inline">\(\psi \in C_{c}^{1}(\overline{\Omega})\)</span> This kind of solution is called a <em>weak</em> solution.</p>
+<dl>
+<dt>Some connections between these two types of solutions are given in the following propositions.</dt>
+<dd>
+<p><strong>Proposition 1.</strong>, (p.124,<ref name="Santambrogio">) Distributional and weak solutions are equivalent. Every weak solution is a distributional solution. On the other hand, every distributional solution admits a representative (a.e. equal), that is weakly continuous and a weak solution.</ref></p>
+</dd>
+<dd>
+<p><strong>Proposition 2.</strong>,(p.124,<ref name="Santambrogio">) Let <span class="math inline">\(\mu\)</span> be the Lipschitz function in <span class="math inline">\((t,x)\)</span> and <span class="math inline">\(v\)</span> be the Lipschitz function in <span class="math inline">\(x.\)</span> Suppose that the continuity equation is satisfied in the weak sense. Then it is satisfied in a.e. sense.</ref></p>
+</dd>
+<dt>The following theorem will provide us with existence and uniqueness of the continuity equation solution. For simplicity, we will assume that <span class="math inline">\(\Omega = \mathbb{R}^{d}.\)</span></dt>
+<dd>
+<p><strong>Theorem.</strong><ref name="Santambrogio"> Let measurable function <span class="math inline">\(v: (0,T) \times \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}\)</span> be a Lipschitz continuous in <span class="math inline">\(x\)</span>, uniformly in <span class="math inline">\(t\)</span>, and uniformly bounded. Suppose that flow <span class="math inline">\(X_{t}\)</span> of the classical ODE problem, with function <span class="math inline">\(v\)</span> exists. Then, for any probability measure <span class="math inline">\(\mu_{0}\)</span>, push-forward measures <span class="math inline">\(\mu_{t} = X_{t}\#\mu_{0}\)</span> satisfy the continuity equation with the initial condition <span class="math inline">\(\mu_{0}\)</span>. Moreover, for all measures <span class="math inline">\(\mu_{t}\)</span> absolutely continuous with respect to Lebesgue measure, the previous solution is the only solution the continuity equation admits.</ref></p>
+</dd>
+<dd>
+<p><em>Sketch of the Proof.</em> Proving existence, or checking that <span class="math inline">\(\mu_{t}\)</span> satisfies the continuity equation in a sense of the weak solution is straightforward, using change of variables in the integral. However, resolving the uniqueness of this solution when it is absolutely continuous with respect to Lebesgue measure requires narrowing a test function space, using distributional solution. Hence, we can control the flow <span class="math inline">\(X_{t}\)</span> in a better way, and using a linear transport equation solution, we can prove the uniqueness of solution of our continuity equation.</p>
+</dd>
+</dl>
 </section>
-<section id="numerical-methods-for-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-methods-for-optimal-transport">Numerical methods for optimal transport</h3>
-<ul>
-<li><a href="./DiscreteOT.html">Discrete Optimal Transport</a></li>
-<li><a href="./AuctionAlgorithm.html">Auction Algorithm</a></li>
-<li><a href="./Semidiscrete.html">Semidiscrete Optimal Transport</a></li>
-<li><a href="./entropic_regularization_and_sinkhorn.html">Entropic Regularization and Sinkhorn’s Algorithm</a></li>
-<li><a href="./sliced_wasserstein_metric.html">Sliced Wasserstein Distance</a></li>
-<li><a href="./backandfortharticle.html">Back and Forth Method</a></li>
-</ul>
+<section id="applications" class="level2">
+<h2 class="anchored" data-anchor-id="applications">Applications</h2>
+<dl>
+<dt>The following theorem can be found at the book by L.Ambrosio, E.Brué, and D.Semola<ref name="Ambrosio">.</ref></dt>
+<dd>
+<p><strong>Theorem (Benamou-Brenier Formula).</strong><ref name="Ambrosio"> Let <span class="math inline">\(\mu, \nu \in \mathcal{P}_{2}(\mathbb{R}^{d})\)</span>. Then :<span class="math inline">\(W_{2}^{2}(\mu, \nu)=\min_{(\mu(t),\nu(t))} \{\int_{0}^{1} |v(\cdot,t)|_{L^{2}(\mu(t))}^{2}dt \quad | \quad \partial_{t}\mu+\nabla\cdot(v\mu)=0,\quad \mu(0)=\mu,\quad \mu(1)=\nu \}.\)</span></ref></p>
+</dd>
+</dl>
+<p>This formula is important for defining the Riemannian structure of our Wasserstein space. In particular, this is related to the fact that the distance minimizing curves on Riemannian manifolds are geodesics. The property at play here is the fact that geodesics minimize the action of the Riemannian metric. In other words, an optimal transport plan between measures <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> is actually related to a geodesic connecting these measures on a Riemannian manifold. The Benamou-Brenier Formula implies that the correct action on this space is <span class="math inline">\(\min_{(\mu(t),\nu(t))} \int_{0}^{1} |v(\cdot,t)|_{L^{2}(\mu(t))}^{2}dt\)</span> where <span class="math inline">\(v(\cdot, t)\)</span> gives the velocity of the curve <span class="math inline">\(\mu\)</span>. This implies the correct Riemannian metric for our Wasserstein space. You can see more at <a href="http://34.106.105.83/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric">Formal Riemannian Structure of the Wasserstein metric</a>.</p>
+<p>In addition, using the continuity equation we can describe geodesics in the Wasserstein space. For more details look at <a href="http://34.106.105.83/wiki/Geodesics_and_generalized_geodesics">Geodesics and generalized geodesics</a>.</p>
 </section>
-<section id="optimal-transport-and-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-transport-and-statistics">Optimal transport and statistics</h3>
-<ul>
-<li><a href="./Est_Tr_Maps.html">Estimation of transport maps</a></li>
-</ul>
-</section>
-<section id="wasserstein-gradient-flows" class="level3">
-<h3 class="anchored" data-anchor-id="wasserstein-gradient-flows">Wasserstein gradient flows</h3>
-<ul>
-<li><a href="./Bures-Wasserstein Gradient Flows.html">Bures-Wasserstein Gradient flows</a></li>
-</ul>
-</section>
-<section id="mathematical-foundations" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-foundations">Mathematical foundations</h3>
-<ul>
-<li><a href="./DualSpaceCtsFns.html">Dual space of C_0(x) vs C_b(x)</a></li>
-<li><a href="./ConvergenceMetrizability.html">Convergence of Measures and Metrizability</a></li>
-<li><a href="./FenchelMoreau.html">Fenchel-Moreau and Primal/Dual Optimization Problems</a></li>
-<li><a href="./FenchelRockafellar.html">Fenchel-Rockafellar and Linear Programming</a></li>
-<li><a href="./MoreauYosida.html">The Moreau-Yosida Regularization</a></li>
-<li><a href="./GFHilbert.html">Gradient flows in Hilbert spaces</a></li>
-<li><a href="./CtyEqn.html">The continuity equation and Benamour Brenier formula</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Isoperimetric_inequality_and_OMT">Isoperimetric inequality and OMT</a></li>
-<li><a href="./Gaussian_Measures.html">Gaussian Measures</a></li>
-<li><a href="./Analysis_in_Metric_Spaces.html">Analysis in metric spaces</a></li>
-<li><a href="./GFMetricSpace.html">Gradient flows in metric spaces</a></li>
-</ul>
-</section>
-<section id="applications-of-optimal-transport" class="level3">
-<h3 class="anchored" data-anchor-id="applications-of-optimal-transport">Applications of optimal transport</h3>
-<ul>
-<li><a href="https://www.otwiki.xyz/wiki/Machine_Learning">Machine Learning</a></li>
-<li><a href="https://www.otwiki.xyz/wiki/Shallow_neural_networks_as_Wasserstein_gradient_flows">Shallow neural networks as Wasserstein gradient flows</a></li>
-<li><a href="./WGAN.html">Wasserstein Generative Adversarial Networks</a></li>
-<li><a href="./Knothe_Maps_Conditional_Sampling.html">Knothe Maps and Conditional Sampling</a></li>
-</ul>
-</section>
-<section id="other" class="level3">
-<h3 class="anchored" data-anchor-id="other">Other</h3>
-<ul>
-<li><a href="https://web.ma.utexas.edu/mediawiki/index.php/Starting_page?">Nonlocal Equations Wiki</a></li>
-<li><a href="http://proteopedia.org/wiki/index.php/Main_Page">Proteopedia</a></li>
-<li><a href="https://www.quantiki.org">Quantum Information Wiki</a></li>
-</ul>
+<section id="references" class="level1">
+<h1>References</h1>
+<p><references></references></p>
+<p><ref name="Marsden"> <a href="https://link.springer.com/book/10.1007/978-1-4612-0883-9">A.J.Chorin, J.E.Marsden, <em>A Mathematical Introduction to Fluid Mechanics</em>, Chapter 1, pages 1-11</a> </ref></p>
+<p><ref name="Santambrogio"> <a href="https://link.springer.com/book/10.1007/978-3-319-20828-2">F.Santambrogio, <em>Optimal Transport for Applied Mathematicians</em>, Chapter 4, pages 123-126</a> </ref></p>
+<p><ref name="Ambrosio"> <a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L.Ambrosio, E.Brué, D.Semola, <em>Lectures on Optimal Transport</em>, Lecture 16.1., pages 183-189</a> </ref></p>
+<p></p>
 
 
 </section>
