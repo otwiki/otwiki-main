@@ -1,1 +1,1 @@
-Sitemap: https://otwiki.github.io/otwiki-main/sitemap.xml
+Sitemap: https://www.otwiki.xyz/sitemap.xml
