@@ -61,3 +61,5 @@ d(x,y) ~=~ \inf \{ \ell(\gamma) ~:~ \gamma \in \text{AC}([a,b],X) ,~ \gamma(a) =
 $$ It is said to be a geodesic space if there exists such a $\gamma$ achieving the infimum (i.e. a geodesic). It is said to be a uniquely geodesic space if such a $\gamma$ is unique.
 
 There are a large number of results in differential and metric geometry establishing necessary and sufficient conditions for a space to have these properties.
+
+Something something poincaré inequalities and doubling conditions.
