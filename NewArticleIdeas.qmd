@@ -12,8 +12,6 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 ### Variants of Optimal Transport Problems
 
 -   The $s$-Wasserstein metric for $s<1$ [Craig and Yu, 2024](https://arxiv.org/abs/2411.12153), Santambrogio 3.3.2
--   Entropic optimal transport, Chewi, Niles-Weed, Rigollet Ch.4 and [2](https://www.math.columbia.edu/~mnutz/docs/EOT_lecture_notes.pdf)
--   Connections between entropic optimal transport and the Schrödinger bridge problem [1](https://www.math.ucdavis.edu/~saito/data/acha.read.s19/leonard_survey-schroedinger-problem-optxport.pdf) - Ka Lok
 -   Brenier maps [3](https://arxiv.org/abs/2404.02855)
 -   Knothe maps, Figalli-Glaudo (9-14), [Carlier, et. al. '08](https://arxiv.org/abs/0810.4153)
 -   Linearized Optimal Transport
@@ -31,10 +29,6 @@ If you choose to write about one of these ideas, let me know, and I will remove 
 ### Wasserstein Gradient Flows
 
 -   Fundamentals of Wasserstein Gradient flows, Chewi, Niles-Weed, Rigollet (135-148) and Santambrogio, 'Euclidean, Metric, and Wasserstein GFs'
-
-### Statistical Foundations
-
--   Estimation of Wasserstein distances, Chewi, Niles-Weed, Rigollet Ch.2
 
 ### Applications:
 

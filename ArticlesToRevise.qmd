@@ -11,18 +11,33 @@ Below, you can find a list of suggestions for articles to revise.
 - [Machine Learning and Optimal Transport](MachineLearning.qmd) - This article should probably be reinvisioned as a high level summary, with links to specific applications.
 
 Articles with formatting issues that need to be fixed, particularly in the equations and references: 
-- [Monge Problem](MongeProblem.qmd) 
+
+- [Monge Problem](Monge.qmd) 
+
 - [Regularity of Optimal Transport Maps](RegularityOTMap.qmd)
+
 - [1-Wasserstein Metric and Generalizations](1Wasserstein.qmd)
+
 - [Geodesics and Generalized Geodesics](GeoGenGeo.qmd)
+
 - [Equivalence of W2 and H-1](W2Hm1.qmd)
+
 - [Auction Algorithm](AuctionAlgorithm.qmd)
+
 - [Semidiscrete Optimal Transport](Semidiscrete.qmd)
+
 - [Dual Space of C0 vs Cb](DualSpaceCtsFns.qmd)
+
 - [Convergence of Measures and Metrizability](ConvergenceMetrizability.qmd)
+
 - [Fenchel Moreau](FenchelMoreau.qmd)
+
 - [Fenchel Rockafellar](FenchelRockafellar.qmd)
+
 - [Moreau Yosida Regularization](MoreauYosida.qmd)
+
 - [Continuity Equation and Benamou Brenier](CtyEqn.qmd)
+
 - [Isoperimetric Inequality](Isoperimetric.qmd)
+
 - [Shallow Neural Networks as W2 GFs](ShallowNeuralNetworks.qmd)
