@@ -6,7 +6,7 @@ title: "Optimal Transport Wiki"
 
 **Welcome to the Optimal Transport Wiki!**
 
-Here is a list of [new article ideas](NewArticleIdeas.qmd). Here is a list of [suggestions of articles to revise](ArticlesToRevise.qmd)
+Here is a list of [new article ideas](NewArticleIdeas.qmd). Here is a list of [suggestions of articles to revise](ArticlesToRevise.qmd). Here is a link to the [main fork of the github page](https://github.com/otwiki/otwiki-main/tree/main), where you can download the qmd files to write and edit articles for this wiki
 
 Contact Katy Craig if you would like to contribute to this wiki.
 
