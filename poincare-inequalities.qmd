@@ -1,0 +1,50 @@
+---
+title: "Poincaré Inequalities on Metric Measure Spaces"
+format: html
+toc: true
+---
+
+## Overview
+
+Poincaré inequalities play a central role in analysis on metric measure spaces, bridging geometric and analytic properties. They are key to understanding the behavior of Sobolev spaces, heat flow, and functions of bounded variation in non-smooth settings.
+
+Let \((X, d, \mu)\) be a metric measure space: \(X\) is a set equipped with a metric \(d\) and a Borel measure \(\mu\) that is finite on bounded sets.
+
+## The (1,p)-Poincaré Inequality
+
+We say that \((X, d, \mu)\) supports a **(1,p)-Poincaré inequality** (for \(1 \leq p < \infty\)) if there exist constants \(C > 0\) and \(\lambda \geq 1\) such that for all Lipschitz functions \(u : X \to \mathbb{R}\) and all balls \(B = B(x,r)\),
+$$
+\frac{1}{\mu(B)} \int_B |u - u_B|\, d\mu \leq C r \left( \frac{1}{\mu(\lambda B)} \int_{\lambda B} g^p\, d\mu \right)^{1/p},
+$$
+where \(u_B := \frac{1}{\mu(B)} \int_B u\, d\mu\) and \(g\) is an upper gradient of \(u\).
+
+## Doubling Measures
+
+A measure \(\mu\) is said to be **doubling** if there exists a constant \(C_\mu > 0\) such that for all \(x \in X\) and \(r > 0\),
+$$
+\mu(B(x,2r)) \leq C_\mu \mu(B(x,r)).
+$$
+
+The doubling condition ensures that the space does not have arbitrarily thin tentacles or spikes — it's a kind of quantitative compactness of the measure.
+
+## Importance of the Poincaré Inequality
+
+The Poincaré inequality (together with the doubling condition) is essential in defining **Sobolev spaces** (or Newtonian spaces) on metric measure spaces.
+
+- In this setting, Sobolev functions are often defined via **upper gradients**, a generalization of the modulus of the gradient.
+- These inequalities are needed for embedding theorems, compactness results, and regularity properties of solutions to PDEs in non-smooth spaces.
+
+## Key Result (Hajłasz-Koskela)
+
+If \((X, d, \mu)\) is a complete metric measure space with a doubling measure that supports a \((1,p)\)-Poincaré inequality, then:
+- The Sobolev space \(N^{1,p}(X)\) is a Banach space.
+- Lipschitz functions are dense in \(N^{1,p}(X)\).
+- The space supports various Sobolev embedding theorems.
+
+## References
+
+- Heinonen, J., Koskela, P. *Quasiconformal maps in metric spaces with controlled geometry*, Acta Math., 181(1), 1–61 (1998).
+- Hajłasz, P., Koskela, P. *Sobolev met Poincaré*, Mem. Amer. Math. Soc. 145 (2000), no. 688.
+- Björn, A., Björn, J. *Nonlinear potential theory on metric spaces*, EMS Tracts in Mathematics.
+
+
