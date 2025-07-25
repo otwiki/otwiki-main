@@ -3,7 +3,7 @@ project:
 
 website:
   title: "OT WIKI"
-  site-url: https://otwiki.xyz
+  site-url: https://otwiki.github.io/otwiki-main/
   navbar:
     left:
       - about.qmd
