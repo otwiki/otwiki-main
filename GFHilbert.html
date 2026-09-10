@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Gradient flows in Hilbert spaces – OT WIKI</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -30,15 +36,16 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3e9b1289f5f353c49b617ce48ad2bc38.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -81,7 +88,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -100,7 +107,7 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -164,296 +171,326 @@ window.Quarto = {
 <p><strong>Gradient Flows in Hilbert Spaces</strong> are generalizations of time-derivatives with a gradient constraint. Specifically, a gradient flow is a Hilbert Space valued function who’s time derivative lies in some generalized collection of gradient vectors. Gradient flows are a key topic in the study of non-linear time evolution partial differential equations. In this exposition, we will draw from Ambrosio et al.’s resource <em>Lectures on Optimal Transport</em> and Evans’ <em>Partial Differential Equations</em>.</p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The heat equation is a classic example of a time evolution partial differential equation. In particular, the heat equation is a linear parabolic partial differential equation. Such PDEs are well understood and are solvable using several different approaches. One particularly interesting technique is to view the PDE as a Banach-space valued ODE in the time variable. In this case, we can try to understand how to write the solution of the PDE as a flow in time which is a generalization of the exponential function. The techniques which one implements to find such a solution ultimately results in the Hille-Yosida theorem, which gives necessary and sufficient conditions for an operator <span class="math inline">\(T\)</span> to be infinitesimal generator of a contraction semigroup of the given PDE<ref name="Evans">. In some sense, these ideas can be extended to non-linear time evolution PDEs, leading to the general notion of flows on Hilbert spaces. We will discuss in this article how the theory of flows can be used to yield existence of a solution of a “non-linear heat equation.”</ref></p>
+<p>The heat equation is a classic example of a time evolution partial differential equation. In particular, the heat equation is a linear parabolic partial differential equation. Such PDEs are well understood and are solvable using several different approaches. One particularly interesting technique is to view the PDE as a Banach-space valued ODE in the time variable. In this case, we can try to understand how to write the solution of the PDE as a flow in time which is a generalization of the exponential function. The techniques which one implements to find such a solution ultimately results in the Hille-Yosida theorem, which gives necessary and sufficient conditions for an operator <span class="math inline">\(T\)</span> to be infinitesimal generator of a contraction semigroup of the given PDE<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In some sense, these ideas can be extended to non-linear time evolution PDEs, leading to the general notion of flows on Hilbert spaces. We will discuss in this article how the theory of flows can be used to yield existence of a solution of a “non-linear heat equation.”</p>
 </section>
 <section id="definitions" class="level2">
 <h2 class="anchored" data-anchor-id="definitions">Definitions</h2>
 <p>Let <span class="math inline">\(H\)</span> be a Hilbert space with inner product <span class="math inline">\(\langle\cdot,\cdot\rangle\)</span> with induced metric <span class="math inline">\(||\cdot||\)</span>. Throughout this exposition, we assume that <span class="math inline">\(f:H\rightarrow(-\infty,\infty]\)</span> is proper, so that the domain on which it takes finite values, <span class="math inline">\(\text{dom}(f)\)</span>, is not empty.</p>
-<p>First, we recall the notion of the subdifferential, rewritten from Ambrosio et al.’s definition<ref name="Ambrosio, Brué, Semola">.</ref></p>
+<p>First, we recall the notion of the subdifferential, rewritten from Ambrosio et al.’s definition<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>The <strong>subdifferential</strong> of <span class="math inline">\(f\)</span> at <span class="math inline">\(x\in\text{dom}(f)\)</span> is the collection,</p>
-<p>:<span class="math inline">\(\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle+o(||u-v||) \right\rbrace\)</span></p>
+<p><span class="math inline">\(\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle+o(||u-v||) \right\rbrace\)</span></p>
 <p><em>Remark:</em> observe that we are not assuming <span class="math inline">\(f\)</span> is convex, only that it is proper. In fact, Ambrosio et al.&nbsp;discusses the case when <span class="math inline">\(f\)</span> is <span class="math inline">\(\lambda\)</span>-convex, which generalizes the notion of convexity. We have omitted that discussion for the sake of clarity and brevity. If <span class="math inline">\(f\)</span> is indeed convex, then the subdifferential becomes,</p>
-<p>:<span class="math inline">\(\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle \quad\text{for each } u\in H\right\rbrace\)</span></p>
-<p>A <strong>gradient flow</strong> <span class="math inline">\(x(t):(0,\infty)\rightarrow\text{dom}(f)\)</span> is a locally absolutely continuous function with the property that <span class="math inline">\(x'(t)\in\partial(f(x(t))\)</span> for almost every <span class="math inline">\(t\)</span> (with respect to Lebesgue measure)<ref name="Ambrosio, Brué, Semola">. Note that the <span class="math inline">\(x(t)\)</span> being locally absolutely continuous is necessary for the existence (almost everywhere) of <span class="math inline">\(x'(t)\)</span><ref name="Ambrosio, Brué, Semola">. It will be particularly useful to identify the starting point of a gradient flow <span class="math inline">\(x(t)\)</span>, which is given by <span class="math inline">\(x_0:=\lim_{t\rightarrow 0}x(t)\)</span>.</ref></ref></p>
+<p><span class="math inline">\(\partial(f(x)):=\left\lbrace v\in H:f(u)\geq f(x)+\langle v,u-x\rangle \quad\text{for each } u\in H\right\rbrace\)</span></p>
+<p>A <strong>gradient flow</strong> <span class="math inline">\(x(t):(0,\infty)\rightarrow\text{dom}(f)\)</span> is a locally absolutely continuous function with the property that <span class="math inline">\(x'(t)\in\partial(f(x(t))\)</span> for almost every <span class="math inline">\(t\)</span> (with respect to Lebesgue measure)<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Note that the <span class="math inline">\(x(t)\)</span> being locally absolutely continuous is necessary for the existence (almost everywhere) of <span class="math inline">\(x'(t)\)</span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. It will be particularly useful to identify the starting point of a gradient flow <span class="math inline">\(x(t)\)</span>, which is given by <span class="math inline">\(x_0:=\lim_{t\rightarrow 0}x(t)\)</span>.</p>
 </section>
 <section id="main-existence-theorem" class="level2">
 <h2 class="anchored" data-anchor-id="main-existence-theorem">Main Existence Theorem</h2>
 <section id="from-linear-to-nonlinear-operators" class="level3">
 <h3 class="anchored" data-anchor-id="from-linear-to-nonlinear-operators">From Linear to Nonlinear Operators</h3>
 <p>Recall that the Hille-Yosida theorem states the following:</p>
-<p>:<strong>Theorem</strong><ref name="Evans"> Let <span class="math inline">\(T\)</span> be a densely defined linear operator on a Banach space (note that <span class="math inline">\(T\)</span> need not be bounded, but we assume <span class="math inline">\(T\)</span> is closed). Denote <span class="math inline">\(\rho(T):=\left\lbrace z\in\mathbb{C}:(z-T) \text{ is invertible and bounded}\right\rbrace\)</span> as the resolvent set of <span class="math inline">\(T\)</span>. Then <span class="math inline">\(T\)</span> is the infinitesimal generator of a semigroup <span class="math inline">\(S_t\)</span> if and only if, for each <span class="math inline">\(\lambda&gt;0\)</span>, we have <span class="math inline">\(\lambda\in\rho(T)\)</span> and <span class="math inline">\(||(\lambda-T)^{-1}||\leq\frac{1}{\lambda}\)</span></ref></p>
+<p><strong>Theorem</strong><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Let <span class="math inline">\(T\)</span> be a densely defined linear operator on a Banach space (note that <span class="math inline">\(T\)</span> need not be bounded, but we assume <span class="math inline">\(T\)</span> is closed). Denote <span class="math inline">\(\rho(T):=\left\lbrace z\in\mathbb{C}:(z-T) \text{ is invertible and bounded}\right\rbrace\)</span> as the resolvent set of <span class="math inline">\(T\)</span>. Then <span class="math inline">\(T\)</span> is the infinitesimal generator of a semigroup <span class="math inline">\(S_t\)</span> if and only if, for each <span class="math inline">\(\lambda&gt;0\)</span>, we have <span class="math inline">\(\lambda\in\rho(T)\)</span> and <span class="math inline">\(||(\lambda-T)^{-1}||\leq\frac{1}{\lambda}\)</span></p>
 <p>Using this result, we may view a linear time evolution PDE as a Banach space valued problem of the following form:</p>
-<p>:<span class="math inline">\(\phi'(t)=T\phi\)</span> :<span class="math inline">\(\phi(0)=\phi_0\)</span></p>
-<p>which has solution <span class="math inline">\(\phi(t):=S_t\phi_0\)</span><ref name="Evans"> . In the ODE above, <span class="math inline">\(T\)</span> denotes the linear differential operator in the original linear time evolution PDE.</ref></p>
+<p><span class="math inline">\(\phi'(t)=T\phi\)</span> <span class="math inline">\(\phi(0)=\phi_0\)</span></p>
+<p>which has solution <span class="math inline">\(\phi(t):=S_t\phi_0\)</span><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> . In the ODE above, <span class="math inline">\(T\)</span> denotes the linear differential operator in the original linear time evolution PDE.</p>
 <p>This approach works well when <span class="math inline">\(T\)</span> is linear, but requires some significant modification in the case that <span class="math inline">\(T\)</span> is nonlinear. In particular, observe that the Hille-Yosida theorem makes use of the resolvent of the relevant linear operator. In some sense, the resolvent bypasses the problems that arise from the unboundedness of the linear operator; in particular, it makes sense to discuss power series expansions involving the resolvent. In the unbounded case, one must introduce a generalization of the resolvent.</p>
-<p>In the notation of Ambrosio et al., the analogue of the resolvent used in the proof of the Brézis-Komura Theorem is <span class="math inline">\((I+\epsilon T)^{-1}\)</span> where <span class="math inline">\(T\)</span> is a non-linear operator on a Hilbert Space <span class="math inline">\(H\)</span><ref name="Ambrosio, Brué, Semola">. Moreover, the existence argument in classical proof the Brézis-Komura Theorem requires a modification to the generalized resolvent of <span class="math inline">\(T\)</span>. This modification is the <strong>Yosida Regularization,</strong><ref name="Ambrosio, Brué, Semola"></ref></ref></p>
-<p>:<span class="math inline">\(Y(T,\epsilon):=\frac{I-(I+\epsilon T)^{-1}}{\epsilon}\)</span></p>
-<p>where <span class="math inline">\(\epsilon\)</span> is some non-negative parameter. The Yosida Regularization, being Lipschitz as an operator on <span class="math inline">\(H\)</span> with Lipschitz constant <span class="math inline">\(\frac{2}{\epsilon}\)</span> <ref name="Brezis">, allows one to construct the starting point for a solution in the Brézis-Komura Theorem.<ref name="Evans"> This is analogous to the [[The_Moreau-Yosida_Regularization|Moreau-Yosida Regularization]], where lower semicontinuous function is approximated by a Lipschitz function.</ref></ref></p>
-<p>Another way to see the Yosida Regularization is via a time-discretization, the approach first used by Jordan, Kinderlehrer and Otto<ref name="JKO">. There are two ways of discretizing a gradient flow, namely Euler schemes, explicit one:</ref></p>
-<p>:<span class="math inline">\(\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n})\)</span>, where <span class="math inline">\(X_{\epsilon}^{0} = X^{0}\)</span>, and implicit one:</p>
-<p>:<span class="math inline">\(\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n+1})\)</span>, where <span class="math inline">\(X_{\epsilon}^{0} = X^{0}.\)</span></p>
+<p>In the notation of Ambrosio et al., the analogue of the resolvent used in the proof of the Brézis-Komura Theorem is <span class="math inline">\((I+\epsilon T)^{-1}\)</span> where <span class="math inline">\(T\)</span> is a non-linear operator on a Hilbert Space <span class="math inline">\(H\)</span><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. Moreover, the existence argument in classical proof the Brézis-Komura Theorem requires a modification to the generalized resolvent of <span class="math inline">\(T\)</span>. This modification is the <strong>Yosida Regularization,</strong><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p><span class="math inline">\(Y(T,\epsilon):=\frac{I-(I+\epsilon T)^{-1}}{\epsilon}\)</span></p>
+<p>where <span class="math inline">\(\epsilon\)</span> is some non-negative parameter. The Yosida Regularization, being Lipschitz as an operator on <span class="math inline">\(H\)</span> with Lipschitz constant <span class="math inline">\(\frac{2}{\epsilon}\)</span> <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, allows one to construct the starting point for a solution in the Brézis-Komura Theorem.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> This is analogous to the <a href="./MoreauYosida.html">Moreau-Yosida Regularization</a>, where lower semicontinuous function is approximated by a Lipschitz function.</p>
+<p>Another way to see the Yosida Regularization is via a time-discretization, the approach first used by Jordan, Kinderlehrer and Otto<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>. There are two ways of discretizing a gradient flow, namely Euler schemes, explicit one:</p>
+<p><span class="math inline">\(\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n})\)</span>, where <span class="math inline">\(X_{\epsilon}^{0} = X^{0}\)</span>, and implicit one:</p>
+<p><span class="math inline">\(\frac{X_{\epsilon}^{n+1}-X_{\epsilon}^{n}}{\epsilon} = - \nabla f(X_{\epsilon}^{n+1})\)</span>, where <span class="math inline">\(X_{\epsilon}^{0} = X^{0}.\)</span></p>
 <p>Note that for implicit scheme <span class="math inline">\(X_{\epsilon}^{n} = (I + \nabla f)^{-n}X_{\epsilon}^{0}.\)</span></p>
 <p>Explicit one is easier for implementation, but the implicit one is more natural here since it decreases, same as <span class="math inline">\(f(x(t)).\)</span> However, using our definition of gradient flow <span class="math inline">\(\partial f\)</span>, we can define Yosida Regularization of <span class="math inline">\(\partial f\)</span> with step <span class="math inline">\(\epsilon\)</span>,</p>
-<p>:<span class="math inline">\((\partial f)_{\epsilon} = :=\frac{I-(I+\epsilon (\partial f))^{-1}}{\epsilon}.\)</span></p>
+<p><span class="math inline">\((\partial f)_{\epsilon} = :=\frac{I-(I+\epsilon (\partial f))^{-1}}{\epsilon}.\)</span></p>
 <p>Now, implicit scheme can be interpreted as explicit scheme applied to above Yosida Regularizaton. Namely,</p>
-<p>:<span class="math inline">\(X_{\epsilon}^{n+1}-X_{\epsilon}^{n} = (I + \partial f)^{-1}X_{\epsilon}^{n} - X_{\epsilon}^{n} = -\epsilon (\partial f)_{\epsilon} X_{\epsilon}^{n},\)</span></p>
-<p>as we claimed (more details could be found here <ref name="Santambrogio">, <ref name="Villani">, <ref name="Ambrosio, Brué, Semola"> ).</ref></ref></ref></p>
+<p><span class="math inline">\(X_{\epsilon}^{n+1}-X_{\epsilon}^{n} = (I + \partial f)^{-1}X_{\epsilon}^{n} - X_{\epsilon}^{n} = -\epsilon (\partial f)_{\epsilon} X_{\epsilon}^{n},\)</span></p>
+<p>as we claimed (more details could be found here <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>, <a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>, <a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> ).</p>
 <p>In order to formulate the Brézis-Komura Theorem, we introduce <span class="math inline">\(\lambda\)</span>- convexity:</p>
-<p>:<strong>Definition</strong><ref name="Ambrosio, Brué, Semola"> Given <span class="math inline">\(\lambda \in \mathbb{R},\)</span> we say that <span class="math inline">\(f:H \rightarrow (-\infty,\infty]\)</span> is <span class="math inline">\(\lambda\)</span>- convex if <span class="math inline">\(f - \frac{\lambda}{2}|\cdot|^{2}\)</span> is convex.</ref></p>
+<p><strong>Definition</strong><a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> Given <span class="math inline">\(\lambda \in \mathbb{R},\)</span> we say that <span class="math inline">\(f:H \rightarrow (-\infty,\infty]\)</span> is <span class="math inline">\(\lambda\)</span>- convex if <span class="math inline">\(f - \frac{\lambda}{2}|\cdot|^{2}\)</span> is convex.</p>
 </section>
 <section id="the-brézis-komura-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="the-brézis-komura-theorem">The Brézis-Komura Theorem</h3>
 <p>We restate the Brézis-Komura Theorem as is stated in Ambrosio et al.</p>
-<p>:<strong>Theorem</strong><ref name="Ambrosio, Brué, Semola"> Assume that <span class="math inline">\(f\)</span> is <span class="math inline">\(\lambda\)</span>-convex for some <span class="math inline">\(\lambda \in \mathbb{R}\)</span> and lower semicontinuous. For every <span class="math inline">\(x_{0}\in\overline{\text{dom}(f)}\)</span>, there exists a unique gradient flow <span class="math inline">\(x(t):=S_tx_0\)</span> starting at <span class="math inline">\(x_{0}.\)</span> The family of operators <span class="math inline">\(\left\lbrace S_t\right\rbrace_{t&gt; 0},\)</span> satisfies the semigroup property <span class="math inline">\(S_{t+s} = S_{t} \circ S_{s},\)</span> and the contractivity property :<span class="math inline">\(|S_{t}x_{0} - S_{t}y_{0}| \leq e^{-\lambda t}|x_{0}-y_{0}| \quad \forall x_{0},y_{0} \in \overline{\text{dom}(f)}.\)</span></ref></p>
+<p><strong>Theorem</strong><a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> Assume that <span class="math inline">\(f\)</span> is <span class="math inline">\(\lambda\)</span>-convex for some <span class="math inline">\(\lambda \in \mathbb{R}\)</span> and lower semicontinuous. For every <span class="math inline">\(x_{0}\in\overline{\text{dom}(f)}\)</span>, there exists a unique gradient flow <span class="math inline">\(x(t):=S_tx_0\)</span> starting at <span class="math inline">\(x_{0}.\)</span> The family of operators <span class="math inline">\(\left\lbrace S_t\right\rbrace_{t&gt; 0},\)</span> satisfies the semigroup property <span class="math inline">\(S_{t+s} = S_{t} \circ S_{s},\)</span> and the contractivity property <span class="math inline">\(|S_{t}x_{0} - S_{t}y_{0}| \leq e^{-\lambda t}|x_{0}-y_{0}| \quad \forall x_{0},y_{0} \in \overline{\text{dom}(f)}.\)</span></p>
 </section>
 </section>
 <section id="example-and-applications" class="level2">
 <h2 class="anchored" data-anchor-id="example-and-applications">Example and Applications</h2>
-<p>As suggested by our previous discussion, the Brézis-Komura Theorem may be used to assert the existence of flows solving certain nonlinear time-evolution PDEs. Several nonlinear time-evolution PDEs and their solutions are discussed by both Ambrosio et al.&nbsp;and Evans. A simple example consists of a particular case of the so-called <span class="math inline">\(p\)</span>-Laplace equation<ref name="Ambrosio, Brué, Semola"> on <span class="math inline">\(L^2(\mathbb{R}^n)\)</span>, which seeks to find a solution to the heat-like equation <span class="math inline">\(u_t-\nabla\cdot(|\nabla u|^2\nabla u)=0\)</span>. Motivated by the applicable variational formulation of this problem, one may consider the function <span class="math inline">\(T(u):=\int_{\mathbb{R}^n}\frac{|\nabla u|^4}{4}\)</span> whenever <span class="math inline">\(u\in L^2(\mathbb{R}^n)\cap W^{1,4}(\mathbb{R}^n)\)</span>, with <span class="math inline">\(T(u):=\infty\)</span> otherwise. Applying the Brézis-Komura Theorem yields a flow <span class="math inline">\(x(t)\)</span> such that <span class="math inline">\(x'(t)=\nabla\cdot(|\nabla x|^2\nabla x)\)</span>. Some care must be taken to show that the subdifferential of <span class="math inline">\(T\)</span> coincides with the right hand side of the expression for <span class="math inline">\(x'(t)\)</span>.</ref></p>
+<p>As suggested by our previous discussion, the Brézis-Komura Theorem may be used to assert the existence of flows solving certain nonlinear time-evolution PDEs. Several nonlinear time-evolution PDEs and their solutions are discussed by both Ambrosio et al.&nbsp;and Evans. A simple example consists of a particular case of the so-called <span class="math inline">\(p\)</span>-Laplace equation<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> on <span class="math inline">\(L^2(\mathbb{R}^n)\)</span>, which seeks to find a solution to the heat-like equation <span class="math inline">\(u_t-\nabla\cdot(|\nabla u|^2\nabla u)=0\)</span>. Motivated by the applicable variational formulation of this problem, one may consider the function <span class="math inline">\(T(u):=\int_{\mathbb{R}^n}\frac{|\nabla u|^4}{4}\)</span> whenever <span class="math inline">\(u\in L^2(\mathbb{R}^n)\cap W^{1,4}(\mathbb{R}^n)\)</span>, with <span class="math inline">\(T(u):=\infty\)</span> otherwise. Applying the Brézis-Komura Theorem yields a flow <span class="math inline">\(x(t)\)</span> such that <span class="math inline">\(x'(t)=\nabla\cdot(|\nabla x|^2\nabla x)\)</span>. Some care must be taken to show that the subdifferential of <span class="math inline">\(T\)</span> coincides with the right hand side of the expression for <span class="math inline">\(x'(t)\)</span>.</p>
 <p>In general, the <span class="math inline">\(p\)</span>-Laplace equation is given by <span class="math inline">\(u_t-\nabla\cdot(|\nabla u|^{p-2}\nabla u)=0\)</span> and is solved on <span class="math inline">\(L^2(\mathbb{R}^n)\)</span>. Note that the <span class="math inline">\(p\)</span>-Laplace equation is a generalization of the heat equation and we may recover the heat equation on <span class="math inline">\(L^2(\mathbb{R}^n)\)</span> when <span class="math inline">\(p=2\)</span>. In that case, the Brézis-Komura Theorem may be applied to the function <span class="math inline">\(T(u):=\int_{\mathbb{R}^n}\frac{|\nabla u|^2}{2}\)</span> whenever <span class="math inline">\(u\in H^1(\mathbb{R}^n)\)</span>, with <span class="math inline">\(T(u):=\infty\)</span> otherwise. Thus, we acquire the existence of a gradient flow which satisfies the heat equation. Heat equation can also be seen as a gradient flow for the energy functional <span class="math inline">\(T(u) = \int |u|^{2},\)</span> where metric tensor is defined by <span class="math inline">\(H^{-1}\)</span> metric. Hence, there are many ways to interpret PDE as a gradient flow.</p>
-<p>If we look at the similar energy functional <span class="math inline">\(T(\rho) = |\rho|_{H^{-1}(\Omega)}^{2}\)</span> for probability density function <span class="math inline">\(\rho,\)</span> we get gradient flow <span class="math inline">\(\frac{\partial \rho}{\partial t} = - \nabla \cdot (\rho \nabla \Delta^{-1}\rho),\)</span> that is studied in Ginzburg-Landau dynamics (see <ref name="Villani">).</ref></p>
-<p>The Brézis-Komura Theorem is also used to assert the existence of the Riemannian Heat Semigroup<ref name="Ambrosio, Brué, Semola">. This forms the starting point for [[Optimal Transport and Ricci curvature|connecting optimal transport and ricci curvature]].</ref></p>
-<p>Denote the Boltzmann’s <span class="math inline">\(H\)</span> functional <span class="math inline">\(T(\rho) = \int \rho \log(\rho)\)</span> for probability density function <span class="math inline">\(\rho\)</span>. If we use the Wasserstein distance <span class="math inline">\(W_{2}\)</span>, then the gradient flow satisfies the <a href="http://34.106.105.83/wiki/The_continuity_equation_and_Benamour_Brenier_formula">Continuity Equation</a> <span class="math inline">\(\frac{\partial \rho}{\partial t} + \nabla \cdot (v\rho) = 0,\)</span> where <span class="math inline">\(v=\frac{-\nabla \rho}{\rho}.\)</span> Hence, this is also the heat equation, <span class="math inline">\(\frac{\partial \rho}{\partial t} = \Delta \rho.\)</span></p>
+<p>If we look at the similar energy functional <span class="math inline">\(T(\rho) = |\rho|_{H^{-1}(\Omega)}^{2}\)</span> for probability density function <span class="math inline">\(\rho,\)</span> we get gradient flow <span class="math inline">\(\frac{\partial \rho}{\partial t} = - \nabla \cdot (\rho \nabla \Delta^{-1}\rho),\)</span> that is studied in Ginzburg-Landau dynamics (see <a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>).</p>
+<p>The Brézis-Komura Theorem is also used to assert the existence of the Riemannian Heat Semigroup<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>. This forms the starting point for <a href="./RicciCurvature.html">connecting optimal transport and ricci curvature</a>.</p>
+<p>Denote the Boltzmann’s <span class="math inline">\(H\)</span> functional <span class="math inline">\(T(\rho) = \int \rho \log(\rho)\)</span> for probability density function <span class="math inline">\(\rho\)</span>. If we use the Wasserstein distance <span class="math inline">\(W_{2}\)</span>, then the gradient flow satisfies the <a href="./CtyEqn.html">Continuity Equation</a> <span class="math inline">\(\frac{\partial \rho}{\partial t} + \nabla \cdot (v\rho) = 0,\)</span> where <span class="math inline">\(v=\frac{-\nabla \rho}{\rho}.\)</span> Hence, this is also the heat equation, <span class="math inline">\(\frac{\partial \rho}{\partial t} = \Delta \rho.\)</span></p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
-<p><references> <ref name="Ambrosio, Brué, Semola"><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a></ref> <ref name="Evans"> L Evans, <em>Partial Differential Equations</em>, p.&nbsp;435-443, p.&nbsp;562-579</ref> <ref name="Brezis"> H.Brezis, <em>Functional Analysis, Sobolev Spaces and Partial Differential Equations</em>, p.&nbsp;181-182</ref> <ref name="JKO"> Jordan, R., Kinderlehrer, D., and Otto, F., <em>The variational formulation of the Fokker-Planck equation</em>, SIAM J.Math Anal. 29, 1 (1998) </ref> <ref name="Santambrogio"> F.Santambrogio, <em>Optimal Transport for Applied Mathematicians</em>, p.287 </ref> <ref name="Villani"> C.Villani, <em>Topics in Optimal Transportation</em>, p.&nbsp;260-261 </ref> </references></p>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>L Evans, <em>Partial Differential Equations</em>, p.&nbsp;435-443, p.&nbsp;562-579<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>L Evans, <em>Partial Differential Equations</em>, p.&nbsp;435-443, p.&nbsp;562-579<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>L Evans, <em>Partial Differential Equations</em>, p.&nbsp;435-443, p.&nbsp;562-579<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>H.Brezis, <em>Functional Analysis, Sobolev Spaces and Partial Differential Equations</em>, p.&nbsp;181-182<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>L Evans, <em>Partial Differential Equations</em>, p.&nbsp;435-443, p.&nbsp;562-579<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Jordan, R., Kinderlehrer, D., and Otto, F., <em>The variational formulation of the Fokker-Planck equation</em>, SIAM J.Math Anal. 29, 1 (1998)<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>F.Santambrogio, <em>Optimal Transport for Applied Mathematicians</em>, p.287<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>C.Villani, <em>Topics in Optimal Transportation</em>, p.&nbsp;260-261<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>C.Villani, <em>Topics in Optimal Transportation</em>, p.&nbsp;260-261<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p><a href="https://link.springer.com/book/10.1007/978-3-030-72162-6">L Ambrosio, E Brué, D Semola, <em>Lectures on Optimal Transport</em>, p.&nbsp;109-124, p.138, p.&nbsp;230</a><a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/otwiki\.github\.io\/otwiki-main\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.otwiki\.xyz\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -461,185 +498,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 
 
