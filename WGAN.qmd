@@ -281,7 +281,7 @@ Thanks to the physical interpretation of optimal transport, the Wasserstein dist
 ## Construction of WGAN
 
 In terms of numerical implementation, an inf-sup formulation of the optimization problem is required, as it clearly specifies the loss functions.
-Luckily, the [Kantorovich-Rubinstein duality](https://www.otwiki.xyz/wiki/1-Wasserstein_metric_and_generalizations) provides the representation:
+Luckily, the [Kantorovich-Rubinstein duality](1Wasserstein.qmd) provides the representation:
 $$
 W(\mathbb{P}_r,\mathbb{P}_\theta) = \sup_{\|f\|_L\leq 1} \mathbb{E}_{X\sim \mathbb{P}_r} f(X) - \mathbb{E}_{Y\sim\mathbb{P}_\theta}  f(Y),
 $$

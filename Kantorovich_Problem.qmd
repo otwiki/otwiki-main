@@ -6,7 +6,7 @@ author:
   - Djordje Nikolic.
 ---
 
-The Kantorovich problem [@Villani2003] is one of the two essential minimization problems in [optimal transport](https://en.wikipedia.org/wiki/Transportation_theory_(mathematics)) (the other being the [Monge problem](http://34.106.105.83/wiki/Monge_Problem)). It is named after Russian mathematician and Nobel Laureate [Leonid Kantorovich](https://en.wikipedia.org/wiki/Leonid_Kantorovich).
+The Kantorovich problem [@Villani2003] is one of the two essential minimization problems in [optimal transport](https://en.wikipedia.org/wiki/Transportation_theory_(mathematics)) (the other being the [Monge problem](Monge.qmd)). It is named after Russian mathematician and Nobel Laureate [Leonid Kantorovich](https://en.wikipedia.org/wiki/Leonid_Kantorovich).
 
 ![Kantorovich Problem. The Kantorovich Problem (like the Monge Problem) can be visualized as distributing piles of sand into holes (of equal volume) in an optimal fashion. [@Mertens2014]](Kantorovich_Problem_Image.png){width="100%"}
 
@@ -22,7 +22,7 @@ The intuition behind the Kantorovich problem can be given by an explanation of o
 
 ## Transport Plans
 
-The Monge problem was about the optimal way to rearrange mass [@Craig2020]. Note that in the Monge formulation of the optimal transport problem, the mass cannot be split and thus it is mapped $x \mapsto T(x)$. When considering discrete cases, this results in problems when trying to establish maps T such that $T_{\#} \mu=\nu$. Kantorovich made the observation that the mass in question could be split, which makes the problem much easier to model <ref> Craig, Katy. The Kantorovich Problem. Math 260L. Univ. of Ca. at Santa Barbara. Spring 2020 </ref>. Allowing the mass to be split results in a relaxation of the problem (e.g. half of the mass from $x_1$ can go to $y_1$ and half can go to $y_2$, and so on). To model this consider $d \pi(x, y)$, which denotes the mass transported from x to y. This allows the mass to be moved to multiple places. Also consider $\mu(A)$ and $\nu(B)$: where the total mass taken from measurable set $A \in X$ must be equal to $\mu(A)$ and the total mass taken from measurable set $B \in Y$ must equal $\nu(B)$.
+The Monge problem was about the optimal way to rearrange mass [@Craig2020]. Note that in the Monge formulation of the optimal transport problem, the mass cannot be split and thus it is mapped $x \mapsto T(x)$. When considering discrete cases, this results in problems when trying to establish maps T such that $T_{\#} \mu=\nu$. Kantorovich made the observation that the mass in question could be split, which makes the problem much easier to model [^ref-note-1]. Allowing the mass to be split results in a relaxation of the problem (e.g. half of the mass from $x_1$ can go to $y_1$ and half can go to $y_2$, and so on). To model this consider $d \pi(x, y)$, which denotes the mass transported from x to y. This allows the mass to be moved to multiple places. Also consider $\mu(A)$ and $\nu(B)$: where the total mass taken from measurable set $A \in X$ must be equal to $\mu(A)$ and the total mass taken from measurable set $B \in Y$ must equal $\nu(B)$.
 
 The constraints of the problem can be written in the following manner:
 
@@ -36,7 +36,7 @@ $$
 
 for all measurable sets $A \subseteq X, B \subseteq Y$. As such, we can interpret $\pi( A\times B)$ as representing the amount of mass from $\mu (A)$ that is directed to $\nu (B)$
 
-If we have a measure $\pi$ that satisfies these constraints, then the set of such $\pi$ is referred to as $\Pi(\mu, \nu)$ -- the set of transport plans between $\mu$ and $\nu$. Notice again that now we are dealing with transport plans instead of the transport maps that are used in the Monge formulation of the problem <ref> Craig, Katy. The Kantorovich Problem. Math 260L. Univ. of Ca. at Santa Barbara. Spring 2020 </ref>.
+If we have a measure $\pi$ that satisfies these constraints, then the set of such $\pi$ is referred to as $\Pi(\mu, \nu)$ -- the set of transport plans between $\mu$ and $\nu$. Notice again that now we are dealing with transport plans instead of the transport maps that are used in the Monge formulation of the problem [^ref-note-2].
 
 ## Problem Statement
 
@@ -60,7 +60,7 @@ thus $\inf \mathbb{K}(\pi) \leq \inf \mathbb{M}(T)$.
 
 ## Kantorovich Duality
 
-Since the Kantorovich problem is a linear minimization problem with convex constraints it admits a [dual problem](http://34.106.105.83/wiki/Kantorovich_Dual_Problem_(for_general_costs)). The astute reader may notice that this is a linear programming problem -- Kantorovich is also considered to be the founder of linear programming.
+Since the Kantorovich problem is a linear minimization problem with convex constraints it admits a [dual problem](KDualProblem.qmd). The astute reader may notice that this is a linear programming problem -- Kantorovich is also considered to be the founder of linear programming.
 
 ## Calculus of Variations Approach
 
@@ -83,3 +83,7 @@ Suppose $X\subset \mathbb{R}^d$ is compact and $\mu, \nu \in \mathcal{P}(X)$. Le
 
      (a) $\pi$ is optimal
      (b) $-P_o = \int|x|^2-f_*(x)d\mu(x) + \int |x|^2-2f_*^*(x)d\nu(x).$
+
+[^ref-note-1]: Craig, Katy. The Kantorovich Problem. Math 260L. Univ. of Ca. at Santa Barbara. Spring 2020
+
+[^ref-note-2]: Craig, Katy. The Kantorovich Problem. Math 260L. Univ. of Ca. at Santa Barbara. Spring 2020

@@ -10,7 +10,7 @@ A major disadvantage of the [Wasserstein distance](https://en.wikipedia.org/wiki
 
 ## Dynamic Formulation 
 
-One way to define the Hellinger-Kantorovich distance between positive measures is in the dynamic sense of [Benamou-Brenier](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula), [Dynamic Optimal Transport](https://otwiki.github.io/otwiki-main/Dynamic_OT.html) via 
+One way to define the Hellinger-Kantorovich distance between positive measures is in the dynamic sense of [Benamou-Brenier](CtyEqn.qmd), [Dynamic Optimal Transport](https://otwiki.github.io/otwiki-main/Dynamic_OT.html) via
 
 $$
 \mathbf{HK}(\mu,\nu) := \min \left\{ \int_{0}^{1} \int_\Omega (\alpha | \nabla u |^{2} + \beta |u |^{2}) d\rho_{t} dt : \partial_{t}\rho = \alpha \hspace{1mm} div (\rho\nabla u) - \beta \rho u, \rho(0) = \mu,  \rho(1) = \nu \right\},
@@ -68,7 +68,7 @@ Following the paper on the JKO scheme for Hellinger-Kantorovich distance [@gallo
 $$
     \mathbf{HK}^{2} \approx \mathbf{W}_{2}^{2} + \mathbf{FR}^{2}, 
 $$ 
-using [Formal Riemannian Structure of Wasserstein Metric](https://www.otwiki.xyz/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric) and Riemannian structure of Fischer-Rao metric [@de2025infimal]. Hence, we obtain 
+using [Formal Riemannian Structure of Wasserstein Metric](RiemannianStructureOriginal.qmd) and Riemannian structure of Fischer-Rao metric [@de2025infimal]. Hence, we obtain
 $$
     \| grad_{HK} F(\rho) \|^{2} = \| grad_{W_{2}} F(\rho) \|^{2} + \| grad_{FR} F(\rho) \|^{2}.
 $$

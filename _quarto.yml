@@ -1,9 +1,14 @@
 project:
   type: website
+  render:
+    - "*.qmd"
+  resources:
+    - CNAME
+    - .nojekyll
 
 website:
   title: "OT WIKI"
-  site-url: https://otwiki.github.io/otwiki-main/
+  site-url: https://www.otwiki.xyz/
   navbar:
     left:
       - about.qmd

@@ -16,11 +16,11 @@ Let $(X,d)$ be a [complete](https://en.wikipedia.org/wiki/Complete_metric_space)
 T \# \mu(A) = \mu(T^{-1}(A)).
 $$ If $T \# \mu = \nu$, we say $T$ transports $\mu$ to $\nu$.
 
-The [Monge problem](https://www.otwiki.xyz/wiki/Monge_Problem) is: given probability measures $\mu , \nu \in \mathcal{P}(X)$ and a cost function $c:X \times X \to [0,\infty)$, find a function $T$ which minimizes $$
+The [Monge problem](Monge.qmd) is: given probability measures $\mu , \nu \in \mathcal{P}(X)$ and a cost function $c:X \times X \to [0,\infty)$, find a function $T$ which minimizes $$
 \min_T \mathbb{M}(T) = \min_T \int c(x,T(x)) d \mu(x),
 $$ {#eq-Monge} where the minimum is taken over all (measurable) functions $T:X \to X$ with $T \# \mu =\nu$. A mimizer $T$ of @eq-Monge is called an optimal transport map. In general an optimal transport map need not exist, and may not be unique.
 
-One usefull sufficient condition for existance and uniqueness is Brenier's theorem (stated [here](https://www.otwiki.xyz/wiki/Monge_Problem))
+One usefull sufficient condition for existance and uniqueness is Brenier's theorem (stated [here](Monge.qmd))
 
 ```{=html}
 <!---Throughout the rest of the article, we will assume $X = \mathbb{R}^d$, and the cost function $c$ is $c(x,y) = |x-y|^2$. This makes the the minimum value equal to the 2-Wasserstein distance between $\mu$ and $\nu$ (link!!) ($W_2(\mu,\nu)$). 

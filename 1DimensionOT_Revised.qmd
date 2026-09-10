@@ -56,7 +56,7 @@ Consider the cost function $c(x,y) = |x-y|$ along with probability measures (on 
 
 ### Book Shifting Example
 
-Consider the cost function $c(x,y) = |x-y|$ along with $\mu = \frac{1}{2} \lambda*{\[0,2\]}$ and $\nu = \frac{1}{2}\lambda{\[1,3\]}$ (where $\lambda$ is the one-dimensional Lebesgue measure). A (monotone) transport plan that rearranges $\mu$ to look like \$\nu \$ is given by $T_0(x) = x+1$, and its corresponding cost is:
+Consider the cost function $c(x,y) = |x-y|$ along with $\mu = \frac{1}{2} \lambda*{[0,2]}$ and $\nu = \frac{1}{2}\lambda{[1,3]}$ (where $\lambda$ is the one-dimensional Lebesgue measure). A (monotone) transport plan that rearranges $\mu$ to look like $\nu$ is given by $T_0(x) = x+1$, and its corresponding cost is:
 
 $$
  M(T_0) = \int \|T_0(x)-x\| d\mu \equiv 1
@@ -104,4 +104,4 @@ $$
 \int_{\mathbb{R}^2} u(x, y) d \pi(x, y)=\int_0^1 u\left(F^{-1}(t), G^{-1}(t)\right) d t
 $$
 
-This then immediately yields the cost ( T_2(\mu, \nu) ) and completes the proof.
+This then immediately yields the cost ($T_2(\mu, \nu)$) and completes the proof.

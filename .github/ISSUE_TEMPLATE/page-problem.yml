@@ -1,0 +1,24 @@
+name: Report a page problem
+description: Report a broken formula, citation, link, or other page problem.
+title: "Page problem: "
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page address
+      description: Paste the URL of the affected wiki page.
+      placeholder: https://www.otwiki.xyz/Monge.html
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+      description: Identify the formula, citation, link, or section and describe what you see. You may attach a screenshot.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: If you know, describe what should appear or where the link should lead.

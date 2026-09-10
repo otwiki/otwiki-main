@@ -10,7 +10,7 @@ Sinkhorn's Algorithm is an iterative numerical method used to obtain an optimal 
 
 #### **Continuous Problem Formulation**
 
-Entropic regularization modifies the Kantorovich problem by adding a [Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence%20Kullback-Leibler) term to the optimization goal. Specifically, the general form of the problem is now to determine
+Entropic regularization modifies the Kantorovich problem by adding a [Kullback-Leibler divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) term to the optimization goal. Specifically, the general form of the problem is now to determine
 
 $$
 L_c^\epsilon (\alpha, \beta) = \inf_{\pi \in \Gamma(\alpha, \beta)} \underbrace{\int_{X \times Y} c(x, y) \, d\pi(x, y)}_{\text{Kantorovich functional } \mathbb{K}(\pi)} + \epsilon \underbrace{\text{KL}(\pi \mid \alpha \otimes \beta)}_{\text{entropic term}}

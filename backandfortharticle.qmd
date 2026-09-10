@@ -17,7 +17,7 @@ Let $\Omega \subset \mathbb{R}^{d}$, be convex and compact. A cost on $\Omega$ i
 
 #### **The Optimal Transport Problem Background**
 
-Given measures $\mu$ and $\nu$ which are supported in $\Omega$, we can define the [Monge formulation](https://www.otwiki.xyz/wiki/Monge_Problem) of the optimal transport problem (also known simply as the Monge Problem) as: $$ C(\mu, \nu) = \inf_{T} \int_{\Omega}c(x, T(x))d\mu(x) $$ where this infimum runs over maps $T: \Omega \rightarrow \Omega$ such that $T \# \mu = \nu$, where $T \# \mu$ is the pushforward of $\mu$ under $T$. The pushforward condition can be characterized by defining the integral of the pushforward measure against continuous test functions $f: \Omega \rightarrow \mathbb{R}$: $$ \int_{\Omega}f(y)d(T \# \mu)(y) = \int_{\Omega} f(T(x))d\mu(x) . $$
+Given measures $\mu$ and $\nu$ which are supported in $\Omega$, we can define the [Monge formulation](Monge.qmd) of the optimal transport problem (also known simply as the Monge Problem) as: $$ C(\mu, \nu) = \inf_{T} \int_{\Omega}c(x, T(x))d\mu(x) $$ where this infimum runs over maps $T: \Omega \rightarrow \Omega$ such that $T \# \mu = \nu$, where $T \# \mu$ is the pushforward of $\mu$ under $T$. The pushforward condition can be characterized by defining the integral of the pushforward measure against continuous test functions $f: \Omega \rightarrow \mathbb{R}$: $$ \int_{\Omega}f(y)d(T \# \mu)(y) = \int_{\Omega} f(T(x))d\mu(x) . $$
 
 If $\mu$ and $\nu$ are absolutely continuous with respect to Lebesgue, there exists a unique optimal map $T_{*}$ which pushed $\mu$ to $\nu$, and its inverse $T_{*}^{-1}$ is the optimal map that pushes $\nu$ to $\mu$ [@Gangbo1995].
 
@@ -25,7 +25,7 @@ The pushforward constraint $T\#\mu = \nu$ holds if and only if $$ \int_{\Omega}\
 
 It follows that: $$ \inf_{T \# \mu = \nu} \int_{\Omega} c(x, T(x))d\mu(x) = \inf_{T} \sup_{\phi} \int_{\Omega} c(x, T(x)) d \mu(x) - \phi(T(x))d\mu(x) + \int_{\Omega}\phi(y)d\nu(y) . $$
 
-If $\mu$ is absolutely continuous, then we can interchange the supremum and infimum [@Santambrogio2015] and [obtain](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)): $$ \sup_{\phi} \inf_{T} \int_{\Omega}\left( c(x, T(x)) - \phi(T(x)) \right) d \mu(x) + \int_{\Omega}\phi(y) d\nu(y) . $$
+If $\mu$ is absolutely continuous, then we can interchange the supremum and infimum [@Santambrogio2015] and [obtain](KDualProblem.qmd): $$ \sup_{\phi} \inf_{T} \int_{\Omega}\left( c(x, T(x)) - \phi(T(x)) \right) d \mu(x) + \int_{\Omega}\phi(y) d\nu(y) . $$
 
 From here, we can see that the term $\inf_{T(x)} c(x, T(x)) - \phi(T(x))$ is important for the dual problem. To further analyze this, we will introduce a new operation, called the $c$-transform, which can be seen as a generalization of the Legendre transform.
 
