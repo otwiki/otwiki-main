@@ -1,0 +1,16 @@
+{
+  "name": "otwiki-checks",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Rendering and link checks for the Optimal Transport Wiki",
+  "scripts": {
+    "check": "python3 scripts/check-site.py && node scripts/check-math.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.19.0"
+}

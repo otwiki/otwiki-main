@@ -5,3 +5,8 @@
 /.quarto/
 /_site/
 CS117_S25.html
+
+.DS_Store
+node_modules/
+
+**/*.quarto_ipynb
