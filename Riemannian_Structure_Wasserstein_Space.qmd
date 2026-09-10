@@ -10,7 +10,7 @@ Identifying a given PDE as a Wasserstein gradient flow with respect to some func
 
 ## Notion of the Tangent Space on 2-Wasserstein Space
 
-From the [Benamou-Brenier Formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula) , we know that for two measures $\overline{\mu}_0,\overline{\mu}_1\in P_2(M)$, $$
+From the [Benamou-Brenier Formula](CtyEqn.qmd) , we know that for two measures $\overline{\mu}_0,\overline{\mu}_1\in P_2(M)$, $$
     W_2(\overline{\mu}_0,\overline{\mu}_1)^2 = \inf\left\{\int_0^1\left(
         \int_M|v_t|^2d\mu_t
     \right)dt: 

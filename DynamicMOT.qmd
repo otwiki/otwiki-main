@@ -74,11 +74,13 @@ $(\geq)$. The remaining direction relies on an important construction. Suppose $
     M_t^x:= E(\nabla F^x (B_1) \mid \mathcal{F}_t^B) = E(\nabla F^x (B_1) \mid B_t)
 \end{align} where the second equality follows from the Markov property of $B_t$. It is clearly that $M_t^x$ is a martingale with $M_1^x = \nabla F^x(B_1)\sim \pi_x$ and $M_0^x = x$. Now we pick $X\sim \mu$ independent to $\mathcal{F}_t$. Then we define \begin{align}
     M_t^X(\omega) = M_t^{X(\omega)}
-\end{align} which could be easily shown to be a martingale adapted to the filtration by $X$ and $\mathcal{F}_t$ in which $X$ is independent to $\mathcal{F}_t^B$. Let $\sigma_t$ be the volatility process of $M_t^X$ (for instance given by the \textit{martingale representation theorem}). Then by @eq-prodtrace, we have \begin{align}
+\end{align} which could be easily shown to be a martingale adapted to the filtration by $X$ and $\mathcal{F}_t$ in which $X$ is independent to $\mathcal{F}_t^B$. Let $\sigma_t$ be the volatility process of $M_t^X$ (for instance given by the *martingale representation theorem*). Then by @eq-prodtrace, we have \begin{align}
      \mathbb{E}\int_0^1 tr(\sigma_t)dt &= \mathbb{E}(M_1^X\cdot B_1) = \mathbb{E}(\mathbb{E}(\nabla F^x(B_1)\cdot B_1\mid X)) = \int \mu(dx) \mathbb{E}(\nabla F^x(B_1)\cdot B_1\mid X = x) \\
     & \overset{X\perp B}{=} \int \mu(dx) \mathbb{E}(\nabla F^x (B_1)\cdot B_1)=\int \mu(dx)  \sup_{q\in \Pi(\gamma, \pi_x)}\int b\cdot m q(dm, db)\\
     &\geq WOT(\mu, \nu)
 \end{align} in which the last equality follows from Brenier theorem for the choice of $\nabla F^x$. This of course implies that $MT(\mu, \nu)\geq WOT(\mu, \nu)$.
+
+::::::::::
 
 ## Well-posedness with unique-in-law solution
 
@@ -102,6 +104,8 @@ Let $\mu\leq_c \nu\in P^2(\Omega)$. Then we have
 2.  We first consider the case where $\mu = \delta_x$. Suppose $N_t$ attains $MT(\mu, \nu)$ with filtration $\mathcal{F}_t$ and Brownian motion $B_t$. Then we have by @eq-prodtrace \begin{align}
     \mathbb{E}(N_1 B_1) =\mathbb{E}\int_0^1 tr(\sigma_s) ds = MT(\delta_x,\nu) = WOT(\delta_x, \nu) = \sup_{q\in \Pi(\gamma, \nu)}\int b\cdot n q(db, dn)
     \end{align} in which the last equality follows simply by definition of WOT. Since $N_1\sim \nu$ and $B_1\sim \gamma$, it follows that $N_t$ induces the optimal coupling for the last quantity. It follows the by Brenier's theorem we must have $N_1 = \nabla F^x (B_1)$. By the martingale property, we then have $N_t = E(\nabla F^x(B_1)\mid \mathcal{F}_t)  = \mathbb{E}(\nabla F^x(B_1)\mid B_t)$ (recall that in the definition of MT, we are restricted to martingale over Brownian filtrations). This determines a unique law. For general $\mu$, as we are assuming the initial condition of the optimal process has to be independent to the remaining of the process, we already determine the law.
+
+::::::::
 
 # Property of stretched Brownian motions
 
@@ -136,6 +140,8 @@ The $\leq$ direction is trivial. We consider the opposite direction. Let $M_t$ b
     \mathbb{E}(\int_0^t \sigma_s dB_s) + V(t, 1, \mathcal{L}(M_t), \nu)=\mathbb{E}(\int_0^t \sigma_s dB_s + \int_t^1 \sigma^{(2)}_s dW_s) = \mathbb{E}(\int_0^1 \sigma^*_s dB_s^*)\leq V(0, 1, \mu, \nu)
 \end{align} which concludes the proof.
 
+:::::
+
 ::: {#cor-}
 The stretched Brownian motion from $\mu$ to $\nu$ is Markov
 :::
@@ -143,6 +149,3 @@ The stretched Brownian motion from $\mu$ to $\nu$ is Markov
 ::: proof
 Fix $t$ and a path of sBm $M_t$. Then we can construct another sBm (identified by the same law) by first restricting $M_s$ over $[0, t]$ and glue an independent path from $M_t$ (given by the flexibility of filtration in the optimizer of $V$). It follows that conditioning on the path up to time $t$ is the same as conditioning on the state at $t$.
 :::
-:::::
-::::::::
-::::::::::

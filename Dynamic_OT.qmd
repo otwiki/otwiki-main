@@ -4,11 +4,11 @@ bibliography: bibliography.bibtex
 author: Max Emerick
 ---
 
-The dynamic formulation of optimal transport is one of the four main formulations of the optimal transport problem (the other three being the [Monge Problem](https://www.otwiki.xyz/wiki/Monge_Problem), the [Kantorovich Problem](https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html), and the [Kantorovich Dual Problem](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs))). Rather than minimizing over transport maps or transport plans between measures $\mu$ and $\nu$, the dynamic formulation of optimal transport minimizes over curves which connect $\mu$ and $\nu$.
+The dynamic formulation of optimal transport is one of the four main formulations of the optimal transport problem (the other three being the [Monge Problem](Monge.qmd), the [Kantorovich Problem](https://otwiki.github.io/otwiki-main/Kantorovich_Problem.html), and the [Kantorovich Dual Problem](KDualProblem.qmd)). Rather than minimizing over transport maps or transport plans between measures $\mu$ and $\nu$, the dynamic formulation of optimal transport minimizes over curves which connect $\mu$ and $\nu$.
 
 Minimizing over curves (as opposed to maps or plans) has at least two major advantages. First, it allows for continuous interpolation between measures in the Wasserstein space. This is desirable in several applications.
 
-Second, minimization over curves generalizes to many settings where transport maps or plans may not be well defined or may be difficult to define. This allows for the construction of optimal transport-based metrics in nonclassical settings, such as [Optimal Transport on Graphs](add_link) or [Unbalanced Optimal Transport](https://arxiv.org/abs/1508.05216).
+Second, minimization over curves generalizes to many settings where transport maps or plans may not be well defined or may be difficult to define. This allows for the construction of optimal transport-based metrics in nonclassical settings, such as [Optimal Transport on Graphs](WassersteinOnGraphs.qmd) or [Unbalanced Optimal Transport](https://arxiv.org/abs/1508.05216).
 
 The original formulation of the dynamic optimal transport problem is due to [@Benamou2000]. However, a somewhat different formulation is presented in this article following [@Ambrosio2021] which is based on integrals defined on the path space of the underlying metric space. We will compare these two approaches later in this article.
 
@@ -32,7 +32,7 @@ The above definitions imply that for any curve $\gamma \in \text{AC}([a,b],X)$, 
 
 A metric space $X$ is said to be geodesic if for all $x,y \in X$ there exists $\gamma \in \text{Geo}(X)$ such that $\gamma(0) = x$ and $\gamma(1) = y$.
 
-See [Analysis in Metric Spaces](add_link) for a review of these ideas.
+See [Analysis in Metric Spaces](Analysis_in_Metric_Spaces.qmd) for a review of these ideas.
 
 Generalizing the notion of length, the ($p$-) action of a curve $\gamma \in \text{AC}([0,1],X)$ is defined as $$
 A_p(\gamma) ~:=~ \int_0^1 |\gamma'|^p (t) \, dt .
@@ -93,7 +93,7 @@ $$ Here, $\rho$ is a time-varying probability measure on $X$ and $v$ is a time-v
 
 In order to interpret the statement of this problem appropriately, $X$ needs to be a subset of Euclidean space (or some Riemannian manifold) and the continuity equation must be understood in some appropriate weak sense.
 
-See [The Continuity Equation and Benamou Brenier Formula](https://www.otwiki.xyz/wiki/The_continuity_equation_and_Benamour_Brenier_formula) and [Geodesics and Generalized Geodesics](https://www.otwiki.xyz/wiki/Geodesics_and_generalized_geodesics) for more on these ideas.
+See [The Continuity Equation and Benamou Brenier Formula](CtyEqn.qmd) and [Geodesics and Generalized Geodesics](GeoGenGeo.qmd) for more on these ideas.
 
 If $\mu$ has a density function, then particles start from unique locations, and we can write $\phi(t,x)$ to denote the location (at time $t$) of the particle which started from location $x$ at time $0$. It then holds that $$
 \rho(t) ~=~ (\phi(t,\cdot))_\# \rho(0) ~=~ (\phi(t,\cdot))_\# \mu .

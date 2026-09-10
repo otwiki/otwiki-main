@@ -1,16 +1,16 @@
 ---
 title: "Continuous-Time MOT and Skorokhod Embedding"
 author: "Qijin Shi"
-bibliography: bibliography.bib
+bibliography: CTMOT_bibliography.bib
 ---
 
-This article is an extension of the previous Wiki article [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance). We set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging, without assuming a specific stochastic model for the asset dynamics. The main technical difficulty in the continuous-time setting is the construction of a martingale coupling measure on the space of sample paths, e.g., $C([0, T], \mathbb{R})$; or equivalently, the construction of a continuous martingale price process matching all the given marginals. The [Skorokhod embedding problem (SEP)](https://en.wikipedia.org/wiki/Skorokhod%27s_embedding_theorem) plays the role of converting this technical difficulty into the problem of finding a stopping time for a Brownian motion that reproduces the target marginals. By illustrating several explicit SEP solutions, we give applications to robust hedging and pricing in the settings of continuous-time MOT.
+This article is an extension of the previous Wiki article [Martingale optimal transport and mathematical finance](MOT.qmd). We set up a robust and dynamic connection to bridge martingale optimal transport (MOT) with continuous-time mathematical finance, providing a model-independent framework for robust hedging, without assuming a specific stochastic model for the asset dynamics. The main technical difficulty in the continuous-time setting is the construction of a martingale coupling measure on the space of sample paths, e.g., $C([0, T], \mathbb{R})$; or equivalently, the construction of a continuous martingale price process matching all the given marginals. The [Skorokhod embedding problem (SEP)](https://en.wikipedia.org/wiki/Skorokhod%27s_embedding_theorem) plays the role of converting this technical difficulty into the problem of finding a stopping time for a Brownian motion that reproduces the target marginals. By illustrating several explicit SEP solutions, we give applications to robust hedging and pricing in the settings of continuous-time MOT.
 
 This article requires basic knowledge of stochastic analysis, mainly [stochastic calculus](https://en.wikipedia.org/wiki/Stochastic_calculus) and [Itô's formula](https://en.wikipedia.org/wiki/It%C3%B4%27s_lemma). The main reference is @henrylabordere2017model, Chapter 4.
 
 ## Continuous-time MOT
 
-The setting of continuous-time MOT is similar to the discrete case in the previous Wiki article [Martingale optimal transport and mathematical finance](https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance), except the underlying price process is continuous. We describe it via a probability measure on a path space, e.g., $C([0, T], \mathbb{R}_+)$. Throughout this article, we assume a zero interest rate.
+The setting of continuous-time MOT is similar to the discrete case in the previous Wiki article [Martingale optimal transport and mathematical finance](MOT.qmd), except the underlying price process is continuous. We describe it via a probability measure on a path space, e.g., $C([0, T], \mathbb{R}_+)$. Throughout this article, we assume a zero interest rate.
 
 ### Probabilistic setup
 
@@ -58,7 +58,7 @@ $$
 
 ### Duality formulation
 
-Let $\xi$ be the payoff of an option, defined as an $\mathcal{F}_T$-measurable random variable. This means that the payoff might not depend only on the final price $S_T$, but also on the whole price path. In addition to the continuous-time trading, we assume that the investor can take static positions in Vanilla options with maturities $\left(t_i\right)_{i=1, \ldots, n}$. From the theory of \href{https://en.wikipedia.org/wiki/Risk-neutral_measure}{risk-neutral pricing}, $t_i$-Vanilla defined by the payoff $\lambda_i\left(S_{t_i}\right) \in \mathrm{L}^1\left(\mathbb{P}^i\right)$ has an unambiguous market price given by $\mathbb{E}^{\mathbb{P}^i}\left[\lambda_i\left(S_{t_i}\right)\right]$, see also \href{https://www.otwiki.xyz/wiki/Martingale_optimal_transport_and_mathematical_finance}{this Wiki article} . The robust super-replication price is then defined by:
+Let $\xi$ be the payoff of an option, defined as an $\mathcal{F}_T$-measurable random variable. This means that the payoff might not depend only on the final price $S_T$, but also on the whole price path. In addition to the continuous-time trading, we assume that the investor can take static positions in Vanilla options with maturities $\left(t_i\right)_{i=1, \ldots, n}$. From the theory of [risk-neutral pricing](https://en.wikipedia.org/wiki/Risk-neutral_measure), $t_i$-Vanilla defined by the payoff $\lambda_i\left(S_{t_i}\right) \in \mathrm{L}^1\left(\mathbb{P}^i\right)$ has an unambiguous market price given by $\mathbb{E}^{\mathbb{P}^i}\left[\lambda_i\left(S_{t_i}\right)\right]$, see also [this Wiki article](MOT.qmd) . The robust super-replication price is then defined by:
 
 
 $$
@@ -165,7 +165,7 @@ This problem corresponds then to the determination of an (optimal) stopping time
 
 ### Explicit SEP solutions
 
-In this section, we cite several explicit solutions to SEP. For more details, see \cite{henrylabordere2017model} Section 4.6. We set $M_t \equiv \max _{0<s<t} B_t$ and $m_t \equiv \min _{0<s<t} B_t$. 
+In this section, we cite several explicit solutions to SEP. For more details, see [@henrylabordere2017model] Section 4.6. We set $M_t \equiv \max _{0<s<t} B_t$ and $m_t \equiv \min _{0<s<t} B_t$.
 
 **Azéma–Yor Solution [@henrylabordere2017model]**  
 Define $\tau_{AY} = \inf \{ t \geq 0 : B_t \leq \psi_\mu(M_t) \}$ with $\psi_\mu^{-1}(x) = \frac{\mathbb{E}^\mu[S_T 1_{S_T \geq x}]}{\mathbb{E}^\mu[1_{S_T \geq x}]}$. Then $B_{\tau_{AY}} \sim \mu$.

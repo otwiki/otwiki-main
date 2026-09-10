@@ -81,7 +81,7 @@ As usual, we consider the dual formulation of our optimization problem. It has b
 An important feature of the Schrödinger bridge problem is that we have a well-established relation between the solution to the dual problem with the original problem. To motivate the relation, we recall that if $\Omega$ is Polish, and $R$ is a positive measure over $\Omega$; then by one can use convex conjugate technique to deduce the variational formulation of the entropy functional @Leonard14Path \begin{align}
     H(P\mid R):= \sup \{\int u dP - \log (\int \exp(u)dR):u\in C_W(\Omega)\}
 \end{align} where $W:\Omega\to [0, \infty)$ is a function of your choice such that $\int_\Omega \exp(-W) dR<\infty$ and $u\in C_W(\Omega)$ if and only if $\sup_\Omega
-\frac{|u|}{(1+W)}$. In addition \textbf{the supremum is attained if and only if $u = \frac{dP}{dR}$}. Hence if $(\hat\phi, \hat\psi)$ is a solution to the dual formulation, $\hat\pi$ is the solution to the static formulation and $\hat P$ is the solution to the path formulation, we must have (modulo some technicality) \begin{align}
+\frac{|u|}{(1+W)}$. In addition **the supremum is attained if and only if $u = \frac{dP}{dR}$**. Hence if $(\hat\phi, \hat\psi)$ is a solution to the dual formulation, $\hat\pi$ is the solution to the static formulation and $\hat P$ is the solution to the path formulation, we must have (modulo some technicality) \begin{align}
     \hat \pi(dx, dy) = \exp(\hat \psi(x)\oplus \hat\psi(y))R_{01}(dx, dy) && d\hat P = \exp(\hat\psi(X_0) + \hat\phi(X_1)) dR  
 \end{align} where the Radon-Nikodym derivative terms $\exp(\hat\phi(x) \oplus \hat \psi(y))$ are *strictly positive* with respect to the reference measure. If we let $f :=e^\phi$ and $g^\psi$ then the relation could be written as \begin{align}
     \hat \pi (dx, dy) = f(x)g(y) R_{01}(dx, dy) && d\hat P = f(X_0)g(X_1) dR
@@ -137,7 +137,7 @@ Under hypotheses on the reference measure $R$ and suitably chosen test functions
     \vec{A_t}u(x) = Lu(x) + \frac{\Gamma(g_t, u)(x)}{g_t(x)} && (t, x)\in [0, 1)\times \mathcal{X}
 \end{align} and the backward generator given by \begin{align}
     A_t^{\textit{back}} u(x) = Lu(x) + \frac{\Gamma(f_t, u)(x)}{f_t(x)}&& (t, x)\in 0, 1]\times \mathcal{X}
-\end{align} where $L$ is the generator of the reversible process $R$ (which does not differentiate between the forward and backward case) and $\Gamma(u, v):= L(uv) - uLv - vLu$ is the \textbf{carr\'{e} du champ operator} of $R$ which measures the tendency of $L$ from being a derivation.
+\end{align} where $L$ is the generator of the reversible process $R$ (which does not differentiate between the forward and backward case) and $\Gamma(u, v):= L(uv) - uLv - vLu$ is the **carré du champ operator** of $R$ which measures the tendency of $L$ from being a derivation.
 :::
 
 ### Schrödinger's system

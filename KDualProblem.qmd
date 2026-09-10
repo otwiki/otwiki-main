@@ -4,7 +4,7 @@ bibliography: bibliography_KDP.bibtex
 author: Djordje Nikolic
 ---
 
-The Kantorovich Dual Problem is one of the minimization problems in [Optimal Transport](http://34.106.105.83/wiki/Main_Page) . It is a dual problem of the [Kantorovich Problem](http://34.106.105.83/wiki/).
+The Kantorovich Dual Problem is one of the minimization problems in [Optimal Transport](index.qmd) . It is a dual problem of the [Kantorovich Problem](Kantorovich_Problem.qmd).
 
 # The Shipper's Problem
 
@@ -36,7 +36,7 @@ Take a note that at some point we use [Arzela-Ascoli Theorem](https://en.wikiped
 
 Let $\mu_{n}$ be a tight sequence of probability measures on Polish space $X$. Then, there exists $\mu \in \mathcal{P}(X)$ and convergent subsequence $\mu_{n_{k}}$ such that $\mu_{n_{k}} \rightharpoonup \mu$ in the dual of $C_{b}(X)$. Conversely, every sequence $\mu_{n} \rightharpoonup \mu$ is tight.
 
-The proof of the previous Theorem can be found in [@bogachev2007measure]. For more information on $C_{b}(X)$ duality, take a look at [Dual space of C_0(x) vs C_b(x)](http://34.106.105.83/wiki/).
+The proof of the previous Theorem can be found in [@bogachev2007measure]. For more information on $C_{b}(X)$ duality, take a look at [Dual space of C_0(x) vs C_b(x)](DualSpaceCtsFns.qmd).
 
 # C-concave functions
 

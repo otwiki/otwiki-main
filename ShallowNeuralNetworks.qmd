@@ -13,7 +13,7 @@ author: Paige Hillen
 
 ### Discrete Formulation
 
-Let us introduce the mathematical framework and notation for a neural network with a single hidden layer.<ref name="Figalli" /> Let $D \subset \mathbb{R}^d$ be open . The set $D$ represents the space of inputs into the network. There is some unknown function $f:D \rightarrow \mathbb{R}$ which we would like to approximate. Let $N  \in \mathbb{N}$ be the number of neurons in the hidden layer. Define
+Let us introduce the mathematical framework and notation for a neural network with a single hidden layer.[^ref-figalli] Let $D \subset \mathbb{R}^d$ be open . The set $D$ represents the space of inputs into the network. There is some unknown function $f:D \rightarrow \mathbb{R}$ which we would like to approximate. Let $N  \in \mathbb{N}$ be the number of neurons in the hidden layer. Define
 
 :   $F_N : D \times \Omega^N \rightarrow \mathbb{R}^k$
 
@@ -35,7 +35,7 @@ For the continuous formulation (i.e. when $N = \infty$), we rephrase the above m
 
 minimizes the loss function:
 
-:$F(\mu) : = \frac{1}{2} \int_{D} (f - f_\mu)^2 dx$.
+$F(\mu) : = \frac{1}{2} \int_{D} (f - f_\mu)^2 dx$.
 
 Here $\Phi(\xi, x)$ is an activation function with parameter $\xi = (\omega, \theta) \in \Omega$. We will in fact restrict choices of $\mu$ to probability measures with finite second moment, denoted $\mathcal{P}_2(\Omega)$. This is a small technicality to ensure that the Wasserstein metric is indeed a metric.
 
@@ -43,7 +43,7 @@ Note that by restricting choices of $\mu$ to probability measures of the form $\
 
 To avoid overfitting the network to the training data, a potential term is added the loss function. For the remainder of this article, we define the loss function $F$ to be:
 
-:$F(\mu) : = \frac{1}{2} \int_{D} (f - (\int_{\Omega} \Phi(\xi, x) d \mu (\xi)))^2 dx  +  \int_{\Omega} V(\xi)d\mu(\xi)$
+$F(\mu) : = \frac{1}{2} \int_{D} (f - (\int_{\Omega} \Phi(\xi, x) d \mu (\xi)))^2 dx  +  \int_{\Omega} V(\xi)d\mu(\xi)$
 
 for a convex potential function $V: \Omega \rightarrow \mathbb{R}$. Often we choose $V(\xi) = \frac{\lambda}{2} |\xi|^2$. In fact, $F$ is convex (along linear interpolations), in contrast to the minimization function in the finite neuron case.
 
@@ -51,57 +51,57 @@ for a convex potential function $V: \Omega \rightarrow \mathbb{R}$. Often we cho
 
 When $X \subseteq \mathbb{R}^n$, the gradient flow of a differentiable function $g: X \rightarrow \mathbb{R}$ starting at a point $x_0$ is a curve $x(t): [0, T) \rightarrow X$ satisfying the differential equation
 
-:$\frac{d}{dt}x(t) = - \nabla g (x(t)), x(0)=x_0$.
+$\frac{d}{dt}x(t) = - \nabla g (x(t)), x(0)=x_0$.
 
-where $\nabla g$ is the gradient of g.<ref name="Schiebinger"/>
+where $\nabla g$ is the gradient of g.[^ref-schiebinger]
 
 Crucially, the gradient flow heads in the direction that decreases the value of $g$ the fastest. We would like to use this nice property of gradient flow in our setting with the functional $F$. However, it is not immediately straightforward how to do this, since $F$ is defined on the space of probability measures, rather than on $\mathbb{R}^n$, so the usual gradient is not defined. Before we generalize the notion of gradient flow, recall that $\nabla g$ is the unique function from $\mathbb{R}^n$ to $\mathbb{R}^n$ such that
 
-:$\langle\nabla g , v \rangle = D_v g$,
+$\langle\nabla g , v \rangle = D_v g$,
 
-where $D_v g$ is the directional derivative of $g$ in the direction $v$. Motivated by this and using the [Riemannian structure of the space of probability measures](http://34.106.105.83/wiki/Formal_Riemannian_Structure_of_the_Wasserstein_metric), we can define the a notion of gradient for our loss functional $F$.
+where $D_v g$ is the directional derivative of $g$ in the direction $v$. Motivated by this and using the [Riemannian structure of the space of probability measures](RiemannianStructureOriginal.qmd), we can define the a notion of gradient for our loss functional $F$.
 
-Note that one can define [gradient flows in a general Hilbert space](http://34.106.105.83/wiki/Gradient_flows_in_Hilbert_spaces).
+Note that one can define [gradient flows in a general Hilbert space](GFHilbert.qmd).
 
 ### Wasserstein Gradient / Subdifferential
 
 We are looking for an element $\nabla_{W_2} F (\mu)$ in the tangent space of $\mathcal{P}_2(\Omega)$ at $\mu$ such that
 
-:$\langle  \nabla_{W_2} F (\mu_*), \frac{d}{dt}\mu(t)|_{t=0} \rangle_{W_2} = \lim_{h \rightarrow 0} \frac{F(\mu(h)) - F(\mu_*)}{h}$
+$\langle  \nabla_{W_2} F (\mu_*), \frac{d}{dt}\mu(t)|_{t=0} \rangle_{W_2} = \lim_{h \rightarrow 0} \frac{F(\mu(h)) - F(\mu_*)}{h}$
 
 for any absolutely continuous curve $\mu(t)$ in $\mathcal{P}_2(\Omega)$ with $\mu(0)=\mu_*$.
 
 We claim that in fact
 
-:$\nabla_{W_2} F (\mu_*) = - \nabla \cdot (\mu_* \nabla \frac{\delta F}{\delta \mu_*})$
+$\nabla_{W_2} F (\mu_*) = - \nabla \cdot (\mu_* \nabla \frac{\delta F}{\delta \mu_*})$
 
-where $\frac{\delta F}{\delta \mu_*}$ is the first variation of $F$ at $\mu_*$ <ref name="Ambrosio" /> (also called the [functional derivative](https://en.wikipedia.org/wiki/Functional_derivative#cite_note-ParrYangP246A.2-3)).
+where $\frac{\delta F}{\delta \mu_*}$ is the first variation of $F$ at $\mu_*$ [^ref-ambrosio] (also called the [functional derivative](https://en.wikipedia.org/wiki/Functional_derivative#cite_note-ParrYangP246A.2-3)).
 
 We provide a formal argument for this equality that makes the most sense when $\mu$ is absolutely continuous with respect to the Lebesgue measure. In this case, we can think of $\mu$ as a density function with $d \mu(x) = \mu(x) dx$. We can further assume that $\mu$ is in $L^2(\Omega)$. Therefore the same notion of gradient for $L^2$ exists for $F$, and in fact
 
-:$\nabla_{L^2}F(\mu) = \frac{\delta F}{\delta \mu}$
+$\nabla_{L^2}F(\mu) = \frac{\delta F}{\delta \mu}$
 
 Thus by definition of $L^2$ gradient and $L^2$ inner product, we should have
 
-:$\lim_{h \rightarrow 0} \frac{F(\mu(h)) - F(\mu_*)}{h}= \langle \frac{\delta F}{\delta \mu_*} , \frac{d}{dt}\mu(t)|_{t=0} \rangle_{L^2}$
+$\lim_{h \rightarrow 0} \frac{F(\mu(h)) - F(\mu_*)}{h}= \langle \frac{\delta F}{\delta \mu_*} , \frac{d}{dt}\mu(t)|_{t=0} \rangle_{L^2}$
 
-:$= \int \frac{\delta F}{\delta \mu_*} \frac{d}{dt}\mu(t)|_{t=0} dx$
+$= \int \frac{\delta F}{\delta \mu_*} \frac{d}{dt}\mu(t)|_{t=0} dx$
 
 by the continuity equation for $\mu(t)$ and divergence theorem,
 
-:$\int \frac{\delta F}{\delta \mu_*} \frac{d}{dt}\mu(t)|_{t=0} dx = - \int \frac{\delta F}{\delta \mu_*} (\nabla \cdot (v_*\mu_*)) dx= \int \nabla \frac{\delta F}{\delta \mu_*} (v_*\mu_*)dx = \int \nabla \frac{\delta F}{\delta \mu_*} v_* d\mu_*$
+$\int \frac{\delta F}{\delta \mu_*} \frac{d}{dt}\mu(t)|_{t=0} dx = - \int \frac{\delta F}{\delta \mu_*} (\nabla \cdot (v_*\mu_*)) dx= \int \nabla \frac{\delta F}{\delta \mu_*} (v_*\mu_*)dx = \int \nabla \frac{\delta F}{\delta \mu_*} v_* d\mu_*$
 
-where $v_*$ is the unique velocity vector corresponding to $\mu_*$ by the equivalence of absolutely continuous curves and solutions of [the continuity equation](http://34.106.105.83/wiki/The_continuity_equation_and_Benamour_Brenier_formula). Now by the definition of the inner product structure of $(\mathcal{P}_2(\mathbb{R}^d), W_2)$, we have
+where $v_*$ is the unique velocity vector corresponding to $\mu_*$ by the equivalence of absolutely continuous curves and solutions of [the continuity equation](CtyEqn.qmd). Now by the definition of the inner product structure of $(\mathcal{P}_2(\mathbb{R}^d), W_2)$, we have
 
-:$\int \nabla \frac{\delta F}{\delta \mu_*} v_* d\mu_* = \langle - \nabla \cdot (\mu \nabla \frac{\delta F}{\delta \mu_*}),  \frac{d}{dt}\mu(t)|_{t=0} \rangle_{W_2}.$
+$\int \nabla \frac{\delta F}{\delta \mu_*} v_* d\mu_* = \langle - \nabla \cdot (\mu \nabla \frac{\delta F}{\delta \mu_*}),  \frac{d}{dt}\mu(t)|_{t=0} \rangle_{W_2}.$
 
 Therefore we have
 
-:$\nabla_{W_2}F(\mu_*)= - \nabla \cdot (\mu \nabla \frac{\delta F}{\delta \mu_*}).$
+$\nabla_{W_2}F(\mu_*)= - \nabla \cdot (\mu \nabla \frac{\delta F}{\delta \mu_*}).$
 
 so the gradient flow for $F$ is an absolutely continuous curve of probability measure $\mu_t$ such that
 
-:$\partial_t \mu_t  = \nabla \cdot (\mu_t \nabla \frac{\delta F}{\delta \mu_t})$.
+$\partial_t \mu_t  = \nabla \cdot (\mu_t \nabla \frac{\delta F}{\delta \mu_t})$.
 
 Now we actually compute this gradient flow for our loss functional $F$.
 
@@ -109,7 +109,7 @@ Now we actually compute this gradient flow for our loss functional $F$.
 
 First, we compute the first variation ( or [functional derivative](https://en.wikipedia.org/wiki/Functional_derivative)) of a function from $\mathcal{P}(\Omega)$ to $\mathbb{R}$ of $F$
 
-:$\frac{\delta F}{\delta \mu}(\mu_*) = \int_D \Phi( \cdot, x) [\int_\Omega \Phi(\bar{\xi},x)d \mu_*(\bar{xi}) - f(x) ]dx + V$
+$\frac{\delta F}{\delta \mu}(\mu_*) = \int_D \Phi( \cdot, x) [\int_\Omega \Phi(\bar{\xi},x)d \mu_*(\bar{xi}) - f(x) ]dx + V$
 
 Therefore we have
 
@@ -117,22 +117,20 @@ Therefore we have
 
 Hence the Wasserstein gradient flow is
 
-:$\partial_t \mu_t = \rm{div}( \mu_t \nabla \frac{\delta F}{\delta \mu} (\mu_t))$.
+$\partial_t \mu_t = \rm{div}( \mu_t \nabla \frac{\delta F}{\delta \mu} (\mu_t))$.
 
 ## Open Problems
 
 ### Generalization
 
-[Generalization error](https://en.wikipedia.org/wiki/Generalization_error) is how well a model generalizes for a new data not in your training data set. In practice, gradient descent does generalize really well, but it is an open problem to provide a theoretical framework to guarantee generalization. Wang, Meng, Chen and Liu 2021 made progress on studying the implicit regularization of the algorithm, and provide a framework for convergence. <ref name="Wang" />
+[Generalization error](https://en.wikipedia.org/wiki/Generalization_error) is how well a model generalizes for a new data not in your training data set. In practice, gradient descent does generalize really well, but it is an open problem to provide a theoretical framework to guarantee generalization. Wang, Meng, Chen and Liu 2021 made progress on studying the implicit regularization of the algorithm, and provide a framework for convergence. [^ref-wang]
 
 ## References
 
-<references> <ref name="Figalli">[X. Fernandez-Real and A. Figalli, *The Continuous Formulation of Shallow Neural Networks as Wasserstein-Type Gradient Flows*](https://people.math.ethz.ch/~afigalli/lecture-notes-pdf/The-continuous-formulation-of-shallow-neural-networks-as-wasserstein-type-gradient-flows.pdf)</ref>
+[^ref-figalli]: [X. Fernandez-Real and A. Figalli, *The Continuous Formulation of Shallow Neural Networks as Wasserstein-Type Gradient Flows*](https://people.math.ethz.ch/~afigalli/lecture-notes-pdf/The-continuous-formulation-of-shallow-neural-networks-as-wasserstein-type-gradient-flows.pdf)
 
-<ref name="Ambrosio">[L. Ambrosio, N. Gigli, G. Savaré, *Gradient Flows in Metric Spaces and in the Space of Probability Measures*](http://www2.stat.duke.edu/~sayan/ambrosio.pdf)</ref>
+[^ref-schiebinger]: [G. Schiebinger, *Gradient Flow in Wasserstein Space*](https://personal.math.ubc.ca/~geoff/courses/W2019T1/Lecture16.pdf)
 
-<ref name="Schiebinger"> [G. Schiebinger, *Gradient Flow in Wasserstein Space*](https://personal.math.ubc.ca/~geoff/courses/W2019T1/Lecture16.pdf) </ref>
+[^ref-ambrosio]: [L. Ambrosio, N. Gigli, G. Savaré, *Gradient Flows in Metric Spaces and in the Space of Probability Measures*](http://www2.stat.duke.edu/~sayan/ambrosio.pdf)
 
-<ref name="Wang"> [B. Wang, Q. Meng, W. Chen, T. Liu, *The Implicit Regularization for Adaptive Optimization Algorithms on Homogeneous Neural Networks*](https://arxiv.org/pdf/2012.06244.pdf) </ref>
-
-</references>
+[^ref-wang]: [B. Wang, Q. Meng, W. Chen, T. Liu, *The Implicit Regularization for Adaptive Optimization Algorithms on Homogeneous Neural Networks*](https://arxiv.org/pdf/2012.06244.pdf)

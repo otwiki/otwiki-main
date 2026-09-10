@@ -135,11 +135,11 @@ $$ where $$
 \mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2) := \{(\lambda_1,\lambda_2):\lambda_1(s_1) + \lambda_2(s_2)\geq c(s_1,s_2)\}.
 $$ The objective function is the cost of replication with European payoffs $\lambda_1$ and $\lambda_2$, while $\mathscr{P}^*(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of payoff functions that admits a super-replication.
 
-Through the [Kantorovich Duality](https://www.otwiki.xyz/wiki/Kantorovich_Dual_Problem_(for_general_costs)), it is clear that $$
+Through the [Kantorovich Duality](KDualProblem.qmd), it is clear that $$
 \text{MK}_2=\sup_{\mathbb{P}\in\mathscr{P}(\mathbb{P}^1,\mathbb{P}^2)}\mathbb{E}_{\mathbb{P}}[c(S^1_T,S^2_T)],
 $$ where $\mathscr{P}(\mathbb{P}^1,\mathbb{P}^2)$ is the collection of probability measures, under which $S^1_T\sim \mathbb{P}^1$ and $S^2_T\sim \mathbb{P}^2$.
 
-We remark that, the primal and dual optimization problems align with those in optimal transport. However, those optimization problems no longer have the physical interpretation as transport problems, but are interpreted in the sense of hedging. Nevertheless, this optimization problem can be numerically solved through techniques that have been developed for optimal transport, e.g., [Sinkhorn's Algorithm](https://www.otwiki.xyz/wiki/Sinkhorn%27s_Algorithm).
+We remark that, the primal and dual optimization problems align with those in optimal transport. However, those optimization problems no longer have the physical interpretation as transport problems, but are interpreted in the sense of hedging. Nevertheless, this optimization problem can be numerically solved through techniques that have been developed for optimal transport, e.g., [Sinkhorn's Algorithm](entropic_regularization_and_sinkhorn.qmd).
 
 ## Pricing Options with Path-dependent Payoffs
 
